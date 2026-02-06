@@ -1,0 +1,92 @@
+﻿<Window x:Class="Calcoo.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Calcoo Settings" SizeToContent="WidthAndHeight"
+        Button.Click="Settings_Button_Click">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="Autorelease" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <CheckBox Content="arc button" Name="AutoreleaseArcButton" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5"  VerticalAlignment="Top"/>
+                <CheckBox Content="hyp button" Name="AutoreleaseHypButton" HorizontalAlignment="Left"  Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="Mode" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <RadioButton GroupName="Mode" Name ="ModeRpn" Content="Rpn" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5" VerticalAlignment="Top"/>
+                <RadioButton GroupName="Mode" Name ="ModeAlgebraic" Content="Algebraic" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="0" Grid.Row="1" Header="RPN Enter" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <RadioButton GroupName="RpnEnter" Name="RpnEnterTraditional" Content="Traditional" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5" VerticalAlignment="Top"/>
+                <RadioButton GroupName="RpnEnter" Name="RpnEnterHp28" Content="Hp28" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="1" Header="RPN Stack" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <RadioButton GroupName="RpnStack" Name="RpnStackInfinite" Content="Infinite" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5" VerticalAlignment="Top"/>
+                <RadioButton GroupName="RpnStack" Name="RpnStackXyzt" Content="Xyzt" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="0" Grid.Row="2" Header="Rounding" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <CheckBox Content="Rounding output" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5"  VerticalAlignment="Top"/>
+                <CheckBox Content="Truncate trailing zeros" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5"  VerticalAlignment="Top"/>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="0" Grid.Row="3" Header="Paste Parsing" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <RadioButton GroupName="PasteParsing" Name="PasteParsingLocaleBased" Content="Locale-based" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5" VerticalAlignment="Top"/>
+                <RadioButton GroupName="PasteParsing" Name="PasteParsingHeuristic" Content="Heuristic" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="3" Header="Customize" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button Grid.Column="0" Grid.Row="0" Name ="CustomButton" Content="&#x25C7; button" HorizontalAlignment="Left" Margin="5,5,5,5"  VerticalAlignment="Top" Width="75"/>
+            </Grid>
+        </GroupBox>
+
+        <Button Grid.Column="0" Grid.Row="4" Name="SettingsOk" Content="Ok" HorizontalAlignment="Left" Margin="5,5,5,5"  VerticalAlignment="Top" Width="75"/>
+        <Button Grid.Column="1" Grid.Row="4" Name="SettingsCancel" Content="Cancel" HorizontalAlignment="Left" Margin="5,5,5,5"  VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Window>

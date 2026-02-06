@@ -1,0 +1,157 @@
+﻿<Window x:Class="Calcoo.InfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="InfoDialog" SizeToContent="WidthAndHeight">
+    <Grid>
+        <TabControl HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TabItem Header="Shortcuts">
+                <DataGrid xmlns:local="clr-namespace:Calcoo" GridLinesVisibility="None" Name="ShortcutGrid" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Shortcut" Binding="{Binding Shortcut}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalContentAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Command" Binding="{Binding Command}"/>
+                    </DataGrid.Columns>
+
+                    <local:ShortcutItem Shortcut= "Esc" Command="clear all registers"/>
+                    <local:ShortcutItem Shortcut= "Delete" Command="clear register X"/>
+                    <local:ShortcutItem Shortcut= "0 1 2 3 4 5 6 7 8 9" Command="corresponding digits"/>
+                    <local:ShortcutItem Shortcut= ". ," Command="."/>
+                    <local:ShortcutItem Shortcut= "+ - * / ^" Command="corresponding binary operations"/>
+                    <local:ShortcutItem Shortcut= "s c t" Command="sin cos tan"/>
+                    <local:ShortcutItem Shortcut= "n g" Command="ln log"/>
+                    <local:ShortcutItem Shortcut= "x d" Command="e^x 10^x"/>
+                    <local:ShortcutItem Shortcut= "q w r" Command="x^2 sqrt y^x"/>
+                    <local:ShortcutItem Shortcut= "i p f" Command="1/x pi x!"/>
+                    <local:ShortcutItem Shortcut= "a h" Command="arc hyp"/>
+                    <local:ShortcutItem Shortcut= "( [  ] )" Command="( )"/>
+                    <local:ShortcutItem Shortcut= "Enter, =" Command="evaluate (algebraic mode)"/>
+                    <local:ShortcutItem Shortcut= "Enter" Command="enter (RPN mode)"/>
+                    <local:ShortcutItem Shortcut= "BackSpace Ctrl-z LeftArrow" Command="undo"/>
+                    <local:ShortcutItem Shortcut= "Ctrl-y RightArrow" Command="redo"/>
+                    <local:ShortcutItem Shortcut= "Ctrl-c Ctrl-v" Command="copy paste"/>
+                    <local:ShortcutItem Shortcut= "Ctrl--" Command="change mantissa sign"/>
+                    <local:ShortcutItem Shortcut= "Ctrl-e" Command="change exp sign"/>
+                    <local:ShortcutItem Shortcut= "m" Command="change the current sign"/>
+                    <local:ShortcutItem Shortcut= "UpArrow/DownArrow" Command="scroll stack up/down (RPN mode)"/>
+                    <local:ShortcutItem Shortcut= "y" Command="swap registers X and Y"/>
+                    <local:ShortcutItem Shortcut= "e" Command="E"/>
+                    <local:ShortcutItem Shortcut= "?" Command="info/help"/>
+                    <local:ShortcutItem Shortcut= "!" Command="settings"/>
+                    <local:ShortcutItem Shortcut= "Ctrl-q" Command="exit"/>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Help">
+                <RichTextBox IsReadOnly="True" BorderThickness="0" Background="Transparent" VerticalScrollBarVisibility="Auto" 
+                             Width="{Binding ElementName=ShortcutGrid, Path=ActualWidth}"
+                             Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
+                    <FlowDocument>
+                        <Paragraph>
+                            Even though it must be clear in general how to use calcoo,
+                            some subtleties may need clarification.
+                        </Paragraph>
+                        <Paragraph>
+                            In the RPN mode, the stack either has four registers, X, Y, Z, T,
+                            like in most real RPN calculators, or is unlimited, depending
+                                           on the corresponding option. In the algebraic mode, the number of
+                                           registers is unlimited, but only the lowest four have their
+                                           contents displayed.
+                        </Paragraph>
+                        <Paragraph>
+                            Several adjacent opening parens are possible. However, calcoo
+                                           will show only one paren in the corresponding display, due to
+                                           display limitations. Calcoo does keep track of all of them, even
+                                           though it is unable to show them.
+                        </Paragraph>
+                        <Paragraph>
+                            The closing paren button acts as "=" button if there are no
+                                           matching opening parens.
+                        </Paragraph>
+                        <Paragraph>
+                            If an expression begins with an opening paren, the paren will
+                                           not be displayed (actually the paren will be ignored).
+                                           Nevertheless, you should go ahead and type the whole expression,
+                                           since an unmatched closing paren acts as "=", the whole
+                                           expression will be evaluated properly, as though the (ignored)
+                                           opening paren and the closing paren (interpreted as "=") were
+                                           interpreted as parens.
+                        </Paragraph>
+                        <Paragraph>
+                            Undo remembers only the last 200 elementary actions.
+                        </Paragraph>
+                        <Paragraph>
+                            Switching between RPN and algebraic modes resets undo.
+                        </Paragraph>
+                        <Paragraph>
+                            Locale-based parsing of pasted numbers uses Java's native pasting
+                                           algorithm, based on your current locale. It is quite robust and should
+                                           be chosen unless sometimes you happen to paste numbers formatted
+                                           in different locales. In this case, the heuristic parser may be
+                                           a better choice. While more picky, it tries to figure out which locale
+                                           conventions to use based on the appearance of the pasted number.
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </TabItem>
+            <TabItem Header="License">
+                <RichTextBox IsReadOnly="True" BorderThickness="0" Background="Transparent" IsDocumentEnabled="True"  VerticalScrollBarVisibility="Auto" 
+                             Width="{Binding ElementName=ShortcutGrid, Path=ActualWidth}"
+                             Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
+                    <FlowDocument>
+                        <Paragraph>
+                            Calcoo - scientific calculator. Version 2.1.0.
+                        </Paragraph>
+                        <Paragraph>
+                            Copyright (C) 2001-2014 Alexei Kaminski.</Paragraph>
+                        <Paragraph>
+                            This program is free software: you can redistribute it and/or modify
+                            it under the terms of the GNU General Public License as published by
+                            the Free Software Foundation, either version 3 of the License, or
+                                          (at your option) any later version.</Paragraph>
+                        <Paragraph>
+                            This program is distributed in the hope that it will be useful,
+                                          but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                                          GNU General Public License for more details.</Paragraph>
+                        <Paragraph>
+                            You should have received a copy of the GNU General Public License
+                                          along with this program. If not, see
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</Hyperlink>.
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </TabItem>
+            <TabItem Header="About">
+                <RichTextBox IsReadOnly="True" BorderThickness="0" Background="Transparent"  VerticalAlignment="Center" IsDocumentEnabled="True"  VerticalScrollBarVisibility="Auto" 
+                             Width="{Binding ElementName=ShortcutGrid, Path=ActualWidth}"
+                             Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}" 
+                    >
+                    <FlowDocument TextAlignment="Center" >
+                        <Paragraph>Calcoo - scientific calculator. Version 2.1.0.
+                        </Paragraph>
+                        <Paragraph>
+                            Copyright (C) 2001-2014 Alexei Kaminski.</Paragraph>
+                        <Paragraph>
+                            Webpage:
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink> .
+                        </Paragraph>
+                        <Paragraph>
+                            Feedback:
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="mailto:calcoo.calculator@gmail.com">calcoo.calculator@gmail.com</Hyperlink> .
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </TabItem>
+        </TabControl>
+        <Button Content="Ok" HorizontalAlignment="Right" Height="22"  VerticalAlignment="Bottom" Width="75"/>
+    </Grid>
+</Window>

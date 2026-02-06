@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calcoo", "Calcoo\Calcoo.csproj", "{A320D154-262B-4F71-B3C1-0916FD55BDC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calcoo.Test", "Calcoo.Test\Calcoo.Test.csproj", "{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A320D154-262B-4F71-B3C1-0916FD55BDC0} = {A320D154-262B-4F71-B3C1-0916FD55BDC0}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A320D154-262B-4F71-B3C1-0916FD55BDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A320D154-262B-4F71-B3C1-0916FD55BDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A320D154-262B-4F71-B3C1-0916FD55BDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A320D154-262B-4F71-B3C1-0916FD55BDC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
