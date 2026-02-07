@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 
 namespace Calcoo
@@ -24,7 +26,7 @@ namespace Calcoo
         private const int UndoStackSize = 200;
 
         private readonly Body body;
-       
+        private double _aspectRatio;
 
         public MainWindow()
         {
@@ -56,6 +58,51 @@ namespace Calcoo
             body.RedoEnabled = false;
 
             body.Refresh(cpu);
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            _aspectRatio = Width / Height;
+            var source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            source?.AddHook(WndProc);
+        }
+
+        private const int WM_SIZING = 0x0214;
+        private const int WMSZ_TOP = 3;
+        private const int WMSZ_TOPLEFT = 4;
+        private const int WMSZ_TOPRIGHT = 5;
+        private const int WMSZ_BOTTOM = 6;
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT { public int Left, Top, Right, Bottom; }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_SIZING)
+            {
+                var rect = Marshal.PtrToStructure<RECT>(lParam);
+                int edge = wParam.ToInt32();
+                int width = rect.Right - rect.Left;
+                int height = rect.Bottom - rect.Top;
+
+                if (edge == WMSZ_TOP || edge == WMSZ_BOTTOM)
+                {
+                    rect.Right = rect.Left + (int)(height * _aspectRatio);
+                }
+                else
+                {
+                    int newHeight = (int)(width / _aspectRatio);
+                    if (edge == WMSZ_TOPLEFT || edge == WMSZ_TOPRIGHT)
+                        rect.Top = rect.Bottom - newHeight;
+                    else
+                        rect.Bottom = rect.Top + newHeight;
+                }
+
+                Marshal.StructureToPtr(rect, lParam, false);
+                handled = true;
+            }
+            return IntPtr.Zero;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
