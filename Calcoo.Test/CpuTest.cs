@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Calcoo.Test
 {
@@ -44,7 +45,7 @@ namespace Calcoo.Test
                 results[i] = cpus[i].X;
             }
 
-            Assert.AreEqual(results[0], results[1], Cpu.CpuPrecision, "command sequence 0");
+            ClassicAssert.AreEqual(results[0], results[1], Cpu.CpuPrecision, "command sequence 0");
         }
 
         [Test]
@@ -53,31 +54,31 @@ namespace Calcoo.Test
             // RPN
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "RPN - blank");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "RPN - blank");
             cpu.Execute(Command.Digit1);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "RPN - after digit");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "RPN - after digit");
             cpu.Execute(Command.Sqrt);
-            Assert.AreEqual(false, cpu.IsInputInProgress(), "RPN - after unary op");
+            ClassicAssert.AreEqual(false, cpu.IsInputInProgress(), "RPN - after unary op");
             cpu.Execute(Command.Digit2);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "RPN - after digit again");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "RPN - after digit again");
             cpu.Execute(Command.Enter);
-            Assert.AreEqual(false, cpu.IsInputInProgress(), "RPN - after enter");
+            ClassicAssert.AreEqual(false, cpu.IsInputInProgress(), "RPN - after enter");
             cpu.Execute(Command.ClearAll);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "RPN - after clear");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "RPN - after clear");
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "ALG - blank");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "ALG - blank");
             cpu.Execute(Command.Digit1);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "ALG - after digit");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "ALG - after digit");
             cpu.Execute(Command.Sqrt);
-            Assert.AreEqual(false, cpu.IsInputInProgress(), "ALG - after unary op");
+            ClassicAssert.AreEqual(false, cpu.IsInputInProgress(), "ALG - after unary op");
             cpu.Execute(Command.Digit2);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "ALG - after digit again");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "ALG - after digit again");
             cpu.Execute(Command.Add);
-            Assert.AreEqual(false, cpu.IsInputInProgress(), "ALG - after binop");
+            ClassicAssert.AreEqual(false, cpu.IsInputInProgress(), "ALG - after binop");
             cpu.Execute(Command.ClearAll);
-            Assert.AreEqual(true, cpu.IsInputInProgress(), "ALG - after clear");
+            ClassicAssert.AreEqual(true, cpu.IsInputInProgress(), "ALG - after clear");
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace Calcoo.Test
             // just making sure we are getting access to the stack - the specific
             // stack functionality
             // is tested in its own tests
-            Assert.AreEqual(7.23, cpu.GetStack().PeekValue(0), Cpu.CpuPrecision, "RPN");
+            ClassicAssert.AreEqual(7.23, cpu.GetStack().PeekValue(0), Cpu.CpuPrecision, "RPN");
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
@@ -105,7 +106,7 @@ namespace Calcoo.Test
             // just making sure we are getting access to the stack - the specific
             // stack functionality
             // is tested in its own tests
-            Assert.AreEqual(7.23, cpu.GetStack().PeekValue(0), Cpu.CpuPrecision, "ALG");
+            ClassicAssert.AreEqual(7.23, cpu.GetStack().PeekValue(0), Cpu.CpuPrecision, "ALG");
         }
 
         [Test]
@@ -118,7 +119,7 @@ namespace Calcoo.Test
             String[] rpnSetupKeystrokes = {"Digit7", "Dot", "Digit2", "Digit3"};
             foreach (String ks in rpnSetupKeystrokes)
                 cpu.Execute((Command) Enum.Parse(typeof (Command), ks));
-            Assert.AreEqual(7.23, cpu.GetInput().ToDouble(NumBase), Cpu.CpuPrecision, "RPN");
+            ClassicAssert.AreEqual(7.23, cpu.GetInput().ToDouble(NumBase), Cpu.CpuPrecision, "RPN");
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
@@ -128,7 +129,7 @@ namespace Calcoo.Test
             String[] algSetupKeystrokes = {"Digit7", "Dot", "Digit2", "Digit3"};
             foreach (String ks in algSetupKeystrokes)
                 cpu.Execute((Command) Enum.Parse(typeof (Command), ks));
-            Assert.AreEqual(7.23, cpu.GetInput().ToDouble(NumBase), Cpu.CpuPrecision, "ALG");
+            ClassicAssert.AreEqual(7.23, cpu.GetInput().ToDouble(NumBase), Cpu.CpuPrecision, "ALG");
         }
 
         [Test]
@@ -141,7 +142,7 @@ namespace Calcoo.Test
             String[] rpnSetupKeystrokes = {"Digit7", "Dot", "Digit2", "Digit3", "Enter"};
             foreach (String ks in rpnSetupKeystrokes)
                 cpu.Execute((Command) Enum.Parse(typeof (Command), ks));
-            Assert.AreEqual(7.23, cpu.X, Cpu.CpuPrecision, "RPN");
+            ClassicAssert.AreEqual(7.23, cpu.X, Cpu.CpuPrecision, "RPN");
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
@@ -150,7 +151,7 @@ namespace Calcoo.Test
             String[] algSetupKeystrokes = {"Digit7", "Dot", "Digit2", "Digit3", "Eq"};
             foreach (String ks in algSetupKeystrokes)
                 cpu.Execute((Command) Enum.Parse(typeof (Command), ks));
-            Assert.AreEqual(7.23, cpu.X, Cpu.CpuPrecision, "ALG");
+            ClassicAssert.AreEqual(7.23, cpu.X, Cpu.CpuPrecision, "ALG");
         }
 
         [Test]
@@ -169,8 +170,8 @@ namespace Calcoo.Test
             // just making sure we are getting access to the stack - the specific
             // stack functionality
             // is tested in its own tests
-            Assert.AreEqual(7.23, cpu.GetMem(0), Cpu.CpuPrecision, "mem0");
-            Assert.AreEqual(8.23, cpu.GetMem(1), Cpu.CpuPrecision, "mem1");
+            ClassicAssert.AreEqual(7.23, cpu.GetMem(0), Cpu.CpuPrecision, "mem0");
+            ClassicAssert.AreEqual(8.23, cpu.GetMem(1), Cpu.CpuPrecision, "mem1");
 
             // ALG testing is deemed unnecessary, since the mem operation does not
             // have mode-specific functionality
@@ -182,7 +183,7 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(0, cpu.ActiveMemNum, "blank cpu");
+            ClassicAssert.AreEqual(0, cpu.ActiveMemNum, "blank cpu");
 
             String[] rpnSetupKeystrokes =
             {
@@ -191,9 +192,9 @@ namespace Calcoo.Test
             };
             foreach (String ks in rpnSetupKeystrokes)
                 cpu.Execute((Command) Enum.Parse(typeof (Command), ks));
-            Assert.AreEqual(1, cpu.ActiveMemNum, "switched to 1");
+            ClassicAssert.AreEqual(1, cpu.ActiveMemNum, "switched to 1");
             cpu.Execute(Command.Mem0);
-            Assert.AreEqual(0, cpu.ActiveMemNum, "switched back to 0");
+            ClassicAssert.AreEqual(0, cpu.ActiveMemNum, "switched back to 0");
 
             // ALG testing is deemed unnecessary, since the mem operation does not
             // have mode-specific functionality
@@ -205,9 +206,9 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(Settings.AngleUnits.Deg, cpu.AngleUnits, "blank cpu");
+            ClassicAssert.AreEqual(Settings.AngleUnits.Deg, cpu.AngleUnits, "blank cpu");
             cpu.Execute(Command.DegRad);
-            Assert.AreEqual(Settings.AngleUnits.Rad, cpu.AngleUnits, "switched once");
+            ClassicAssert.AreEqual(Settings.AngleUnits.Rad, cpu.AngleUnits, "switched once");
         }
 
         [Test]
@@ -216,15 +217,15 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(DefaultEnterMode, cpu.EnterMode, "blank cpu");
+            ClassicAssert.AreEqual(DefaultEnterMode, cpu.EnterMode, "blank cpu");
             cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28");
+            ClassicAssert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28");
             cpu.EnterMode = Settings.EnterMode.Traditional;
-            Assert.AreEqual(Settings.EnterMode.Traditional, cpu.EnterMode, "set to TRADITIONAL");
+            ClassicAssert.AreEqual(Settings.EnterMode.Traditional, cpu.EnterMode, "set to TRADITIONAL");
             cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28 again");
+            ClassicAssert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28 again");
 
-            Assert.AreEqual(18.0,
+            ClassicAssert.AreEqual(18.0,
                 RunCpu(new[]
                 {
                     "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter",
@@ -232,7 +233,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
                 1e-7, "3<Enter>3<Enter>3<Enter>3<Enter>3<Enter>3+++++");
-            Assert.AreEqual(12.0,
+            ClassicAssert.AreEqual(12.0,
                 RunCpu(new[]
                 {
                     "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter",
@@ -250,13 +251,13 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(DefaultEnterMode, cpu.EnterMode, "blank cpu");
+            ClassicAssert.AreEqual(DefaultEnterMode, cpu.EnterMode, "blank cpu");
             cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28");
+            ClassicAssert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28");
             cpu.EnterMode = Settings.EnterMode.Traditional;
-            Assert.AreEqual(Settings.EnterMode.Traditional, cpu.EnterMode, "set to TRADITIONAL");
+            ClassicAssert.AreEqual(Settings.EnterMode.Traditional, cpu.EnterMode, "set to TRADITIONAL");
             cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28 again");
+            ClassicAssert.AreEqual(Settings.EnterMode.Hp28, cpu.EnterMode, "set to HP28 again");
         }
 
         [Test]
@@ -265,19 +266,19 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(DefaultStackMode, cpu.StackMode, "blank cpu");
+            ClassicAssert.AreEqual(DefaultStackMode, cpu.StackMode, "blank cpu");
             cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT");
+            ClassicAssert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT");
             cpu.StackMode = Settings.StackMode.Infinite;
-            Assert.AreEqual(Settings.StackMode.Infinite, cpu.StackMode, "set to INFINITE");
+            ClassicAssert.AreEqual(Settings.StackMode.Infinite, cpu.StackMode, "set to INFINITE");
             cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT again");
+            ClassicAssert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT again");
 
-            Assert.AreEqual(6.0,
+            ClassicAssert.AreEqual(6.0,
                 RunCpu(new[] {"Digit3", "Enter", "Add"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
                 1e-7, "3<Enter>+");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit3", "Enter", "Add"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
                 1e-7, "3<Enter>+");
@@ -291,13 +292,13 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(DefaultStackMode, cpu.StackMode, "blank cpu");
+            ClassicAssert.AreEqual(DefaultStackMode, cpu.StackMode, "blank cpu");
             cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT");
+            ClassicAssert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT");
             cpu.StackMode = Settings.StackMode.Infinite;
-            Assert.AreEqual(Settings.StackMode.Infinite, cpu.StackMode, "set to INFINITE");
+            ClassicAssert.AreEqual(Settings.StackMode.Infinite, cpu.StackMode, "set to INFINITE");
             cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT again");
+            ClassicAssert.AreEqual(Settings.StackMode.Xyzt, cpu.StackMode, "set to XYZT again");
         }
 
         [Test]
@@ -306,20 +307,20 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "blank cpu RPN");
+            ClassicAssert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "blank cpu RPN");
             cpu.Mode = Settings.Mode.Alg;
-            Assert.AreEqual(Settings.Mode.Alg, cpu.Mode, "RPN - set to ALG");
+            ClassicAssert.AreEqual(Settings.Mode.Alg, cpu.Mode, "RPN - set to ALG");
             cpu.Mode = Settings.Mode.Rpn;
-            Assert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "RPN - set to RPN again");
+            ClassicAssert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "RPN - set to RPN again");
 
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(Settings.Mode.Alg, cpu.Mode, "blank cpu ALG");
+            ClassicAssert.AreEqual(Settings.Mode.Alg, cpu.Mode, "blank cpu ALG");
             cpu.Mode = Settings.Mode.Rpn;
-            Assert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "ALG - set to RPN");
+            ClassicAssert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "ALG - set to RPN");
             cpu.Mode = Settings.Mode.Alg;
-            Assert.AreEqual(Settings.Mode.Alg, cpu.Mode, "ALG - set to ALG again");
+            ClassicAssert.AreEqual(Settings.Mode.Alg, cpu.Mode, "ALG - set to ALG again");
         }
 
         [Test]
@@ -330,20 +331,20 @@ namespace Calcoo.Test
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "blank cpu RPN");
+            ClassicAssert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "blank cpu RPN");
             cpu.Mode = Settings.Mode.Alg;
-            Assert.AreEqual(Settings.Mode.Alg, cpu.Mode, "RPN - set to ALG");
+            ClassicAssert.AreEqual(Settings.Mode.Alg, cpu.Mode, "RPN - set to ALG");
             cpu.Mode = Settings.Mode.Rpn;
-            Assert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "RPN - set to RPN again");
+            ClassicAssert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "RPN - set to RPN again");
 
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.AreEqual(Settings.Mode.Alg, cpu.Mode, "blank cpu ALG");
+            ClassicAssert.AreEqual(Settings.Mode.Alg, cpu.Mode, "blank cpu ALG");
             cpu.Mode = Settings.Mode.Rpn;
-            Assert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "ALG - set to RPN");
+            ClassicAssert.AreEqual(Settings.Mode.Rpn, cpu.Mode, "ALG - set to RPN");
             cpu.Mode = Settings.Mode.Alg;
-            Assert.AreEqual(Settings.Mode.Alg, cpu.Mode, "ALG - set to ALG again");
+            ClassicAssert.AreEqual(Settings.Mode.Alg, cpu.Mode, "ALG - set to ALG again");
         }
 
         // indirect testing of private functions
@@ -352,7 +353,7 @@ namespace Calcoo.Test
         public void ExecuteDigitTest()
         {
             // trivial input
-            Assert.AreEqual(86.0,
+            ClassicAssert.AreEqual(86.0,
                 RunCpu(new[] {"Digit8", "Digit6", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "86");
@@ -361,64 +362,64 @@ namespace Calcoo.Test
             // empty
             var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
-            Assert.AreEqual(0, cpu.GetInput().GetNIntDigits(), "empty");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNIntDigits(), "empty");
             // input starts with 0
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Digit0);
-            Assert.AreEqual(0, cpu.GetInput().GetNIntDigits(), "input starts with 0 - 1");
-            Assert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with 0 - 1 - frac");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNIntDigits(), "input starts with 0 - 1");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with 0 - 1 - frac");
             cpu.Execute(Command.Digit1);
-            Assert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with 0 - 2");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with 0 - 2");
             // input starts with dot
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Dot);
-            Assert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with dot - 1");
-            Assert.AreEqual(0, cpu.GetInput().GetIntDigit(0), "input starts with dot - 1 - int digit");
-            Assert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with dot - 1 - frac");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with dot - 1");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetIntDigit(0), "input starts with dot - 1 - int digit");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with dot - 1 - frac");
             cpu.Execute(Command.Digit1);
-            Assert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with dot - 2 - int");
-            Assert.AreEqual(0, cpu.GetInput().GetIntDigit(0), "input starts with dot - 2 - int digit");
-            Assert.AreEqual(1, cpu.GetInput().GetNFracDigits(), "input starts with dot - 2 - frac");
-            Assert.AreEqual(1, cpu.GetInput().GetFracDigit(0), "input starts with dot - 2 - frac digit");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with dot - 2 - int");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetIntDigit(0), "input starts with dot - 2 - int digit");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNFracDigits(), "input starts with dot - 2 - frac");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetFracDigit(0), "input starts with dot - 2 - frac digit");
             // input starts with exp
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Exp);
-            Assert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with exp - 1");
-            Assert.AreEqual(1, cpu.GetInput().GetIntDigit(0), "input starts with exp - 1 - int digit");
-            Assert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with exp - 1 - frac");
-            Assert.AreEqual(ExpInputLength, cpu.GetInput().GetNExpDigits(), "input starts with exp - 1 - exp");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with exp - 1");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetIntDigit(0), "input starts with exp - 1 - int digit");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with exp - 1 - frac");
+            ClassicAssert.AreEqual(ExpInputLength, cpu.GetInput().GetNExpDigits(), "input starts with exp - 1 - exp");
             cpu.Execute(Command.Digit1);
-            Assert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with exp - 2 - int");
-            Assert.AreEqual(1, cpu.GetInput().GetIntDigit(0), "input starts with exp - 2 - int digit");
-            Assert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with exp - 2 - frac");
-            Assert.AreEqual(ExpInputLength, cpu.GetInput().GetNExpDigits(), "input starts with exp - 2 - exp");
-            Assert.AreEqual(1, cpu.GetInput().GetExpDigit(ExpInputLength - 1), "input starts with exp - 2 - exp digit");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with exp - 2 - int");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetIntDigit(0), "input starts with exp - 2 - int digit");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNFracDigits(), "input starts with exp - 2 - frac");
+            ClassicAssert.AreEqual(ExpInputLength, cpu.GetInput().GetNExpDigits(), "input starts with exp - 2 - exp");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetExpDigit(ExpInputLength - 1), "input starts with exp - 2 - exp digit");
             // input starts with sign
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Sign);
-            Assert.AreEqual(0, cpu.GetInput().GetNIntDigits(), "input starts with sign - 1");
-            Assert.AreEqual(-1, cpu.GetInput().GetSign(), "input starts with sign - 1 - sign");
+            ClassicAssert.AreEqual(0, cpu.GetInput().GetNIntDigits(), "input starts with sign - 1");
+            ClassicAssert.AreEqual(-1, cpu.GetInput().GetSign(), "input starts with sign - 1 - sign");
             cpu.Execute(Command.Digit1);
-            Assert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with sign - 2");
-            Assert.AreEqual(1, cpu.GetInput().GetIntDigit(0), "input starts with sign - 2");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetNIntDigits(), "input starts with sign - 2");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetIntDigit(0), "input starts with sign - 2");
             // the test below is non-trivial. Contrary to what one may expect, one cannot start number input with the sign.
             // This behavior is the same as in a regular calculator.
-            Assert.AreEqual(1, cpu.GetInput().GetSign(), "input starts with sign - 2 - sign");
+            ClassicAssert.AreEqual(1, cpu.GetInput().GetSign(), "input starts with sign - 2 - sign");
         }
 
         [Test]
         public void ExecuteDotTest()
         {
-            Assert.AreEqual(8.6,
+            ClassicAssert.AreEqual(8.6,
                 RunCpu(new[] {"Digit8", "Dot", "Digit6", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 Cpu.CpuPrecision*8.6, "8.6");
             // number entry starting with a dot
-            Assert.AreEqual(0.6,
+            ClassicAssert.AreEqual(0.6,
                 RunCpu(new[] {"Dot", "Digit6", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 Cpu.CpuPrecision*0.6, "0.6");
@@ -427,23 +428,23 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteMantissaSignTest()
         {
-            Assert.AreEqual(-86.0,
+            ClassicAssert.AreEqual(-86.0,
                 RunCpu(new[] {"Digit8", "Digit6", "MantissaSign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "-86");
 
-            Assert.AreEqual(86.0,
+            ClassicAssert.AreEqual(86.0,
                 RunCpu(new[] {"Digit8", "Digit6", "MantissaSign", "MantissaSign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "--86");
 
-            Assert.AreEqual(860,
+            ClassicAssert.AreEqual(860,
                 RunCpu(new[] {"Digit8", "Digit6", "Exp", "Digit1", "MantissaSign", "MantissaSign", "Eq"},
                     Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "--86e1");
 
-            Assert.AreEqual(-860,
+            ClassicAssert.AreEqual(-860,
                 RunCpu(new[] {"Digit8", "Digit6", "Exp", "Digit1", "MantissaSign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "-86e1");
@@ -452,35 +453,35 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteCurrentSignTest()
         {
-            Assert.AreEqual(-86.0,
+            ClassicAssert.AreEqual(-86.0,
                 RunCpu(new[] {"Digit8", "Digit6", "Sign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "-86");
 
-            Assert.AreEqual(86.0,
+            ClassicAssert.AreEqual(86.0,
                 RunCpu(new[] {"Digit8", "Digit6", "Sign", "Sign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "--86");
 
-            Assert.AreEqual(-86.3,
+            ClassicAssert.AreEqual(-86.3,
                 RunCpu(new[] {"Digit8", "Digit6", "Dot", "Digit3", "Sign", "Eq"},
                     Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "-86.3");
 
-            Assert.AreEqual(86.3,
+            ClassicAssert.AreEqual(86.3,
                 RunCpu(new[] {"Digit8", "Digit6", "Dot", "Digit3", "Sign", "Sign", "Eq"},
                     Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "--86.3");
 
-            Assert.AreEqual(86.3e-2,
+            ClassicAssert.AreEqual(86.3e-2,
                 RunCpu(new[] {"Digit8", "Digit6", "Dot", "Digit3", "Exp", "Digit2", "Sign", "Eq"},
                     Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "86.3e-2");
 
-            Assert.AreEqual(86.3e2,
+            ClassicAssert.AreEqual(86.3e2,
                 RunCpu(new[]
                 {
                     "Digit8", "Digit6", "Dot", "Digit3", "Exp", "Digit2", "Sign",
@@ -489,7 +490,7 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Rad),
                 1e-17, "86.3e2");
 
-            Assert.AreEqual(-86.3e-2,
+            ClassicAssert.AreEqual(-86.3e-2,
                 RunCpu(new[]
                 {
                     "Digit8", "Digit6", "Dot", "Sign", "Digit3", "Exp", "Digit2",
@@ -502,7 +503,7 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteExpTest()
         {
-            Assert.AreEqual(80.0,
+            ClassicAssert.AreEqual(80.0,
                 RunCpu(new[] {"Digit8", "Exp", "Digit1", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8e1");
@@ -511,12 +512,12 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteExpSignTest()
         {
-            Assert.AreEqual(0.8,
+            ClassicAssert.AreEqual(0.8,
                 RunCpu(new[] {"Digit8", "Exp", "Digit1", "ExpSign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8e-1");
 
-            Assert.AreEqual(80.0,
+            ClassicAssert.AreEqual(80.0,
                 RunCpu(new[] {"Digit8", "Exp", "Digit1", "ExpSign", "ExpSign", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8e--1");
@@ -525,14 +526,14 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteClearXTest()
         {
-            Assert.AreEqual(0.0, RunCpu(new[] {"Pi", "ClearX"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+            ClassicAssert.AreEqual(0.0, RunCpu(new[] {"Pi", "ClearX"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
                 1e-17, "pi");
 
-            Assert.AreEqual(8.0,
+            ClassicAssert.AreEqual(8.0,
                 RunCpu(new[] {"Digit8", "Add", "Digit6", "ClearX", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8+6<Cx>=");
-            Assert.AreEqual(13.0,
+            ClassicAssert.AreEqual(13.0,
                 RunCpu(new[] {"Digit8", "Add", "Digit6", "ClearX", "Digit5", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8+6<Cx>5=");
@@ -541,11 +542,11 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteClearAllTest()
         {
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit8", "Add", "Digit6", "ClearAll", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8+6<CA>=");
-            Assert.AreEqual(5.0,
+            ClassicAssert.AreEqual(5.0,
                 RunCpu(new[] {"Digit8", "Add", "Digit6", "ClearAll", "Digit5", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad),
                 1e-17, "8+6<CA>5=");
@@ -554,7 +555,7 @@ namespace Calcoo.Test
         [Test]
         public void ExecutePiTest()
         {
-            Assert.AreEqual(Math.PI, RunCpu(new[] {"Pi"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+            ClassicAssert.AreEqual(Math.PI, RunCpu(new[] {"Pi"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
                 Cpu.CpuPrecision*1e-5, "pi");
         }
 
@@ -566,36 +567,36 @@ namespace Calcoo.Test
                 DefaultEnterMode, DefaultStackMode);
 
             cpu.ExecutePaste(2.12);
-            Assert.AreEqual(2.12, cpu.X, Cpu.CpuPrecision, "RPN on blank");
+            ClassicAssert.AreEqual(2.12, cpu.X, Cpu.CpuPrecision, "RPN on blank");
             cpu.Execute(Command.Digit1);
             cpu.Execute(Command.Add);
-            Assert.AreEqual(3.12, cpu.X, Cpu.CpuPrecision, "RPN number on paste");
+            ClassicAssert.AreEqual(3.12, cpu.X, Cpu.CpuPrecision, "RPN number on paste");
             cpu.ExecutePaste(3.12);
             cpu.Execute(Command.Add);
-            Assert.AreEqual(6.24, cpu.X, Cpu.CpuPrecision, "RPN on op");
+            ClassicAssert.AreEqual(6.24, cpu.X, Cpu.CpuPrecision, "RPN on op");
             cpu.Execute(Command.Digit1);
             cpu.ExecutePaste(3.12);
             cpu.Execute(Command.Add);
-            Assert.AreEqual(4.12, cpu.X, Cpu.CpuPrecision, "RPN on input in progress 1");
+            ClassicAssert.AreEqual(4.12, cpu.X, Cpu.CpuPrecision, "RPN on input in progress 1");
             cpu.Execute(Command.Add);
-            Assert.AreEqual(10.36, cpu.X, Cpu.CpuPrecision, "RPN on input in progress 2");
+            ClassicAssert.AreEqual(10.36, cpu.X, Cpu.CpuPrecision, "RPN on input in progress 2");
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             cpu.ExecutePaste(2.12);
-            Assert.AreEqual(2.12, cpu.X, Cpu.CpuPrecision, "ALG on blank");
+            ClassicAssert.AreEqual(2.12, cpu.X, Cpu.CpuPrecision, "ALG on blank");
             cpu.Execute(Command.Add);
             cpu.Execute(Command.Digit1);
             cpu.Execute(Command.Add);
             cpu.ExecutePaste(5.12);
             cpu.Execute(Command.Add);
-            Assert.AreEqual(8.24, cpu.X, Cpu.CpuPrecision, "ALG on op");
+            ClassicAssert.AreEqual(8.24, cpu.X, Cpu.CpuPrecision, "ALG on op");
             cpu.Execute(Command.Digit1);
             cpu.ExecutePaste(1.12);
             cpu.Execute(Command.Eq);
-            Assert.AreEqual(9.36, cpu.X, Cpu.CpuPrecision, "ALG on input in progress");
+            ClassicAssert.AreEqual(9.36, cpu.X, Cpu.CpuPrecision, "ALG on input in progress");
         }
 
         [Test]
@@ -603,117 +604,117 @@ namespace Calcoo.Test
         {
             // ALG mode
             // simple operations
-            Assert.AreEqual((2.0 + 3.0),
+            ClassicAssert.AreEqual((2.0 + 3.0),
                 RunCpu(new[] {"Digit2", "Add", "Digit3", "Eq"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2+3");
-            Assert.AreEqual((2.0 - 3.0),
+            ClassicAssert.AreEqual((2.0 - 3.0),
                 RunCpu(new[] {"Digit2", "Sub", "Digit3", "Eq"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2-3");
-            Assert.AreEqual((2.0*3.0),
+            ClassicAssert.AreEqual((2.0*3.0),
                 RunCpu(new[] {"Digit2", "Mul", "Digit3", "Eq"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2*3");
-            Assert.AreEqual((2.0/3.0),
+            ClassicAssert.AreEqual((2.0/3.0),
                 RunCpu(new[] {"Digit2", "Div", "Digit3", "Eq"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2/3");
-            Assert.AreEqual(Math.Pow(2.0, 3.0),
+            ClassicAssert.AreEqual(Math.Pow(2.0, 3.0),
                 RunCpu(new[] {"Digit2", "Pow", "Digit3", "Eq"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2^3");
             // binop priority
-            Assert.AreEqual((2.0 + 3.0),
+            ClassicAssert.AreEqual((2.0 + 3.0),
                 RunCpu(new[] {"Digit2", "Add", "Digit3", "Add"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2+3+");
-            Assert.AreEqual((3.0),
+            ClassicAssert.AreEqual((3.0),
                 RunCpu(new[] {"Digit2", "Add", "Digit3", "Mul"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2+3*");
-            Assert.AreEqual((2.0*3.0),
+            ClassicAssert.AreEqual((2.0*3.0),
                 RunCpu(new[] {"Digit2", "Mul", "Digit3", "Mul"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2*3*");
-            Assert.AreEqual((3.0),
+            ClassicAssert.AreEqual((3.0),
                 RunCpu(new[] {"Digit2", "Mul", "Digit3", "Pow"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2*3^");
-            Assert.AreEqual((163.0),
+            ClassicAssert.AreEqual((163.0),
                 RunCpu(new[] {"Digit1", "Add", "Digit2", "Mul", "Digit3", "Pow", "Digit4", "Eq"},
                     Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7, "1+2*3^4");
             // RPN mode - traditional stack
             // simple operations
-            Assert.AreEqual((2.0 + 3.0),
+            ClassicAssert.AreEqual((2.0 + 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Add"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 +");
-            Assert.AreEqual((2.0 - 3.0),
+            ClassicAssert.AreEqual((2.0 - 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Sub"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 -");
-            Assert.AreEqual((2.0*3.0),
+            ClassicAssert.AreEqual((2.0*3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Mul"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 *");
-            Assert.AreEqual((2.0/3.0),
+            ClassicAssert.AreEqual((2.0/3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Div"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 /");
-            Assert.AreEqual(Math.Pow(2.0, 3.0),
+            ClassicAssert.AreEqual(Math.Pow(2.0, 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Pow"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 ^");
             // enter followed by op
-            Assert.AreEqual((2.0 + 2.0),
+            ClassicAssert.AreEqual((2.0 + 2.0),
                 RunCpu(new[] {"Digit2", "Enter", "Add"}, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 +");
-            Assert.AreEqual((2.0*2.0),
+            ClassicAssert.AreEqual((2.0*2.0),
                 RunCpu(new[] {"Digit2", "Enter", "Mul"}, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 *");
             // operation chains
-            Assert.AreEqual(2.0*Math.Log(3.0 + 4.0),
+            ClassicAssert.AreEqual(2.0*Math.Log(3.0 + 4.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "Add", "Ln", "Mul"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 4 + ln *");
             // RPN mode - HP28 stack
             // simple operations - same as traditional stack
-            Assert.AreEqual((2.0 + 3.0),
+            ClassicAssert.AreEqual((2.0 + 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Add"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 3 +");
-            Assert.AreEqual((2.0 - 3.0),
+            ClassicAssert.AreEqual((2.0 - 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Sub"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 3 -");
-            Assert.AreEqual((2.0*3.0),
+            ClassicAssert.AreEqual((2.0*3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Mul"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 3 *");
-            Assert.AreEqual((2.0/3.0),
+            ClassicAssert.AreEqual((2.0/3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Div"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 3 /");
-            Assert.AreEqual(Math.Pow(2.0, 3.0),
+            ClassicAssert.AreEqual(Math.Pow(2.0, 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Pow"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 3 ^");
             // enter followed by op - behavior different from traditional stack
-            Assert.AreEqual((2.0),
+            ClassicAssert.AreEqual((2.0),
                 RunCpu(new[] {"Digit2", "Enter", "Add"}, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 +");
-            Assert.AreEqual((0.0),
+            ClassicAssert.AreEqual((0.0),
                 RunCpu(new[] {"Digit2", "Enter", "Mul"}, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), 1e-7, "2 *");
             // operation chains - same as traditional stack
-            Assert.AreEqual(2.0*Math.Log(3.0 + 4.0),
+            ClassicAssert.AreEqual(2.0*Math.Log(3.0 + 4.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "Add", "Ln", "Mul"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
@@ -721,18 +722,18 @@ namespace Calcoo.Test
             // non-trivial cases - testing only RPN since the behavior is determined
             // by the low-level routines which are shared between RPN and ALG modes
             // less simple cases
-            Assert.AreEqual(1.0,
+            ClassicAssert.AreEqual(1.0,
                 RunCpu(new[] {"Digit2", "Dot", "Digit3", "Enter", "Digit0", "Pow"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), Cpu.CpuPrecision, "2.3 ^ 0.0");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit0", "Enter", "Digit4", "Dot", "Digit6", "Pow"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), Cpu.CpuPrecision*1e-15, "0.0 ^ 4.6");
             // precision smart sum
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[]
                 {
                     "Digit1", "Digit0", "Digit0", "Dot", "Digit1", "Enter",
@@ -743,25 +744,25 @@ namespace Calcoo.Test
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite), Cpu.CpuPrecision*1e-15, "100.1 - 100.0 - 0.1");
             // overflows
-            Assert.True(Double.IsNaN(
+            ClassicAssert.True(Double.IsNaN(
                 RunCpu(new[] {"Digit2", "Dot", "Digit3", "Enter", "Digit0", "Div"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite)
                 ), "2.3 / 0.0");
-            Assert.True(Double.IsNaN(
+            ClassicAssert.True(Double.IsNaN(
                 RunCpu(new[] {"Digit0", "Enter", "Digit0", "Pow"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite)
                 ), "0.0 ^ 0.0");
-            Assert.True(Double.IsNaN(
+            ClassicAssert.True(Double.IsNaN(
                 RunCpu(new[] {"Digit0", "Enter", "Digit1", "Sign", "Pow"},
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
                     Settings.StackMode.Infinite)
                 ), "0.0 ^ -1.0");
-            Assert.True(
+            ClassicAssert.True(
                 Double.IsNaN(
                     RunCpu(new[]
                     {
@@ -777,12 +778,12 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteEqTest()
         {
-            Assert.AreEqual((2.0 + 3.0),
+            ClassicAssert.AreEqual((2.0 + 3.0),
                 RunCpu(new[] {"Digit2", "Add", "Digit3", "Eq"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "2+3");
 
 
-            Assert.Throws(Is.InstanceOf(typeof (Exception)),
+            ClassicAssert.Throws(Is.InstanceOf(typeof (Exception)),
                 () => RunCpu(new[] {"Eq"}, Settings.Mode.Rpn, Settings.AngleUnits.Deg),
                 "  throw at EQ in RPN mode");
         }
@@ -790,13 +791,13 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteEnterTest()
         {
-            Assert.AreEqual((2.0 + 3.0),
+            ClassicAssert.AreEqual((2.0 + 3.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Add"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
                 1e-7, "2+3");
 
 
-            Assert.Throws(Is.InstanceOf(typeof (Exception)),
+            ClassicAssert.Throws(Is.InstanceOf(typeof (Exception)),
                 () => RunCpu(new[] {"Enter"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 "  throw at Enter in Alg mode");
         }
@@ -805,17 +806,17 @@ namespace Calcoo.Test
         public void ExecuteExchXyTest()
         {
             // ALG mode
-            Assert.AreEqual((3.0/2.0),
+            ClassicAssert.AreEqual((3.0/2.0),
                 RunCpu(new[] {"Digit2", "Div", "Digit3", "ExchXy", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "2 / 3 ExchXY =");
             // RPN mode
-            Assert.AreEqual((3.0/2.0),
+            ClassicAssert.AreEqual((3.0/2.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "ExchXy", "Div"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
                     Settings.StackMode.Infinite), 1e-7, "2 3 ExchXY /");
-            Assert.AreEqual((3.0/2.0),
+            ClassicAssert.AreEqual((3.0/2.0),
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "ExchXy", "Div"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
@@ -827,44 +828,44 @@ namespace Calcoo.Test
         {
             // infinite stack
             // one number in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackUp", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 up up up");
             // two numbers in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 up");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 up up up");
             // three numbers in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 4 up");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 4 up up");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
@@ -872,7 +873,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 4 up up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
@@ -882,47 +883,47 @@ namespace Calcoo.Test
                 "infinite: 2 3 4 up up up up");
             // xyzt stack
             // one number in the stack
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 up");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 up up");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackUp", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 up up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackUp", "StackUp", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 up up up up");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackUp", "StackUp", "StackUp", "StackUp", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 up up up up up");
             // two numbers in the stack
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 up");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp", "StackUp"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 up up up");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 up up up up");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp", "StackUp",
@@ -931,17 +932,17 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 up up up up up");
             // three numbers in the stack
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 up up");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
@@ -949,7 +950,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 up up up");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
@@ -957,7 +958,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 up up up up");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
@@ -966,7 +967,7 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 up up up up up");
             // four numbers in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -975,7 +976,7 @@ namespace Calcoo.Test
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -983,7 +984,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up up");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -991,7 +992,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up up up");
-            Assert.AreEqual(5.0,
+            ClassicAssert.AreEqual(5.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -999,7 +1000,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up up up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -1009,7 +1010,7 @@ namespace Calcoo.Test
                 "xyzt: 2 3 4 5 up up up up up");
             // five numbers in the stack - the highest number should not matter as
             // only the lowest four are rotated
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1017,7 +1018,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 7 2 3 4 5 up");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1025,7 +1026,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up up");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1033,7 +1034,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up up up");
-            Assert.AreEqual(5.0,
+            ClassicAssert.AreEqual(5.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1041,7 +1042,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 up up up up");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1056,44 +1057,44 @@ namespace Calcoo.Test
         {
             // infinite stack
             // one number in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackDown", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 down down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackDown", "StackDown", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 down down down");
             // two numbers in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 down");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackDown", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 down down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 down down down");
             // three numbers in the stack
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 4 down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 4 down down");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
@@ -1101,7 +1102,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite), 1e-7,
                 "infinite: 2 3 4 down down down");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
@@ -1111,24 +1112,24 @@ namespace Calcoo.Test
                 "infinite: 2 3 4 down down down down");
             // xyzt stack
             // one number in the stack
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 down");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackDown", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 down down");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "StackDown", "StackDown", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 down down down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "StackDown", "StackDown", "StackDown", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 down down down down");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[]
                 {
                     "Digit2", "StackDown", "StackDown", "StackDown", "StackDown",
@@ -1138,20 +1139,20 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 down down down down down");
             // two numbers in the stack
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 down");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackDown", "StackDown"}, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 down down");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 down down down");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown",
@@ -1159,7 +1160,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 down down down down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown",
@@ -1168,17 +1169,17 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 down down down down down");
             // three numbers in the stack
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[] {"Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown"},
                     Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 down down");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
@@ -1186,7 +1187,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 down down down");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
@@ -1194,7 +1195,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 down down down down");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
@@ -1203,7 +1204,7 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 down down down down down");
             // four numbers in the stack
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -1211,7 +1212,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -1219,7 +1220,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -1227,7 +1228,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down down down");
-            Assert.AreEqual(5.0,
+            ClassicAssert.AreEqual(5.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -1235,7 +1236,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down down down down");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
@@ -1245,7 +1246,7 @@ namespace Calcoo.Test
                 "xyzt: 2 3 4 5 down down down down down");
             // five numbers in the stack - the highest number should not matter as
             // only the lowest four are rotated
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1253,7 +1254,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 7 2 3 4 5 down");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1261,7 +1262,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down down");
-            Assert.AreEqual(2.0,
+            ClassicAssert.AreEqual(2.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1269,7 +1270,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down down down");
-            Assert.AreEqual(5.0,
+            ClassicAssert.AreEqual(5.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1277,7 +1278,7 @@ namespace Calcoo.Test
                 }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt), 1e-7,
                 "xyzt: 2 3 4 5 down down down down");
-            Assert.AreEqual(4.0,
+            ClassicAssert.AreEqual(4.0,
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
@@ -1291,7 +1292,7 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteLeftParenTest()
         {
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"LeftParen", "Digit1", "Add", "Digit2", "Eq"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg), 1e-7, "EQ resets lone opening paren");
             // more tests in executeRightParenTest because the require both parens
@@ -1300,18 +1301,18 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteRightParenTest()
         {
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit1", "Add", "Digit2", "RightParen"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "unmatched closing paren acts as EQ");
-            Assert.AreEqual(2.0*(3.0 + 4.0),
+            ClassicAssert.AreEqual(2.0*(3.0 + 4.0),
                 RunCpu(new[]
                 {
                     "Digit2", "Mul", "LeftParen", "Digit3", "Add", "Digit4",
                     "RightParen", "Eq"
                 },
                     Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7, "2*(3+4)");
-            Assert.AreEqual(Math.Pow(2.0, (3.0 + 4.0)*5.0),
+            ClassicAssert.AreEqual(Math.Pow(2.0, (3.0 + 4.0)*5.0),
                 RunCpu(new[]
                 {
                     "Digit2", "Pow", "LeftParen", "LeftParen", "Digit3", "Add", "Digit4",
@@ -1324,79 +1325,79 @@ namespace Calcoo.Test
         public void ExecuteUnaryOpTest()
         {
             // non-trigonometric unary ops
-            Assert.AreEqual(Math.Log10(12.0),
+            ClassicAssert.AreEqual(Math.Log10(12.0),
                 RunCpu(new[] {"Digit1", "Digit2", "Log10"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "log10(12)");
-            Assert.AreEqual(Math.Log(10.0),
+            ClassicAssert.AreEqual(Math.Log(10.0),
                 RunCpu(new[] {"Digit1", "Digit0", "Ln"}, Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7,
                 "ln(10)");
-            Assert.AreEqual(Math.Pow(10.0, 1.3),
+            ClassicAssert.AreEqual(Math.Pow(10.0, 1.3),
                 RunCpu(new[] {"Digit1", "Dot", "Digit3", "TenToX"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg), 1e-7, "10^1.3");
-            Assert.AreEqual(Math.Exp(1.3),
+            ClassicAssert.AreEqual(Math.Exp(1.3),
                 RunCpu(new[] {"Digit1", "Dot", "Digit3", "EtoX"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "e^1.3");
-            Assert.AreEqual(Math.Sqrt(70.0),
+            ClassicAssert.AreEqual(Math.Sqrt(70.0),
                 RunCpu(new[] {"Digit7", "Digit0", "Sqrt"}, Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7,
                 "sqrt(70)");
-            Assert.AreEqual((1.3*1.3),
+            ClassicAssert.AreEqual((1.3*1.3),
                 RunCpu(new[] {"Digit1", "Dot", "Digit3", "Sqr"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "1.3^2");
-            Assert.AreEqual((1.0/1.3),
+            ClassicAssert.AreEqual((1.0/1.3),
                 RunCpu(new[] {"Digit1", "Dot", "Digit3", "InvX"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "1/1.3");
-            Assert.AreEqual(MathUtil.Fact(5.6, InputLength),
+            ClassicAssert.AreEqual(MathUtil.Fact(5.6, InputLength),
                 RunCpu(new[] {"Digit5", "Dot", "Digit6", "Fact"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "5.6!");
 
             // trigonometric - degrees
             const double dr = Math.PI/180.0;
-            Assert.AreEqual(Math.Sin(10.0*dr),
+            ClassicAssert.AreEqual(Math.Sin(10.0*dr),
                 RunCpu(new[] {"Digit1", "Digit0", "Sin"}, Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7,
                 "sin(10 deg)");
-            Assert.AreEqual(Math.Cos(10.0*dr),
+            ClassicAssert.AreEqual(Math.Cos(10.0*dr),
                 RunCpu(new[] {"Digit1", "Digit0", "Cos"}, Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7,
                 "cos(10 deg)");
-            Assert.AreEqual(Math.Tan(10.0*dr),
+            ClassicAssert.AreEqual(Math.Tan(10.0*dr),
                 RunCpu(new[] {"Digit1", "Digit0", "Tan"}, Settings.Mode.Alg, Settings.AngleUnits.Deg), 1e-7,
                 "tan(10 deg)");
             // special cases
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit1", "Digit8", "Digit0", "Sin"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 Cpu.CpuPrecision*1e-5, "sin(180 deg)");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit9", "Digit0", "Cos"}, Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 Cpu.CpuPrecision*1e-5, "cos(90 deg)");
-            Assert.True(
+            ClassicAssert.True(
                 Double.IsNaN(RunCpu(new[] {"Digit9", "Digit0", "Tan"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg)), "tan(90 deg)");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Digit1", "Digit8", "Digit0", "Tan"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 Cpu.CpuPrecision*1e-5, "tan(180 deg)");
 
             // trigonometric - radians
-            Assert.AreEqual(Math.Sin(10.0),
+            ClassicAssert.AreEqual(Math.Sin(10.0),
                 RunCpu(new[] {"Digit1", "Digit0", "Sin"}, Settings.Mode.Alg, Settings.AngleUnits.Rad), 1e-7,
                 "sin(10 rad)");
-            Assert.AreEqual(Math.Cos(10.0),
+            ClassicAssert.AreEqual(Math.Cos(10.0),
                 RunCpu(new[] {"Digit1", "Digit0", "Cos"}, Settings.Mode.Alg, Settings.AngleUnits.Rad), 1e-7,
                 "cos(10 rad)");
-            Assert.AreEqual(Math.Tan(10.0),
+            ClassicAssert.AreEqual(Math.Tan(10.0),
                 RunCpu(new[] {"Digit1", "Digit0", "Tan"}, Settings.Mode.Alg, Settings.AngleUnits.Rad), 1e-7,
                 "tan(10 rad)");
             // special cases
-            Assert.AreEqual(0.0, RunCpu(new[] {"Pi", "Sin"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+            ClassicAssert.AreEqual(0.0, RunCpu(new[] {"Pi", "Sin"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
                 Cpu.CpuPrecision*1e-5, "sin(pi)");
 
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Pi", "Div", "Digit2", "Eq", "Cos"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
                 Cpu.CpuPrecision*1e-5, "cos(pi/2)");
-            Assert.AreEqual(true,
+            ClassicAssert.AreEqual(true,
                 Double.IsNaN(RunCpu(new[] {"Pi", "Div", "Digit2", "Eq", "Tan"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad)), "tan(pi/2)");
-            Assert.AreEqual(0.0,
+            ClassicAssert.AreEqual(0.0,
                 RunCpu(new[] {"Pi", "Tan"}, Settings.Mode.Alg, Settings.AngleUnits.Rad),
                 Cpu.CpuPrecision*1e-5, "tan(180 deg)");
         }
@@ -1404,24 +1405,24 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteMemoryOpTest()
         {
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit3", "XToMem", "ClearX", "MemToX"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "XToMem, CLEAR_X, MemToX");
 
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit3", "XToMem", "Sqrt", "MemToX"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "XToMem, SQRT, MemToX");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit3", "XToMem", "Sqrt", "ExchXMem"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "XToMem, SQRT, EXCH_X_MEM");
-            Assert.AreEqual(Math.Sqrt(3.0),
+            ClassicAssert.AreEqual(Math.Sqrt(3.0),
                 RunCpu(new[] {"Digit3", "XToMem", "Sqrt", "ExchXMem", "ClearX", "ExchXMem"},
                     Settings.Mode.Alg, Settings.AngleUnits.Deg),
                 1e-7, "XToMem, SQRT, EXCH_X_MEM, CLEAR_X, EXCH_X_MEM");
-            Assert.AreEqual(3.0 + Math.Sqrt(3.0),
+            ClassicAssert.AreEqual(3.0 + Math.Sqrt(3.0),
                 RunCpu(new[] {"Digit3", "XToMem", "Sqrt", "MemPlus", "MemToX"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "XToMem, SQRT, MEM_PLUS, MemToX");
@@ -1430,16 +1431,16 @@ namespace Calcoo.Test
         [Test]
         public void ExecuteSwitchToMemTest()
         {
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit3", "XToMem", "ClearX", "MemToX"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "XToMem, CLEAR_X, MemToX");
-            Assert.AreEqual(3.0,
+            ClassicAssert.AreEqual(3.0,
                 RunCpu(new[] {"Digit3", "XToMem", "Sqrt", "Mem1", "XToMem", "Mem0", "MemToX"},
                     Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 1e-7, "XToMem, SQRT, Mem1, XToMem, Mem0, MemToX");
-            Assert.AreEqual(Math.Sqrt(3.0),
+            ClassicAssert.AreEqual(Math.Sqrt(3.0),
                 RunCpu(new[]
                 {
                     "Digit3", "XToMem", "Sqrt", "Mem1", "XToMem", "Mem0", "MemToX", "Mem1",
@@ -1453,16 +1454,16 @@ namespace Calcoo.Test
         public void ExecuteDegRadTest()
         {
             const double dr = Math.PI/180.0;
-            Assert.AreEqual(Math.Sin(10.0),
+            ClassicAssert.AreEqual(Math.Sin(10.0),
                 RunCpu(new[] {"Digit1", "Digit0", "DegRad", "Sin"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg), 1e-7, "sin(10 rad) - one deg/rad switch");
-            Assert.AreEqual(Math.Sin(10.0*dr),
+            ClassicAssert.AreEqual(Math.Sin(10.0*dr),
                 RunCpu(new[] {"Digit1", "Digit0", "DegRad", "Sin"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad), 1e-7, "sin(10 deg) - one deg/rad switch");
-            Assert.AreEqual(Math.Sin(10.0*dr),
+            ClassicAssert.AreEqual(Math.Sin(10.0*dr),
                 RunCpu(new[] {"Digit1", "Digit0", "DegRad", "DegRad", "Sin"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg), 1e-7, "sin(10 deg) - two deg/rad switches");
-            Assert.AreEqual(Math.Sin(10.0),
+            ClassicAssert.AreEqual(Math.Sin(10.0),
                 RunCpu(new[] {"Digit1", "Digit0", "DegRad", "DegRad", "Sin"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Rad), 1e-7, "sin(10 rad) - two deg/rad switches");
         }
