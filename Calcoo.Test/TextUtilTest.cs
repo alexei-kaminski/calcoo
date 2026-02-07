@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 
 namespace Calcoo.Test
 {
@@ -32,7 +31,7 @@ namespace Calcoo.Test
             foreach (var d in testCasesD)
             {
                 var s = d.ToString(CultureInfo.CurrentCulture);
-                ClassicAssert.AreEqual(d, TextUtil.TextToDouble(s, true), Precision*Math.Abs(d), s + ", NFParser");
+                Assert.That(TextUtil.TextToDouble(s, true), Is.EqualTo(d).Within(Precision*Math.Abs(d)), s + ", NFParser");
             }
 
             var testCases = new List<StringNumberPair>();
@@ -268,7 +267,7 @@ namespace Calcoo.Test
 
             foreach (var testCase in testCases)
             {
-                ClassicAssert.AreEqual(testCase.N, TextUtil.TextToDouble(testCase.S, false), Precision*Math.Abs(testCase.N),
+                Assert.That(TextUtil.TextToDouble(testCase.S, false), Is.EqualTo(testCase.N).Within(Precision*Math.Abs(testCase.N)),
                     testCase.S + ", heuristic parser");
             }
 
@@ -289,7 +288,7 @@ namespace Calcoo.Test
 
             foreach (String testCase in testCasesInvalid)
             {
-                ClassicAssert.AreEqual(true, Double.IsNaN(TextUtil.TextToDouble(testCase, false)),
+                Assert.That(Double.IsNaN(TextUtil.TextToDouble(testCase, false)), Is.EqualTo(true),
                     "invalid " + testCase + ", heuristic parser");
             }
         }

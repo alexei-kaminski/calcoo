@@ -4,19 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Calcoo is a WPF scientific calculator for Windows, written in C# targeting .NET Framework 4.8. It supports both RPN (Reverse Polish Notation) and Algebraic calculation modes, similar to classic HP calculators.
+Calcoo is a WPF scientific calculator for Windows, written in C# targeting .NET 10 (`net10.0-windows`). It supports both RPN (Reverse Polish Notation) and Algebraic calculation modes, similar to classic HP calculators.
 
 ## Build and Test Commands
 
 ```bash
 # Build the solution
-msbuild Calcoo.sln /p:Configuration=Debug /p:Platform="Any CPU"
+dotnet build Calcoo.sln
 
 # Run all tests
-nunit3-console Calcoo.Test/bin/Debug/Calcoo.Test.dll
-
-# Run tests via dotnet (with NUnit3TestAdapter)
-# Or use Visual Studio Test Explorer (Ctrl+R, A)
+dotnet test Calcoo.Test/Calcoo.Test.csproj
 ```
 
 The solution file is `Calcoo.sln` containing two projects: `Calcoo` (WinExe) and `Calcoo.Test` (test library).
@@ -53,4 +50,4 @@ User input → `MainWindow` → `Body.ButtonPressed()` → `Cpu` executes comman
 - CPU precision constant: `1e-15`
 - Two calculation modes affect command availability: RPN-only commands (Enter, RotateUp, RotateDown, ExchXY) and Alg-only commands (OpenBracket, CloseBracket, Equals)
 - Vector icon resources are in `Resources/Icons/` (XAML format)
-- Legacy .csproj format (MSBuild 12.0), not SDK-style
+- SDK-style .csproj format with PackageReference

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 
 namespace Calcoo.Test
 {
@@ -38,7 +37,7 @@ namespace Calcoo.Test
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {7, 8, 9}, -1, -1, true);
             clonedDbd = dbd.Clone();
-            ClassicAssert.AreEqual(true, clonedDbd.IsOverflow(), "overflown");
+            Assert.That(clonedDbd.IsOverflow(), Is.EqualTo(true), "overflown");
             /*- the content should not matter if overflown */
         }
 
@@ -70,26 +69,26 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {0, 0}, -1, 1, false, "4");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {7, 8, 9}, -1, -1, true);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
         }
 
         [Test]
         public void ToDoubleTest()
         {
             DoubleByDigit dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {7, 8, 9}, -1, -1, false);
-            ClassicAssert.AreEqual(-123.456e-89, dbd.ToDouble(10), Precision*123.456e-89, "1");
+            Assert.That(dbd.ToDouble(10), Is.EqualTo(-123.456e-89).Within(Precision*123.456e-89), "1");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9}, 1, 1, false);
-            ClassicAssert.AreEqual(123.456e9, dbd.ToDouble(10), Precision*123.456e9, "2");
+            Assert.That(dbd.ToDouble(10), Is.EqualTo(123.456e9).Within(Precision*123.456e9), "2");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9, 0, 1}, 1, -1, false);
-            ClassicAssert.AreEqual(123.456e-1, dbd.ToDouble(10), Precision*123.456e-1, "3");
+            Assert.That(dbd.ToDouble(10), Is.EqualTo(123.456e-1).Within(Precision*123.456e-1), "3");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9, 0, 0}, -1, 1, false);
-            ClassicAssert.AreEqual(-123.456, dbd.ToDouble(10), Precision*123.456, "4");
+            Assert.That(dbd.ToDouble(10), Is.EqualTo(-123.456).Within(Precision*123.456), "4");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {7, 8, 9}, -1, -1, true);
-            ClassicAssert.AreEqual(true, Double.IsNaN(dbd.ToDouble(10)), "overflown");
+            Assert.That(Double.IsNaN(dbd.ToDouble(10)), Is.EqualTo(true), "overflown");
         }
 
         [Test]
@@ -102,45 +101,45 @@ namespace Calcoo.Test
             // not numbers
             DoubleByDigit dbd = DoubleByDigit.FromDouble(Double.NaN, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
 
             dbd = DoubleByDigit.FromDouble(Double.PositiveInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
 
             dbd = DoubleByDigit.FromDouble(Double.NegativeInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
 
             // too large to be displayed
             double d = 1e101;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), d.ToString(CultureInfo.CurrentCulture) + "overflown");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
             /*- the content should not matter if overflown */
 
             d = -1e101;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), d.ToString(CultureInfo.CurrentCulture) + "overflown");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
             /*- the content should not matter if overflown */
 
             d = 1e100;
             dbd = DoubleByDigit.FromDouble(1e100, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), d.ToString(CultureInfo.CurrentCulture) + "overflown");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
             /*- the content should not matter if overflown */
 
             d = -1e100;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), d.ToString(CultureInfo.CurrentCulture) + "overflown");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
             /*- the content should not matter if overflown */
 
             d = 9.99999999999999999999e99; // overflow caused by rounding
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), d.ToString(CultureInfo.CurrentCulture) + "overflown");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
             /*- the content should not matter if overflown */
 
             d = -9.99999999999999999999e99;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
-            ClassicAssert.AreEqual(true, dbd.IsOverflow(), d.ToString(CultureInfo.CurrentCulture) + "overflown");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
             /*- the content should not matter if overflown */
 
             /*
@@ -592,28 +591,28 @@ namespace Calcoo.Test
         public void ToStringTest()
         {
             var dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9}, 1, 1, false);
-            ClassicAssert.AreEqual("123.456e09", dbd.ToString(), "1");
+            Assert.That(dbd.ToString(), Is.EqualTo("123.456e09"), "1");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9}, -1, 1, false);
-            ClassicAssert.AreEqual("-123.456e09", dbd.ToString(), "2");
+            Assert.That(dbd.ToString(), Is.EqualTo("-123.456e09"), "2");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9}, 1, -1, false);
-            ClassicAssert.AreEqual("123.456e-09", dbd.ToString(), "3");
+            Assert.That(dbd.ToString(), Is.EqualTo("123.456e-09"), "3");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5, 6}, new[] {9}, -1, -1, false);
-            ClassicAssert.AreEqual("-123.456e-09", dbd.ToString(), "4");
+            Assert.That(dbd.ToString(), Is.EqualTo("-123.456e-09"), "4");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new int[] {}, new int[] {}, 1, -1, false);
-            ClassicAssert.AreEqual("123", dbd.ToString(), "5");
+            Assert.That(dbd.ToString(), Is.EqualTo("123"), "5");
 
             dbd = InitDoubleByDigit(new[] {1, 2, 3}, new[] {4, 5}, new int[] {}, 1, -1, false);
-            ClassicAssert.AreEqual("123.45", dbd.ToString(), "6");
+            Assert.That(dbd.ToString(), Is.EqualTo("123.45"), "6");
 
             dbd = InitDoubleByDigit(new int[] {}, new int[] {}, new int[] {}, 1, 1, false);
-            ClassicAssert.AreEqual("0", dbd.ToString(), "7");
+            Assert.That(dbd.ToString(), Is.EqualTo("0"), "7");
 
             dbd = InitDoubleByDigit(new int[] {}, new int[] {}, new int[] {}, -1, 1, false);
-            ClassicAssert.AreEqual("-0", dbd.ToString(), "8");
+            Assert.That(dbd.ToString(), Is.EqualTo("-0"), "8");
         }
 
         static private DoubleByDigit InitDoubleByDigit(IEnumerable<int> intDigits,
@@ -645,21 +644,21 @@ namespace Calcoo.Test
             bool overflow,
             String message)
         {
-            ClassicAssert.AreEqual(intDigits.Length, dbd.GetNIntDigits(), message + " intDigit length");
+            Assert.That(dbd.GetNIntDigits(), Is.EqualTo(intDigits.Length), message + " intDigit length");
             for (int i = 0; i < intDigits.Length; ++i)
-                ClassicAssert.AreEqual(intDigits[i], dbd.GetIntDigit(i), message + " intDigit " + i);
+                Assert.That(dbd.GetIntDigit(i), Is.EqualTo(intDigits[i]), message + " intDigit " + i);
 
-            ClassicAssert.AreEqual(fracDigits.Length, dbd.GetNFracDigits(), message + " fracDigit length");
+            Assert.That(dbd.GetNFracDigits(), Is.EqualTo(fracDigits.Length), message + " fracDigit length");
             for (int i = 0; i < fracDigits.Length; ++i)
-                ClassicAssert.AreEqual(fracDigits[i], dbd.GetFracDigit(i), message + " fracDigit " + i);
+                Assert.That(dbd.GetFracDigit(i), Is.EqualTo(fracDigits[i]), message + " fracDigit " + i);
 
-            ClassicAssert.AreEqual(expDigits.Length, dbd.GetNExpDigits(), message + " expDigit length");
+            Assert.That(dbd.GetNExpDigits(), Is.EqualTo(expDigits.Length), message + " expDigit length");
             for (int i = 0; i < expDigits.Length; ++i)
-                ClassicAssert.AreEqual(expDigits[i], dbd.GetExpDigit(i), message + " expDigit " + i);
+                Assert.That(dbd.GetExpDigit(i), Is.EqualTo(expDigits[i]), message + " expDigit " + i);
 
-            ClassicAssert.AreEqual(sign, dbd.GetSign(), message + " sign");
-            ClassicAssert.AreEqual(expSign, dbd.GetExpSign(), message + " expSign");
-            ClassicAssert.AreEqual(overflow, dbd.IsOverflow(), message + " overflow");
+            Assert.That(dbd.GetSign(), Is.EqualTo(sign), message + " sign");
+            Assert.That(dbd.GetExpSign(), Is.EqualTo(expSign), message + " expSign");
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(overflow), message + " overflow");
         }
     }
 }
