@@ -5,8 +5,8 @@
         Button.Click="Settings_Button_Click">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
          </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -15,7 +15,7 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <GroupBox Grid.Column="0" Grid.Row="0" Header="Autorelease" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="Autorelease" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -25,7 +25,7 @@
                 <CheckBox Content="hyp button" Name="AutoreleaseHypButton" HorizontalAlignment="Left"  Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.Row="0" Header="Mode" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="Mode" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -35,7 +35,7 @@
                 <RadioButton GroupName="Mode" Name ="ModeAlgebraic" Content="Algebraic" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Column="0" Grid.Row="1" Header="RPN Enter" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+        <GroupBox Grid.Column="0" Grid.Row="1" Header="RPN Enter" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -45,7 +45,7 @@
                 <RadioButton GroupName="RpnEnter" Name="RpnEnterHp28" Content="Hp28" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.Row="1" Header="RPN Stack" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+        <GroupBox Grid.Column="1" Grid.Row="1" Header="RPN Stack" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Top">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -77,7 +77,7 @@
                 <CheckBox Content="Truncate trailing zeros" Name="TruncateZerosCheckBox" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Column="0" Grid.Row="3" Header="Paste Parsing" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+        <GroupBox Grid.Column="0" Grid.Row="3" Header="Paste Parsing" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -87,7 +87,7 @@
                 <RadioButton GroupName="PasteParsing" Name="PasteParsingHeuristic" Content="Heuristic" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.Row="3" Header="Customize" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
+        <GroupBox Grid.Column="1" Grid.Row="3" Header="Customize" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -97,7 +97,9 @@
             </Grid>
         </GroupBox>
 
-        <Button Grid.Column="0" Grid.Row="4" Name="SettingsOk" Content="Ok" HorizontalAlignment="Left" Margin="5,5,5,5"  VerticalAlignment="Top" Width="75"/>
-        <Button Grid.Column="1" Grid.Row="4" Name="SettingsCancel" Content="Cancel" HorizontalAlignment="Left" Margin="5,5,5,5"  VerticalAlignment="Top" Width="75"/>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,5,5,5">
+            <Button Name="SettingsOk" Content="Ok" Width="75" Margin="20,0"/>
+            <Button Name="SettingsCancel" Content="Cancel" Width="75" Margin="20,0"/>
+        </StackPanel>
     </Grid>
 </Window>
