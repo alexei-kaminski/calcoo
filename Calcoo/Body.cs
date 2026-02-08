@@ -26,7 +26,7 @@ namespace Calcoo
         private readonly IndicatorDisplay<Settings.AngleUnits> _angleUnitsDisplay;
 
         private readonly int _inputLength, _expInputLength, _numBase;
-        private Settings.DisplayFormat displayFormat;
+        public Settings.DisplayFormat displayFormat;
         public bool round;
         public int roundLength;
         public bool truncateZeros;

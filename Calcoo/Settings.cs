@@ -51,6 +51,8 @@ namespace Calcoo
 
         public String customButtonCommand;
 
+        public AngleUnits angleUnits;
+        public DisplayFormat displayFormat;
 
         private static class Defaults
         {
@@ -98,7 +100,9 @@ namespace Calcoo
             bool arcAutorelease,
             bool hypAutorelease,
             PasteParsingAlgorithm pasteParsingAlgorithm,
-            String customButtonCommand)
+            String customButtonCommand,
+            AngleUnits angleUnits,
+            DisplayFormat displayFormat)
         {
             this.stackMode = stackMode;
             this.mode = mode;
@@ -110,6 +114,8 @@ namespace Calcoo
             this.hypAutorelease = hypAutorelease;
             this.pasteParsingAlgorithm = pasteParsingAlgorithm;
             this.customButtonCommand = customButtonCommand;
+            this.angleUnits = angleUnits;
+            this.displayFormat = displayFormat;
         }
 
         public Settings Clone()
@@ -124,7 +130,9 @@ namespace Calcoo
                 arcAutorelease,
                 hypAutorelease,
                 pasteParsingAlgorithm,
-                customButtonCommand);
+                customButtonCommand,
+                angleUnits,
+                displayFormat);
         }
 
         public Settings(int roundLength)
@@ -139,6 +147,8 @@ namespace Calcoo
             hypAutorelease = Defaults.HypAutorelease;
             pasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
             customButtonCommand = Defaults.CustomButtonCommand;
+            angleUnits = Defaults.AngleUnits;
+            displayFormat = Defaults.DisplayFormat;
         }
 
         private static class Names
@@ -193,10 +203,17 @@ namespace Calcoo
                 settings.enterMode = Defaults.EnterMode;
             if (!Boolean.TryParse((string)rk.GetValue(Names.round, Defaults.Round.ToString(), RegistryValueOptions.None), out settings.round))
                 settings.round = Defaults.Round;
-            if (rk.GetValueKind(Names.roundLength) == RegistryValueKind.DWord)
-                settings.roundLength = (int)rk.GetValue(Names.roundLength, defaultRoundLength, RegistryValueOptions.None);
-            else
+            try
+            {
+                if (rk.GetValueKind(Names.roundLength) == RegistryValueKind.DWord)
+                    settings.roundLength = (int)rk.GetValue(Names.roundLength, defaultRoundLength, RegistryValueOptions.None);
+                else
+                    settings.roundLength = defaultRoundLength;
+            }
+            catch
+            {
                 settings.roundLength = defaultRoundLength;
+            }
             if (!Boolean.TryParse((string)rk.GetValue(Names.truncateZeros, Defaults.TruncateZeros.ToString(), RegistryValueOptions.None), out settings.truncateZeros))
                 settings.truncateZeros = Defaults.TruncateZeros;
             if (!Boolean.TryParse((string)rk.GetValue(Names.arcAutorelease, Defaults.ArcAutorelease.ToString(), RegistryValueOptions.None), out settings.arcAutorelease))
@@ -205,6 +222,10 @@ namespace Calcoo
                 settings.hypAutorelease = Defaults.HypAutorelease;
             if (!Enum.TryParse((string)rk.GetValue(Names.pasteParsingAlgorithm, Defaults.PasteParsingAlgorithm.ToString(), RegistryValueOptions.None), out settings.pasteParsingAlgorithm))
                 settings.pasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
+            if (!Enum.TryParse((string)rk.GetValue(Names.angleUnits, Defaults.AngleUnits.ToString(), RegistryValueOptions.None), out settings.angleUnits))
+                settings.angleUnits = Defaults.AngleUnits;
+            if (!Enum.TryParse((string)rk.GetValue(Names.displayFormat, Defaults.DisplayFormat.ToString(), RegistryValueOptions.None), out settings.displayFormat))
+                settings.displayFormat = Defaults.DisplayFormat;
 
             settings.customButtonCommand = CleanUpCustomCommand((string)rk.GetValue(Names.customButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None));
 
@@ -213,7 +234,7 @@ namespace Calcoo
 
         public void Save()
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(Names.registryPath, RegistryKeyPermissionCheck.ReadWriteSubTree);
+            RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
             if (rk == null) return;
 
             rk.SetValue(Names.mode, mode.ToString());
@@ -226,6 +247,8 @@ namespace Calcoo
             rk.SetValue(Names.hypAutorelease, hypAutorelease.ToString());
             rk.SetValue(Names.pasteParsingAlgorithm, pasteParsingAlgorithm.ToString());
             rk.SetValue(Names.customButtonCommand, customButtonCommand);
+            rk.SetValue(Names.angleUnits, angleUnits.ToString());
+            rk.SetValue(Names.displayFormat, displayFormat.ToString());
         }
     }
 }

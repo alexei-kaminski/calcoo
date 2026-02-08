@@ -27,11 +27,12 @@ namespace Calcoo
 
         private readonly Body body;
         private double _aspectRatio;
+        private string _customButtonCommand;
 
         public MainWindow()
         {
             var settings = Settings.Load(InputLength);
-            cpu = new Cpu(settings.mode, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(settings.mode, settings.angleUnits, InputLength, ExpInputLength, NumBase, NMem,
                 settings.enterMode, settings.stackMode);
             undoStack = new LinkedList<Cpu>();
             redoStack = new LinkedList<Cpu>();
@@ -57,6 +58,8 @@ namespace Calcoo
             body.round = settings.round;
             body.roundLength = settings.roundLength;
             body.truncateZeros = settings.truncateZeros;
+            body.displayFormat = settings.displayFormat;
+            _customButtonCommand = settings.customButtonCommand;
             body.UndoEnabled = false;
             body.RedoEnabled = false;
 
@@ -164,7 +167,9 @@ namespace Calcoo
                         body.arcAutorelease,
                         body.hypAutorelease,
                         body.pasteParsingAlgorithm,
-                        "");
+                        _customButtonCommand,
+                        cpu.AngleUnits,
+                        body.displayFormat);
                     var settingsDialog = new SettingsDialog(settings, InputLength);
                     settingsDialog.Owner = this;
                     settingsDialog.ShowDialog();
