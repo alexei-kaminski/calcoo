@@ -161,7 +161,7 @@
                             Calcoo - scientific calculator. Version <Run x:Name="LicenseVersionRun"/>.
                         </Paragraph>
                         <Paragraph>
-                            Copyright (C) 2001-2014 Alexei Kaminski.</Paragraph>
+                            <Run x:Name="LicenseCopyrightRun"/></Paragraph>
                         <Paragraph>
                             This program is free software: you can redistribute it and/or modify
                             it under the terms of the GNU General Public License as published by
@@ -185,7 +185,7 @@
                       Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock TextAlignment="Center" Margin="0,4">Calcoo - scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
-                        <TextBlock Text="Copyright (C) 2001-2014 Alexei Kaminski." TextAlignment="Center" Margin="0,4"/>
+                        <TextBlock x:Name="AboutCopyrightText" TextAlignment="Center" Margin="0,4"/>
                         <TextBlock TextAlignment="Center" Margin="0,4">
                             Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink> .
                         </TextBlock>

@@ -18,6 +18,11 @@ namespace Calcoo
                 .InformationalVersion.Split('+')[0];
             LicenseVersionRun.Text = version;
             AboutVersionRun.Text = version;
+            var copyright = Assembly.GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyCopyrightAttribute>()!
+                .Copyright;
+            LicenseCopyrightRun.Text = copyright;
+            AboutCopyrightText.Text = copyright;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
