@@ -259,10 +259,10 @@ namespace Calcoo
                 new[] {Settings.AngleUnits.Deg, Settings.AngleUnits.Rad}, "/Icons/Displays/Indicator/",
                 displayCanvas.DegRadDisplay);
 
-            displayFormat = Settings.DisplayFormat.Fix; // FIXME
-            round = false; // FIXME
-            roundLength = inputLength; // FIXME
-            truncateZeros = false; // FIXME
+            displayFormat = Settings.DisplayFormat.Fix;
+            round = false;
+            roundLength = inputLength;
+            truncateZeros = false;
 
             _numBase = numBase;
             _expInputLength = expInputLength;
