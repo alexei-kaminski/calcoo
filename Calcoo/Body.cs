@@ -27,9 +27,9 @@ namespace Calcoo
 
         private readonly int _inputLength, _expInputLength, _numBase;
         private Settings.DisplayFormat displayFormat;
-        private bool round;
-        private int roundLength;
-        private bool truncateZeros;
+        public bool round;
+        public int roundLength;
+        public bool truncateZeros;
 
         public class DisplayCanvas
         {

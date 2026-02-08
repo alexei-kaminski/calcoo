@@ -54,6 +54,9 @@ namespace Calcoo
             body.arcAutorelease = settings.arcAutorelease;
             body.hypAutorelease = settings.hypAutorelease;
             body.pasteParsingAlgorithm = settings.pasteParsingAlgorithm;
+            body.round = settings.round;
+            body.roundLength = settings.roundLength;
+            body.truncateZeros = settings.truncateZeros;
             body.UndoEnabled = false;
             body.RedoEnabled = false;
 
@@ -155,14 +158,14 @@ namespace Calcoo
                     var settings = new Settings(cpu.StackMode,
                         cpu.Mode,
                         cpu.EnterMode,
-                        false,
-                        10,
-                        false,
+                        body.round,
+                        body.roundLength,
+                        body.truncateZeros,
                         body.arcAutorelease,
                         body.hypAutorelease,
                         body.pasteParsingAlgorithm,
                         "");
-                    var settingsDialog = new SettingsDialog(settings);
+                    var settingsDialog = new SettingsDialog(settings, InputLength);
                     settingsDialog.Owner = this;
                     settingsDialog.ShowDialog();
                     if (settingsDialog.WasChanged)
@@ -179,6 +182,9 @@ namespace Calcoo
                         body.arcAutorelease = settingsDialog.NewSettings.arcAutorelease;
                         body.hypAutorelease = settingsDialog.NewSettings.hypAutorelease;
                         body.pasteParsingAlgorithm = settingsDialog.NewSettings.pasteParsingAlgorithm;
+                        body.round = settingsDialog.NewSettings.round;
+                        body.roundLength = settingsDialog.NewSettings.roundLength;
+                        body.truncateZeros = settingsDialog.NewSettings.truncateZeros;
                         settingsDialog.NewSettings.Save();
                     }
                     break;

@@ -22,13 +22,15 @@ namespace Calcoo
     {
         public Settings NewSettings;
         public bool WasChanged;
+        private readonly int _maxRoundLength;
 
-        public SettingsDialog(Settings settings)
+        public SettingsDialog(Settings settings, int maxRoundLength)
         {
             InitializeComponent();
 
             WasChanged = false;
             NewSettings = settings.Clone();
+            _maxRoundLength = maxRoundLength;
 
             AutoreleaseArcButton.IsChecked = settings.arcAutorelease;
             AutoreleaseHypButton.IsChecked = settings.hypAutorelease;
@@ -81,6 +83,19 @@ namespace Calcoo
                 default:
                     throw new Exception("Unknown paste parsing algorithm " + settings.pasteParsingAlgorithm);
             }
+
+            RoundingOutputCheckBox.IsChecked = settings.round;
+            RoundingDigitsTextBox.Text = settings.roundLength.ToString();
+            TruncateZerosCheckBox.IsChecked = settings.truncateZeros;
+            UpdateRoundingControlsEnabled(settings.round);
+        }
+
+        private void UpdateRoundingControlsEnabled(bool roundingEnabled)
+        {
+            RoundingDigitsTextBox.IsEnabled = roundingEnabled;
+            RoundingDigitsUp.IsEnabled = roundingEnabled;
+            RoundingDigitsDown.IsEnabled = roundingEnabled;
+            TruncateZerosCheckBox.IsEnabled = roundingEnabled;
         }
 
         private void Settings_Button_Click(object sender, RoutedEventArgs e)
@@ -140,6 +155,38 @@ namespace Calcoo
                         break;
                     case"AutoreleaseHypButton":
                         NewSettings.hypAutorelease = AutoreleaseHypButton.IsChecked.Equals(true);
+                        break;
+                    case "RoundingOutputCheckBox":
+                        NewSettings.round = RoundingOutputCheckBox.IsChecked.Equals(true);
+                        UpdateRoundingControlsEnabled(NewSettings.round);
+                        break;
+                    case "TruncateZerosCheckBox":
+                        NewSettings.truncateZeros = TruncateZerosCheckBox.IsChecked.Equals(true);
+                        break;
+                }
+                return;
+            }
+
+            if (e.Source.GetType() == typeof(RepeatButton))
+            {
+                RepeatButton b = e.Source as RepeatButton;
+                if (b == null) return;
+                WasChanged = true;
+                switch (b.Name)
+                {
+                    case "RoundingDigitsUp":
+                        if (NewSettings.roundLength < _maxRoundLength)
+                        {
+                            NewSettings.roundLength++;
+                            RoundingDigitsTextBox.Text = NewSettings.roundLength.ToString();
+                        }
+                        break;
+                    case "RoundingDigitsDown":
+                        if (NewSettings.roundLength > 1)
+                        {
+                            NewSettings.roundLength--;
+                            RoundingDigitsTextBox.Text = NewSettings.roundLength.ToString();
+                        }
                         break;
                 }
                 return;

@@ -61,9 +61,19 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <CheckBox Content="Rounding output" HorizontalAlignment="Left" Grid.Row="0" Margin="5,5,5,5"  VerticalAlignment="Top"/>
-                <CheckBox Content="Truncate trailing zeros" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5"  VerticalAlignment="Top"/>
-
+                <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top">
+                    <CheckBox Content="Rounding output" Name="RoundingOutputCheckBox" Margin="5,5,5,5" VerticalAlignment="Center"/>
+                    <TextBox Name="RoundingDigitsTextBox" Width="30" Margin="5,5,0,5" VerticalAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"/>
+                    <Grid Margin="0,5,5,5" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <RepeatButton Name="RoundingDigitsUp" Content="&#x25B2;" FontSize="6" Width="16" Height="12" Padding="0" Grid.Row="0"/>
+                        <RepeatButton Name="RoundingDigitsDown" Content="&#x25BC;" FontSize="6" Width="16" Height="12" Padding="0" Grid.Row="1"/>
+                    </Grid>
+                </StackPanel>
+                <CheckBox Content="Truncate trailing zeros" Name="TruncateZerosCheckBox" HorizontalAlignment="Left" Grid.Row="1" Margin="5,5,5,5" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Column="0" Grid.Row="3" Header="Paste Parsing" HorizontalAlignment="Left" Margin="5,5,5,5" VerticalAlignment="Top">
