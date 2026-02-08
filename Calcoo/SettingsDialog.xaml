@@ -99,7 +99,7 @@
 
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,5,5,5">
             <Button Name="SettingsOk" Content="Ok" Width="75" Margin="20,0"/>
-            <Button Name="SettingsCancel" Content="Cancel" Width="75" Margin="20,0"/>
+            <Button Name="SettingsCancel" Content="Cancel" IsCancel="True" Width="75" Margin="20,0"/>
         </StackPanel>
     </Grid>
 </Window>

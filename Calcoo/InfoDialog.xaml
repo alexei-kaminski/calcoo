@@ -196,6 +196,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Content="Ok" Click="Ok_Click" HorizontalAlignment="Center" Width="75" Margin="5,5,5,10"/>
+        <Button Content="Ok" Click="Ok_Click" IsCancel="True" HorizontalAlignment="Center" Width="75" Margin="5,5,5,10"/>
     </StackPanel>
 </Window>
