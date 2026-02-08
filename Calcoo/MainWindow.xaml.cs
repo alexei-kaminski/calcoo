@@ -205,6 +205,7 @@ namespace Calcoo
                         body.round = settingsDialog.NewSettings.round;
                         body.roundLength = settingsDialog.NewSettings.roundLength;
                         body.truncateZeros = settingsDialog.NewSettings.truncateZeros;
+                        _customButtonCommand = settingsDialog.NewSettings.customButtonCommand;
                         settingsDialog.NewSettings.Save();
                     }
                     break;
@@ -255,6 +256,24 @@ namespace Calcoo
                         undoStack.RemoveLast();
 
                     cpu.ExecutePaste(value);
+                    break;
+                case Command.Custom:
+                    if (!string.IsNullOrEmpty(_customButtonCommand))
+                    {
+                        redoStack.Clear();
+                        undoStack.AddFirst(cpu.Clone());
+                        body.UndoEnabled = true;
+                        body.RedoEnabled = false;
+                        if (undoStack.Count > UndoStackSize)
+                            undoStack.RemoveLast();
+
+                        foreach (string token in _customButtonCommand.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            Command parsed;
+                            if (Enum.TryParse(token, out parsed))
+                                cpu.Execute(parsed);
+                        }
+                    }
                     break;
                 case Command.Exit:
                     Close();

@@ -1,8 +1,127 @@
 ﻿<Window x:Class="Calcoo.CustomButtonDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="CustomButtonDialog" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        Title="Set Custom Button" SizeToContent="WidthAndHeight" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="10">
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,8" MaxWidth="520">Input the custom command to invoke by the ◇ button. It should be composed of the commands listed below the input field, separated by spaces.</TextBlock>
+        <TextBox Name="CommandTextBox" AcceptsReturn="True" TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto" Height="60" Margin="0,0,0,8"/>
+
+        <!-- Command palette -->
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Column 0: Math functions -->
+            <StackPanel Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Log10" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="TenToX" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Ln" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="EtoX" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Pow" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Sqrt" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Sqr" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="InvX" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Pi" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Fact" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Sin" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Asin" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Sinh" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Asinh" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Cos" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Acos" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Cosh" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Acosh" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Tan" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Atan" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Tanh" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Atanh" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Column 1: Digits -->
+            <StackPanel Grid.Column="2">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Digit7" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Digit8" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Digit9" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Digit4" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Digit5" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Digit6" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Digit1" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Digit2" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Digit3" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Digit0" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Dot" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="MantissaSign" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Sign" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Exp" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="ExpSign" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Column 2: Operations -->
+            <StackPanel Grid.Column="4">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Add" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Sub" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Mul" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Div" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="ClearAll" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="ExchXy" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="LeftParen" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="RightParen" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Eq" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="StackDown" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="StackUp" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Enter" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="ClearX" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="MemToX" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="MemPlus" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="XToMem" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="ExchXMem" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Mem0" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                    <Label Content="Mem1" MouseDown="CommandLabel_MouseDown" Cursor="Hand" Padding="3,1"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- Button row -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Save" Click="Save_Click" Width="75" Margin="5,0"/>
+            <Button Content="Validate" Click="Validate_Click" Width="75" Margin="5,0"/>
+            <Button Content="Cancel" Click="Cancel_Click" Width="75" Margin="5,0"/>
+        </StackPanel>
+    </StackPanel>
 </Window>

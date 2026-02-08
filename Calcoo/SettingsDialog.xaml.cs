@@ -206,10 +206,14 @@ namespace Calcoo
                         Close();
                         break;
                     case "CustomButton":
-                        var customButtonDialog = new CustomButtonDialog();
+                        var customButtonDialog = new CustomButtonDialog(NewSettings.customButtonCommand);
                         customButtonDialog.Owner = this;
-                        customButtonDialog.ShowDialog();
-                    break;
+                        if (customButtonDialog.ShowDialog() == true)
+                        {
+                            NewSettings.customButtonCommand = customButtonDialog.CommandText;
+                            WasChanged = true;
+                        }
+                        break;
                 }
             }
         }
