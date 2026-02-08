@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Calcoo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Calcoo" Width="430" Height="270"
+        Title="Calcoo" Width="422" Height="270"
         Icon="pack://application:,,,/Resources/calcoo.ico"
         Button.Click="Button_Click"
         KeyDown="Window_KeyDown"
@@ -86,7 +86,7 @@
         </Style>
     </Window.Resources>
     <Viewbox>
-    <Grid Name="MainGrid" Margin="8,8,8,8">
+    <Grid Name="MainGrid" Margin="4,8,4,8">
         <Grid.RowDefinitions>
             <RowDefinition Height="16" />
             <RowDefinition Height="16" />
