@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
+using Microsoft.Win32;
 
 
 namespace Calcoo
@@ -40,6 +41,16 @@ namespace Calcoo
 
             InitializeComponent();
 
+            var rk = Registry.CurrentUser.OpenSubKey("Software\\Calcoo\\");
+            if (rk != null)
+            {
+                if (rk.GetValue("WindowWidth") is int w && rk.GetValue("WindowHeight") is int h && w > 0 && h > 0)
+                {
+                    Width = w;
+                    Height = h;
+                }
+            }
+
             var displayCanvas = new Body.DisplayCanvas(NMem, NRegister);
             displayCanvas.MainDisplay = MainDisplayCanvas;
             displayCanvas.DegRadDisplay = DegRadDisplayCanvas;
@@ -65,6 +76,17 @@ namespace Calcoo
             body.RedoEnabled = false;
 
             body.Refresh(cpu);
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            var rk = Registry.CurrentUser.CreateSubKey("Software\\Calcoo\\");
+            if (rk != null)
+            {
+                rk.SetValue("WindowWidth", (int)ActualWidth, RegistryValueKind.DWord);
+                rk.SetValue("WindowHeight", (int)ActualHeight, RegistryValueKind.DWord);
+            }
         }
 
         protected override void OnSourceInitialized(EventArgs e)
