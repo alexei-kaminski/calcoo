@@ -24,6 +24,7 @@ namespace Calcoo
         private readonly NumberDisplay[] _memDisplays;
         private readonly IndicatorDisplay<Settings.DisplayFormat> _displayFormatDisplay;
         private readonly IndicatorDisplay<Settings.AngleUnits> _angleUnitsDisplay;
+        private readonly Frame _activeMemIcon;
 
         private readonly int _inputLength, _expInputLength, _numBase;
         public Settings.DisplayFormat displayFormat;
@@ -266,6 +267,10 @@ namespace Calcoo
             _numBase = numBase;
             _expInputLength = expInputLength;
             _inputLength = inputLength;
+
+            _activeMemIcon = new Frame();
+            _activeMemIcon.Source = new Uri("pack://application:,,,/Resources/Icons/Buttons/ActiveMem.xaml",
+                UriKind.Absolute);
         }
 
         private void CreateButtons(Grid mainGrid)
@@ -407,7 +412,7 @@ namespace Calcoo
                     _numBase);
                 _memDisplays[i].Show(dbd);
                 if (i == cpuOutput.ActiveMemNum)
-                    _buttons[CommandExtensions.Mem[i]].Content = null; // FIXME
+                    _buttons[CommandExtensions.Mem[i]].Content = _activeMemIcon;
                 else
                     _buttons[CommandExtensions.Mem[i]].Content = null;
             }

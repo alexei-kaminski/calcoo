@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform"><Canvas Name="svg1" Width="1000" Height="1000"><Canvas.RenderTransform><TranslateTransform X="0" Y="0"/></Canvas.RenderTransform><Canvas.Resources/><!--Unknown tag: metadata--><Canvas Name="Layer1"><Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path1" Fill="#FF1F1A17"><Path.Data><PathGeometry Figures="M327 200 L846 500 L327 800 Z" FillRule="evenodd"/></Path.Data></Path></Canvas></Canvas></Viewbox>
