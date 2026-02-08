@@ -27,6 +27,7 @@ namespace Calcoo
 
         private readonly Body body;
         private double _aspectRatio;
+        private int _chromeWidth, _chromeHeight;
         private string _customButtonCommand;
 
         public MainWindow()
@@ -69,8 +70,16 @@ namespace Calcoo
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            _aspectRatio = Width / Height;
-            var source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            var hwnd = new WindowInteropHelper(this).Handle;
+
+            GetWindowRect(hwnd, out RECT windowRect);
+            GetClientRect(hwnd, out RECT clientRect);
+
+            _chromeWidth = (windowRect.Right - windowRect.Left) - (clientRect.Right - clientRect.Left);
+            _chromeHeight = (windowRect.Bottom - windowRect.Top) - (clientRect.Bottom - clientRect.Top);
+            _aspectRatio = (double)(clientRect.Right - clientRect.Left) / (clientRect.Bottom - clientRect.Top);
+
+            var source = HwndSource.FromHwnd(hwnd);
             source?.AddHook(WndProc);
         }
 
@@ -83,22 +92,28 @@ namespace Calcoo
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT { public int Left, Top, Right, Bottom; }
 
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_SIZING)
             {
                 var rect = Marshal.PtrToStructure<RECT>(lParam);
                 int edge = wParam.ToInt32();
-                int width = rect.Right - rect.Left;
-                int height = rect.Bottom - rect.Top;
+                int clientWidth = rect.Right - rect.Left - _chromeWidth;
+                int clientHeight = rect.Bottom - rect.Top - _chromeHeight;
 
                 if (edge == WMSZ_TOP || edge == WMSZ_BOTTOM)
                 {
-                    rect.Right = rect.Left + (int)(height * _aspectRatio);
+                    rect.Right = rect.Left + (int)(clientHeight * _aspectRatio) + _chromeWidth;
                 }
                 else
                 {
-                    int newHeight = (int)(width / _aspectRatio);
+                    int newHeight = (int)(clientWidth / _aspectRatio) + _chromeHeight;
                     if (edge == WMSZ_TOPLEFT || edge == WMSZ_TOPRIGHT)
                         rect.Top = rect.Bottom - newHeight;
                     else
