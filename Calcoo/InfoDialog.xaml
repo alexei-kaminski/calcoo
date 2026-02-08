@@ -4,7 +4,7 @@
         Title="Calcoo Info" SizeToContent="WidthAndHeight" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
     <StackPanel>
-        <TabControl HorizontalAlignment="Left" VerticalAlignment="Top">
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <TabItem Header="Shortcuts">
                 <Grid Name="ShortcutGrid" Margin="10">
                     <Grid.ColumnDefinitions>
