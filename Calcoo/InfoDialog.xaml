@@ -158,7 +158,7 @@
                              Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
                     <FlowDocument>
                         <Paragraph>
-                            Calcoo - scientific calculator. Version 2.1.0.
+                            Calcoo - scientific calculator. Version <Run x:Name="LicenseVersionRun"/>.
                         </Paragraph>
                         <Paragraph>
                             Copyright (C) 2001-2014 Alexei Kaminski.</Paragraph>
@@ -184,7 +184,7 @@
                 <Grid Width="{Binding ElementName=ShortcutGrid, Path=ActualWidth}"
                       Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Calcoo - scientific calculator. Version 2.1.0." TextAlignment="Center" Margin="0,4"/>
+                        <TextBlock TextAlignment="Center" Margin="0,4">Calcoo - scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
                         <TextBlock Text="Copyright (C) 2001-2014 Alexei Kaminski." TextAlignment="Center" Margin="0,4"/>
                         <TextBlock TextAlignment="Center" Margin="0,4">
                             Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink> .

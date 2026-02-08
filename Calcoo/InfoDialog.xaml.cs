@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -12,6 +13,11 @@ namespace Calcoo
         public InfoDialog()
         {
             InitializeComponent();
+            var version = Assembly.GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
+                .InformationalVersion.Split('+')[0];
+            LicenseVersionRun.Text = version;
+            AboutVersionRun.Text = version;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

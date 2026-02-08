@@ -7,6 +7,7 @@
     <RootNamespace>Calcoo</RootNamespace>
     <AssemblyName>Calcoo</AssemblyName>
     <ApplicationIcon>Resources\calcoo.ico</ApplicationIcon>
+    <Version>3.0.0-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>
