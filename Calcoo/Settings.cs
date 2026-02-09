@@ -232,6 +232,13 @@ namespace Calcoo
             return settings;
         }
 
+        public static void SaveDisplayFormat(DisplayFormat displayFormat)
+        {
+            RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            if (rk == null) return;
+            rk.SetValue(Names.displayFormat, displayFormat.ToString());
+        }
+
         public void Save()
         {
             RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);

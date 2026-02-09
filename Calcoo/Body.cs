@@ -18,6 +18,7 @@ namespace Calcoo
         private readonly Dictionary<Key, Command>[] _shortcuts;
 
         private readonly NumberDisplay _mainDisplay;
+        private IDoubleByDigitGetters _mainDisplayContent;
         private readonly NumberDisplay[] _regNumDisplays;
         private readonly OperationDisplay[] _operationDisplays;
         private readonly LabelDisplay[] _regLabelDisplays;
@@ -75,6 +76,11 @@ namespace Calcoo
         public Settings.DisplayFormat GetDisplayFormat()
         {
             return displayFormat;
+        }
+
+        public string GetMainDisplayString()
+        {
+            return _mainDisplayContent.ToString();
         }
 
         public void SwitchDisplayFormat()
@@ -372,25 +378,24 @@ namespace Calcoo
                 throw new Exception("exp input lengths don't match on the body (" + _expInputLength + ") and cpu("
                                     + cpuOutput.GetInput().GetNExpDigits() + ")");
 
-            IDoubleByDigitGetters mainDisplayContent;
             if (cpuOutput.IsInputInProgress())
             {
-                mainDisplayContent = cpuOutput.GetInput();
-                if (mainDisplayContent.GetNIntDigits() == 0)
+                _mainDisplayContent = cpuOutput.GetInput();
+                if (_mainDisplayContent.GetNIntDigits() == 0)
                 {
                     var tmp = new DoubleByDigit();
                     tmp.AddIntDigit(0);
-                    tmp.SetSign(mainDisplayContent.GetSign());
-                    mainDisplayContent = tmp;
+                    tmp.SetSign(_mainDisplayContent.GetSign());
+                    _mainDisplayContent = tmp;
                 }
             }
             else
-                mainDisplayContent = DoubleByDigit.FromDouble(cpuOutput.X, _inputLength, _expInputLength,
+                _mainDisplayContent = DoubleByDigit.FromDouble(cpuOutput.X, _inputLength, _expInputLength,
                     displayFormat != Settings.DisplayFormat.Fix,
                     Settings.ExpDivisor(displayFormat), (round ? roundLength : _inputLength), round && !truncateZeros,
                     _numBase);
 
-            _mainDisplay.Show(mainDisplayContent);
+            _mainDisplay.Show(_mainDisplayContent);
             
             for (int i = 0; i < _regNumDisplays.Length; ++i)
             {
@@ -420,7 +425,7 @@ namespace Calcoo
             _angleUnitsDisplay.Show(cpuOutput.AngleUnits);
             _displayFormatDisplay.Show(displayFormat);
 
-            if (mainDisplayContent.IsOverflow())
+            if (_mainDisplayContent.IsOverflow())
             {
                 foreach (var c in _buttons.Keys)
                     if (c != Command.Undo && c != Command.Redo && c != Command.ClearAll)

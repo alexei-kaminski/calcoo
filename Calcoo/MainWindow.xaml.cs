@@ -257,10 +257,10 @@ namespace Calcoo
                     break;
                 case Command.Format:
                     body.SwitchDisplayFormat();
-                    //Settings.saveDisplayFormat(body.getDisplayFormat()); FIXME
+                    Settings.SaveDisplayFormat(body.GetDisplayFormat());
                     break;
                 case Command.Copy:
-                    //Clipboard.SetText(mainDisplay.Content.ToString()); FIXME
+                    Clipboard.SetText(body.GetMainDisplayString());
                     break;
                 case Command.Paste:
                     if (!Clipboard.ContainsText())
