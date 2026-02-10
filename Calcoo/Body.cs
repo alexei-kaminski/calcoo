@@ -198,7 +198,7 @@ namespace Calcoo
             {
                 _memDisplays[i] = new NumberDisplay(
                         7, //int cellWidth,
-                        1, //int dotOffsetX,
+                        0, //int dotOffsetX,
                         8, //int dotOffsetY,
                         3, //int dotWidth,
                         1, //int xMargin,
@@ -225,7 +225,7 @@ namespace Calcoo
             {
                 _regNumDisplays[i] = new NumberDisplay(
                     7, //int cellWidth,
-                    1, //int dotOffsetX,
+                    0, //int dotOffsetX,
                     8, //int dotOffsetY,
                     3, //int dotWidth,
                     1 + 10, //int xMargin,
