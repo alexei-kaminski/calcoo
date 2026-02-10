@@ -73,7 +73,6 @@ namespace Calcoo
             public StackElement(double z)
             {
                 Z = z;
-                // FIXME null out _op and _numberOfParens
             }
 
             public StackElement Clone()
