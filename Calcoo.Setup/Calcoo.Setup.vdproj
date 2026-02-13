@@ -19,6 +19,12 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_8D23A7F1C5E24DEBA3F1E0C9B1A5D2F3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -74,6 +80,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8D23A7F1C5E24DEBA3F1E0C9B1A5D2F3"
+            {
+            "SourcePath" = "8:..\\Calcoo\\Resources\\calcoo.ico"
+            "TargetName" = "8:calcoo.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_4F21B43AE3CF418EB34481653982B822"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -83,7 +109,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_4E9B4734A0EA45569212142AD42F90A5"
             {
             "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:ProgramMenuFolder"
@@ -95,7 +121,7 @@
             {
             "DefaultLocation" = "8:[ProgramFilesFolder]Calcoo\\"
             "Name" = "8:#1925"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:TARGETDIR"
@@ -106,7 +132,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_C54ABB19843B42C0920529C7CD9CB9D2"
             {
             "Name" = "8:#1916"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:DesktopFolder"
@@ -148,7 +174,7 @@
         "Keywords" = "8:calculator scientific RPN"
         "ARPCOMMENTS" = "8:Calcoo - Scientific Calculator for Windows"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_8D23A7F1C5E24DEBA3F1E0C9B1A5D2F3"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -251,7 +277,7 @@
         }
         "Shortcut"
         {
-            "{B9B2A855-6519-41E0-851C-D0A2B3A75D44}:_2E4F6A8BC0D24E6F9A1BC3D5E7F90123"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2E4F6A8BC0D24E6F9A1BC3D5E7F90123"
             {
             "Name" = "8:Calcoo"
             "Arguments" = "8:"
@@ -261,10 +287,11 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_6B0F975DE07B4B4B801BF5B8C12F071A"
             "Folder" = "8:_4E9B4734A0EA45569212142AD42F90A5"
-            "Icon" = "8:"
+            "WorkingFolder" = "8:_4F21B43AE3CF418EB34481653982B822"
+            "Icon" = "8:_8D23A7F1C5E24DEBA3F1E0C9B1A5D2F3"
             "Feature" = "8:"
             }
-            "{B9B2A855-6519-41E0-851C-D0A2B3A75D44}:_4A6B8C0DE2F44A6B8C0DE2F44A6B8C0D"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4A6B8C0DE2F44A6B8C0DE2F44A6B8C0D"
             {
             "Name" = "8:Calcoo"
             "Arguments" = "8:"
@@ -274,7 +301,8 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_6B0F975DE07B4B4B801BF5B8C12F071A"
             "Folder" = "8:_C54ABB19843B42C0920529C7CD9CB9D2"
-            "Icon" = "8:"
+            "WorkingFolder" = "8:_4F21B43AE3CF418EB34481653982B822"
+            "Icon" = "8:_8D23A7F1C5E24DEBA3F1E0C9B1A5D2F3"
             "Feature" = "8:"
             }
         }
