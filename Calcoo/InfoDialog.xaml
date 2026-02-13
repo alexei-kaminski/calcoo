@@ -187,10 +187,10 @@
                         <TextBlock TextAlignment="Center" Margin="0,4">Calcoo - scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
                         <TextBlock x:Name="AboutCopyrightText" TextAlignment="Center" Margin="0,4"/>
                         <TextBlock TextAlignment="Center" Margin="0,4">
-                            Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink> .
+                            Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink>
                         </TextBlock>
                         <TextBlock TextAlignment="Center" Margin="0,4">
-                            Feedback: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="mailto:calcoo.calculator@gmail.com">calcoo.calculator@gmail.com</Hyperlink> .
+                            Feedback: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="mailto:calcoo.calculator@gmail.com">calcoo.calculator@gmail.com</Hyperlink>
                         </TextBlock>
                     </StackPanel>
                 </Grid>
