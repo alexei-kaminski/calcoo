@@ -37,6 +37,9 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="content" Property="Opacity" Value="0.5" />
                             </Trigger>
+                            <Trigger Property="Tag" Value="Highlighted">
+                                <Setter TargetName="border" Property="Background" Value="#FFBABABA" />
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -67,6 +70,9 @@
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="content" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="Highlighted">
+                                <Setter TargetName="border" Property="Background" Value="#FFBABABA" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

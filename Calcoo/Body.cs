@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Calcoo
 {
@@ -16,6 +17,7 @@ namespace Calcoo
         private readonly Dictionary<Command, Button> _buttons;
         private readonly Dictionary<Command, ToggleButton> _toggleButtons;
         private readonly Dictionary<Key, Command>[] _shortcuts;
+        private readonly Dictionary<Command, DispatcherTimer> _highlightTimers = new();
 
         private readonly NumberDisplay _mainDisplay;
         private IDoubleByDigitGetters _mainDisplayContent;
@@ -161,6 +163,53 @@ namespace Calcoo
             if (_shortcuts[ShrotcutFlagsToIndex(ctrl, shift)].TryGetValue(key, out command))
                 return command;
             return null;
+        }
+
+        // Buttons that share a grid position and swap visibility by mode
+        private static readonly Dictionary<Command, Command> _modeAlternates = new()
+        {
+            { Command.Enter, Command.Eq },
+            { Command.Eq, Command.Enter },
+            { Command.StackDown, Command.LeftParen },
+            { Command.LeftParen, Command.StackDown },
+            { Command.StackUp, Command.RightParen },
+            { Command.RightParen, Command.StackUp },
+        };
+
+        private ButtonBase FindButton(Command command)
+        {
+            if (_buttons.TryGetValue(command, out var btn))
+                return btn;
+            if (_toggleButtons.TryGetValue(command, out var tbtn))
+                return tbtn;
+            return null;
+        }
+
+        public void HighlightButton(Command command)
+        {
+            ButtonBase button = FindButton(command);
+
+            // If button is hidden, try the mode alternate (e.g. Enter↔Eq)
+            if ((button == null || button.Visibility != Visibility.Visible)
+                && _modeAlternates.TryGetValue(command, out var alt))
+                button = FindButton(alt);
+
+            if (button == null || button.Visibility != Visibility.Visible) return;
+
+            if (_highlightTimers.TryGetValue(command, out var existing))
+                existing.Stop();
+
+            button.Tag = "Highlighted";
+
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(150) };
+            timer.Tick += (s, e) =>
+            {
+                timer.Stop();
+                button.Tag = null;
+                _highlightTimers.Remove(command);
+            };
+            _highlightTimers[command] = timer;
+            timer.Start();
         }
 
         public Body(Grid mainGrid, DisplayCanvas displayCanvas, int numBase, int inputLength, int expInputLength)

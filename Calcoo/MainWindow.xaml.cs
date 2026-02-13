@@ -164,16 +164,19 @@ namespace Calcoo
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             Command? command = body.TranslateShortcut(e.Key, Keyboard.Modifiers == ModifierKeys.Control, Keyboard.Modifiers == ModifierKeys.Shift);
-            switch (command) { 
+            switch (command) {
                 case null:
                     return;
                 case Command.Arc:
+                    body.HighlightButton(Command.Arc);
                     body.Arc = !body.Arc;
                     break;
                 case Command.Hyp:
+                    body.HighlightButton(Command.Hyp);
                     body.Hyp = !body.Hyp;
                     break;
                 default:
+                    body.HighlightButton(command.Value);
                     ProcessCommand((Command)command);
                     break;
             }
