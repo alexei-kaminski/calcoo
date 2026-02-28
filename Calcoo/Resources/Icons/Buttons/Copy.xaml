@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform"><Canvas Name="svg4839" Width="1000" Height="1000"><Canvas.RenderTransform><TranslateTransform X="0" Y="0"/></Canvas.RenderTransform><Canvas.Resources/><!--Unknown tag: metadata--><!--Unknown tag: sodipodi:namedview--><Canvas Name="Layer1"><Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4842" StrokeThickness="83" Stroke="#FF1F1A17"><Path.Data><PathGeometry Figures="M539 510l158 -227 -277 -23" FillRule="evenodd"/></Path.Data></Path><Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4844" StrokeThickness="97" Stroke="#FF1F1A17" StrokeStartLineCap="Round" StrokeEndLineCap="Round"><Path.Data><PathGeometry Figures="M339 736c0 -225 133 -408 297 -408" FillRule="evenodd"/></Path.Data></Path></Canvas></Canvas></Viewbox>
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Width="1000" Height="1000">
+    <!-- Back square (top-right), only the non-occluded portion.
+         Centerline matches a 480x480 Rectangle with StrokeThickness=83
+         (inset by 41.5 → 397x397 centerline) at outer bounds (360,160)-(840,640). -->
+    <Path Stroke="#FF1F1A17" StrokeThickness="83"
+          Data="M401.5,401.5 L401.5,266.5 A65,65,0,0,1,466.5,201.5 L733.5,201.5 A65,65,0,0,1,798.5,266.5 L798.5,533.5 A65,65,0,0,1,733.5,598.5 L598.5,598.5"/>
+    <!-- Front square (bottom-left), outline only -->
+    <Rectangle Canvas.Left="160" Canvas.Top="360" Width="480" Height="480"
+               RadiusX="65" RadiusY="65"
+               Stroke="#FF1F1A17" StrokeThickness="83"/>
+  </Canvas>
+</Viewbox>
