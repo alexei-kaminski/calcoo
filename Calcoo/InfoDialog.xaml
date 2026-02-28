@@ -112,34 +112,34 @@
                              Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
                     <FlowDocument>
                         <Paragraph>
-                            Even though it must be clear in general how to use calcoo,
+                            Even though it should be generally clear how to use Calcoo,
                             some subtleties may need clarification.
                         </Paragraph>
                         <Paragraph>
-                            In the RPN mode, the stack either has four registers, X, Y, Z, T,
+                            In RPN mode, the stack either has four registers, X, Y, Z, T,
                             like in most real RPN calculators, or is unlimited, depending
-                                           on the corresponding option. In the algebraic mode, the number of
-                                           registers is unlimited, but only the lowest four have their
-                                           contents displayed.
+                            on the corresponding option. In algebraic mode, the number of
+                            registers is unlimited, but only the lowest four have their
+                            contents displayed.
                         </Paragraph>
                         <Paragraph>
-                            Several adjacent opening parens are possible. However, calcoo
-                                           will show only one paren in the corresponding display, due to
-                                           display limitations. Calcoo does keep track of all of them, even
-                                           though it is unable to show them.
+                            Several adjacent opening parentheses are possible. However, Calcoo
+                            will show only one parenthesis in the corresponding display, due to
+                            display limitations. Calcoo does keep track of all of them, even
+                            though it is unable to show them.
                         </Paragraph>
                         <Paragraph>
-                            The closing paren button acts as "=" button if there are no
-                                           matching opening parens.
+                            The closing parenthesis button acts as the "=" button if there are no
+                            matching opening parentheses.
                         </Paragraph>
                         <Paragraph>
-                            If an expression begins with an opening paren, the paren will
-                                           not be displayed (actually the paren will be ignored).
-                                           Nevertheless, you should go ahead and type the whole expression,
-                                           since an unmatched closing paren acts as "=", the whole
-                                           expression will be evaluated properly, as though the (ignored)
-                                           opening paren and the closing paren (interpreted as "=") were
-                                           interpreted as parens.
+                            If an expression begins with an opening parenthesis, the parenthesis will
+                            not be displayed (actually the parenthesis will be ignored).
+                            Nevertheless, you should go ahead and type the whole expression,
+                            since an unmatched closing parenthesis acts as "=", the whole
+                            expression will be evaluated properly, as though the (ignored)
+                            opening parenthesis and the closing parenthesis (interpreted as "=") were
+                            interpreted as parentheses.
                         </Paragraph>
                         <Paragraph>
                             Undo remembers only the last 200 elementary actions.
@@ -148,12 +148,12 @@
                             Switching between RPN and algebraic modes resets undo.
                         </Paragraph>
                         <Paragraph>
-                            Locale-based parsing of pasted numbers uses Java's native pasting
-                                           algorithm, based on your current locale. It is quite robust and should
-                                           be chosen unless sometimes you happen to paste numbers formatted
-                                           in different locales. In this case, the heuristic parser may be
-                                           a better choice. While more picky, it tries to figure out which locale
-                                           conventions to use based on the appearance of the pasted number.
+                            Locale-based parsing of pasted numbers uses the system's native
+                            parsing algorithm, based on your current locale. It is quite robust
+                            and should be chosen unless you sometimes need to paste numbers formatted
+                            in different locales. In that case, the heuristic parser may be
+                            a better choice. While more picky, it tries to figure out which locale
+                            conventions to use based on the appearance of the pasted number.
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
