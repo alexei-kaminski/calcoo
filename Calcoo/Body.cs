@@ -373,14 +373,14 @@ namespace Calcoo
             CreateButton(Command.Add, 17, 3, 2, 2, new[] { new[] { Key.Add }, new[] { Key.OemPlus } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Mul, 17, 5, 2, 2, new[] { new[] { Key.Multiply }, new[] { Key.D8 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.ExchXy, 17, 7, 2, 2, new[] { new[] { Key.Y } }, "Swap X and Y", iconPath, mainGrid, false, true);
-            CreateButton(Command.XToMem, 17, 10, 2, 2, new Key[][] {}, "STO", iconPath, mainGrid, false, true);
-            CreateButton(Command.Mem0, 17, 12, 1, 1, new Key[][] {}, "", iconPath, mainGrid, false, false);
-            CreateButton(Command.Mem1, 17, 13, 1, 1, new Key[][] {}, "", iconPath, mainGrid, false, false);
+            CreateButton(Command.XToMem, 17, 10, 2, 2, new[] { new Key[] {}, new Key[] {}, new[] { Key.M } }, "STO", iconPath, mainGrid, false, true);
+            CreateButton(Command.Mem0, 17, 12, 1, 1, new[] { new Key[] {}, new Key[] {}, new[] { Key.D1 } }, "", iconPath, mainGrid, false, false);
+            CreateButton(Command.Mem1, 17, 13, 1, 1, new[] { new Key[] {}, new Key[] {}, new[] { Key.D2 } }, "", iconPath, mainGrid, false, false);
             CreateButton(Command.Sub, 19, 3, 2, 2, new[] { new[] { Key.Subtract, Key.OemMinus } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Div, 19, 5, 2, 2, new[] { new[] { Key.Divide, Key.Oem2 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.LeftParen, 19, 7, 2, 2, new[] { new[] { Key.Oem4 }, new[] { Key.D9 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.StackDown, 19, 7, 2, 2, new[] { new[] { Key.Down } }, "Scroll stack down", iconPath, mainGrid, false, true);
-            CreateButton(Command.MemToX, 19, 10, 2, 2, new Key[][] {}, "RCL", iconPath, mainGrid, false, true);
+            CreateButton(Command.MemToX, 19, 10, 2, 2, new[] { new Key[] {}, new Key[] {}, new[] { Key.R } }, "RCL", iconPath, mainGrid, false, true);
             CreateButton(Command.ClearAll, 21, 3, 2, 2, new[] { new[] { Key.Escape } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Eq, 21, 5, 2, 2, new[] { new[] { Key.OemPlus } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Enter, 21, 5, 2, 2, new[] { new[] { Key.Return } }, "Enter", iconPath, mainGrid, false, true);

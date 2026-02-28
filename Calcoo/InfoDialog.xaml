@@ -41,6 +41,8 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <!-- Headers -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Shortcut" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,2"/>
@@ -92,12 +94,16 @@
                     <TextBlock Grid.Row="22" Grid.Column="2" Text="swap registers X and Y" HorizontalAlignment="Left" Margin="0,2"/>
                     <TextBlock Grid.Row="23" Grid.Column="0" Text="e" HorizontalAlignment="Right" Margin="0,2"/>
                     <TextBlock Grid.Row="23" Grid.Column="2" Text="E" HorizontalAlignment="Left" Margin="0,2"/>
-                    <TextBlock Grid.Row="24" Grid.Column="0" Text="?" HorizontalAlignment="Right" Margin="0,2"/>
-                    <TextBlock Grid.Row="24" Grid.Column="2" Text="info/help" HorizontalAlignment="Left" Margin="0,2"/>
-                    <TextBlock Grid.Row="25" Grid.Column="0" Text="!" HorizontalAlignment="Right" Margin="0,2"/>
-                    <TextBlock Grid.Row="25" Grid.Column="2" Text="settings" HorizontalAlignment="Left" Margin="0,2"/>
-                    <TextBlock Grid.Row="26" Grid.Column="0" Text="Ctrl-q" HorizontalAlignment="Right" Margin="0,2"/>
-                    <TextBlock Grid.Row="26" Grid.Column="2" Text="exit" HorizontalAlignment="Left" Margin="0,2"/>
+                    <TextBlock Grid.Row="24" Grid.Column="0" Text="Ctrl-m Ctrl-r" HorizontalAlignment="Right" Margin="0,2"/>
+                    <TextBlock Grid.Row="24" Grid.Column="2" Text="STO RCL" HorizontalAlignment="Left" Margin="0,2"/>
+                    <TextBlock Grid.Row="25" Grid.Column="0" Text="Ctrl-1 Ctrl-2" HorizontalAlignment="Right" Margin="0,2"/>
+                    <TextBlock Grid.Row="25" Grid.Column="2" Text="switch between memory registers" HorizontalAlignment="Left" Margin="0,2"/>
+                    <TextBlock Grid.Row="26" Grid.Column="0" Text="?" HorizontalAlignment="Right" Margin="0,2"/>
+                    <TextBlock Grid.Row="26" Grid.Column="2" Text="info/help" HorizontalAlignment="Left" Margin="0,2"/>
+                    <TextBlock Grid.Row="27" Grid.Column="0" Text="!" HorizontalAlignment="Right" Margin="0,2"/>
+                    <TextBlock Grid.Row="27" Grid.Column="2" Text="settings" HorizontalAlignment="Left" Margin="0,2"/>
+                    <TextBlock Grid.Row="28" Grid.Column="0" Text="Ctrl-q" HorizontalAlignment="Right" Margin="0,2"/>
+                    <TextBlock Grid.Row="28" Grid.Column="2" Text="exit" HorizontalAlignment="Left" Margin="0,2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Help">
