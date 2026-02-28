@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform"><Canvas Name="svg4658" Width="1000" Height="1000"><Canvas.RenderTransform><TranslateTransform X="0" Y="0"/></Canvas.RenderTransform><Canvas.Resources/><!--Unknown tag: metadata--><!--Unknown tag: sodipodi:namedview--><Canvas Name="Layer1"><Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4661" StrokeThickness="83" Stroke="#FF1F1A17"><Path.Data><PathGeometry Figures="M426 500l170 218 105 -256" FillRule="evenodd"/></Path.Data></Path><Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4663" StrokeThickness="97" Stroke="#FF1F1A17" StrokeStartLineCap="Round" StrokeEndLineCap="Round"><Path.Data><PathGeometry Figures="M587 657c0 -224 -134 -408 -298 -408" FillRule="evenodd"/></Path.Data></Path></Canvas></Canvas></Viewbox>
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+  <Canvas Width="1000" Height="1000">
+    <!-- Back square right portion (gap end rounded, junction end flat) -->
+    <Path Stroke="#FF1F1A17" StrokeThickness="83"
+          StrokeEndLineCap="Round"
+          Data="M681.5,401.5 L681.5,266.5 A65,65,0,0,0,616.5,201.5 L591.5,201.5"/>
+    <!-- Back square left portion (gap end rounded, junction end flat) -->
+    <Path Stroke="#FF1F1A17" StrokeThickness="83"
+          StrokeStartLineCap="Round"
+          Data="M291.5,201.5 L266.5,201.5 A65,65,0,0,0,201.5,266.5 L201.5,616.5 A65,65,0,0,0,266.5,681.5 L401.5,681.5"/>
+    <!-- Lower clipboard line (below top edge, round caps aligned with gap edges) -->
+    <Line X1="366.5" Y1="284.5" X2="516.5" Y2="284.5"
+          Stroke="#FF1F1A17" StrokeThickness="83"
+          StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+    <!-- Upper clipboard line (above top edge, shorter) -->
+    <Line X1="406.5" Y1="128.5" X2="476.5" Y2="128.5"
+          Stroke="#FF1F1A17" StrokeThickness="83"
+          StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+    <!-- Front square (bottom-right), outline only -->
+    <Rectangle Canvas.Left="360" Canvas.Top="360" Width="480" Height="480"
+               RadiusX="65" RadiusY="65"
+               Stroke="#FF1F1A17" StrokeThickness="83"/>
+  </Canvas>
+</Viewbox>
