@@ -4,11 +4,11 @@
     <!-- Back square (top-right), only the non-occluded portion.
          Centerline matches a 480x480 Rectangle with StrokeThickness=83
          (inset by 41.5 → 397x397 centerline) at outer bounds (360,160)-(840,640). -->
-    <Path Stroke="#FF1F1A17" StrokeThickness="83"
+    <Path Stroke="#FF1F1A17" StrokeThickness="66"
           Data="M401.5,401.5 L401.5,266.5 A65,65,0,0,1,466.5,201.5 L733.5,201.5 A65,65,0,0,1,798.5,266.5 L798.5,533.5 A65,65,0,0,1,733.5,598.5 L598.5,598.5"/>
     <!-- Front square (bottom-left), outline only -->
     <Rectangle Canvas.Left="160" Canvas.Top="360" Width="480" Height="480"
                RadiusX="65" RadiusY="65"
-               Stroke="#FF1F1A17" StrokeThickness="83"/>
+               Stroke="#FF1F1A17" StrokeThickness="66"/>
   </Canvas>
 </Viewbox>
