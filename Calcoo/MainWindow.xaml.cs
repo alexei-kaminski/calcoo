@@ -41,14 +41,12 @@ namespace Calcoo
 
             InitializeComponent();
 
-            var rk = Registry.CurrentUser.OpenSubKey("Software\\Calcoo\\");
+            var rk = Registry.CurrentUser.OpenSubKey("Software\\Calcoo\\", writable: true);
             if (rk != null)
             {
-                if (rk.GetValue("WindowWidth") is int w && rk.GetValue("WindowHeight") is int h && w > 0 && h > 0)
-                {
-                    Width = w;
+                if (rk.GetValue("WindowHeight") is int h && h > 0)
                     Height = h;
-                }
+                rk.DeleteValue("WindowWidth", throwOnMissingValue: false);
             }
 
             var displayCanvas = new Body.DisplayCanvas(NMem, NRegister);
@@ -84,7 +82,6 @@ namespace Calcoo
             var rk = Registry.CurrentUser.CreateSubKey("Software\\Calcoo\\");
             if (rk != null)
             {
-                rk.SetValue("WindowWidth", (int)ActualWidth, RegistryValueKind.DWord);
                 rk.SetValue("WindowHeight", (int)ActualHeight, RegistryValueKind.DWord);
             }
         }
@@ -99,7 +96,12 @@ namespace Calcoo
 
             _chromeWidth = (windowRect.Right - windowRect.Left) - (clientRect.Right - clientRect.Left);
             _chromeHeight = (windowRect.Bottom - windowRect.Top) - (clientRect.Bottom - clientRect.Top);
-            _aspectRatio = (double)(clientRect.Right - clientRect.Left) / (clientRect.Bottom - clientRect.Top);
+            // Content aspect ratio: MainGrid is 25×16 + margins 8+8 = 416 wide, 14×16 + margins 8+8 = 240 tall
+            _aspectRatio = 416.0 / 240.0;
+
+            // Adjust window width to match content aspect ratio
+            double clientHeight = clientRect.Bottom - clientRect.Top;
+            Width = clientHeight * _aspectRatio + _chromeWidth;
 
             var source = HwndSource.FromHwnd(hwnd);
             source?.AddHook(WndProc);

@@ -92,7 +92,7 @@
         </Style>
     </Window.Resources>
     <Viewbox>
-    <Grid Name="MainGrid" Margin="4,8,4,8">
+    <Grid Name="MainGrid" Margin="8,8,8,8">
         <Grid.RowDefinitions>
             <RowDefinition Height="16" />
             <RowDefinition Height="16" />
