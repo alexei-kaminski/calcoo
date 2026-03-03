@@ -13,6 +13,7 @@ namespace Calcoo
         public InfoDialog()
         {
             InitializeComponent();
+            SourceInitialized += (_, _) => App.ApplyDarkTitleBar(this);
             var version = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
                 .InformationalVersion.Split('+')[0];

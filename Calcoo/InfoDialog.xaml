@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Calcoo Info" SizeToContent="WidthAndHeight" ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+        WindowStartupLocation="CenterOwner" Loaded="Window_Loaded"
+        Background="{DynamicResource AppBackground}" Foreground="{DynamicResource TextForeground}">
     <StackPanel>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <TabItem Header="Shortcuts">
@@ -108,9 +109,10 @@
             </TabItem>
             <TabItem Header="Help">
                 <RichTextBox IsReadOnly="True" BorderThickness="0" Background="Transparent" VerticalScrollBarVisibility="Auto"
+                             Foreground="{DynamicResource TextForeground}"
                              Width="{Binding ElementName=ShortcutGrid, Path=ActualWidth}"
                              Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
-                    <FlowDocument>
+                    <FlowDocument Foreground="{DynamicResource TextForeground}">
                         <Paragraph>
                             Even though it should be generally clear how to use Calcoo,
                             some subtleties may need clarification.
@@ -159,10 +161,11 @@
                 </RichTextBox>
             </TabItem>
             <TabItem Header="License">
-                <RichTextBox IsReadOnly="True" BorderThickness="0" Background="Transparent" IsDocumentEnabled="True"  VerticalScrollBarVisibility="Auto"
+                <RichTextBox IsReadOnly="True" BorderThickness="0" Background="Transparent" IsDocumentEnabled="True" VerticalScrollBarVisibility="Auto"
+                             Foreground="{DynamicResource TextForeground}"
                              Width="{Binding ElementName=ShortcutGrid, Path=ActualWidth}"
                              Height="{Binding ElementName=ShortcutGrid, Path=ActualHeight}">
-                    <FlowDocument>
+                    <FlowDocument Foreground="{DynamicResource TextForeground}">
                         <Paragraph>
                             Calcoo - scientific calculator. Version <Run x:Name="LicenseVersionRun"/>.
                         </Paragraph>

@@ -17,6 +17,7 @@ namespace Calcoo
         public CustomButtonDialog(string currentCommand)
         {
             InitializeComponent();
+            SourceInitialized += (_, _) => App.ApplyDarkTitleBar(this);
             CommandTextBox.Text = currentCommand ?? "";
             CommandText = "";
         }

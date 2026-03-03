@@ -103,11 +103,15 @@ namespace Calcoo
             double clientHeight = clientRect.Bottom - clientRect.Top;
             Width = clientHeight * _aspectRatio + _chromeWidth;
 
+            App.ApplyDarkTitleBar(this);
+
             var source = HwndSource.FromHwnd(hwnd);
             source?.AddHook(WndProc);
         }
 
+
         private const int WM_SIZING = 0x0214;
+        private const int WM_SETTINGCHANGE = 0x001A;
         private const int WMSZ_TOP = 3;
         private const int WMSZ_TOPLEFT = 4;
         private const int WMSZ_TOPRIGHT = 5;
@@ -122,9 +126,19 @@ namespace Calcoo
         [DllImport("user32.dll")]
         private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
+
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WM_SIZING)
+            if (msg == WM_SETTINGCHANGE)
+            {
+                bool isDark = App.DetectDarkMode();
+                if (isDark != App.IsDarkMode)
+                {
+                    App.ApplyTheme(isDark);
+                    App.ApplyDarkTitleBar(this);
+                }
+            }
+            else if (msg == WM_SIZING)
             {
                 var rect = Marshal.PtrToStructure<RECT>(lParam);
                 int edge = wParam.ToInt32();

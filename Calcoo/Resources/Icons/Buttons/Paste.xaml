@@ -2,24 +2,24 @@
 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
   <Canvas Width="1000" Height="1000">
     <!-- Back square right portion (gap end rounded, junction end flat) -->
-    <Path Stroke="#FF1F1A17" StrokeThickness="66"
+    <Path Stroke="{DynamicResource IconStroke}" StrokeThickness="66"
           StrokeEndLineCap="Round"
           Data="M681.5,401.5 L681.5,266.5 A65,65,0,0,0,616.5,201.5 L591.5,201.5"/>
     <!-- Back square left portion (gap end rounded, junction end flat) -->
-    <Path Stroke="#FF1F1A17" StrokeThickness="66"
+    <Path Stroke="{DynamicResource IconStroke}" StrokeThickness="66"
           StrokeStartLineCap="Round"
           Data="M291.5,201.5 L266.5,201.5 A65,65,0,0,0,201.5,266.5 L201.5,616.5 A65,65,0,0,0,266.5,681.5 L401.5,681.5"/>
     <!-- Lower clipboard line (below top edge, round caps aligned with gap edges) -->
     <Line X1="366.5" Y1="268" X2="516.5" Y2="268"
-          Stroke="#FF1F1A17" StrokeThickness="66"
+          Stroke="{DynamicResource IconStroke}" StrokeThickness="66"
           StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
     <!-- Upper clipboard line (above top edge, shorter) -->
     <Line X1="406.5" Y1="145" X2="476.5" Y2="145"
-          Stroke="#FF1F1A17" StrokeThickness="66"
+          Stroke="{DynamicResource IconStroke}" StrokeThickness="66"
           StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
     <!-- Front square (bottom-right), outline only -->
     <Rectangle Canvas.Left="360" Canvas.Top="360" Width="480" Height="480"
                RadiusX="65" RadiusY="65"
-               Stroke="#FF1F1A17" StrokeThickness="66"/>
+               Stroke="{DynamicResource IconStroke}" StrokeThickness="66"/>
   </Canvas>
 </Viewbox>

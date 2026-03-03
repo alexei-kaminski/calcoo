@@ -5,12 +5,12 @@
         Icon="pack://application:,,,/Resources/calcoo.ico"
         Button.Click="Button_Click"
         KeyDown="Window_KeyDown"
-        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        Background="{DynamicResource AppBackground}">
 
     <Window.Resources>
         <Style TargetType="ToggleButton">
-            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Background" Value="{DynamicResource AppBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
             <Setter Property="BorderThickness" Value="0,0,1,1" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -26,19 +26,19 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFCACACA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonCheckedBg}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFDADADA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBg}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFBABABA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="content" Property="Opacity" Value="0.5" />
                             </Trigger>
                             <Trigger Property="Tag" Value="Highlighted">
-                                <Setter TargetName="border" Property="Background" Value="#FFBABABA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -46,8 +46,8 @@
             </Setter>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Background" Value="{DynamicResource AppBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
             <Setter Property="BorderThickness" Value="0,0,1,1" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -63,16 +63,16 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFDADADA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBg}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFBABABA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="content" Property="Opacity" Value="0.5" />
                             </Trigger>
                             <Trigger Property="Tag" Value="Highlighted">
-                                <Setter TargetName="border" Property="Background" Value="#FFBABABA" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -80,12 +80,12 @@
             </Setter>
         </Style>
         <Style TargetType="Border" x:Key="DisplayStyle">
-            <Setter Property="Background" Value ="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Background" Value="{DynamicResource DisplayBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
             <Setter Property="BorderThickness" Value="0,0,1,1"/>
         </Style>
         <Style TargetType="Border" x:Key="BlockBorder">
-            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
             <Setter Property="BorderThickness" Value="1,1,0,0"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
             <Setter Property="Panel.ZIndex" Value="1"/>
@@ -139,9 +139,9 @@
 
         <!-- Block overlay borders (top+left) for border-collapse effect -->
         <Border Style="{StaticResource BlockBorder}" Grid.Column="0"  Grid.Row="0"  Grid.ColumnSpan="9"  Grid.RowSpan="3"  />
-        <Border BorderBrush="Black" BorderThickness="1,0,0,0" IsHitTestVisible="False" Panel.ZIndex="1"
+        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1,0,0,0" IsHitTestVisible="False" Panel.ZIndex="1"
                 Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Margin="10,0,0,0" />
-        <Border BorderBrush="Black" BorderThickness="1,0,0,0" IsHitTestVisible="False" Panel.ZIndex="1"
+        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1,0,0,0" IsHitTestVisible="False" Panel.ZIndex="1"
                 Grid.Column="7" Grid.Row="0" Grid.RowSpan="3" Margin="8,0,0,0" />
         <Border Style="{StaticResource BlockBorder}" Grid.Column="10" Grid.Row="0"  Grid.ColumnSpan="15" Grid.RowSpan="2"  />
         <Border Style="{StaticResource BlockBorder}" Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="2"  Grid.RowSpan="10" />

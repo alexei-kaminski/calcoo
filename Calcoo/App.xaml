@@ -3,6 +3,163 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="AppBackground" Color="#F0F0F0"/>
+        <SolidColorBrush x:Key="DisplayBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#000000"/>
+        <SolidColorBrush x:Key="IconForeground" Color="#000000"/>
+        <SolidColorBrush x:Key="IconStroke" Color="#FF1F1A17"/>
+        <SolidColorBrush x:Key="TextForeground" Color="#000000"/>
+        <SolidColorBrush x:Key="ButtonHoverBg" Color="#DADADA"/>
+        <SolidColorBrush x:Key="ButtonPressedBg" Color="#BABABA"/>
+        <SolidColorBrush x:Key="ButtonCheckedBg" Color="#CACACA"/>
+
+        <!-- Default styles for dialog controls -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{DynamicResource DisplayBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource TextForeground}"/>
+        </Style>
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder" Padding="8,4"
+                                Background="{DynamicResource AppBackground}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1,1,1,0" Margin="0,0,2,0">
+                            <ContentPresenter ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DisplayBackground}"/>
+                                <Setter TargetName="TabBorder" Property="Margin" Value="0,0,2,-1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="CheckBorder" Width="14" Height="14"
+                                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                    Background="{DynamicResource DisplayBackground}" VerticalAlignment="Center">
+                                <Path x:Name="CheckMark" Data="M2,6 L5,9 L11,2"
+                                      Stroke="{DynamicResource TextForeground}" StrokeThickness="2"
+                                      Visibility="Collapsed"/>
+                            </Border>
+                            <ContentPresenter Margin="4,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="RadioBorder" Width="14" Height="14" CornerRadius="7"
+                                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                    Background="{DynamicResource DisplayBackground}" VerticalAlignment="Center">
+                                <Ellipse x:Name="RadioDot" Width="8" Height="8"
+                                         Fill="{DynamicResource TextForeground}"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center"
+                                         Visibility="Collapsed"/>
+                            </Border>
+                            <ContentPresenter Margin="4,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="RadioDot" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="RepeatButton">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBg}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Padding="3,1" Background="{DynamicResource AppBackground}">
+                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True"/>
+                            </Border>
+                            <Border Grid.Row="1"
+                                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                    Padding="3">
+                                <ContentPresenter/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -27,6 +27,7 @@ namespace Calcoo
         public SettingsDialog(Settings settings, int maxRoundLength)
         {
             InitializeComponent();
+            SourceInitialized += (_, _) => App.ApplyDarkTitleBar(this);
 
             WasChanged = false;
             NewSettings = settings.Clone();
