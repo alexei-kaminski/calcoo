@@ -12,6 +12,11 @@
         <SolidColorBrush x:Key="ButtonHoverBg" Color="#DADADA"/>
         <SolidColorBrush x:Key="ButtonPressedBg" Color="#BABABA"/>
         <SolidColorBrush x:Key="ButtonCheckedBg" Color="#CACACA"/>
+        <SolidColorBrush x:Key="CardBackground" Color="#B3FFFFFF"/>
+        <SolidColorBrush x:Key="CardBorderBrush" Color="#0F000000"/>
+        <SolidColorBrush x:Key="SubtleForeground" Color="#666666"/>
+        <SolidColorBrush x:Key="AccentButtonBackground" Color="#0067C0"/>
+        <SolidColorBrush x:Key="AccentButtonForeground" Color="#FFFFFF"/>
 
         <!-- Default styles for dialog controls -->
         <Style TargetType="Button">
@@ -54,18 +59,20 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
                         <StackPanel Orientation="Horizontal">
-                            <Border x:Name="CheckBorder" Width="14" Height="14"
-                                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                            <Border x:Name="CheckBorder" Width="18" Height="18" CornerRadius="3"
+                                    BorderBrush="{DynamicResource SubtleForeground}" BorderThickness="1"
                                     Background="{DynamicResource DisplayBackground}" VerticalAlignment="Center">
-                                <Path x:Name="CheckMark" Data="M2,6 L5,9 L11,2"
-                                      Stroke="{DynamicResource TextForeground}" StrokeThickness="2"
-                                      Visibility="Collapsed"/>
+                                <Path x:Name="CheckMark" Data="M3,8 L7,12 L15,3"
+                                      Stroke="White" StrokeThickness="1.5"
+                                      Visibility="Collapsed" Margin="-1,-1,0,0"/>
                             </Border>
-                            <ContentPresenter Margin="4,0,0,0" VerticalAlignment="Center"/>
+                            <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="CheckBorder" Property="Background" Value="{DynamicResource AccentButtonBackground}"/>
+                                <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBackground}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.4"/>
@@ -81,19 +88,20 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <StackPanel Orientation="Horizontal">
-                            <Border x:Name="RadioBorder" Width="14" Height="14" CornerRadius="7"
-                                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                            <Border x:Name="RadioBorder" Width="20" Height="20" CornerRadius="10"
+                                    BorderBrush="{DynamicResource SubtleForeground}" BorderThickness="1"
                                     Background="{DynamicResource DisplayBackground}" VerticalAlignment="Center">
-                                <Ellipse x:Name="RadioDot" Width="8" Height="8"
-                                         Fill="{DynamicResource TextForeground}"
+                                <Ellipse x:Name="RadioDot" Width="10" Height="10"
+                                         Fill="{DynamicResource AccentButtonBackground}"
                                          HorizontalAlignment="Center" VerticalAlignment="Center"
                                          Visibility="Collapsed"/>
                             </Border>
-                            <ContentPresenter Margin="4,0,0,0" VerticalAlignment="Center"/>
+                            <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="RadioDot" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="RadioBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBackground}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.4"/>
@@ -157,6 +165,83 @@
         </Style>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{DynamicResource DisplayBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource SubtleForeground}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" Focusable="False"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="border" Background="{DynamicResource DisplayBackground}"
+                                                BorderBrush="{DynamicResource SubtleForeground}" BorderThickness="1"
+                                                CornerRadius="4" SnapsToDevicePixels="True">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="20"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Path Grid.Column="1" Data="M0,0 L4,4 L8,0" Stroke="{DynamicResource TextForeground}"
+                                                      StrokeThickness="1.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBg}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              Margin="8,4,24,4" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Border x:Name="DropDownBorder" Background="{DynamicResource AppBackground}"
+                                        BorderBrush="{DynamicResource SubtleForeground}" BorderThickness="1"
+                                        CornerRadius="4" Margin="0,2,0,0" Padding="2"
+                                        MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextForeground}"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="border" Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}" CornerRadius="3" SnapsToDevicePixels="True">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBg}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonCheckedBg}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="{DynamicResource AppBackground}"/>

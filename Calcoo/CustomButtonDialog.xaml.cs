@@ -17,7 +17,11 @@ namespace Calcoo
         public CustomButtonDialog(string currentCommand)
         {
             InitializeComponent();
-            SourceInitialized += (_, _) => App.ApplyDarkTitleBar(this);
+            SourceInitialized += (_, _) =>
+            {
+                App.ApplyDarkTitleBar(this);
+                App.ApplyMica(this);
+            };
             CommandTextBox.Text = currentCommand ?? "";
             CommandText = "";
         }
@@ -55,15 +59,14 @@ namespace Calcoo
                 Command parsed;
                 if (!Enum.TryParse(tokens[i], out parsed))
                 {
-                    MessageBox.Show(this, "Unknown command: " + tokens[i], "Validation Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    ThemedMessageBox.Show(this, "Unknown command: " + tokens[i], "Validation Error");
                     SelectToken(tokens, i);
                     return false;
                 }
                 if (CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
                 {
-                    MessageBox.Show(this, "Command not allowed in custom sequence: " + tokens[i],
-                        "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ThemedMessageBox.Show(this, "Command not allowed in custom sequence: " + tokens[i],
+                        "Validation Error");
                     SelectToken(tokens, i);
                     return false;
                 }
@@ -94,8 +97,7 @@ namespace Calcoo
             TidyUp();
             if (Validate())
             {
-                MessageBox.Show(this, "Command sequence is valid.", "Validation",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                ThemedMessageBox.Show(this, "Command sequence is valid.", "Validation");
             }
         }
 

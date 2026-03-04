@@ -27,7 +27,11 @@ namespace Calcoo
         public SettingsDialog(Settings settings, int maxRoundLength)
         {
             InitializeComponent();
-            SourceInitialized += (_, _) => App.ApplyDarkTitleBar(this);
+            SourceInitialized += (_, _) =>
+            {
+                App.ApplyDarkTitleBar(this);
+                App.ApplyMica(this);
+            };
 
             WasChanged = false;
             NewSettings = settings.Clone();
@@ -86,17 +90,26 @@ namespace Calcoo
             }
 
             RoundingOutputCheckBox.IsChecked = settings.round;
-            RoundingDigitsTextBox.Text = settings.roundLength.ToString();
+            for (int i = maxRoundLength; i >= 1; i--)
+                RoundingDigitsComboBox.Items.Add(i);
+            RoundingDigitsComboBox.SelectedItem = settings.roundLength;
             TruncateZerosCheckBox.IsChecked = settings.truncateZeros;
             UpdateRoundingControlsEnabled(settings.round);
         }
 
         private void UpdateRoundingControlsEnabled(bool roundingEnabled)
         {
-            RoundingDigitsTextBox.IsEnabled = roundingEnabled;
-            RoundingDigitsUp.IsEnabled = roundingEnabled;
-            RoundingDigitsDown.IsEnabled = roundingEnabled;
+            RoundingDigitsComboBox.IsEnabled = roundingEnabled;
             TruncateZerosCheckBox.IsEnabled = roundingEnabled;
+        }
+
+        private void RoundingDigitsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RoundingDigitsComboBox.SelectedItem is int value)
+            {
+                NewSettings.roundLength = value;
+                WasChanged = true;
+            }
         }
 
         private void Settings_Button_Click(object sender, RoutedEventArgs e)
@@ -163,31 +176,6 @@ namespace Calcoo
                         break;
                     case "TruncateZerosCheckBox":
                         NewSettings.truncateZeros = TruncateZerosCheckBox.IsChecked.Equals(true);
-                        break;
-                }
-                return;
-            }
-
-            if (e.Source.GetType() == typeof(RepeatButton))
-            {
-                RepeatButton b = e.Source as RepeatButton;
-                if (b == null) return;
-                WasChanged = true;
-                switch (b.Name)
-                {
-                    case "RoundingDigitsUp":
-                        if (NewSettings.roundLength < _maxRoundLength)
-                        {
-                            NewSettings.roundLength++;
-                            RoundingDigitsTextBox.Text = NewSettings.roundLength.ToString();
-                        }
-                        break;
-                    case "RoundingDigitsDown":
-                        if (NewSettings.roundLength > 1)
-                        {
-                            NewSettings.roundLength--;
-                            RoundingDigitsTextBox.Text = NewSettings.roundLength.ToString();
-                        }
                         break;
                 }
                 return;
