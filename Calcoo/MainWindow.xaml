@@ -16,6 +16,8 @@
                     <ControlTemplate TargetType="ToggleButton">
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1"
                                 CornerRadius="4"
                                 SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="content"
@@ -51,6 +53,8 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1"
                                 CornerRadius="4"
                                 SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="content"
