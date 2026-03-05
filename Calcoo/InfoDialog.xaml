@@ -218,7 +218,7 @@
                             Height="{Binding ElementName=ShortcutBorder, Path=ActualHeight}">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <TextBlock TextWrapping="Wrap" LineHeight="22" Margin="0,0,12,0">
-                                <Run>Calcoo - scientific calculator. Version </Run><Run x:Name="LicenseVersionRun"/><Run>.</Run>
+                                <Run>Calcoo — scientific calculator. Version&#160;</Run><Run x:Name="LicenseVersionRun"/><Run>.</Run>
                                 <LineBreak/><LineBreak/>
                                 <Run x:Name="LicenseCopyrightRun"/>
                                 <LineBreak/><LineBreak/>
@@ -239,7 +239,7 @@
                             Width="{Binding ElementName=ShortcutBorder, Path=ActualWidth}"
                             Height="{Binding ElementName=ShortcutBorder, Path=ActualHeight}">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock TextAlignment="Center" Margin="0,4">Calcoo - scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
+                            <TextBlock TextAlignment="Center" Margin="0,4">Calcoo — scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
                             <TextBlock x:Name="AboutCopyrightText" TextAlignment="Center" Margin="0,4"/>
                             <TextBlock TextAlignment="Center" Margin="0,4">
                                 Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink>
