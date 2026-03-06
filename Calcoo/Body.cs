@@ -307,10 +307,10 @@ namespace Calcoo
                     displayCanvas.RegisterDisplays[i]);
             }
 
-            _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(0, 0, 32, 16,
+            _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32, 16,
                 new[] {Settings.DisplayFormat.Eng, Settings.DisplayFormat.Sci, Settings.DisplayFormat.Fix},
                 "/Icons/Displays/Indicator/", displayCanvas.FormatDisplay);
-            _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(0, 0, 32, 16,
+            _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(-1, -1, 32, 16,
                 new[] {Settings.AngleUnits.Deg, Settings.AngleUnits.Rad}, "/Icons/Displays/Indicator/",
                 displayCanvas.DegRadDisplay);
 
