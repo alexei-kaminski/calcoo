@@ -17,6 +17,8 @@
         <SolidColorBrush x:Key="SubtleForeground" Color="#666666"/>
         <SolidColorBrush x:Key="AccentButtonBackground" Color="#0067C0"/>
         <SolidColorBrush x:Key="AccentButtonForeground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ScrollBarThumbBrush" Color="#CDCDCD"/>
+        <SolidColorBrush x:Key="ScrollBarTrackBrush" Color="#F0F0F0"/>
 
         <!-- Default styles for dialog controls -->
         <Style TargetType="Button">
@@ -244,7 +246,30 @@
             </Setter>
         </Style>
         <Style TargetType="ScrollBar">
-            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="MinWidth" Value="8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Border Background="{DynamicResource ScrollBarTrackBrush}" CornerRadius="4"/>
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="{DynamicResource ScrollBarThumbBrush}"
+                                                        CornerRadius="4" Margin="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
