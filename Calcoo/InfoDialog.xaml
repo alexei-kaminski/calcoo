@@ -255,7 +255,7 @@
 
         <!-- Button bar -->
         <Border Grid.Row="1" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="0,1,0,0" Padding="16,12">
-            <Button Content="OK" Click="Ok_Click" IsCancel="True" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Center"/>
+            <Button Content="OK" Click="Ok_Click" IsCancel="True" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"/>
         </Border>
     </Grid>
 </Window>

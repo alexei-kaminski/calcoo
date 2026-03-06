@@ -74,6 +74,32 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="CalcButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource SubtleForeground}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBg}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -171,7 +197,9 @@
 
                 <TextBlock Grid.Row="6" Grid.Column="2" Text="Customize" Style="{StaticResource SectionHeader}"/>
                 <Border Grid.Row="7" Grid.Column="2" Style="{StaticResource SettingsCard}">
-                    <Button Name="CustomButton" Content="&#x25C7; button" HorizontalAlignment="Left" Width="90"/>
+                    <Button Name="CustomButton" Style="{StaticResource CalcButtonStyle}" HorizontalAlignment="Left" Width="36" Height="36" Padding="0">
+                        <Frame Source="pack://application:,,,/Resources/Icons/Buttons/Custom.xaml" NavigationUIVisibility="Hidden" Margin="4"/>
+                    </Button>
                 </Border>
             </Grid>
         </ScrollViewer>
