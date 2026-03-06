@@ -144,14 +144,28 @@
             <Canvas Name="Mem1DisplayCanvas"/>
         </Border>
 
-        <Border Style="{StaticResource DisplayStyle}" Grid.ColumnSpan="9" Grid.Column="0"  Grid.Row="0"  Grid.RowSpan="1" >
-            <Canvas Name="Register2DisplayCanvas"/>
+        <Canvas Name="Register2LabelCanvas" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0"/>
+        <Border Style="{StaticResource DisplayStyle}" Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="0">
+            <Canvas Name="Register2NumberCanvas"/>
         </Border>
-        <Border Style="{StaticResource DisplayStyle}" Grid.ColumnSpan="9" Grid.Column="0"  Grid.Row="1"  Grid.RowSpan="1" >
-            <Canvas Name="Register1DisplayCanvas"/>
+        <Border Style="{StaticResource DisplayStyle}" Grid.Column="8" Grid.ColumnSpan="1" Grid.Row="0">
+            <Canvas Name="Register2OperationCanvas"/>
         </Border>
-        <Border Style="{StaticResource DisplayStyle}" Grid.ColumnSpan="9" Grid.Column="0"  Grid.Row="2"  Grid.RowSpan="1" >
-            <Canvas Name="Register0DisplayCanvas"/>
+
+        <Canvas Name="Register1LabelCanvas" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1"/>
+        <Border Style="{StaticResource DisplayStyle}" Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="1">
+            <Canvas Name="Register1NumberCanvas"/>
+        </Border>
+        <Border Style="{StaticResource DisplayStyle}" Grid.Column="8" Grid.ColumnSpan="1" Grid.Row="1">
+            <Canvas Name="Register1OperationCanvas"/>
+        </Border>
+
+        <Canvas Name="Register0LabelCanvas" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2"/>
+        <Border Style="{StaticResource DisplayStyle}" Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="2">
+            <Canvas Name="Register0NumberCanvas"/>
+        </Border>
+        <Border Style="{StaticResource DisplayStyle}" Grid.Column="8" Grid.ColumnSpan="1" Grid.Row="2">
+            <Canvas Name="Register0OperationCanvas"/>
         </Border>
 
         <Border Style="{StaticResource DisplayStyle}"  Grid.ColumnSpan="2" Grid.Column="14"  Grid.Row="13"  Grid.RowSpan="1" >

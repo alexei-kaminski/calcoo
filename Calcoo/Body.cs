@@ -38,12 +38,14 @@ namespace Calcoo
         public class DisplayCanvas
         {
             public Canvas MainDisplay, DegRadDisplay, FormatDisplay;
-            public Canvas[] MemDisplays, RegisterDisplays;
+            public Canvas[] MemDisplays, RegisterLabelDisplays, RegisterNumberDisplays, RegisterOperationDisplays;
 
             public DisplayCanvas(int nMemDisplays, int nRegisterDisplays)
             {
                 MemDisplays = new Canvas[nMemDisplays];
-                RegisterDisplays = new Canvas[nRegisterDisplays];
+                RegisterLabelDisplays = new Canvas[nRegisterDisplays];
+                RegisterNumberDisplays = new Canvas[nRegisterDisplays];
+                RegisterOperationDisplays = new Canvas[nRegisterDisplays];
             }
         }
 
@@ -266,9 +268,9 @@ namespace Calcoo
                         );
             }
 
-            _regNumDisplays = new NumberDisplay[displayCanvas.RegisterDisplays.Length];
-            _operationDisplays = new OperationDisplay[displayCanvas.RegisterDisplays.Length];
-            _regLabelDisplays = new LabelDisplay[displayCanvas.RegisterDisplays.Length];
+            _regNumDisplays = new NumberDisplay[displayCanvas.RegisterNumberDisplays.Length];
+            _operationDisplays = new OperationDisplay[displayCanvas.RegisterOperationDisplays.Length];
+            _regLabelDisplays = new LabelDisplay[displayCanvas.RegisterLabelDisplays.Length];
 
             for (int i = 0; i < _regNumDisplays.Length; ++i)
             {
@@ -277,7 +279,7 @@ namespace Calcoo
                     0, //int dotOffsetX,
                     -6, //int dotOffsetY,
                     3, //int dotWidth,
-                    1 + 10, //int xMargin,
+                    1, //int xMargin,
                     2, //int yMargin,
                     0, //int errorOffsetX,
                     0, //int tickOffsetX,
@@ -289,22 +291,22 @@ namespace Calcoo
                     false,
                     "/Icons/Displays/Main/",
                     numBase,
-                    displayCanvas.RegisterDisplays[i]
+                    displayCanvas.RegisterNumberDisplays[i]
                     );
 
-                _operationDisplays[i] = new OperationDisplay(120,
+                _operationDisplays[i] = new OperationDisplay(-3,
                     0,
                     20,
                     16,
                     "/Icons/Displays/Operation/",
-                    displayCanvas.RegisterDisplays[i]);
+                    displayCanvas.RegisterOperationDisplays[i]);
 
-                _regLabelDisplays[i] = new LabelDisplay(0,
+                _regLabelDisplays[i] = new LabelDisplay(2,
                     0,
                     12,
                     16,
                     "/Icons/Displays/Label/Register" + i,
-                    displayCanvas.RegisterDisplays[i]);
+                    displayCanvas.RegisterLabelDisplays[i]);
             }
 
             _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32, 16,

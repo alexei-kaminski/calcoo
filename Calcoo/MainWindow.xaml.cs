@@ -55,9 +55,15 @@ namespace Calcoo
             displayCanvas.FormatDisplay = FormatDisplayCanvas;
             displayCanvas.MemDisplays[0] = Mem0DisplayCanvas;
             displayCanvas.MemDisplays[1] = Mem1DisplayCanvas;
-            displayCanvas.RegisterDisplays[0] = Register0DisplayCanvas;
-            displayCanvas.RegisterDisplays[1] = Register1DisplayCanvas;
-            displayCanvas.RegisterDisplays[2] = Register2DisplayCanvas;
+            displayCanvas.RegisterLabelDisplays[0] = Register0LabelCanvas;
+            displayCanvas.RegisterLabelDisplays[1] = Register1LabelCanvas;
+            displayCanvas.RegisterLabelDisplays[2] = Register2LabelCanvas;
+            displayCanvas.RegisterNumberDisplays[0] = Register0NumberCanvas;
+            displayCanvas.RegisterNumberDisplays[1] = Register1NumberCanvas;
+            displayCanvas.RegisterNumberDisplays[2] = Register2NumberCanvas;
+            displayCanvas.RegisterOperationDisplays[0] = Register0OperationCanvas;
+            displayCanvas.RegisterOperationDisplays[1] = Register1OperationCanvas;
+            displayCanvas.RegisterOperationDisplays[2] = Register2OperationCanvas;
 
             body = new Body(MainGrid, displayCanvas, NumBase, InputLength, ExpInputLength);
             
