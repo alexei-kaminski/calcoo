@@ -72,8 +72,10 @@ namespace Calcoo
          * guaranteed that the factorial will fit into double
          */
 
-            if (x <= 0.0)
+            if (x < 0.0)
                 return false;
+            if (x == 0.0)
+                return true;
             double log10XFact = x*Math.Log10(x) - x*Math.Log10(Math.E) + 0.5*Math.Log10(2*Math.PI*x);
             return (log10XFact < Math.Pow(10, nExpDigits));
         }

@@ -21,6 +21,7 @@ namespace Calcoo.Test
         [Test]
         public void FactCanDoTest()
         {
+            Assert.That(MathUtil.FactCanDo(0.0, 2), Is.EqualTo(true), "of 0");
             Assert.That(MathUtil.FactCanDo(24.0, 2), Is.EqualTo(true), "of 24");
             Assert.That(MathUtil.FactCanDo(69.0, 2), Is.EqualTo(true), "of 69");
             Assert.That(MathUtil.FactCanDo(70.0, 2), Is.EqualTo(false), "of 70");
@@ -65,5 +66,6 @@ namespace Calcoo.Test
             Assert.That(MathUtil.SmartSum(MathUtil.SmartSum(100.1, (-100.0), 10), (-0.1), 10),
                 Is.EqualTo(0.0).Within(1e-20), "( 100.1 - 100 ) - 0.1 == 0");
         }
+
     }
 }
