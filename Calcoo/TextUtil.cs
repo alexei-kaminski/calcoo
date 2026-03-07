@@ -49,7 +49,7 @@ namespace Calcoo
                     {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '.', ',', 'e', 'E'});
                 char[] textAsChars = simplifiedText.ToCharArray();
 
-                if (!allowedChars.Contains(textAsChars[0]))
+                if (textAsChars.Length == 0 || !allowedChars.Contains(textAsChars[0]))
                     return Double.NaN;
 
                 int parseableLength = textAsChars.Length;

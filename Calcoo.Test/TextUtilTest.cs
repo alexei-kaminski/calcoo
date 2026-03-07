@@ -292,5 +292,12 @@ namespace Calcoo.Test
                     "invalid " + testCase + ", heuristic parser");
             }
         }
+
+        [Test]
+        public void TextToDoubleEmptyStringReturnsNaN()
+        {
+            Assert.That(Double.IsNaN(TextUtil.TextToDouble("", false)), Is.True, "empty string");
+            Assert.That(Double.IsNaN(TextUtil.TextToDouble("   ", false)), Is.True, "whitespace only");
+        }
     }
 }
