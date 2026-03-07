@@ -288,24 +288,28 @@ namespace Calcoo
                     Settings.SaveDisplayFormat(body.GetDisplayFormat());
                     break;
                 case Command.Copy:
-                    Clipboard.SetText(body.GetMainDisplayString());
+                    try { Clipboard.SetText(body.GetMainDisplayString()); } catch { }
                     break;
                 case Command.Paste:
-                    if (!Clipboard.ContainsText())
-                        break;
-                    String textToPaste = Clipboard.GetText(TextDataFormat.Text);
-                    double value = TextUtil.TextToDouble(textToPaste, body.pasteParsingAlgorithm == Settings.PasteParsingAlgorithm.LocaleBased);
-                    if (Double.IsNaN(value))
-                        break;
+                    try
+                    {
+                        if (!Clipboard.ContainsText())
+                            break;
+                        string textToPaste = Clipboard.GetText(TextDataFormat.Text);
+                        double value = TextUtil.TextToDouble(textToPaste, body.pasteParsingAlgorithm == Settings.PasteParsingAlgorithm.LocaleBased);
+                        if (Double.IsNaN(value))
+                            break;
 
-                    redoStack.Clear();
-                    undoStack.AddFirst(cpu.Clone());
-                    body.UndoEnabled = true;
-                    body.RedoEnabled = false;
-                    if (undoStack.Count > UndoStackSize)
-                        undoStack.RemoveLast();
+                        redoStack.Clear();
+                        undoStack.AddFirst(cpu.Clone());
+                        body.UndoEnabled = true;
+                        body.RedoEnabled = false;
+                        if (undoStack.Count > UndoStackSize)
+                            undoStack.RemoveLast();
 
-                    cpu.ExecutePaste(value);
+                        cpu.ExecutePaste(value);
+                    }
+                    catch { }
                     break;
                 case Command.Custom:
                     if (!string.IsNullOrEmpty(_customButtonCommand))
