@@ -49,7 +49,6 @@ namespace Calcoo
             var button = new Button
             {
                 Content = "OK",
-                Padding = new Thickness(24, 6, 24, 6),
                 HorizontalAlignment = HorizontalAlignment.Right,
                 IsDefault = true,
                 Background = (System.Windows.Media.Brush)Application.Current.Resources["AccentButtonBackground"],
