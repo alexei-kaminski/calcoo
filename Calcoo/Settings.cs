@@ -210,7 +210,7 @@ namespace Calcoo
                 else
                     settings.roundLength = defaultRoundLength;
             }
-            catch
+            catch (Exception)
             {
                 settings.roundLength = defaultRoundLength;
             }
