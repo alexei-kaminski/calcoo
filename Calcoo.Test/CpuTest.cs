@@ -1641,6 +1641,54 @@ namespace Calcoo.Test
         }
 
         [Test]
+        public void CloseParenWithDeepStackDoesNotCrash()
+        {
+            // Regression test for issue #5: DoBinaryOpChain with parenClosed=true
+            // loops calling HeadParenExists(), which throws on empty stack.
+            // The caller (ExecuteRightParen) guards with ExistOpenParen(), making
+            // the crash unreachable in practice. This test exercises deep stacking
+            // above a paren marker to verify the invariant holds.
+
+            // 2 * (3 + 4 + 5 + 6 + 7) = 2 * 25 = 50
+            Assert.That(
+                RunCpu(new[]
+                {
+                    "Digit2", "Mul", "LeftParen",
+                    "Digit3", "Add", "Digit4", "Add", "Digit5", "Add", "Digit6", "Add", "Digit7",
+                    "RightParen", "Eq"
+                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(50.0).Within(1e-7), "2*(3+4+5+6+7)");
+
+            // Nested: 1 + (2 * (3 + 4 + 5)) = 1 + 2*12 = 25
+            Assert.That(
+                RunCpu(new[]
+                {
+                    "Digit1", "Add", "LeftParen",
+                    "Digit2", "Mul", "LeftParen",
+                    "Digit3", "Add", "Digit4", "Add", "Digit5",
+                    "RightParen", "RightParen", "Eq"
+                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(25.0).Within(1e-7), "1+(2*(3+4+5))");
+
+            // Triple nesting: ((2 + 3) * (4 + 5)) = 5 * 9 = 45
+            Assert.That(
+                RunCpu(new[]
+                {
+                    "LeftParen", "Digit2", "Add", "Digit3", "RightParen",
+                    "Mul", "LeftParen", "Digit4", "Add", "Digit5", "RightParen", "Eq"
+                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(45.0).Within(1e-7), "(2+3)*(4+5)");
+
+            // Extra close-parens should not crash (acts like =)
+            Assert.That(
+                RunCpu(new[]
+                {
+                    "Digit2", "Add", "Digit3", "RightParen", "RightParen"
+                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(5.0).Within(1e-7), "2+3)) - extra close-parens");
+        }
+
+        [Test]
         public void CustomCommandSequenceShouldStopOnError()
         {
             // Issue #2: custom command sequence should stop after an error.

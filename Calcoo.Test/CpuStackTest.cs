@@ -827,5 +827,23 @@ namespace Calcoo.Test
             Assert.That(stack.IsEmpty(), Is.True);
             Assert.That(() => stack.HeadParenExists(), Throws.TypeOf<Exception>());
         }
+
+        [Test]
+        public void HeadParenAddOnEmptyStackThrows()
+        {
+            // Issue #6: HeadParenAdd calls _stack.First().NumberOfParens++ with
+            // no empty-stack guard. On an empty stack, First() throws
+            // InvalidOperationException instead of a descriptive Exception.
+            // Compare with HeadParenExists which has an explicit empty-stack guard.
+            // Currently not triggerable via Cpu because ExecuteLeftParen only
+            // calls HeadParenAdd when _lastAction == Binop (which implies
+            // a Push preceded it), but the method itself is unguarded.
+            var stack = new CpuStack(Settings.Mode.Alg);
+            Assert.That(stack.IsEmpty(), Is.True);
+            // Bug: throws InvalidOperationException from First() instead of
+            // a descriptive Exception like the other stack methods.
+            // Should throw Exception with message like "HeadParenAdd called on empty stack".
+            Assert.That(() => stack.HeadParenAdd(), Throws.TypeOf<InvalidOperationException>());
+        }
     }
 }
