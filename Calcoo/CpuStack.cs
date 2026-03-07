@@ -98,7 +98,7 @@ namespace Calcoo
             if (_mode != Settings.Mode.Rpn)
                 throw new Exception("RPN stack push called in non-RPN mode");
             _stack.AddFirst(new StackElement(z));
-            if (StackMode == Settings.StackMode.Xyzt && _stack.Count() > 3)
+            if (StackMode == Settings.StackMode.Xyzt && _stack.Count > 3)
                 _stack.RemoveLast();
         }
 
@@ -148,7 +148,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek stack at negative depth " + i);
-            if (_stack.Count() > i)
+            if (_stack.Count > i)
             {
                 LinkedList<StackElement>.Enumerator e = _stack.GetEnumerator();
                 e.MoveNext();
@@ -164,7 +164,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek value at negative depth " + i);
-            if (_stack.Count() > i)
+            if (_stack.Count > i)
                 return PeekElement(i).Z;
 
             return 0.0;
@@ -174,7 +174,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek op at negative depth " + i);
-            if (_stack.Count() > i && _mode == Settings.Mode.Alg)
+            if (_stack.Count > i && _mode == Settings.Mode.Alg)
                 return PeekElement(i).Op;
 
             return null;
@@ -184,7 +184,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek paren at negative depth " + i);
-            if (_stack.Count() > i && _mode == Settings.Mode.Alg)
+            if (_stack.Count > i && _mode == Settings.Mode.Alg)
                 return (PeekElement(i).NumberOfParens > 0);
 
             return false;
