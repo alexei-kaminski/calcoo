@@ -263,7 +263,7 @@ namespace Calcoo.Test
             testCasesInvalid.Add("123,456.7,8");
             testCasesInvalid.Add("123.456,7.8");
             testCasesInvalid.Add("12,34.56");
-            testCasesInvalid.Add("12.34.56");
+            testCasesInvalid.Add("12.34,56");
 
             foreach (String testCase in testCasesInvalid)
             {
