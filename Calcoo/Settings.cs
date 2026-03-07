@@ -191,8 +191,8 @@ namespace Calcoo
         public static Settings Load(int defaultRoundLength)
         {
             var settings = new Settings(defaultRoundLength);
-            var rk = Registry.CurrentUser.OpenSubKey(Names.registryPath);
-            if (rk == null) 
+            using var rk = Registry.CurrentUser.OpenSubKey(Names.registryPath);
+            if (rk == null)
                 return settings;
 
             if (!Enum.TryParse((string)rk.GetValue(Names.mode, Defaults.Mode.ToString(), RegistryValueOptions.None), out settings.mode))
@@ -234,14 +234,14 @@ namespace Calcoo
 
         public static void SaveDisplayFormat(DisplayFormat displayFormat)
         {
-            RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
             if (rk == null) return;
             rk.SetValue(Names.displayFormat, displayFormat.ToString());
         }
 
         public void Save()
         {
-            RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
             if (rk == null) return;
 
             rk.SetValue(Names.mode, mode.ToString());

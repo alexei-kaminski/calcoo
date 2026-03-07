@@ -41,12 +41,14 @@ namespace Calcoo
 
             InitializeComponent();
 
-            var rk = Registry.CurrentUser.OpenSubKey("Software\\Calcoo\\", writable: true);
-            if (rk != null)
+            using (var rk = Registry.CurrentUser.OpenSubKey("Software\\Calcoo\\", writable: true))
             {
-                if (rk.GetValue("WindowHeight") is int h && h > 0)
-                    Height = h;
-                rk.DeleteValue("WindowWidth", throwOnMissingValue: false);
+                if (rk != null)
+                {
+                    if (rk.GetValue("WindowHeight") is int h && h > 0)
+                        Height = h;
+                    rk.DeleteValue("WindowWidth", throwOnMissingValue: false);
+                }
             }
 
             var displayCanvas = new Body.DisplayCanvas(NMem, NRegister);
@@ -85,10 +87,12 @@ namespace Calcoo
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
-            var rk = Registry.CurrentUser.CreateSubKey("Software\\Calcoo\\");
-            if (rk != null)
+            using (var rk = Registry.CurrentUser.CreateSubKey("Software\\Calcoo\\"))
             {
-                rk.SetValue("WindowHeight", (int)ActualHeight, RegistryValueKind.DWord);
+                if (rk != null)
+                {
+                    rk.SetValue("WindowHeight", (int)ActualHeight, RegistryValueKind.DWord);
+                }
             }
         }
 

@@ -21,7 +21,7 @@ namespace Calcoo
         {
             try
             {
-                var key = Registry.CurrentUser.OpenSubKey(
+                using var key = Registry.CurrentUser.OpenSubKey(
                     @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
                 if (key?.GetValue("AppsUseLightTheme") is int value)
                     return value == 0;
