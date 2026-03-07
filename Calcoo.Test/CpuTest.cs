@@ -1556,6 +1556,80 @@ namespace Calcoo.Test
         }
 
         [Test]
+        public void TrigZeroSnapWorksForLargeAngles()
+        {
+            // Large multiples of 180 degrees — the old relative-epsilon check was fragile here
+            var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+                DefaultEnterMode, DefaultStackMode);
+
+            // sin(360000000 deg) = sin(2000000 * 180) should be exactly 0
+            cpu.ExecutePaste(360000000.0);
+            cpu.Execute(Command.Sin);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "sin(360000000 deg)");
+
+            // sin(36000 deg) should be exactly 0
+            cpu.ExecutePaste(36000.0);
+            cpu.Execute(Command.Sin);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "sin(36000 deg)");
+
+            // cos(4500 deg) = cos(25 * 180) should be exactly 0 (odd multiple of 90)
+            // 4500 / 180 = 25 (odd), so 4500 = 25 * 180 = 50 * 90, which is even multiple of 90.
+            // Actually cos is zero at odd multiples of 90: 90, 270, 450, ...
+            // 4500 = 50 * 90 (even multiple of 90), so cos(4500) = cos(0) = 1, not 0.
+            // Use 4590 = 51 * 90 (odd multiple of 90) instead.
+            cpu.ExecutePaste(4590.0);
+            cpu.Execute(Command.Cos);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "cos(4590 deg)");
+
+            // cos(36090 deg) = cos(401 * 90) — odd multiple of 90, should be 0
+            cpu.ExecutePaste(36090.0);
+            cpu.Execute(Command.Cos);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "cos(36090 deg)");
+
+            // tan(360000000 deg) should be exactly 0
+            cpu.ExecutePaste(360000000.0);
+            cpu.Execute(Command.Tan);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "tan(360000000 deg)");
+
+            // tan(36090 deg) = tan(401 * 90) — odd multiple of 90, should be NaN
+            cpu.ExecutePaste(36090.0);
+            cpu.Execute(Command.Tan);
+            Assert.That(double.IsNaN(cpu.X), Is.True, "tan(36090 deg)");
+
+            // tan(360000090 deg) — large odd multiple of 90, should be NaN
+            cpu.ExecutePaste(360000090.0);
+            cpu.Execute(Command.Tan);
+            Assert.That(double.IsNaN(cpu.X), Is.True, "tan(360000090 deg)");
+        }
+
+        [Test]
+        public void TrigZeroSnapWorksForLargeRadians()
+        {
+            var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Rad, InputLength, ExpInputLength, NumBase, NMem,
+                DefaultEnterMode, DefaultStackMode);
+
+            // sin(2000000 * pi) should be exactly 0
+            cpu.ExecutePaste(2000000.0 * Math.PI);
+            cpu.Execute(Command.Sin);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "sin(2000000*pi)");
+
+            // cos(1000001 * pi/2) — odd multiple of pi/2, should be 0
+            cpu.ExecutePaste(1000001.0 * Math.PI / 2.0);
+            cpu.Execute(Command.Cos);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "cos(1000001*pi/2)");
+
+            // tan(2000000 * pi) should be exactly 0
+            cpu.ExecutePaste(2000000.0 * Math.PI);
+            cpu.Execute(Command.Tan);
+            Assert.That(cpu.X, Is.EqualTo(0.0), "tan(2000000*pi)");
+
+            // tan(1000001 * pi/2) — odd multiple of pi/2, should be NaN
+            cpu.ExecutePaste(1000001.0 * Math.PI / 2.0);
+            cpu.Execute(Command.Tan);
+            Assert.That(double.IsNaN(cpu.X), Is.True, "tan(1000001*pi/2)");
+        }
+
+        [Test]
         public void GetMemNegativeIndexThrowsDescriptiveException()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
