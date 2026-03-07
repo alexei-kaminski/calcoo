@@ -24,8 +24,8 @@ namespace Calcoo
         public void Show(T value)
         {
             Clear();
-            if (_icons.ContainsKey(value))
-                ShownGlyphs.Push(_icons[value]);
+            if (_icons.TryGetValue(value, out var icon))
+                ShownGlyphs.Push(icon);
             else
                 throw new Exception("Request to shown unknown value " + value);
             Refresh();

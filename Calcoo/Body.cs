@@ -55,13 +55,13 @@ namespace Calcoo
 
         public bool Arc
         {
-            get { return _toggleButtons[Command.Arc].IsChecked.Equals(true); }
+            get { return _toggleButtons[Command.Arc].IsChecked == true; }
             set { _toggleButtons[Command.Arc].IsChecked = value; }
         }
 
         public bool Hyp
         {
-            get { return _toggleButtons[Command.Hyp].IsChecked.Equals(true); }
+            get { return _toggleButtons[Command.Hyp].IsChecked == true; }
             set { _toggleButtons[Command.Hyp].IsChecked = value; }
         }
 

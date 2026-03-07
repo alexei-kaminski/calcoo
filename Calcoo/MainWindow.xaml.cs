@@ -91,7 +91,7 @@ namespace Calcoo
             {
                 if (rk != null)
                 {
-                    rk.SetValue("WindowHeight", (int)ActualHeight, RegistryValueKind.DWord);
+                    rk.SetValue("WindowHeight", (int)Math.Round(ActualHeight), RegistryValueKind.DWord);
                 }
             }
         }
@@ -176,12 +176,10 @@ namespace Calcoo
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Source.GetType() == typeof (ToggleButton))
+            if (e.Source is ToggleButton)
                 return;
 
-            var b = e.Source as Button;
-
-            if (b == null)
+            if (e.Source is not Button b)
                 return;
 
             if (Enum.TryParse(b.Name, out Command command))
