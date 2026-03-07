@@ -160,28 +160,7 @@ namespace Calcoo.Test
             testCases.Add(new StringNumberPair(-567.8123456, "-567.812,345,6"));
             testCases.Add(new StringNumberPair(-567.8123456, "-567,812.345.6"));
 
-            // custom local parser - several separators present, with decimal point and exponent    
-            testCases.Add(new StringNumberPair(1234567.8, "1,234,567.8"));
-            testCases.Add(new StringNumberPair(1234567.8, "1.234.567,8"));
-            testCases.Add(new StringNumberPair(1234567.81234, "1,234,567.812,34"));
-            testCases.Add(new StringNumberPair(1234567.81234, "1.234.567,812.34"));
-            testCases.Add(new StringNumberPair(1234567.8123456, "1,234,567.812,345,6"));
-            testCases.Add(new StringNumberPair(1234567.8123456, "1.234.567,812.345.6"));
-            testCases.Add(new StringNumberPair(234567.8123456, "234,567.812,345,6"));
-            testCases.Add(new StringNumberPair(234567.8123456, "234.567,812.345.6"));
-            testCases.Add(new StringNumberPair(567.8123456, "567.812,345,6"));
-            testCases.Add(new StringNumberPair(567.8123456, "567,812.345.6"));
-            testCases.Add(new StringNumberPair(-1234567.8, "-1,234,567.8"));
-            testCases.Add(new StringNumberPair(-1234567.8, "-1.234.567,8"));
-            testCases.Add(new StringNumberPair(-1234567.81234, "-1,234,567.812,34"));
-            testCases.Add(new StringNumberPair(-1234567.81234, "-1.234.567,812.34"));
-            testCases.Add(new StringNumberPair(-1234567.8123456, "-1,234,567.812,345,6"));
-            testCases.Add(new StringNumberPair(-1234567.8123456, "-1.234.567,812.345.6"));
-            testCases.Add(new StringNumberPair(-234567.8123456, "-234,567.812,345,6"));
-            testCases.Add(new StringNumberPair(-234567.8123456, "-234.567,812.345.6"));
-            testCases.Add(new StringNumberPair(-567.8123456, "-567.812,345,6"));
-            testCases.Add(new StringNumberPair(-567.8123456, "-567,812.345.6"));
-
+            // custom local parser - several separators present, with decimal point and exponent
             testCases.Add(new StringNumberPair(12345678, "1,234,567.8e1"));
             testCases.Add(new StringNumberPair(12345678, "1.234.567,8e1"));
             testCases.Add(new StringNumberPair(12345678.1234, "1,234,567.812,34e1"));
