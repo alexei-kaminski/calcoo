@@ -184,7 +184,8 @@ namespace Calcoo
             if (b == null)
                 return;
 
-            ProcessCommand( (Command) Enum.Parse(typeof (Command), b.Name));
+            if (Enum.TryParse(b.Name, out Command command))
+                ProcessCommand(command);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
