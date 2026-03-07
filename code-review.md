@@ -81,15 +81,13 @@
 - `MathUtil.cs:206`
 - When `abssum == 0` (e.g., `5 + (-5)`), `Math.Log10(0)` = `-Infinity` causes the early-return condition to fail, sending the calculation through the rounding path. The result is correct (0.0) but only because `Math.Round(0 / cutoff) = 0`. An early return for `abssum == 0` would be simpler and more robust.
 
-### 19. `DoubleByDigit.FromDouble` uses `long` arithmetic that could overflow for large mantissa lengths
-- `DoubleByDigit.cs:305,333`
-- `abs1X` is computed as `(long) Math.Round(...)` where the value can reach `10^mantissaLength`. A `long` holds ~18 decimal digits. Current `mantissaLength` is 14 (safe), but no guard prevents overflow with larger values.
+### 19. ~~`DoubleByDigit.FromDouble` uses `long` arithmetic that could overflow for large mantissa lengths~~ (IGNORED)
+- Not a practical concern with current `mantissaLength` of 14.
 
 ### Suggestions
 
-### 20. `Atanh(+/-1)` returns infinity instead of NaN, inconsistent with other inverse functions
-- `MathUtil.cs:151-169`
-- Other inverse functions (`Asin`, `Acos`, `Acosh`) return NaN for boundary inputs. `Atanh(1)` returns `PositiveInfinity`. Mathematically correct but inconsistent with the calculator's error display convention.
+### 20. ~~`Atanh(+/-1)` returns infinity instead of NaN~~ (IGNORED)
+- No visible effect: both Infinity and NaN display as "error" via `DoubleByDigit.FromDouble`.
 
 ### 21. Dead `Padding` assignment on ThemedMessageBox button
 - `ThemedMessageBox.cs:52`
