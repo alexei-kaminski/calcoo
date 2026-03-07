@@ -80,16 +80,16 @@ namespace Calcoo
     {
         public static readonly Command[] Mem = {Command.Mem0, Command.Mem1};
 
-        public static ReadOnlyCollection<Command> RpnOnly =
+        public static readonly ReadOnlyCollection<Command> RpnOnly =
             new ReadOnlyCollection<Command>(new List<Command> {Command.Enter, Command.StackUp, Command.StackDown});
 
-        public static ReadOnlyCollection<Command> AlgOnly =
+        public static readonly ReadOnlyCollection<Command> AlgOnly =
             new ReadOnlyCollection<Command>(new List<Command> {Command.Eq, Command.LeftParen, Command.RightParen});
 
-        public static ReadOnlyCollection<Command> TrigBare =
+        public static readonly ReadOnlyCollection<Command> TrigBare =
             new ReadOnlyCollection<Command>(new List<Command> {Command.Sin, Command.Cos, Command.Tan});
 
-        public static ReadOnlyCollection<Command> TrigAll = new ReadOnlyCollection<Command>(new List<Command>
+        public static readonly ReadOnlyCollection<Command> TrigAll = new ReadOnlyCollection<Command>(new List<Command>
         {
             Command.Sin,
             Command.Cos,
@@ -105,7 +105,7 @@ namespace Calcoo
             Command.Atanh
         });
 
-        public static ReadOnlyCollection<Command> InvalidForCustomCommandSequence =
+        public static readonly ReadOnlyCollection<Command> InvalidForCustomCommandSequence =
             new ReadOnlyCollection<Command>(new List<Command>
             {
                 Command.Custom,
