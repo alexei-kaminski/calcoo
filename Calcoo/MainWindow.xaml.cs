@@ -151,7 +151,7 @@ namespace Calcoo
             else if (msg == WM_SIZING)
             {
                 var rect = Marshal.PtrToStructure<RECT>(lParam);
-                int edge = wParam.ToInt32();
+                int edge = (int)wParam.ToInt64();
                 int clientWidth = rect.Right - rect.Left - _chromeWidth;
                 int clientHeight = rect.Bottom - rect.Top - _chromeHeight;
 
