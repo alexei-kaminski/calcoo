@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace Calcoo.Test
 {
+    [TestFixture]
     internal class TextUtilTest
     {
         private class StringNumberPair

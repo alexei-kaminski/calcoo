@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Calcoo.Test
 {
+    [TestFixture]
     internal class MathUtilTest
     {
         [Test]
