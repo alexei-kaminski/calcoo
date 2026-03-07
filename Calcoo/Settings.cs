@@ -239,6 +239,13 @@ namespace Calcoo
             rk.SetValue(Names.displayFormat, displayFormat.ToString());
         }
 
+        public static void SaveAngleUnits(AngleUnits angleUnits)
+        {
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            if (rk == null) return;
+            rk.SetValue(Names.angleUnits, angleUnits.ToString());
+        }
+
         public void Save()
         {
             using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);

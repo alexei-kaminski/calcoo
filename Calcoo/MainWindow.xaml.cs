@@ -287,6 +287,10 @@ namespace Calcoo
                     body.SwitchDisplayFormat();
                     Settings.SaveDisplayFormat(body.GetDisplayFormat());
                     break;
+                case Command.DegRad:
+                    cpu.Execute(Command.DegRad);
+                    Settings.SaveAngleUnits(cpu.AngleUnits);
+                    break;
                 case Command.Copy:
                     try { Clipboard.SetText(body.GetMainDisplayString()); } catch { }
                     break;

@@ -29,13 +29,12 @@
 - `CpuStack.cs:213`
 - `_stack.First().NumberOfParens++` will throw `InvalidOperationException` if the stack is empty. Currently protected by caller logic, but fragile.
 
-### 7. `Pow` is left-associative instead of right-associative
+### 7. ~~`Pow` is left-associative instead of right-associative~~ (NOT A BUG — intentional)
 - `Cpu.cs:665-668`
-- The `>=` comparison in `BinaryOpPriority` evaluation makes equal-priority operators left-associative. For `+`, `-`, `*`, `/` this is correct, but `2^3^4` evaluates as `(2^3)^4 = 4096` instead of the mathematical convention `2^(3^4)`. May be intentional to match physical calculator behavior.
+- Left-associative `Pow` matches physical calculator behavior by design.
 
-### 8. `WasChanged` set true even when clicking already-selected option
-- `SettingsDialog.xaml.cs:109,150`
-- Any RadioButton/CheckBox click sets `WasChanged = true`, even when the value doesn't actually change. Causes unnecessary registry writes.
+### 8. ~~`WasChanged` set true even when clicking already-selected option~~ (FIXED)
+- Used `when` guards to skip no-op clicks on already-selected controls.
 
 ### 9. `_mainDisplayContent` could be null
 - `Body.cs:87`
@@ -45,9 +44,8 @@
 - `NumberDisplay.cs:110`
 - When `_hasError` is true, `_error` (declared `DisplayGlyph?`) is pushed onto `ShownGlyphs`. Currently safe because the constructor keeps `_hasError` and `_error` in sync, but these are independent fields — a refactor could introduce a NullReferenceException.
 
-### 11. `_numBase` vs hardcoded `10` inconsistency
-- `Cpu.cs:656` vs `793,799,874`
-- `ExecuteBinaryOp` uses hardcoded `10` for `_input.ToDouble(10)` instead of `_numBase`, while some other methods use `_numBase`. If non-base-10 modes were ever supported, binary/unary operations would use the wrong base.
+### 11. ~~`_numBase` vs hardcoded `10` inconsistency~~ (FIXED)
+- Replaced all `ToDouble(10)` with `ToDouble(_numBase)`.
 
 ## Suggestions
 
@@ -63,10 +61,36 @@
 - `TextUtil.cs:98-102`
 - Pasting `"1,234"` from a locale using comma as thousands separator parses as `1.234` instead of `1234`.
 
-### 15. Duplicate invalid test case in TextUtilTest
-- `TextUtilTest.cs:279,287`
-- `"12.34.56"` appears twice in `testCasesInvalid`. The second may have been intended as a different invalid pattern.
+### 15. ~~Duplicate invalid test case in TextUtilTest~~ (FIXED)
+- Replaced duplicate `"12.34.56"` with `"12.34,56"`.
 
-### 16. Missing `[TestFixture]` on `MathUtilTest` and `TextUtilTest`
-- `MathUtilTest.cs:7`, `TextUtilTest.cs:8`
-- Inconsistent with the other four test classes. Tests still run in NUnit 4 but could break under stricter configurations.
+### 16. ~~Missing `[TestFixture]` on `MathUtilTest` and `TextUtilTest`~~ (FIXED)
+- Added `[TestFixture]` to both classes for consistency.
+
+## Round 3
+
+### Bugs
+
+### 17. AngleUnits (DegRad) toggle is not persisted to registry
+- `MainWindow.xaml.cs:337` (default case)
+- The `DegRad` button toggles `cpu.AngleUnits` in memory but never saves to registry. Compare with `Format` (line 288) which calls `Settings.SaveDisplayFormat()`. If the user switches Deg/Rad and closes the app, the change is lost on next launch.
+
+### Warnings
+
+### 18. `SmartSum` takes unnecessary rounding path when sum is exactly zero
+- `MathUtil.cs:206`
+- When `abssum == 0` (e.g., `5 + (-5)`), `Math.Log10(0)` = `-Infinity` causes the early-return condition to fail, sending the calculation through the rounding path. The result is correct (0.0) but only because `Math.Round(0 / cutoff) = 0`. An early return for `abssum == 0` would be simpler and more robust.
+
+### 19. `DoubleByDigit.FromDouble` uses `long` arithmetic that could overflow for large mantissa lengths
+- `DoubleByDigit.cs:305,333`
+- `abs1X` is computed as `(long) Math.Round(...)` where the value can reach `10^mantissaLength`. A `long` holds ~18 decimal digits. Current `mantissaLength` is 14 (safe), but no guard prevents overflow with larger values.
+
+### Suggestions
+
+### 20. `Atanh(+/-1)` returns infinity instead of NaN, inconsistent with other inverse functions
+- `MathUtil.cs:151-169`
+- Other inverse functions (`Asin`, `Acos`, `Acosh`) return NaN for boundary inputs. `Atanh(1)` returns `PositiveInfinity`. Mathematically correct but inconsistent with the calculator's error display convention.
+
+### 21. Dead `Padding` assignment on ThemedMessageBox button
+- `ThemedMessageBox.cs:52`
+- The `Button.Padding` is set but ignored because the custom `ControlTemplate` defines its own padding without a `TemplateBinding`. The button-level value is dead code.
