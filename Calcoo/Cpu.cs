@@ -922,7 +922,7 @@ namespace Calcoo
                     break;
                 case UnaryOp.Sin:
                     X = AngleToRad(X, AngleUnits);
-                    if (Math.Abs(X%Math.PI) < CpuPrecision*X)
+                    if (Math.Abs(X%Math.PI) < CpuPrecision*Math.Abs(X))
                         // to have sin 180 == 0;
                         // the condition may be a bit too aggressive
                         X = 0.0;
@@ -946,7 +946,7 @@ namespace Calcoo
                     break;
                 case UnaryOp.Cos:
                     X = AngleToRad(X, AngleUnits);
-                    if (Math.Abs((X - Math.PI/2.0)%Math.PI) < CpuPrecision*X)
+                    if (Math.Abs((X - Math.PI/2.0)%Math.PI) < CpuPrecision*Math.Abs(X))
                         // to have cos 90 == 0;
                         // the condition may be a bit too aggressive
                         X = 0.0;
@@ -973,11 +973,11 @@ namespace Calcoo
                     break;
                 case UnaryOp.Tan:
                     X = AngleToRad(X, AngleUnits);
-                    if (Math.Abs((X - Math.PI/2.0)%Math.PI) < CpuPrecision*X)
+                    if (Math.Abs((X - Math.PI/2.0)%Math.PI) < CpuPrecision*Math.Abs(X))
                         // to have tan 90 -> overflow;
                         // the condition may be a bit too aggressive
                         X = Double.NaN;
-                    else if (Math.Abs(X%Math.PI) < CpuPrecision*X)
+                    else if (Math.Abs(X%Math.PI) < CpuPrecision*Math.Abs(X))
                         // to have tan 180 == 0;
                         // the condition may be a bit too aggressive
                         X = 0.0;

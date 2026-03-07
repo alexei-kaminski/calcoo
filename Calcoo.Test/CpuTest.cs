@@ -1530,5 +1530,29 @@ namespace Calcoo.Test
             Assert.DoesNotThrow(() => cpu.GetMem(NMem - 1));
             Assert.Throws<Exception>(() => cpu.GetMem(NMem));
         }
+
+        [Test]
+        public void TrigZeroSnapWorksForNegativeAngles()
+        {
+            // sin(-180 deg) should snap to 0, just like sin(180 deg)
+            Assert.That(
+                RunCpu(new[] {"Digit1", "Digit8", "Digit0", "Sign", "Sin"}, Settings.Mode.Alg,
+                    Settings.AngleUnits.Deg),
+                Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "sin(-180 deg)");
+            // cos(-90 deg) should snap to 0, just like cos(90 deg)
+            Assert.That(
+                RunCpu(new[] {"Digit9", "Digit0", "Sign", "Cos"}, Settings.Mode.Alg,
+                    Settings.AngleUnits.Deg),
+                Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "cos(-90 deg)");
+            // tan(-180 deg) should snap to 0, just like tan(180 deg)
+            Assert.That(
+                RunCpu(new[] {"Digit1", "Digit8", "Digit0", "Sign", "Tan"}, Settings.Mode.Alg,
+                    Settings.AngleUnits.Deg),
+                Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "tan(-180 deg)");
+            // tan(-90 deg) should be NaN, just like tan(90 deg)
+            Assert.That(
+                Double.IsNaN(RunCpu(new[] {"Digit9", "Digit0", "Sign", "Tan"}, Settings.Mode.Alg,
+                    Settings.AngleUnits.Deg)), Is.True, "tan(-90 deg)");
+        }
     }
 }
