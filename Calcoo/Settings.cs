@@ -227,7 +227,7 @@ namespace Calcoo
             if (!Enum.TryParse((string)rk.GetValue(Names.displayFormat, Defaults.DisplayFormat.ToString(), RegistryValueOptions.None), out settings.displayFormat))
                 settings.displayFormat = Defaults.DisplayFormat;
 
-            settings.customButtonCommand = CleanUpCustomCommand((string)rk.GetValue(Names.customButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None));
+            settings.customButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.customButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
 
             return settings;
         }

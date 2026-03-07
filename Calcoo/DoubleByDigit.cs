@@ -449,7 +449,7 @@ namespace Calcoo
                     while (tmp > 0)
                     {
                         digitsOfExpReversed.Add(tmp%numBase);
-                        tmp = (int) Math.Floor(tmp/dBase);
+                        tmp = tmp / numBase;
                     }
 
                     for (int i = 0; i < expLength - digitsOfExpReversed.Count; ++i)
