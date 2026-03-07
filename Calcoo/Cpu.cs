@@ -700,7 +700,7 @@ namespace Calcoo
         private void ExecuteBinaryOp(BinaryOp binaryOp)
         {
             if (_lastAction == Action.Input)
-                X = _input.ToDouble(10);
+                X = _input.ToDouble(_numBase);
 
             switch (Mode)
             {
@@ -816,7 +816,7 @@ namespace Calcoo
                     throw new Exception("ExecuteEq called in RPN mode");
                 case Settings.Mode.Alg:
                     if (_lastAction == Action.Input)
-                        X = _input.ToDouble(10);
+                        X = _input.ToDouble(_numBase);
                     DoBinaryOpChain(BinopPriorityMin, false);
                     _stack.Clear();
                     _lastAction = Action.Enter;
@@ -837,13 +837,13 @@ namespace Calcoo
                     {
                         case Settings.EnterMode.Traditional:
                             if (_lastAction == Action.Input)
-                                X = _input.ToDouble(10);
+                                X = _input.ToDouble(_numBase);
                             _stack.Push(X);
                             _lastAction = Action.EnterPush;
                             break;
                         case Settings.EnterMode.Hp28:
                             if (_lastAction == Action.Input)
-                                X = _input.ToDouble(10);
+                                X = _input.ToDouble(_numBase);
                             else
                                 _stack.Push(X);
                             _lastAction = Action.Enter;
@@ -860,7 +860,7 @@ namespace Calcoo
         private void ExecuteExchXy()
         {
             if (_lastAction == Action.Input)
-                X = _input.ToDouble(10);
+                X = _input.ToDouble(_numBase);
             X = _stack.SwapHeadValue(X);
             _lastAction = Action.Enter;
         }
@@ -868,7 +868,7 @@ namespace Calcoo
         private void ExecuteStackUp()
         {
             if (_lastAction == Action.Input)
-                X = _input.ToDouble(10);
+                X = _input.ToDouble(_numBase);
             X = _stack.RollUp(X);
             _lastAction = Action.Enter;
         }
@@ -876,7 +876,7 @@ namespace Calcoo
         private void ExecuteStackDown()
         {
             if (_lastAction == Action.Input)
-                X = _input.ToDouble(10);
+                X = _input.ToDouble(_numBase);
             X = _stack.RollDown(X);
             _lastAction = Action.Enter;
         }
@@ -896,7 +896,7 @@ namespace Calcoo
                 throw new Exception("cannot be called in RPN mode");
 
             if (_lastAction == Action.Input)
-                X = _input.ToDouble(10);
+                X = _input.ToDouble(_numBase);
 
             if (_stack.ExistOpenParen())
             {
@@ -918,7 +918,7 @@ namespace Calcoo
         private void ExecuteUnaryOp(UnaryOp unaryOp)
         {
             if (_lastAction == Action.Input)
-                X = _input.ToDouble(10);
+                X = _input.ToDouble(_numBase);
 
             switch (unaryOp)
             {
