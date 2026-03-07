@@ -803,5 +803,29 @@ namespace Calcoo.Test
             Assert.That(() => stack.PeekParenExists(-1), Throws.InstanceOf<Exception>(),
                 "failed to throw at peekValue at negative depth in RPN mode");
         }
+
+        [Test]
+        public void GetOpOnEmptyStackThrowsDescriptiveException()
+        {
+            var stack = new CpuStack(Settings.Mode.Alg);
+            Assert.That(stack.IsEmpty(), Is.True);
+            Assert.That(() => stack.GetOp(), Throws.TypeOf<Exception>());
+        }
+
+        [Test]
+        public void GetValueOnEmptyStackThrowsDescriptiveException()
+        {
+            var stack = new CpuStack(Settings.Mode.Alg);
+            Assert.That(stack.IsEmpty(), Is.True);
+            Assert.That(() => stack.GetValue(), Throws.TypeOf<Exception>());
+        }
+
+        [Test]
+        public void HeadParenExistsOnEmptyStackThrowsDescriptiveException()
+        {
+            var stack = new CpuStack(Settings.Mode.Alg);
+            Assert.That(stack.IsEmpty(), Is.True);
+            Assert.That(() => stack.HeadParenExists(), Throws.TypeOf<Exception>());
+        }
     }
 }

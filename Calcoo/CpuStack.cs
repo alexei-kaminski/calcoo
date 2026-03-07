@@ -139,6 +139,8 @@ namespace Calcoo
         {
             if (_mode != Settings.Mode.Alg)
                 throw new Exception("Alg stack GetOp called in non-Alg mode " + _mode.ToString());
+            if (IsEmpty())
+                throw new Exception("GetOp called on empty stack");
             return _stack.First().Op;
         }
 
@@ -190,6 +192,8 @@ namespace Calcoo
 
         public double GetValue()
         {
+            if (IsEmpty())
+                throw new Exception("GetValue called on empty stack");
             return _stack.First().Z;
         }
 
@@ -197,6 +201,8 @@ namespace Calcoo
         {
             if (_mode != Settings.Mode.Alg)
                 throw new Exception("Alg stack HeadParenExists called in non-Alg mode " + _mode.ToString());
+            if (IsEmpty())
+                throw new Exception("HeadParenExists called on empty stack");
             return _stack.First().NumberOfParens > 0;
         }
 
