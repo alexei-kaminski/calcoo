@@ -27,7 +27,7 @@ namespace Calcoo
             if (_icons.TryGetValue(value, out var icon))
                 ShownGlyphs.Push(icon);
             else
-                throw new Exception("Request to shown unknown value " + value);
+                throw new Exception("Request to show unknown value " + value);
             Refresh();
         }
     }
