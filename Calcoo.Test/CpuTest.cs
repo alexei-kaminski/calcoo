@@ -1554,5 +1554,16 @@ namespace Calcoo.Test
                 Double.IsNaN(RunCpu(new[] {"Digit9", "Digit0", "Sign", "Tan"}, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg)), Is.True, "tan(-90 deg)");
         }
+
+        [Test]
+        public void GetMemNegativeIndexThrowsDescriptiveException()
+        {
+            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+                DefaultEnterMode, DefaultStackMode);
+
+            // Negative index should be caught by the guard and throw Exception,
+            // not slip through to _mem[-1] causing IndexOutOfRangeException.
+            Assert.Throws<Exception>(() => cpu.GetMem(-1));
+        }
     }
 }

@@ -118,7 +118,7 @@ namespace Calcoo
 
         public double GetMem(int i)
         {
-            if (i >= _mem.Length)
+            if (i < 0 || i >= _mem.Length)
                 throw new Exception("Requesting the content of memory register " + i + " while the max allowed is "
                                     + _mem.Length);
             return _mem[i];
