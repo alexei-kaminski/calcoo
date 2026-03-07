@@ -1565,5 +1565,38 @@ namespace Calcoo.Test
             // not slip through to _mem[-1] causing IndexOutOfRangeException.
             Assert.Throws<Exception>(() => cpu.GetMem(-1));
         }
+
+        [Test]
+        public void CustomCommandSequenceShouldStopOnError()
+        {
+            // Issue #2: custom command sequence should stop after an error.
+            // Set up: push 5 onto stack as Y, type 0 as X.
+            // Custom sequence "InvX Add" should error on InvX (1/0 = NaN)
+            // and NOT proceed to Add (which would consume Y=5 from the stack).
+            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+                DefaultEnterMode, DefaultStackMode);
+            cpu.Execute(Command.Digit5);
+            cpu.Execute(Command.Enter);
+            // Stack: [5], X=5
+            cpu.Execute(Command.Digit0);
+            // Stack: [5], input=0
+
+            // Simulate the custom command loop from MainWindow with NaN guard
+            string customCommandSequence = "InvX Add";
+            foreach (string token in customCommandSequence.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (double.IsNaN(cpu.X))
+                    break;
+                if (Enum.TryParse(token, out Command parsed)
+                    && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
+                    cpu.Execute(parsed);
+            }
+
+            // InvX should have produced NaN
+            Assert.That(double.IsNaN(cpu.X), "InvX of 0 should produce NaN");
+            // Add should not have run, so Y=5 should still be on the stack
+            Assert.That(cpu.GetStack().PeekValue(0), Is.EqualTo(5.0),
+                "Stack should be untouched: Add should not execute after a prior error");
+        }
     }
 }

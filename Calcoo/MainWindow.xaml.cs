@@ -323,6 +323,8 @@ namespace Calcoo
 
                         foreach (string token in _customButtonCommand.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                         {
+                            if (double.IsNaN(cpu.X))
+                                break;
                             if (Enum.TryParse(token, out Command parsed)
                                 && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
                                 cpu.Execute(parsed);

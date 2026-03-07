@@ -13,6 +13,7 @@ namespace Calcoo
         public Settings NewSettings;
         public bool WasChanged;
         private readonly int _maxRoundLength;
+        private bool _initialized;
 
         public SettingsDialog(Settings settings, int maxRoundLength)
         {
@@ -85,6 +86,7 @@ namespace Calcoo
             RoundingDigitsComboBox.SelectedItem = settings.roundLength;
             TruncateZerosCheckBox.IsChecked = settings.truncateZeros;
             UpdateRoundingControlsEnabled(settings.round);
+            _initialized = true;
         }
 
         private void UpdateRoundingControlsEnabled(bool roundingEnabled)
@@ -95,6 +97,8 @@ namespace Calcoo
 
         private void RoundingDigitsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!_initialized)
+                return;
             if (RoundingDigitsComboBox.SelectedItem is int value)
             {
                 NewSettings.roundLength = value;
