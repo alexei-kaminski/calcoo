@@ -114,10 +114,8 @@ namespace Calcoo
 
         private void Settings_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Source.GetType() == typeof (RadioButton))
+            if (e.Source is RadioButton b)
             {
-                RadioButton b = e.Source as RadioButton;
-                if (b == null) return;
                 WasChanged = true;
                 switch (b.Name)
                 {
@@ -157,35 +155,31 @@ namespace Calcoo
                 return;
             }
 
-            if (e.Source.GetType() == typeof(CheckBox))
+            if (e.Source is CheckBox cb)
             {
-                CheckBox b = e.Source as CheckBox;
-                if (b == null) return;
                 WasChanged = true;
-                switch (b.Name)
+                switch (cb.Name)
                 {
                     case"AutoreleaseArcButton":
-                        NewSettings.arcAutorelease = AutoreleaseArcButton.IsChecked.Equals(true);
+                        NewSettings.arcAutorelease = AutoreleaseArcButton.IsChecked == true;
                         break;
                     case"AutoreleaseHypButton":
-                        NewSettings.hypAutorelease = AutoreleaseHypButton.IsChecked.Equals(true);
+                        NewSettings.hypAutorelease = AutoreleaseHypButton.IsChecked == true;
                         break;
                     case "RoundingOutputCheckBox":
-                        NewSettings.round = RoundingOutputCheckBox.IsChecked.Equals(true);
+                        NewSettings.round = RoundingOutputCheckBox.IsChecked == true;
                         UpdateRoundingControlsEnabled(NewSettings.round);
                         break;
                     case "TruncateZerosCheckBox":
-                        NewSettings.truncateZeros = TruncateZerosCheckBox.IsChecked.Equals(true);
+                        NewSettings.truncateZeros = TruncateZerosCheckBox.IsChecked == true;
                         break;
                 }
                 return;
             }
 
-            if (e.Source.GetType() == typeof (Button))
+            if (e.Source is Button btn)
             {
-                Button b = e.Source as Button;
-                if (b == null) return;
-                switch (b.Name)
+                switch (btn.Name)
                 {
                     case "SettingsOk":
                         Close();
