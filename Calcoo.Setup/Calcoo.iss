@@ -24,7 +24,7 @@ WizardStyle=modern
 DisableProgramGroupPage=yes
 
 [Files]
-Source: "..\Calcoo\bin\Release\net10.0-windows\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs; Excludes: "*.pdb"
+Source: "..\Calcoo\bin\Release\net9.0-windows\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs; Excludes: "*.pdb"
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Comment: "{#MyAppDescription}"; WorkingDir: "{app}"
@@ -38,6 +38,6 @@ Filename: "{app}\{#MyAppExeName}"; Description: "Launch {#MyAppName}"; Flags: no
 [Code]
 function InitializeSetup: Boolean;
 begin
-  Dependency_AddDotNet100Desktop;
+  Dependency_AddDotNet90Desktop;
   Result := True;
 end;
