@@ -56,4 +56,8 @@
     <Resource Include="Resources\Icons\Displays\Main\Tick.xaml" />
   </ItemGroup>
 
+  <Target Name="BuildInstaller" AfterTargets="Publish">
+    <Exec Command="&quot;C:\Program Files (x86)\Inno Setup 6\ISCC.exe&quot; &quot;$(MSBuildProjectDirectory)\..\Calcoo.Setup\Calcoo.iss&quot;" />
+  </Target>
+
 </Project>

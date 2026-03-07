@@ -10,11 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calcoo.Test", "Calcoo.Test\
 		{A320D154-262B-4F71-B3C1-0916FD55BDC0} = {A320D154-262B-4F71-B3C1-0916FD55BDC0}
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Calcoo.Setup", "Calcoo.Setup\Calcoo.Setup.vdproj", "{33D8E19E-C9C1-5006-2923-C5F500135981}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A320D154-262B-4F71-B3C1-0916FD55BDC0} = {A320D154-262B-4F71-B3C1-0916FD55BDC0}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +24,6 @@ Global
 		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4B9A54-0FFC-4167-B9D6-E8435785E2A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33D8E19E-C9C1-5006-2923-C5F500135981}.Debug|Any CPU.ActiveCfg = Debug
-		{33D8E19E-C9C1-5006-2923-C5F500135981}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
