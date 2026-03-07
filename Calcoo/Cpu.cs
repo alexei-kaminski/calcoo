@@ -174,7 +174,7 @@ namespace Calcoo
             _mem = new double[nMem];
 
             // setting the current settings
-            Mode = mode;
+            _Mode = mode;
             AngleUnits = angleUnits;
             EnterMode = enterMode;
 
