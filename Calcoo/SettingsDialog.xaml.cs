@@ -110,40 +110,47 @@ namespace Calcoo
         {
             if (e.Source is RadioButton b)
             {
-                WasChanged = true;
                 switch (b.Name)
                 {
-                    case "ModeAlgebraic":
+                    case "ModeAlgebraic" when NewSettings.mode != Settings.Mode.Alg:
                         RpnStackInfinite.IsEnabled = false;
                         RpnStackXyzt.IsEnabled = false;
                         RpnEnterTraditional.IsEnabled = false;
                         RpnEnterHp28.IsEnabled = false;
                         NewSettings.mode = Settings.Mode.Alg;
+                        WasChanged = true;
                         break;
-                    case "ModeRpn":
+                    case "ModeRpn" when NewSettings.mode != Settings.Mode.Rpn:
                         RpnStackInfinite.IsEnabled = true;
                         RpnStackXyzt.IsEnabled = true;
                         RpnEnterTraditional.IsEnabled = true;
                         RpnEnterHp28.IsEnabled = true;
                         NewSettings.mode = Settings.Mode.Rpn;
+                        WasChanged = true;
                         break;
-                    case "RpnEnterTraditional":
+                    case "RpnEnterTraditional" when NewSettings.enterMode != Settings.EnterMode.Traditional:
                         NewSettings.enterMode = Settings.EnterMode.Traditional;
+                        WasChanged = true;
                         break;
-                    case "RpnEnterHp28":
+                    case "RpnEnterHp28" when NewSettings.enterMode != Settings.EnterMode.Hp28:
                         NewSettings.enterMode = Settings.EnterMode.Hp28;
+                        WasChanged = true;
                         break;
-                    case "RpnStackInfinite":
+                    case "RpnStackInfinite" when NewSettings.stackMode != Settings.StackMode.Infinite:
                         NewSettings.stackMode = Settings.StackMode.Infinite;
+                        WasChanged = true;
                         break;
-                    case "RpnStackXyzt":
+                    case "RpnStackXyzt" when NewSettings.stackMode != Settings.StackMode.Xyzt:
                         NewSettings.stackMode = Settings.StackMode.Xyzt;
+                        WasChanged = true;
                         break;
-                    case "PasteParsingHeuristic":
+                    case "PasteParsingHeuristic" when NewSettings.pasteParsingAlgorithm != Settings.PasteParsingAlgorithm.Heuristic:
                         NewSettings.pasteParsingAlgorithm = Settings.PasteParsingAlgorithm.Heuristic;
+                        WasChanged = true;
                         break;
-                    case "PasteParsingLocaleBased":
+                    case "PasteParsingLocaleBased" when NewSettings.pasteParsingAlgorithm != Settings.PasteParsingAlgorithm.LocaleBased:
                         NewSettings.pasteParsingAlgorithm = Settings.PasteParsingAlgorithm.LocaleBased;
+                        WasChanged = true;
                         break;
                 }
                 return;
@@ -151,21 +158,25 @@ namespace Calcoo
 
             if (e.Source is CheckBox cb)
             {
-                WasChanged = true;
+                bool value = cb.IsChecked == true;
                 switch (cb.Name)
                 {
-                    case"AutoreleaseArcButton":
-                        NewSettings.arcAutorelease = AutoreleaseArcButton.IsChecked == true;
+                    case "AutoreleaseArcButton" when NewSettings.arcAutorelease != value:
+                        NewSettings.arcAutorelease = value;
+                        WasChanged = true;
                         break;
-                    case"AutoreleaseHypButton":
-                        NewSettings.hypAutorelease = AutoreleaseHypButton.IsChecked == true;
+                    case "AutoreleaseHypButton" when NewSettings.hypAutorelease != value:
+                        NewSettings.hypAutorelease = value;
+                        WasChanged = true;
                         break;
-                    case "RoundingOutputCheckBox":
-                        NewSettings.round = RoundingOutputCheckBox.IsChecked == true;
+                    case "RoundingOutputCheckBox" when NewSettings.round != value:
+                        NewSettings.round = value;
                         UpdateRoundingControlsEnabled(NewSettings.round);
+                        WasChanged = true;
                         break;
-                    case "TruncateZerosCheckBox":
-                        NewSettings.truncateZeros = TruncateZerosCheckBox.IsChecked == true;
+                    case "TruncateZerosCheckBox" when NewSettings.truncateZeros != value:
+                        NewSettings.truncateZeros = value;
+                        WasChanged = true;
                         break;
                 }
                 return;
