@@ -227,7 +227,7 @@
                                 <Run>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</Run>
                                 <LineBreak/><LineBreak/>
                                 <Run>You should have received a copy of the GNU General Public License along with this program. If not, see </Run>
-                                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</Hyperlink><Run>.</Run>
+                                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</Hyperlink><Run>.</Run>
                             </TextBlock>
                         </ScrollViewer>
                     </Border>
@@ -242,7 +242,7 @@
                             <TextBlock TextAlignment="Center" Margin="0,4">Calcoo — scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
                             <TextBlock x:Name="AboutCopyrightText" TextAlignment="Center" Margin="0,4"/>
                             <TextBlock TextAlignment="Center" Margin="0,4">
-                                Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://calcoo.sourceforge.net/">http://calcoo.sourceforge.net/</Hyperlink>
+                                Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://calcoo.sourceforge.net/">https://calcoo.sourceforge.net/</Hyperlink>
                             </TextBlock>
                             <TextBlock TextAlignment="Center" Margin="0,4">
                                 Feedback: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="mailto:calcoo.calculator@gmail.com">calcoo.calculator@gmail.com</Hyperlink>
