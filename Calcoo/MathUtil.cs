@@ -196,6 +196,8 @@ namespace Calcoo
             // to have 100.1 - 100.0 - 0.1 == 0
             double sum = a + b;
             double abssum = Math.Abs(sum);
+            if (abssum == 0.0)
+                return 0.0;
             double maxAbs = Math.Max(Math.Abs(a), Math.Abs(b));
             double log10Base = Math.Log10(calcBase);
             // ceil( log10( x ) / log10( base ) ) is the position before the decimal point
