@@ -1528,7 +1528,7 @@ namespace Calcoo.Test
             // Bug: guard "i > _mem.Length" lets i == _mem.Length slip through,
             // causing IndexOutOfRangeException instead of the descriptive Exception.
             Assert.DoesNotThrow(() => cpu.GetMem(NMem - 1));
-            var ex = Assert.Throws<Exception>(() => cpu.GetMem(NMem));
+            Assert.Throws<Exception>(() => cpu.GetMem(NMem));
         }
     }
 }
