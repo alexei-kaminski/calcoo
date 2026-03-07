@@ -56,9 +56,8 @@ namespace Calcoo
                     _box = new ContentControl {};
                     _box.Width = _xSize;
                     //_box.Height = _ySize;
-                    var frm = new Frame {};
-                    frm.Source = new Uri("pack://application:,,,/Resources" + _icon + ".xaml", UriKind.Absolute);
-                    _box.Content = frm;
+                    var uri = new Uri("Resources" + _icon + ".xaml", UriKind.Relative);
+                    _box.Content = Application.LoadComponent(uri);
                     Canvas.SetLeft(_box, _x);
                     Canvas.SetTop(_box, _y);
                     _parent.Children.Add(_box);
