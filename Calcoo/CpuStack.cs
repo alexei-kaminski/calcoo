@@ -150,7 +150,7 @@ namespace Calcoo
                 throw new Exception("trying to peek stack at negative depth " + i);
             if (_stack.Count > i)
             {
-                LinkedList<StackElement>.Enumerator e = _stack.GetEnumerator();
+                using var e = _stack.GetEnumerator();
                 e.MoveNext();
                 for (int j = 0; j < i; ++j)
                     e.MoveNext();
