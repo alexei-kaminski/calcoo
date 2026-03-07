@@ -154,7 +154,7 @@ namespace Calcoo
                     _shortcuts[i].Add(k, command);
         }
 
-        private int ShrotcutFlagsToIndex(bool ctrl, bool shift)
+        private int ShortcutFlagsToIndex(bool ctrl, bool shift)
         {
             return (ctrl ? 2 : 0) + (shift ? 1 : 0);
         }
@@ -162,7 +162,7 @@ namespace Calcoo
         public Command? TranslateShortcut(Key key, bool ctrl, bool shift)
         {
             Command command;
-            if (_shortcuts[ShrotcutFlagsToIndex(ctrl, shift)].TryGetValue(key, out command))
+            if (_shortcuts[ShortcutFlagsToIndex(ctrl, shift)].TryGetValue(key, out command))
                 return command;
             return null;
         }
