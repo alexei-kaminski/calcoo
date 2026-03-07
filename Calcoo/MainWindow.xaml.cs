@@ -321,8 +321,8 @@ namespace Calcoo
 
                         foreach (string token in _customButtonCommand.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                         {
-                            Command parsed;
-                            if (Enum.TryParse(token, out parsed))
+                            if (Enum.TryParse(token, out Command parsed)
+                                && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
                                 cpu.Execute(parsed);
                         }
                     }
