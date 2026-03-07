@@ -19,13 +19,13 @@ namespace Calcoo
                 App.ApplyMica(this);
             };
             var version = Assembly.GetExecutingAssembly()
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
-                .InformationalVersion.Split('+')[0];
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion.Split('+')[0] ?? "unknown";
             LicenseVersionRun.Text = version;
             AboutVersionRun.Text = version;
             var copyright = Assembly.GetExecutingAssembly()
-                .GetCustomAttribute<AssemblyCopyrightAttribute>()!
-                .Copyright;
+                .GetCustomAttribute<AssemblyCopyrightAttribute>()
+                ?.Copyright ?? "";
             LicenseCopyrightRun.Text = copyright;
             AboutCopyrightText.Text = copyright;
         }
