@@ -1516,5 +1516,19 @@ namespace Calcoo.Test
                 throw new Exception("must specify stack and enter mode explicitly for the RPN mode tests");
             return RunCpu(keystrokes, mode, angleUnits, DefaultEnterMode, DefaultStackMode);
         }
+
+        [Test]
+        public void GetMemAtBoundaryDoesNotThrow()
+        {
+            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+                DefaultEnterMode, DefaultStackMode);
+
+            // NMem is 2, so valid indices are 0 and 1. GetMem(NMem) should be caught
+            // by the guard and throw Exception with a descriptive message.
+            // Bug: guard "i > _mem.Length" lets i == _mem.Length slip through,
+            // causing IndexOutOfRangeException instead of the descriptive Exception.
+            Assert.DoesNotThrow(() => cpu.GetMem(NMem - 1));
+            var ex = Assert.Throws<Exception>(() => cpu.GetMem(NMem));
+        }
     }
 }
