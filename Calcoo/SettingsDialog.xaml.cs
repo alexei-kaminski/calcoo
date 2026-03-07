@@ -53,7 +53,7 @@ namespace Calcoo
                     ModeRpn.IsChecked = true;
                     break;
                 default:
-                    throw new Exception("Unknown mode " + settings.mode);
+                    throw new ArgumentOutOfRangeException(nameof(settings.mode), settings.mode, null);
             }
             switch (settings.stackMode)
             {
@@ -64,7 +64,7 @@ namespace Calcoo
                     RpnStackXyzt.IsChecked = true;
                     break;
                 default:
-                    throw new Exception("Unknown stack mode " + settings.stackMode);
+                    throw new ArgumentOutOfRangeException(nameof(settings.stackMode), settings.stackMode, null);
             }
             switch (settings.enterMode)
             {
@@ -75,7 +75,7 @@ namespace Calcoo
                     RpnEnterHp28.IsChecked = true;
                     break;
                 default:
-                    throw new Exception("Unknown enter mode " + settings.enterMode);
+                    throw new ArgumentOutOfRangeException(nameof(settings.enterMode), settings.enterMode, null);
             }
             switch (settings.pasteParsingAlgorithm)
             {
@@ -86,7 +86,7 @@ namespace Calcoo
                     PasteParsingLocaleBased.IsChecked = true;
                     break;
                 default:
-                    throw new Exception("Unknown paste parsing algorithm " + settings.pasteParsingAlgorithm);
+                    throw new ArgumentOutOfRangeException(nameof(settings.pasteParsingAlgorithm), settings.pasteParsingAlgorithm, null);
             }
 
             RoundingOutputCheckBox.IsChecked = settings.round;
