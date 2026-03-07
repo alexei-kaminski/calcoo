@@ -34,7 +34,7 @@ namespace Calcoo
             {
                 if (showParen)
                     ShownGlyphs.Push(_paren);
-                ShownGlyphs.Push(_ops[(Cpu.BinaryOp) op]);
+                ShownGlyphs.Push(_ops[op.Value]);
             }
 
             Refresh();
