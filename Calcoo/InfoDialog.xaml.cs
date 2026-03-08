@@ -17,6 +17,7 @@ namespace Calcoo
             {
                 App.ApplyDarkTitleBar(this);
                 App.ApplyMica(this);
+                MaxHeight = SystemParameters.WorkArea.Height;
             };
             var version = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
