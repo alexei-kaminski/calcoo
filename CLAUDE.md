@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Calcoo is a WPF scientific calculator for Windows, written in C# targeting .NET 10 (`net10.0-windows`). It supports both RPN (Reverse Polish Notation) and Algebraic calculation modes, similar to classic HP calculators.
+Calcoo is a WPF scientific calculator for Windows, written in C# targeting .NET 9 (`net9.0-windows`). It supports both RPN (Reverse Polish Notation) and Algebraic calculation modes, similar to classic HP calculators.
 
 ## Build and Test Commands
 
@@ -41,7 +41,7 @@ User input → `MainWindow` → `Body.ButtonPressed()` → `Cpu` executes comman
 
 - **Framework:** NUnit 4.4 with `nunit.framework.legacy` for `ClassicAssert` syntax
 - **Test files:** `CpuTest.cs`, `CpuStackTest.cs`, `DoubleByDigitTest.cs`, `MathUtilTest.cs`, `TextUtilTest.cs`, `CommandTest.cs`
-- **68 test methods** covering core computation logic
+- **80 test methods** covering core computation logic
 - Tests use `[TestFixture]` and `[Test]` attributes
 
 ## Key Design Details
