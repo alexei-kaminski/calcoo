@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using Microsoft.Win32;
 
 
@@ -104,14 +105,17 @@ namespace Calcoo
             GetWindowRect(hwnd, out RECT windowRect);
             GetClientRect(hwnd, out RECT clientRect);
 
+            var dpiScale = VisualTreeHelper.GetDpi(this).PixelsPerDip;
             _chromeWidth = (windowRect.Right - windowRect.Left) - (clientRect.Right - clientRect.Left);
             _chromeHeight = (windowRect.Bottom - windowRect.Top) - (clientRect.Bottom - clientRect.Top);
             // Content aspect ratio: MainGrid is 25×16 + margins 8+8 = 416 wide, 14×16 + margins 8+8 = 240 tall
             _aspectRatio = 416.0 / 240.0;
 
             // Adjust window width to match content aspect ratio
-            double clientHeight = clientRect.Bottom - clientRect.Top;
-            Width = clientHeight * _aspectRatio + _chromeWidth;
+            // GetClientRect returns physical pixels; WPF Width is in DIPs
+            double clientHeight = (clientRect.Bottom - clientRect.Top) / dpiScale;
+            double chromeWidth = _chromeWidth / dpiScale;
+            Width = clientHeight * _aspectRatio + chromeWidth;
 
             App.ApplyDarkTitleBar(this);
 

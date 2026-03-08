@@ -1,5 +1,5 @@
 #define MyAppName "Calcoo"
-#define MyAppVersion "2.99.2"
+#define MyAppVersion "2.99.3"
 #define MyAppPublisher "Alexei Kaminski"
 #define MyAppExeName "Calcoo.exe"
 #define MyAppDescription "Calcoo - Scientific Calculator"
