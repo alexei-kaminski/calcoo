@@ -78,13 +78,13 @@ namespace Calcoo
         {
             if (length < 1)
                 throw new Exception("Exp field length equals " + length + " while it must be positive");
-            if (_expField.Count() >= length)
+            if (_expField.Count >= length)
                 do
                 {
                     _expField.RemoveAt(0);
-                } while (_expField.Count() >= length);
+                } while (_expField.Count >= length);
             else
-                while (_expField.Count() < length - 1)
+                while (_expField.Count < length - 1)
                     _expField.Insert(0, 0);
             _expField.Add(d);
         }
@@ -121,7 +121,7 @@ namespace Calcoo
 
         public int GetNIntDigits()
         {
-            return _intField.Count();
+            return _intField.Count;
         }
 
         public int GetIntDigit(int i)
@@ -131,7 +131,7 @@ namespace Calcoo
 
         public int GetNFracDigits()
         {
-            return _fracField.Count();
+            return _fracField.Count;
         }
 
         public int GetFracDigit(int i)
@@ -141,7 +141,7 @@ namespace Calcoo
 
         public int GetNExpDigits()
         {
-            return _expField.Count();
+            return _expField.Count;
         }
 
         public int GetExpDigit(int i)

@@ -184,7 +184,7 @@ namespace Calcoo
 
                     return Double.NaN;
                 }
-                return Double.NaN; // should not get here
+                return Double.NaN; // unreachable; required by compiler
             }
         }
     }

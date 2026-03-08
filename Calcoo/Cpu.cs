@@ -549,7 +549,7 @@ namespace Calcoo
             switch (units)
             {
                 case Settings.AngleUnits.Deg:
-                    return Math.Abs(angle % degPeriod) < CpuPrecision;
+                    return IsNearInteger(angle / degPeriod);
                 case Settings.AngleUnits.Rad:
                     return IsNearInteger(angle / radPeriod);
                 default:
@@ -567,8 +567,8 @@ namespace Calcoo
             {
                 case Settings.AngleUnits.Deg:
                 {
-                    double rem = Math.Abs(angle % degPeriod);
-                    return Math.Abs(rem - degHalf) < CpuPrecision;
+                    double ratio = angle / degHalf;
+                    return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
                 }
                 case Settings.AngleUnits.Rad:
                 {

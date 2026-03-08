@@ -188,7 +188,7 @@ namespace Calcoo
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            Command? command = body.TranslateShortcut(e.Key, Keyboard.Modifiers == ModifierKeys.Control, Keyboard.Modifiers == ModifierKeys.Shift);
+            Command? command = body.TranslateShortcut(e.Key, Keyboard.Modifiers.HasFlag(ModifierKeys.Control), Keyboard.Modifiers.HasFlag(ModifierKeys.Shift));
             switch (command) {
                 case null:
                     return;
@@ -327,7 +327,7 @@ namespace Calcoo
 
                         foreach (string token in _customButtonCommand.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                         {
-                            if (double.IsNaN(cpu.X))
+                            if (!double.IsFinite(cpu.X))
                                 break;
                             if (Enum.TryParse(token, out Command parsed)
                                 && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
