@@ -39,7 +39,7 @@ User input → `MainWindow` → `Body.ButtonPressed()` → `Cpu` executes comman
 
 ## Testing
 
-- **Framework:** NUnit 4.4 with `nunit.framework.legacy` for `ClassicAssert` syntax
+- **Framework:** NUnit 4.5
 - **Test files:** `CpuTest.cs`, `CpuStackTest.cs`, `DoubleByDigitTest.cs`, `MathUtilTest.cs`, `TextUtilTest.cs`, `CommandTest.cs`
 - **80 test methods** covering core computation logic
 - Tests use `[TestFixture]` and `[Test]` attributes
