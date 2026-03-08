@@ -7,7 +7,7 @@
     <RootNamespace>Calcoo</RootNamespace>
     <AssemblyName>Calcoo</AssemblyName>
     <ApplicationIcon>Resources\calcoo.ico</ApplicationIcon>
-    <Version>2.99.3</Version>
+    <Version>3.0.0</Version>
     <Copyright>Copyright (C) 2001-2026 Alexei Kaminski.</Copyright>
   </PropertyGroup>
 
