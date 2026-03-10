@@ -1,5 +1,5 @@
 #define MyAppName "Calcoo"
-#define MyAppVersion "3.0.0"
+#define MyAppVersion "3.0.0.1"
 #define MyAppPublisher "Alexei Kaminski"
 #define MyAppExeName "Calcoo.exe"
 #define MyAppDescription "Calcoo - Scientific Calculator"
@@ -8,6 +8,7 @@
 AppId={{58E1D777-6328-49B1-BCA1-D09624010CD0}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+VersionInfoVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppSupportURL=mailto:calcoo.calculator@gmail.com
 DefaultDirName={autopf}\{#MyAppName}
