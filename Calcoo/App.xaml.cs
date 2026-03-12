@@ -47,7 +47,6 @@ namespace Calcoo
                 res["DisplayBackground"] = Frozen(new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)));
                 res["BorderBrush"] = Frozen(new SolidColorBrush(Color.FromRgb(0x66, 0x66, 0x66)));
                 res["IconForeground"] = Frozen(new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)));
-                res["IconStroke"] = Frozen(new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)));
                 res["ButtonHoverBg"] = Frozen(new SolidColorBrush(Color.FromRgb(0x40, 0x40, 0x40)));
                 res["ButtonPressedBg"] = Frozen(new SolidColorBrush(Color.FromRgb(0x50, 0x50, 0x50)));
                 res["TextForeground"] = Frozen(new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)));
@@ -66,7 +65,6 @@ namespace Calcoo
                 res["DisplayBackground"] = Frozen(new SolidColorBrush(Colors.White));
                 res["BorderBrush"] = Frozen(new SolidColorBrush(Colors.Black));
                 res["IconForeground"] = Frozen(new SolidColorBrush(Colors.Black));
-                res["IconStroke"] = Frozen(new SolidColorBrush(Color.FromRgb(0x1F, 0x1A, 0x17)));
                 res["TextForeground"] = Frozen(new SolidColorBrush(Colors.Black));
                 res["ButtonHoverBg"] = Frozen(new SolidColorBrush(Color.FromRgb(0xDA, 0xDA, 0xDA)));
                 res["ButtonPressedBg"] = Frozen(new SolidColorBrush(Color.FromRgb(0xBA, 0xBA, 0xBA)));
