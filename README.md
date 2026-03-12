@@ -44,6 +44,16 @@ dotnet publish Calcoo -c Release -r win-x64 --no-self-contained
 
 Requires [Inno Setup 6](https://jrsoftware.org/isinfo.php). Output: `Calcoo.Setup/Release/Calcoo.Setup.exe`
 
+The installer is not required to compile and run Calcoo.
+
 ## License
 
 GPL-3.0-or-later. See the License tab in the application for details.
+
+## Miscellanea
+
+Icon Font: Arian Rounded MT Bold
+
+## Previous Versions
+
+Calcoo 2 was written in Java, and is available at https://calcoo.sourceforge.net/.
