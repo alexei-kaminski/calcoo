@@ -111,7 +111,7 @@ namespace Calcoo
         }
 
         public double X { get; private set; }
- 
+
         private readonly int _numBase;
 
         private readonly double[] _mem;
@@ -528,7 +528,7 @@ namespace Calcoo
                 case Settings.AngleUnits.Rad:
                     return a;
                 case Settings.AngleUnits.Deg:
-                    return a*Math.PI/180.0;
+                    return a * Math.PI / 180.0;
                 default:
                     throw new Exception("unknown angle units " + units);
             }
@@ -566,16 +566,16 @@ namespace Calcoo
             switch (units)
             {
                 case Settings.AngleUnits.Deg:
-                {
-                    double ratio = angle / degHalf;
-                    return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
-                }
+                    {
+                        double ratio = angle / degHalf;
+                        return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
+                    }
                 case Settings.AngleUnits.Rad:
-                {
-                    double ratio = angle / radHalf;
-                    // Odd multiple: ratio is an odd integer
-                    return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
-                }
+                    {
+                        double ratio = angle / radHalf;
+                        // Odd multiple: ratio is an odd integer
+                        return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
+                    }
                 default:
                     throw new Exception("unknown angle units " + units);
             }
@@ -589,7 +589,7 @@ namespace Calcoo
                 case Settings.AngleUnits.Rad:
                     return a;
                 case Settings.AngleUnits.Deg:
-                    return a*180.0/Math.PI;
+                    return a * 180.0 / Math.PI;
                 default:
                     throw new Exception("unknown angle units " + units);
             }
@@ -767,7 +767,7 @@ namespace Calcoo
                 while (!_stack.IsEmpty()
                        && (
                            (BinaryOpPriority(_stack.GetOp()) >= initPriority && !_stack.HeadParenExists())
-                               // "=" effectively closes all parens
+                           // "=" effectively closes all parens
                            || initPriority == BinopPriorityMin
                            ))
                 {
@@ -789,10 +789,10 @@ namespace Calcoo
                 case BinaryOp.Sub:
                     return MathUtil.SmartSum(a, -b, baseForPrecision);
                 case BinaryOp.Mul:
-                    return a*b;
+                    return a * b;
                 case BinaryOp.Div:
                     if (b != 0.0)
-                        return a/b;
+                        return a / b;
                     else
                         return Double.NaN;
                 case BinaryOp.Pow:
@@ -931,7 +931,7 @@ namespace Calcoo
                         X = Double.NaN;
                     break;
                 case UnaryOp.EtoX:
-                    if (X*Math.Log10(Math.E) < Math.Pow(10.0, _expInputLength))
+                    if (X * Math.Log10(Math.E) < Math.Pow(10.0, _expInputLength))
                         X = Math.Exp(X);
                     else
                         X = Double.NaN;
@@ -943,11 +943,11 @@ namespace Calcoo
                         X = Double.NaN;
                     break;
                 case UnaryOp.Sqr:
-                    X = X*X;
+                    X = X * X;
                     break;
                 case UnaryOp.InvX:
                     if (X != 0.0)
-                        X = 1.0/X;
+                        X = 1.0 / X;
                     else
                         X = Double.NaN;
                     break;

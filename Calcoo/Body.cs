@@ -218,7 +218,7 @@ namespace Calcoo
             _buttons = new Dictionary<Command, Button>();
             _toggleButtons = new Dictionary<Command, ToggleButton>();
             _shortcuts = new Dictionary<Key, Command>[4];
-            for(int i = 0; i < _shortcuts.Length; ++i)
+            for (int i = 0; i < _shortcuts.Length; ++i)
                 _shortcuts[i] = new Dictionary<Key, Command>();
 
             CreateButtons(mainGrid);
@@ -309,10 +309,10 @@ namespace Calcoo
             }
 
             _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32, 16,
-                new[] {Settings.DisplayFormat.Eng, Settings.DisplayFormat.Sci, Settings.DisplayFormat.Fix},
+                new[] { Settings.DisplayFormat.Eng, Settings.DisplayFormat.Sci, Settings.DisplayFormat.Fix },
                 "/Icons/Displays/Indicator/", displayCanvas.FormatDisplay);
             _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(-1, -1, 32, 16,
-                new[] {Settings.AngleUnits.Deg, Settings.AngleUnits.Rad}, "/Icons/Displays/Indicator/",
+                new[] { Settings.AngleUnits.Deg, Settings.AngleUnits.Rad }, "/Icons/Displays/Indicator/",
                 displayCanvas.DegRadDisplay);
 
             displayFormat = Settings.DisplayFormat.Fix;
@@ -333,10 +333,10 @@ namespace Calcoo
         {
             const String iconPath = "/Icons/Buttons/";
 
-            CreateButton(Command.DegRad, 0, 4, 2, 1, new Key[][] {}, "Change angle units", iconPath, mainGrid, false, false);
-            CreateButton(Command.Info, 0, 6, 2, 2, new[] { new Key[] {}, new[] { Key.Oem2 } }, "About/Help", iconPath, mainGrid, false, true);
+            CreateButton(Command.DegRad, 0, 4, 2, 1, new Key[][] { }, "Change angle units", iconPath, mainGrid, false, false);
+            CreateButton(Command.Info, 0, 6, 2, 2, new[] { new Key[] { }, new[] { Key.Oem2 } }, "About/Help", iconPath, mainGrid, false, true);
             CreateButton(Command.Settings, 0, 8, 2, 2, new[] { new Key[] { }, new[] { Key.D1 } }, "Settings", iconPath, mainGrid, false, true);
-            CreateButton(Command.Copy, 0, 10, 2, 2, new[] { new Key[] {}, new Key[] {}, new[] { Key.C } }, "Copy", iconPath, mainGrid, false, true);
+            CreateButton(Command.Copy, 0, 10, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.C } }, "Copy", iconPath, mainGrid, false, true);
             CreateButton(Command.Paste, 0, 12, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.V } }, "Paste", iconPath, mainGrid, false, true);
 
             CreateButton(Command.Sin, 3, 4, 2, 2, new[] { new[] { Key.S } }, "", iconPath, mainGrid, false, true);
@@ -364,38 +364,38 @@ namespace Calcoo
             CreateButton(Command.Digit5, 12, 5, 2, 2, new[] { new[] { Key.D5, Key.NumPad5 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit2, 12, 7, 2, 2, new[] { new[] { Key.D2, Key.NumPad2 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Sign, 12, 9, 2, 2, new[] { new[] { Key.M } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Custom, 12, 12, 2, 2, new Key[][] {}, "Custom command", iconPath, mainGrid, false, true);
+            CreateButton(Command.Custom, 12, 12, 2, 2, new Key[][] { }, "Custom command", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit9, 14, 3, 2, 2, new[] { new[] { Key.D9, Key.NumPad9 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit6, 14, 5, 2, 2, new[] { new[] { Key.D6, Key.NumPad6 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit3, 14, 7, 2, 2, new[] { new[] { Key.D3, Key.NumPad3 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Dot, 14, 9, 2, 2, new[] { new[] { Key.OemComma, Key.OemPeriod, Key.Decimal } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Format, 14, 12, 2, 1, new Key[][] {}, "Change display format", iconPath, mainGrid, false, false);
+            CreateButton(Command.Format, 14, 12, 2, 1, new Key[][] { }, "Change display format", iconPath, mainGrid, false, false);
 
             CreateButton(Command.Add, 17, 3, 2, 2, new[] { new[] { Key.Add }, new[] { Key.OemPlus } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Mul, 17, 5, 2, 2, new[] { new[] { Key.Multiply }, new[] { Key.D8 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.ExchXy, 17, 7, 2, 2, new[] { new[] { Key.Y } }, "Swap X and Y", iconPath, mainGrid, false, true);
-            CreateButton(Command.XToMem, 17, 10, 2, 2, new[] { new Key[] {}, new Key[] {}, new[] { Key.M } }, "STO", iconPath, mainGrid, false, true);
-            CreateButton(Command.Mem0, 17, 12, 1, 1, new[] { new Key[] {}, new Key[] {}, new[] { Key.D1 } }, "", iconPath, mainGrid, false, false);
-            CreateButton(Command.Mem1, 17, 13, 1, 1, new[] { new Key[] {}, new Key[] {}, new[] { Key.D2 } }, "", iconPath, mainGrid, false, false);
+            CreateButton(Command.XToMem, 17, 10, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.M } }, "STO", iconPath, mainGrid, false, true);
+            CreateButton(Command.Mem0, 17, 12, 1, 1, new[] { new Key[] { }, new Key[] { }, new[] { Key.D1 } }, "", iconPath, mainGrid, false, false);
+            CreateButton(Command.Mem1, 17, 13, 1, 1, new[] { new Key[] { }, new Key[] { }, new[] { Key.D2 } }, "", iconPath, mainGrid, false, false);
             CreateButton(Command.Sub, 19, 3, 2, 2, new[] { new[] { Key.Subtract, Key.OemMinus } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Div, 19, 5, 2, 2, new[] { new[] { Key.Divide, Key.Oem2 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.LeftParen, 19, 7, 2, 2, new[] { new[] { Key.Oem4 }, new[] { Key.D9 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.StackDown, 19, 7, 2, 2, new[] { new[] { Key.Down } }, "Scroll stack down", iconPath, mainGrid, false, true);
-            CreateButton(Command.MemToX, 19, 10, 2, 2, new[] { new Key[] {}, new Key[] {}, new[] { Key.R } }, "RCL", iconPath, mainGrid, false, true);
+            CreateButton(Command.MemToX, 19, 10, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.R } }, "RCL", iconPath, mainGrid, false, true);
             CreateButton(Command.ClearAll, 21, 3, 2, 2, new[] { new[] { Key.Escape } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Eq, 21, 5, 2, 2, new[] { new[] { Key.OemPlus } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Enter, 21, 5, 2, 2, new[] { new[] { Key.Return } }, "Enter", iconPath, mainGrid, false, true);
             CreateButton(Command.RightParen, 21, 7, 2, 2, new[] { new[] { Key.Oem6 }, new[] { Key.D0 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.StackUp, 21, 7, 2, 2, new[] { new[] { Key.Up } }, "Scroll stack up", iconPath, mainGrid, false, true);
-            CreateButton(Command.MemPlus, 21, 10, 2, 2, new Key[][] {}, "Add X to memory", iconPath, mainGrid, false, true);
-            CreateButton(Command.Undo, 23, 3, 2, 2, new[] { new[] { Key.Back, Key.Left }, new Key[] {}, new[] { Key.Z } }, "Undo", iconPath, mainGrid, false, true);
-            CreateButton(Command.Redo, 23, 5, 2, 2, new[] { new[] { Key.Right }, new Key[] {}, new[] { Key.Y } }, "Redo", iconPath, mainGrid, false, true);
+            CreateButton(Command.MemPlus, 21, 10, 2, 2, new Key[][] { }, "Add X to memory", iconPath, mainGrid, false, true);
+            CreateButton(Command.Undo, 23, 3, 2, 2, new[] { new[] { Key.Back, Key.Left }, new Key[] { }, new[] { Key.Z } }, "Undo", iconPath, mainGrid, false, true);
+            CreateButton(Command.Redo, 23, 5, 2, 2, new[] { new[] { Key.Right }, new Key[] { }, new[] { Key.Y } }, "Redo", iconPath, mainGrid, false, true);
             CreateButton(Command.ClearX, 23, 7, 2, 2, new[] { new[] { Key.Delete } }, "Clear X", iconPath, mainGrid, false, true);
-            CreateButton(Command.ExchXMem, 23, 10, 2, 2, new Key[][] {}, "Swap X and memory", iconPath, mainGrid, false, true);
+            CreateButton(Command.ExchXMem, 23, 10, 2, 2, new Key[][] { }, "Swap X and memory", iconPath, mainGrid, false, true);
 
-            AddCommandShortcuts(Command.MantissaSign, new[] { new Key[] { }, new Key[] {}, new[] { Key.OemMinus } });
-            AddCommandShortcuts(Command.ExpSign, new[] { new Key[] {}, new Key[] {}, new[] { Key.E } });
-            AddCommandShortcuts(Command.Exit, new[] { new Key[] {}, new Key[] {}, new[] { Key.Q } });
+            AddCommandShortcuts(Command.MantissaSign, new[] { new Key[] { }, new Key[] { }, new[] { Key.OemMinus } });
+            AddCommandShortcuts(Command.ExpSign, new[] { new Key[] { }, new Key[] { }, new[] { Key.E } });
+            AddCommandShortcuts(Command.Exit, new[] { new Key[] { }, new Key[] { }, new[] { Key.Q } });
         }
 
         public void DisplayOnlyActiveButtonsForMode(Settings.Mode mode)
@@ -446,7 +446,7 @@ namespace Calcoo
                     _numBase);
 
             _mainDisplay.Show(_mainDisplayContent);
-            
+
             for (int i = 0; i < _regNumDisplays.Length; ++i)
             {
                 _regNumDisplays[i].Show(DoubleByDigit.FromDouble(cpuOutput.GetStack().PeekValue(i), _inputLength,

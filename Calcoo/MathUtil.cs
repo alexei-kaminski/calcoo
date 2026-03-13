@@ -6,7 +6,7 @@ namespace Calcoo
     {
         // naming follows the naming in boost 1.34.1
         private const double Epsilon = 1e-15; // good enough for
-                                                             // these purposes
+                                              // these purposes
         private readonly static double Taylor2Bound = Math.Sqrt(Epsilon);
         private readonly static double TaylorNBound = Math.Sqrt(Taylor2Bound);
         private readonly static double UpperTaylor2Bound = 1.0 / Taylor2Bound;
@@ -15,8 +15,9 @@ namespace Calcoo
         /**
          * Factorial using the Stirling formula for large arguments.
          */
-        static public double Fact( double x,
-                            int nSignificantDigits) {
+        static public double Fact(double x,
+                            int nSignificantDigits)
+        {
             /*
              * if calcoo is unable to show all the meaningful digits of the result,
              * there is no point in the exact calculation, so we can use the
@@ -25,9 +26,10 @@ namespace Calcoo
              * but is slower
              */
             // log_10 of the Stirling formula
-             double log10XFact = (x + 0.5) * Math.Log10(x) - x * Math.Log10(Math.E);
-            if (log10XFact > nSignificantDigits) {
-                 double a = 1.0 / (x + 1.0);
+            double log10XFact = (x + 0.5) * Math.Log10(x) - x * Math.Log10(Math.E);
+            if (log10XFact > nSignificantDigits)
+            {
+                double a = 1.0 / (x + 1.0);
                 return Math.Exp(-x - 1.0) * Math.Sqrt(2.0 * Math.PI) * Math.Pow(x + 1.0, (x + 0.5))
                        * (1.0
                        + a * ((1.0 / 12.0)
@@ -35,27 +37,27 @@ namespace Calcoo
                            + a * ((-139.0 / 51840.0)
                              + a * ((-571.0 / 2488320.0)
                                )))));
-            } 
+            }
 
             return FactJr(x);
         }
 
-        private static double FactJr( double x)
+        private static double FactJr(double x)
         {
             if (x >= 1.0)
                 return x * FactJr(x - 1.0);
-        
-                // Abramowitz and Stegun, the error is < 3e-7
-                return (1.0
-                + x * ((-0.577191652)
-                  + x * ((0.988205891)
-                    + x * ((-0.897056937)
-                      + x * ((0.918206857)
-                        + x * ((-0.756704078)
-                          + x * ((0.482199394)
-                            + x * ((-0.193527818)
-                              + x * (0.035868343)
-                              ))))))));
+
+            // Abramowitz and Stegun, the error is < 3e-7
+            return (1.0
+            + x * ((-0.577191652)
+              + x * ((0.988205891)
+                + x * ((-0.897056937)
+                  + x * ((0.918206857)
+                    + x * ((-0.756704078)
+                      + x * ((0.482199394)
+                        + x * ((-0.193527818)
+                          + x * (0.035868343)
+                          ))))))));
         }
 
         /**
@@ -76,7 +78,7 @@ namespace Calcoo
                 return false;
             if (x == 0.0)
                 return true;
-            double log10XFact = x*Math.Log10(x) - x*Math.Log10(Math.E) + 0.5*Math.Log10(2*Math.PI*x);
+            double log10XFact = x * Math.Log10(x) - x * Math.Log10(Math.E) + 0.5 * Math.Log10(2 * Math.PI * x);
             return (log10XFact < Math.Pow(10, nExpDigits));
         }
 
@@ -90,15 +92,15 @@ namespace Calcoo
                     if (x > UpperTaylor2Bound)
                         // approximation by laurent series in 1/x at 0+ order from
                         // -1 to 0
-                        return (Math.Log(x*2.0));
+                        return (Math.Log(x * 2.0));
                     else
                         // approximation by laurent series in 1/x at 0+ order from
                         // -1 to 1
-                        return (Math.Log(x*2.0 + (1.0/(x*2.0))));
+                        return (Math.Log(x * 2.0 + (1.0 / (x * 2.0))));
                 }
                 else
                 {
-                    return (Math.Log(x + Math.Sqrt(x*x + 1.0)));
+                    return (Math.Log(x + Math.Sqrt(x * x + 1.0)));
                 }
             }
             else if (x <= -TaylorNBound)
@@ -111,9 +113,9 @@ namespace Calcoo
                 double result = x;
                 if (Math.Abs(x) >= Taylor2Bound)
                 {
-                    double x3 = x*x*x;
+                    double x3 = x * x * x;
                     // approximation by taylor series in x at 0 up to order 4
-                    result -= x3/6.0;
+                    result -= x3 / 6.0;
                 }
                 return (result);
             }
@@ -129,9 +131,9 @@ namespace Calcoo
                 if (x > UpperTaylor2Bound)
                     // approximation by laurent series in 1/x at 0+ order from -1 to
                     // 0
-                    return (Math.Log(x*2.0));
+                    return (Math.Log(x * 2.0));
                 else
-                    return (Math.Log(x + Math.Sqrt(x*x - 1.0)));
+                    return (Math.Log(x + Math.Sqrt(x * x - 1.0)));
             }
             else
             {
@@ -140,11 +142,11 @@ namespace Calcoo
                 double result = y;
                 if (y >= Taylor2Bound)
                 {
-                    double y3 = y*y*y;
+                    double y3 = y * y * y;
                     // approximation by taylor series in y at 0 up to order 4
-                    result -= y3/12.0;
+                    result -= y3 / 12.0;
                 }
-                return (Math.Sqrt(2.0)*result);
+                return (Math.Sqrt(2.0) * result);
             }
         }
 
@@ -169,7 +171,7 @@ namespace Calcoo
             }
             else if (Math.Abs(x) >= TaylorNBound)
             {
-                return Math.Log((1.0 + x)/(1.0 - x))/2.0;
+                return Math.Log((1.0 + x) / (1.0 - x)) / 2.0;
             }
             else
             {
@@ -177,9 +179,9 @@ namespace Calcoo
                 double result = x;
                 if (Math.Abs(x) >= Taylor2Bound)
                 {
-                    double x3 = x*x*x;
+                    double x3 = x * x * x;
                     // approximation by taylor series in x at 0 up to order 4
-                    result += x3/3.0;
+                    result += x3 / 3.0;
                 }
                 return result;
             }
@@ -205,7 +207,7 @@ namespace Calcoo
             // where log(a,b) is log of a base b; we chose c = 10 ]. Now the next condition checks
             // if the sum has the first significant digit at the same or higher place as
             // the bigger of the two added numbers.
-            if (Math.Ceiling(Math.Log10(maxAbs)/log10Base) <= Math.Ceiling(Math.Log10(abssum)/log10Base))
+            if (Math.Ceiling(Math.Log10(maxAbs) / log10Base) <= Math.Ceiling(Math.Log10(abssum) / log10Base))
                 // If it does, then there is no need to worry about precision, because the error of the sum
                 // due to the finite-precision machine arithmetics would be not less than the bigger error
                 // of the two numbers being added, therefore any error in either of the two numbers will
@@ -219,9 +221,9 @@ namespace Calcoo
                 // presentation, we need to round off these digits. Here cutoff is the smallest number looking
                 // like 0.00000000001, which is larger than the error of the sum which results from the
                 // two added numbers being rounded.
-                double cutoff = Math.Pow(calcBase, Math.Ceiling(Math.Log10(maxAbs*Epsilon)/log10Base));
+                double cutoff = Math.Pow(calcBase, Math.Ceiling(Math.Log10(maxAbs * Epsilon) / log10Base));
                 // We throw out all digits after the cutoff.
-                return cutoff*Math.Round(sum/cutoff);
+                return cutoff * Math.Round(sum / cutoff);
             }
         }
     }

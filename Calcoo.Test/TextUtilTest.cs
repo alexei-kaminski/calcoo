@@ -27,12 +27,12 @@ namespace Calcoo.Test
         public void TextToDoubleTest()
         {
             // native parser
-            double[] testCasesD = {1200, 1200.1, -1200.1};
+            double[] testCasesD = { 1200, 1200.1, -1200.1 };
 
             foreach (var d in testCasesD)
             {
                 var s = d.ToString(CultureInfo.CurrentCulture);
-                Assert.That(TextUtil.TextToDouble(s, true), Is.EqualTo(d).Within(Precision*Math.Abs(d)), s + ", NFParser");
+                Assert.That(TextUtil.TextToDouble(s, true), Is.EqualTo(d).Within(Precision * Math.Abs(d)), s + ", NFParser");
             }
 
             var testCases = new List<StringNumberPair>();
@@ -247,7 +247,7 @@ namespace Calcoo.Test
 
             foreach (var testCase in testCases)
             {
-                Assert.That(TextUtil.TextToDouble(testCase.S, false), Is.EqualTo(testCase.N).Within(Precision*Math.Abs(testCase.N)),
+                Assert.That(TextUtil.TextToDouble(testCase.S, false), Is.EqualTo(testCase.N).Within(Precision * Math.Abs(testCase.N)),
                     testCase.S + ", heuristic parser");
             }
 

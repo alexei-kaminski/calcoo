@@ -169,7 +169,7 @@ namespace Calcoo
 
         private static String CleanUpCustomCommand(String customCommand)
         {
-            String[] commandCandidates = customCommand.Trim().Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            String[] commandCandidates = customCommand.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (!commandCandidates.Any())
                 return "";
             var cleanCustomCommand = new StringBuilder();

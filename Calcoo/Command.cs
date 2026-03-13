@@ -78,16 +78,16 @@ namespace Calcoo
 
     public static class CommandExtensions
     {
-        public static readonly Command[] Mem = {Command.Mem0, Command.Mem1};
+        public static readonly Command[] Mem = { Command.Mem0, Command.Mem1 };
 
         public static readonly ReadOnlyCollection<Command> RpnOnly =
-            new ReadOnlyCollection<Command>(new List<Command> {Command.Enter, Command.StackUp, Command.StackDown});
+            new ReadOnlyCollection<Command>(new List<Command> { Command.Enter, Command.StackUp, Command.StackDown });
 
         public static readonly ReadOnlyCollection<Command> AlgOnly =
-            new ReadOnlyCollection<Command>(new List<Command> {Command.Eq, Command.LeftParen, Command.RightParen});
+            new ReadOnlyCollection<Command>(new List<Command> { Command.Eq, Command.LeftParen, Command.RightParen });
 
         public static readonly ReadOnlyCollection<Command> TrigBare =
-            new ReadOnlyCollection<Command>(new List<Command> {Command.Sin, Command.Cos, Command.Tan});
+            new ReadOnlyCollection<Command>(new List<Command> { Command.Sin, Command.Cos, Command.Tan });
 
         public static readonly ReadOnlyCollection<Command> TrigAll = new ReadOnlyCollection<Command>(new List<Command>
         {

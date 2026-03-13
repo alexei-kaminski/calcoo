@@ -43,7 +43,7 @@ namespace Calcoo
             _dot = new DisplayGlyph[inputLength];
             _expDigits = new DisplayGlyph[expInputLength, numBase];
 
-            int displayExpOffsetX = cellWidth*(inputLength + 1) + dotWidth;
+            int displayExpOffsetX = cellWidth * (inputLength + 1) + dotWidth;
 
             /* Things to show */
             for (int n = 0; n < numBase; ++n)
@@ -52,14 +52,14 @@ namespace Calcoo
 
                 for (int i = 0; i < inputLength; ++i)
                 {
-                    _intDigits[i, n] = new DisplayGlyph(xMargin + cellWidth*(i + 1), yMargin, cellWidth, cellHeight,
+                    _intDigits[i, n] = new DisplayGlyph(xMargin + cellWidth * (i + 1), yMargin, cellWidth, cellHeight,
                         thisDigitIcon, parent);
-                    _fracDigits[i, n] = new DisplayGlyph(xMargin + dotWidth + cellWidth*(i + 1), yMargin, cellWidth,
+                    _fracDigits[i, n] = new DisplayGlyph(xMargin + dotWidth + cellWidth * (i + 1), yMargin, cellWidth,
                         cellHeight, thisDigitIcon, parent);
                 }
 
                 for (int i = 0; i < expInputLength; ++i)
-                    _expDigits[i, n] = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth*(i + 2),
+                    _expDigits[i, n] = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth * (i + 2),
                         yMargin, cellWidth, cellHeight, thisDigitIcon, parent);
             }
 
@@ -68,9 +68,9 @@ namespace Calcoo
 
             for (int i = 0; i < inputLength; i++)
             {
-                _dot[i] = new DisplayGlyph(xMargin + cellWidth*(i + 2) + dotOffsetX, yMargin + dotOffsetY, dotWidth,
+                _dot[i] = new DisplayGlyph(xMargin + cellWidth * (i + 2) + dotOffsetX, yMargin + dotOffsetY, dotWidth,
                     dotWidth, dotIcon, parent);
-                _minusSign[i] = new DisplayGlyph(xMargin + cellWidth*i, yMargin, cellWidth, cellHeight, minusIcon,
+                _minusSign[i] = new DisplayGlyph(xMargin + cellWidth * i, yMargin, cellWidth, cellHeight, minusIcon,
                     parent);
             }
 
@@ -79,9 +79,9 @@ namespace Calcoo
                 String tickIcon = iconSet + "Tick";
                 for (int i = 0; i < inputLength; ++i)
                 {
-                    _intTicks[i] = new DisplayGlyph(xMargin + cellWidth*i + tickOffsetX,
+                    _intTicks[i] = new DisplayGlyph(xMargin + cellWidth * i + tickOffsetX,
                         yMargin + tickOffsetY, tickWidth, tickWidth, tickIcon, parent);
-                    _fracTicks[i] = new DisplayGlyph(xMargin + cellWidth*i + dotWidth + tickOffsetX,
+                    _fracTicks[i] = new DisplayGlyph(xMargin + cellWidth * i + dotWidth + tickOffsetX,
                         yMargin + tickOffsetY, tickWidth, tickWidth, tickIcon, parent);
                 }
             }

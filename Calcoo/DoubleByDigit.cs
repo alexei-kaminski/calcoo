@@ -168,14 +168,14 @@ namespace Calcoo
 
             // int part
             for (int i = 0; i < _intField.Count; ++i)
-                x = x*dBase + _intField[i];
+                x = x * dBase + _intField[i];
 
             // frac part
             double placer = 1.0;
             for (int i = 0; i < _fracField.Count; ++i)
             {
                 placer /= dBase;
-                x += _fracField[i]*placer;
+                x += _fracField[i] * placer;
             }
 
             // sign
@@ -185,7 +185,7 @@ namespace Calcoo
             // exp part
             int exponent = 0;
             for (int i = 0; i < _expField.Count; ++i)
-                exponent = exponent*numBase + _expField[i];
+                exponent = exponent * numBase + _expField[i];
             if (_expSign < 0)
                 exponent = -exponent;
             x *= Math.Pow(dBase, exponent);
@@ -292,7 +292,7 @@ namespace Calcoo
             // sign - note the the sigh of zero is "+", like in all calculators
             dbd._sign = x >= 0.0 ? 1 : -1;
 
-            int exponent = (int) Math.Floor(Math.Log(absX)/Math.Log(dBase));
+            int exponent = (int)Math.Floor(Math.Log(absX) / Math.Log(dBase));
 
             /* truncating all but first "nDigitsToRoundTo" digits of x */
             /*
@@ -301,8 +301,8 @@ namespace Calcoo
          * rounding may be needed
          */
 
-            long abs1X = (long) Math.Round((absX/Math.Pow(dBase, exponent + 1))
-                                           *Math.Pow(dBase, nDigitsToRoundTo));
+            long abs1X = (long)Math.Round((absX / Math.Pow(dBase, exponent + 1))
+                                           * Math.Pow(dBase, nDigitsToRoundTo));
 
             if (abs1X >= Math.Pow(dBase, nDigitsToRoundTo))
             {
@@ -310,13 +310,13 @@ namespace Calcoo
              * !!! rounding has promoted x to the next order - this is what we
              * mentioned before
              */
-                abs1X = (long) Math.Round(abs1X/dBase);
+                abs1X = (long)Math.Round(abs1X / dBase);
                 exponent += 1;
             }
 
             if ((exponent == -1)
                 && !forceExp
-                && (Math.Round(abs1X/dBase) >= Math.Pow(dBase, nDigitsToRoundTo - 1)))
+                && (Math.Round(abs1X / dBase) >= Math.Pow(dBase, nDigitsToRoundTo - 1)))
             {
                 /*
              * a very special case of, say, x=0.999999997, when the introduction
@@ -329,15 +329,15 @@ namespace Calcoo
             }
 
             /* padding with zeros to the full mantissaLength */
-            abs1X *= (long) Math.Pow(dBase, mantissaLength - nDigitsToRoundTo);
+            abs1X *= (long)Math.Pow(dBase, mantissaLength - nDigitsToRoundTo);
 
             int[] digitsOfX = new int[mantissaLength];
             /* interpreting meaningful digits of x */
             for (int i = mantissaLength - 1; i >= 0; --i)
             {
-                int lastDigit = (int) (abs1X%numBase);
+                int lastDigit = (int)(abs1X % numBase);
                 digitsOfX[i] = lastDigit;
-                abs1X = (abs1X - lastDigit)/numBase;
+                abs1X = (abs1X - lastDigit) / numBase;
             }
 
             /*
@@ -379,8 +379,8 @@ namespace Calcoo
                     nSignifDigits = nDigitsToRoundTo;
 
                 /* separating first "signif_digit_num" digits of x */
-                long abs2X = (long) Math.Round((absX/Math.Pow(dBase, exponent + 1))
-                                               *Math.Pow(dBase, nSignifDigits));
+                long abs2X = (long)Math.Round((absX / Math.Pow(dBase, exponent + 1))
+                                               * Math.Pow(dBase, nSignifDigits));
 
                 if (abs2X >= Math.Pow(dBase, nSignifDigits))
                 {
@@ -390,14 +390,14 @@ namespace Calcoo
                         nSignifDigits++;
                     }
                     else
-                        abs2X = (long) Math.Round(abs2X/dBase);
+                        abs2X = (long)Math.Round(abs2X / dBase);
                 }
 
                 for (int i = nSignifDigits - 1; i >= 0; i--)
                 {
-                    int lastDigit = (int) (abs2X%numBase);
+                    int lastDigit = (int)(abs2X % numBase);
                     digitsOfX[i] = lastDigit;
-                    abs2X = (long) Math.Round((double) (abs2X - lastDigit)/numBase);
+                    abs2X = (long)Math.Round((double)(abs2X - lastDigit) / numBase);
                 }
 
                 /* interpreting meaningful digits of x */
@@ -422,7 +422,7 @@ namespace Calcoo
                  * engineering format: the exponent must be a multiple of
                  * ExpDivisor
                  */
-                    int exponentAdj = Math.Abs(exponent)%expDivisor;
+                    int exponentAdj = Math.Abs(exponent) % expDivisor;
                     if (exponent < 0 && exponentAdj != 0)
                         exponentAdj = expDivisor - exponentAdj;
                     for (int i = 0; i < 1 + exponentAdj; ++i)
@@ -447,7 +447,7 @@ namespace Calcoo
 
                     while (tmp > 0)
                     {
-                        digitsOfExpReversed.Add(tmp%numBase);
+                        digitsOfExpReversed.Add(tmp % numBase);
                         tmp = tmp / numBase;
                     }
 

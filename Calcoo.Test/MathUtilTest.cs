@@ -11,12 +11,12 @@ namespace Calcoo.Test
         {
             Assert.That(MathUtil.Fact(0.0, 10), Is.EqualTo(1.0).Within(1e-10), "Zero");
             // the error of the used approximation per Abramowitz and Stegun is 3e-7
-            Assert.That(MathUtil.Fact(0.5, 10), Is.EqualTo(Math.Sqrt(Math.PI)/2.0).Within(3e-7), "Approximate - 0.5!");
+            Assert.That(MathUtil.Fact(0.5, 10), Is.EqualTo(Math.Sqrt(Math.PI) / 2.0).Within(3e-7), "Approximate - 0.5!");
             Assert.That(MathUtil.Fact(4.0, 10), Is.EqualTo(24.0).Within(1e-10), "Exact - 4!");
-            Assert.That(MathUtil.Fact(15.0, 10), Is.EqualTo(2.0*3*4*5*6*7*8*9*10*11*12*13*14*15).Within(1e3),
+            Assert.That(MathUtil.Fact(15.0, 10), Is.EqualTo(2.0 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12 * 13 * 14 * 15).Within(1e3),
                 "Approximate - 15!");
-            Assert.That(MathUtil.Fact(24.0, 10), Is.EqualTo(2.0*3*4*5*6*7*8*9*10*11*12*13*14*15*16*17*18
-                            *19*20*21*22*23*24).Within(1e14), "Approximate - 24!");
+            Assert.That(MathUtil.Fact(24.0, 10), Is.EqualTo(2.0 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12 * 13 * 14 * 15 * 16 * 17 * 18
+                            * 19 * 20 * 21 * 22 * 23 * 24).Within(1e14), "Approximate - 24!");
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Calcoo.Test
         [Test]
         public void AsinhTest()
         {
-            double[] testValues = {-20.0, -10.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 10.0, 20.0};
+            double[] testValues = { -20.0, -10.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 10.0, 20.0 };
             const double precision = 1e-12;
             foreach (double testValue in testValues)
                 Assert.That(MathUtil.Asinh(Math.Sinh(testValue)),
@@ -42,7 +42,7 @@ namespace Calcoo.Test
         [Test]
         public void AcoshTest()
         {
-            double[] testValues = {-20.0, -10.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 10.0, 20.0};
+            double[] testValues = { -20.0, -10.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 10.0, 20.0 };
             const double precision = 1e-12;
             foreach (double testValue in testValues)
                 Assert.That(MathUtil.Acosh(Math.Cosh(testValue)),
@@ -52,7 +52,7 @@ namespace Calcoo.Test
         [Test]
         public void AtanhTest()
         {
-            double[] testValues = {-5.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 5.0};
+            double[] testValues = { -5.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 5.0 };
             // cannot resolve +/-20 - returns infinity; precision for +/-10 is below
             // 1e-12 - it is Ok
             const double precision = 1e-12;

@@ -69,7 +69,7 @@ namespace Calcoo
             displayCanvas.RegisterOperationDisplays[2] = Register2OperationCanvas;
 
             body = new Body(MainGrid, displayCanvas, NumBase, InputLength, ExpInputLength);
-            
+
             body.DisplayOnlyActiveButtonsForMode(settings.mode);
             body.arcAutorelease = settings.arcAutorelease;
             body.hypAutorelease = settings.hypAutorelease;
@@ -193,7 +193,8 @@ namespace Calcoo
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             Command? command = body.TranslateShortcut(e.Key, Keyboard.Modifiers.HasFlag(ModifierKeys.Control), Keyboard.Modifiers.HasFlag(ModifierKeys.Shift));
-            switch (command) {
+            switch (command)
+            {
                 case null:
                     return;
                 case Command.Arc:

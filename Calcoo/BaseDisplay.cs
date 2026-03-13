@@ -53,7 +53,7 @@ namespace Calcoo
             {
                 if (_box == null)
                 {
-                    _box = new ContentControl {};
+                    _box = new ContentControl { };
                     _box.Width = _xSize;
                     //_box.Height = _ySize;
                     var uri = new Uri("Resources" + _icon + ".xaml", UriKind.Relative);

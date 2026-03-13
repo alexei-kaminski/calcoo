@@ -84,7 +84,7 @@ namespace Calcoo
                             goto stringLoopExit;
                     }
                 }
-                stringLoopExit:
+            stringLoopExit:
 
                 // now we try to deduce the roles of ',' and '.' from their
                 // positions

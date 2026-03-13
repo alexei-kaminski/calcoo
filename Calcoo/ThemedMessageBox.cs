@@ -70,7 +70,7 @@ namespace Calcoo
             var template = new System.Windows.Controls.ControlTemplate(typeof(Button));
             var border = new FrameworkElementFactory(typeof(Border));
             border.SetValue(Border.BackgroundProperty, new System.Windows.Data.Binding("Background")
-                { RelativeSource = new System.Windows.Data.RelativeSource(System.Windows.Data.RelativeSourceMode.TemplatedParent) });
+            { RelativeSource = new System.Windows.Data.RelativeSource(System.Windows.Data.RelativeSourceMode.TemplatedParent) });
             border.SetValue(Border.CornerRadiusProperty, new CornerRadius(4));
             border.SetValue(Border.PaddingProperty, new Thickness(24, 6, 24, 6));
             border.SetValue(Border.SnapsToDevicePixelsProperty, true);

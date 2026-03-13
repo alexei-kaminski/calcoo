@@ -14,7 +14,7 @@ namespace Calcoo
     public class CpuStack : ICpuStackGetters
     {
         public Settings.StackMode StackMode { get; set; }
-    
+
         private readonly Settings.Mode _mode;
 
         private CpuStack()
