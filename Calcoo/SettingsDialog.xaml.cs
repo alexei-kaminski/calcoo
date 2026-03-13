@@ -18,11 +18,7 @@ namespace Calcoo
         public SettingsDialog(Settings settings, int maxRoundLength)
         {
             InitializeComponent();
-            SourceInitialized += (_, _) =>
-            {
-                App.ApplyDarkTitleBar(this);
-                App.ApplyMica(this);
-            };
+            App.ApplyDialogTheme(this);
 
             WasChanged = false;
             NewSettings = settings.Clone();

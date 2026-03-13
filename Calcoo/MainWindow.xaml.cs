@@ -308,13 +308,7 @@ namespace Calcoo
                         if (Double.IsNaN(value))
                             break;
 
-                        redoStack.Clear();
-                        undoStack.AddFirst(cpu.Clone());
-                        body.UndoEnabled = true;
-                        body.RedoEnabled = false;
-                        if (undoStack.Count > UndoStackSize)
-                            undoStack.RemoveLast();
-
+                        PushUndo();
                         cpu.ExecutePaste(value);
                     }
                     catch { }
@@ -322,13 +316,7 @@ namespace Calcoo
                 case Command.Custom:
                     if (!string.IsNullOrEmpty(_customButtonCommand))
                     {
-                        redoStack.Clear();
-                        undoStack.AddFirst(cpu.Clone());
-                        body.UndoEnabled = true;
-                        body.RedoEnabled = false;
-                        if (undoStack.Count > UndoStackSize)
-                            undoStack.RemoveLast();
-
+                        PushUndo();
                         foreach (string token in _customButtonCommand.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                         {
                             if (!double.IsFinite(cpu.X))
@@ -343,12 +331,7 @@ namespace Calcoo
                     Close();
                     break;
                 default:
-                    redoStack.Clear();
-                    undoStack.AddFirst(cpu.Clone());
-                    body.UndoEnabled = true;
-                    body.RedoEnabled = false;
-                    if (undoStack.Count > UndoStackSize)
-                        undoStack.RemoveLast();
+                    PushUndo();
 
                     if (CommandExtensions.TrigAll.Contains(command))
                     {
@@ -377,6 +360,16 @@ namespace Calcoo
             }
 
             body.Refresh(cpu);
+        }
+
+        private void PushUndo()
+        {
+            redoStack.Clear();
+            undoStack.AddFirst(cpu.Clone());
+            body.UndoEnabled = true;
+            body.RedoEnabled = false;
+            if (undoStack.Count > UndoStackSize)
+                undoStack.RemoveLast();
         }
     }
 }

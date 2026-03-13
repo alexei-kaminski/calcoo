@@ -104,6 +104,15 @@ namespace Calcoo
             DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, sizeof(int));
         }
 
+        public static void ApplyDialogTheme(Window window)
+        {
+            window.SourceInitialized += (_, _) =>
+            {
+                ApplyDarkTitleBar(window);
+                ApplyMica(window);
+            };
+        }
+
         public static bool ApplyMica(Window window)
         {
             try

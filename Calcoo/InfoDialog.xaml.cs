@@ -13,12 +13,8 @@ namespace Calcoo
         public InfoDialog()
         {
             InitializeComponent();
-            SourceInitialized += (_, _) =>
-            {
-                App.ApplyDarkTitleBar(this);
-                App.ApplyMica(this);
-                MaxHeight = SystemParameters.WorkArea.Height;
-            };
+            App.ApplyDialogTheme(this);
+            SourceInitialized += (_, _) => MaxHeight = SystemParameters.WorkArea.Height;
             var version = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 ?.InformationalVersion.Split('+')[0] ?? "unknown";

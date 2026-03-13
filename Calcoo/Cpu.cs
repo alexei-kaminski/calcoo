@@ -675,8 +675,7 @@ namespace Calcoo
         {
             if (Mode == Settings.Mode.Rpn)
             {
-                if (_lastAction == Action.Input)
-                    X = _input.ToDouble(_numBase);
+                FinalizeInput();
                 _stack.Push(X);
             }
             X = Math.PI;
@@ -687,8 +686,7 @@ namespace Calcoo
         {
             if (Mode == Settings.Mode.Rpn)
             {
-                if (_lastAction == Action.Input)
-                    X = _input.ToDouble(_numBase);
+                FinalizeInput();
                 _stack.Push(X);
             }
             X = z;
@@ -699,8 +697,7 @@ namespace Calcoo
 
         private void ExecuteBinaryOp(BinaryOp binaryOp)
         {
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
 
             switch (Mode)
             {
@@ -815,8 +812,7 @@ namespace Calcoo
                 case Settings.Mode.Rpn:
                     throw new Exception("ExecuteEq called in RPN mode");
                 case Settings.Mode.Alg:
-                    if (_lastAction == Action.Input)
-                        X = _input.ToDouble(_numBase);
+                    FinalizeInput();
                     DoBinaryOpChain(BinopPriorityMin, false);
                     _stack.Clear();
                     _lastAction = Action.Enter;
@@ -836,8 +832,7 @@ namespace Calcoo
                     switch (EnterMode)
                     {
                         case Settings.EnterMode.Traditional:
-                            if (_lastAction == Action.Input)
-                                X = _input.ToDouble(_numBase);
+                            FinalizeInput();
                             _stack.Push(X);
                             _lastAction = Action.EnterPush;
                             break;
@@ -859,24 +854,21 @@ namespace Calcoo
 
         private void ExecuteExchXy()
         {
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
             X = _stack.SwapHeadValue(X);
             _lastAction = Action.Enter;
         }
 
         private void ExecuteStackUp()
         {
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
             X = _stack.RollUp(X);
             _lastAction = Action.Enter;
         }
 
         private void ExecuteStackDown()
         {
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
             X = _stack.RollDown(X);
             _lastAction = Action.Enter;
         }
@@ -895,8 +887,7 @@ namespace Calcoo
             if (Mode == Settings.Mode.Rpn)
                 throw new Exception("cannot be called in RPN mode");
 
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
 
             if (_stack.ExistOpenParen())
             {
@@ -917,8 +908,7 @@ namespace Calcoo
 
         private void ExecuteUnaryOp(UnaryOp unaryOp)
         {
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
 
             switch (unaryOp)
             {
@@ -1039,8 +1029,7 @@ namespace Calcoo
 
         private void ExecuteMemoryOp(MemoryOp memoryOp)
         {
-            if (_lastAction == Action.Input)
-                X = _input.ToDouble(_numBase);
+            FinalizeInput();
 
             switch (memoryOp)
             {
@@ -1079,6 +1068,12 @@ namespace Calcoo
         private void ExecuteSwitchToMem(int memIndex)
         {
             ActiveMemNum = memIndex;
+        }
+
+        private void FinalizeInput()
+        {
+            if (_lastAction == Action.Input)
+                X = _input.ToDouble(_numBase);
         }
 
         private void ExecuteDegRad()
