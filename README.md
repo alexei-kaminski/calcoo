@@ -2,7 +2,7 @@
 
 Calcoo is an RPN and algebraic scientific calculator designed to provide maximum usability.
 
-![Calcoo in algebraic mode](screenshot-algebraic.png) ![Calcoo in RPN mode](screenshot-rpn.png) ![Calcoo settings](screenshot-settings.png)
+![Calcoo in algebraic mode](screenshot-algebraic.png?raw=true) ![Calcoo in RPN mode](screenshot-rpn.png?raw=true) ![Calcoo settings](screenshot-settings.png?raw=true)
 
 ## Features
 
