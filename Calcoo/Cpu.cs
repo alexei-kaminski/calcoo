@@ -976,7 +976,7 @@ namespace Calcoo
                     X = Math.Sinh(X);
                     break;
                 case UnaryOp.Asinh:
-                    X = MathUtil.Asinh(X);
+                    X = Math.Asinh(X);
                     break;
                 case UnaryOp.Cos:
                     if (IsOddMultipleOfHalf(X, 180.0, Math.PI, AngleUnits))
@@ -997,10 +997,7 @@ namespace Calcoo
                     X = Math.Cosh(X);
                     break;
                 case UnaryOp.Acosh:
-                    if (X >= 1.0)
-                        X = MathUtil.Acosh(X);
-                    else
-                        X = Double.NaN;
+                    X = Math.Acosh(X);
                     break;
                 case UnaryOp.Tan:
                     if (IsOddMultipleOfHalf(X, 180.0, Math.PI, AngleUnits))
@@ -1018,7 +1015,7 @@ namespace Calcoo
                     X = Math.Tanh(X);
                     break;
                 case UnaryOp.Atanh:
-                    X = MathUtil.Atanh(X);
+                    X = Math.Atanh(X);
                     break;
                 default:
                     throw new Exception("unknown unary op " + unaryOp);

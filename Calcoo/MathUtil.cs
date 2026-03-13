@@ -4,13 +4,7 @@ namespace Calcoo
 {
     public static class MathUtil
     {
-        // naming follows the naming in boost 1.34.1
-        private const double Epsilon = 1e-15; // good enough for
-                                              // these purposes
-        private readonly static double Taylor2Bound = Math.Sqrt(Epsilon);
-        private readonly static double TaylorNBound = Math.Sqrt(Taylor2Bound);
-        private readonly static double UpperTaylor2Bound = 1.0 / Taylor2Bound;
-        private readonly static double UpperTaylorNBound = 1.0 / TaylorNBound;
+        private const double Epsilon = 1e-15;
 
         /**
          * Factorial using the Stirling formula for large arguments.
@@ -80,111 +74,6 @@ namespace Calcoo
                 return true;
             double log10XFact = x * Math.Log10(x) - x * Math.Log10(Math.E) + 0.5 * Math.Log10(2 * Math.PI * x);
             return (log10XFact < Math.Pow(10, nExpDigits));
-        }
-
-        public static double Asinh(double x)
-        {
-            // adapted from boost 1.34.1
-            if (x >= +TaylorNBound)
-            {
-                if (x > UpperTaylorNBound)
-                {
-                    if (x > UpperTaylor2Bound)
-                        // approximation by laurent series in 1/x at 0+ order from
-                        // -1 to 0
-                        return (Math.Log(x * 2.0));
-                    else
-                        // approximation by laurent series in 1/x at 0+ order from
-                        // -1 to 1
-                        return (Math.Log(x * 2.0 + (1.0 / (x * 2.0))));
-                }
-                else
-                {
-                    return (Math.Log(x + Math.Sqrt(x * x + 1.0)));
-                }
-            }
-            else if (x <= -TaylorNBound)
-            {
-                return (-Asinh(-x));
-            }
-            else
-            {
-                // approximation by taylor series in x at 0 up to order 2
-                double result = x;
-                if (Math.Abs(x) >= Taylor2Bound)
-                {
-                    double x3 = x * x * x;
-                    // approximation by taylor series in x at 0 up to order 4
-                    result -= x3 / 6.0;
-                }
-                return (result);
-            }
-        }
-
-        public static double Acosh(double x)
-        {
-            // adapted from boost 1.34.1
-            if (x < 1.0)
-                return Double.NaN;
-            else if (x >= TaylorNBound)
-            {
-                if (x > UpperTaylor2Bound)
-                    // approximation by laurent series in 1/x at 0+ order from -1 to
-                    // 0
-                    return (Math.Log(x * 2.0));
-                else
-                    return (Math.Log(x + Math.Sqrt(x * x - 1.0)));
-            }
-            else
-            {
-                double y = Math.Sqrt(x - 1.0);
-                // approximation by taylor series in y at 0 up to order 2
-                double result = y;
-                if (y >= Taylor2Bound)
-                {
-                    double y3 = y * y * y;
-                    // approximation by taylor series in y at 0 up to order 4
-                    result -= y3 / 12.0;
-                }
-                return (Math.Sqrt(2.0) * result);
-            }
-        }
-
-        public static double Atanh(double x)
-        {
-            // adapted from boost 1.34.1
-            if (x < -1.0)
-            {
-                return Double.NaN;
-            }
-            else if (x < -1.0 + Epsilon)
-            {
-                return Double.NegativeInfinity;
-            }
-            else if (x > 1.0)
-            {
-                return Double.NaN;
-            }
-            else if (x > 1.0 - Epsilon)
-            {
-                return Double.PositiveInfinity;
-            }
-            else if (Math.Abs(x) >= TaylorNBound)
-            {
-                return Math.Log((1.0 + x) / (1.0 - x)) / 2.0;
-            }
-            else
-            {
-                // approximation by taylor series in x at 0 up to order 2
-                double result = x;
-                if (Math.Abs(x) >= Taylor2Bound)
-                {
-                    double x3 = x * x * x;
-                    // approximation by taylor series in x at 0 up to order 4
-                    result += x3 / 3.0;
-                }
-                return result;
-            }
         }
 
         /**

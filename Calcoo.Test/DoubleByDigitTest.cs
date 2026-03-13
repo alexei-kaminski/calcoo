@@ -588,6 +588,68 @@ namespace Calcoo.Test
         }
 
         [Test]
+        public void AddExpDigitInvalidLengthTest()
+        {
+            var dbd = new DoubleByDigit();
+            Assert.Throws<Exception>(() => dbd.AddExpDigit(1, 0), "length 0");
+            Assert.Throws<Exception>(() => dbd.AddExpDigit(1, -1), "length -1");
+        }
+
+        [Test]
+        public void ToStringOverflowTest()
+        {
+            var dbd = InitDoubleByDigit(new[] { 1, 2, 3 }, new[] { 4, 5, 6 }, new[] { 7, 8, 9 }, -1, -1, true);
+            Assert.That(dbd.ToString(), Is.EqualTo("error"), "overflow ToString");
+        }
+
+        [Test]
+        public void FromDoubleInvalidParametersTest()
+        {
+            // expDivisor <= 0
+            Assert.Throws<Exception>(() =>
+                DoubleByDigit.FromDouble(1.0, MantissaLength, ExpLength, false, 0, MantissaLength, false, 10),
+                "expDivisor = 0");
+            // expDivisor >= base^expLength
+            Assert.Throws<Exception>(() =>
+                DoubleByDigit.FromDouble(1.0, MantissaLength, ExpLength, false, 100, MantissaLength, false, 10),
+                "expDivisor = 100");
+            // mantissaLength <= 0
+            Assert.Throws<Exception>(() =>
+                DoubleByDigit.FromDouble(1.0, 0, ExpLength, false, 1, 0, false, 10),
+                "mantissaLength = 0");
+            // mantissaLength < nDigitsToRoundTo
+            Assert.Throws<Exception>(() =>
+                DoubleByDigit.FromDouble(1.0, 5, ExpLength, false, 1, 6, false, 10),
+                "nDigitsToRoundTo > mantissaLength");
+        }
+
+        [Test]
+        public void FromDoubleRoundingPromotionFracTest()
+        {
+            // This value triggers rounding promotion in the x<1 fixed-format branch
+            // where nSignifDigits < nDigitsToRoundTo (line 388-390)
+            double d = 0.000999999995;
+            var dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
+            Assert.That(dbd.IsOverflow(), Is.False, d + " not overflow");
+            Assert.That(dbd.GetSign(), Is.EqualTo(1), d + " sign");
+            // After rounding promotion: 0.0010000000
+            Assert.That(dbd.GetIntDigit(0), Is.EqualTo(0), d + " int digit");
+            Assert.That(dbd.GetFracDigit(0), Is.EqualTo(0), d + " frac 0");
+            Assert.That(dbd.GetFracDigit(1), Is.EqualTo(0), d + " frac 1");
+            Assert.That(dbd.GetFracDigit(2), Is.EqualTo(0), d + " frac 2");
+            Assert.That(dbd.GetFracDigit(3), Is.EqualTo(1), d + " frac 3 (promoted)");
+
+            // This value triggers the else branch (line 392-393) where
+            // nSignifDigits == nDigitsToRoundTo, so abs2X is divided by base
+            d = 0.009995;
+            dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, 3, false, 10);
+            Assert.That(dbd.IsOverflow(), Is.False, d + " not overflow");
+            Assert.That(dbd.GetIntDigit(0), Is.EqualTo(0), d + " int digit");
+            Assert.That(dbd.GetFracDigit(0), Is.EqualTo(0), d + " frac 0");
+            Assert.That(dbd.GetFracDigit(1), Is.EqualTo(1), d + " frac 1 (promoted)");
+        }
+
+        [Test]
         public void ToStringTest()
         {
             var dbd = InitDoubleByDigit(new[] { 1, 2, 3 }, new[] { 4, 5, 6 }, new[] { 9 }, 1, 1, false);

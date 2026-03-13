@@ -1689,6 +1689,120 @@ namespace Calcoo.Test
         }
 
         [Test]
+        public void ExecuteInverseTrigTest()
+        {
+            // asin in degrees
+            Assert.That(
+                RunCpu(new[] { "Dot", "Digit5", "Asin" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(30.0).Within(1e-7), "asin(0.5) deg");
+            // acos in degrees
+            Assert.That(
+                RunCpu(new[] { "Dot", "Digit5", "Acos" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(60.0).Within(1e-7), "acos(0.5) deg");
+            // atan in degrees
+            Assert.That(
+                RunCpu(new[] { "Digit1", "Atan" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(45.0).Within(1e-7), "atan(1) deg");
+            // asin in radians
+            Assert.That(
+                RunCpu(new[] { "Dot", "Digit5", "Asin" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                Is.EqualTo(Math.Asin(0.5)).Within(1e-12), "asin(0.5) rad");
+            // acos in radians
+            Assert.That(
+                RunCpu(new[] { "Dot", "Digit5", "Acos" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                Is.EqualTo(Math.Acos(0.5)).Within(1e-12), "acos(0.5) rad");
+            // atan in radians
+            Assert.That(
+                RunCpu(new[] { "Digit1", "Atan" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                Is.EqualTo(Math.Atan(1.0)).Within(1e-12), "atan(1) rad");
+            // asin out of range
+            Assert.That(
+                Double.IsNaN(RunCpu(new[] { "Digit2", "Asin" }, Settings.Mode.Alg, Settings.AngleUnits.Deg)),
+                Is.True, "asin(2) = NaN");
+            // acos out of range
+            Assert.That(
+                Double.IsNaN(RunCpu(new[] { "Digit2", "Acos" }, Settings.Mode.Alg, Settings.AngleUnits.Deg)),
+                Is.True, "acos(2) = NaN");
+        }
+
+        [Test]
+        public void ExecuteHyperbolicTest()
+        {
+            // sinh
+            Assert.That(
+                RunCpu(new[] { "Digit1", "Sinh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(Math.Sinh(1.0)).Within(1e-12), "sinh(1)");
+            // cosh
+            Assert.That(
+                RunCpu(new[] { "Digit1", "Cosh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(Math.Cosh(1.0)).Within(1e-12), "cosh(1)");
+            // tanh
+            Assert.That(
+                RunCpu(new[] { "Digit1", "Tanh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(Math.Tanh(1.0)).Within(1e-12), "tanh(1)");
+            // asinh
+            Assert.That(
+                RunCpu(new[] { "Digit2", "Asinh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(Math.Asinh(2.0)).Within(1e-12), "asinh(2)");
+            // acosh
+            Assert.That(
+                RunCpu(new[] { "Digit2", "Acosh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(Math.Acosh(2.0)).Within(1e-12), "acosh(2)");
+            // atanh
+            Assert.That(
+                RunCpu(new[] { "Dot", "Digit5", "Atanh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(Math.Atanh(0.5)).Within(1e-12), "atanh(0.5)");
+            // acosh of value < 1 = NaN
+            Assert.That(
+                Double.IsNaN(RunCpu(new[] { "Dot", "Digit5", "Acosh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg)),
+                Is.True, "acosh(0.5) = NaN");
+        }
+
+        [Test]
+        public void ExecutePiRpnTest()
+        {
+            // In RPN mode, Pi should push the current X onto the stack
+            Assert.That(
+                RunCpu(new[] { "Digit5", "Pi", "Add" }, Settings.Mode.Rpn,
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                Is.EqualTo(5.0 + Math.PI).Within(1e-7), "5 Pi +");
+            // Pi after Enter
+            Assert.That(
+                RunCpu(new[] { "Digit3", "Enter", "Pi", "Mul" }, Settings.Mode.Rpn,
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                Is.EqualTo(3.0 * Math.PI).Within(1e-7), "3 Enter Pi *");
+        }
+
+        [Test]
+        public void ExecuteEnterHp28Test()
+        {
+            // HP28 enter mode: Enter does not duplicate X, it only pushes
+            Assert.That(
+                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                Is.EqualTo(3.0).Within(1e-7), "HP28: 3 Enter + = 3 (no dup)");
+            // HP28: two values then add
+            Assert.That(
+                RunCpu(new[] { "Digit3", "Enter", "Digit4", "Add" }, Settings.Mode.Rpn,
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                Is.EqualTo(7.0).Within(1e-7), "HP28: 3 Enter 4 + = 7");
+        }
+
+        [Test]
+        public void ExecuteEqAlgChainTest()
+        {
+            // Test chained operations in ALG mode
+            Assert.That(
+                RunCpu(new[] { "Digit2", "Add", "Digit3", "Mul", "Digit4", "Eq" },
+                    Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(14.0).Within(1e-7), "2+3*4 = 14");
+            // Test Eq on blank (just a number)
+            Assert.That(
+                RunCpu(new[] { "Digit7", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                Is.EqualTo(7.0).Within(1e-7), "7 =");
+        }
+
+        [Test]
         public void CustomCommandSequenceShouldStopOnError()
         {
             // Issue #2: custom command sequence should stop after an error.

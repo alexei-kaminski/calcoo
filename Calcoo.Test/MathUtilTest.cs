@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 
 namespace Calcoo.Test
@@ -30,42 +30,23 @@ namespace Calcoo.Test
         }
 
         [Test]
-        public void AsinhTest()
-        {
-            double[] testValues = { -20.0, -10.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 10.0, 20.0 };
-            const double precision = 1e-12;
-            foreach (double testValue in testValues)
-                Assert.That(MathUtil.Asinh(Math.Sinh(testValue)),
-                    Is.EqualTo(testValue).Within(precision), "asinh of sinh of " + testValue);
-        }
-
-        [Test]
-        public void AcoshTest()
-        {
-            double[] testValues = { -20.0, -10.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 10.0, 20.0 };
-            const double precision = 1e-12;
-            foreach (double testValue in testValues)
-                Assert.That(MathUtil.Acosh(Math.Cosh(testValue)),
-                    Is.EqualTo(Math.Abs(testValue)).Within(precision), "acosh of cosh of " + testValue);
-        }
-
-        [Test]
-        public void AtanhTest()
-        {
-            double[] testValues = { -5.0, -1.0, -0.1, -0.0001, 0.0, 0.0001, 0.1, 1.0, 5.0 };
-            // cannot resolve +/-20 - returns infinity; precision for +/-10 is below
-            // 1e-12 - it is Ok
-            const double precision = 1e-12;
-            foreach (double testValue in testValues)
-                Assert.That(MathUtil.Atanh(Math.Tanh(testValue)),
-                    Is.EqualTo(testValue).Within(precision), "atanh of tanh of " + testValue);
-        }
-
-        [Test]
         public void SmartSumTest()
         {
             Assert.That(MathUtil.SmartSum(MathUtil.SmartSum(100.1, (-100.0), 10), (-0.1), 10),
                 Is.EqualTo(0.0).Within(1e-20), "( 100.1 - 100 ) - 0.1 == 0");
+            // Same-magnitude sum (no precision issue)
+            Assert.That(MathUtil.SmartSum(1.5, 2.5, 10),
+                Is.EqualTo(4.0).Within(1e-15), "1.5 + 2.5 == 4");
+            // Zero result directly
+            Assert.That(MathUtil.SmartSum(5.0, -5.0, 10),
+                Is.EqualTo(0.0).Within(1e-20), "5 - 5 == 0");
+        }
+
+        [Test]
+        public void FactCanDoNegativeTest()
+        {
+            Assert.That(MathUtil.FactCanDo(-1.0, 2), Is.EqualTo(false), "of -1");
+            Assert.That(MathUtil.FactCanDo(-100.0, 2), Is.EqualTo(false), "of -100");
         }
 
     }
