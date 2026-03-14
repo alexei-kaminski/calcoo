@@ -53,6 +53,7 @@ namespace Calcoo
                 res["ButtonCheckedBg"] = Frozen(new SolidColorBrush(Color.FromRgb(0x48, 0x48, 0x48)));
                 res["CardBackground"] = Frozen(new SolidColorBrush(Color.FromArgb(0xB3, 0x2D, 0x2D, 0x2D)));
                 res["CardBorderBrush"] = Frozen(new SolidColorBrush(Color.FromArgb(0x1A, 0xFF, 0xFF, 0xFF)));
+                res["ButtonBorderBrush"] = Frozen(new SolidColorBrush(Color.FromArgb(0x40, 0xFF, 0xFF, 0xFF)));
                 res["ScrollBarThumbBrush"] = Frozen(new SolidColorBrush(Color.FromRgb(0x6B, 0x6B, 0x6B)));
                 res["ScrollBarTrackBrush"] = Frozen(new SolidColorBrush(Color.FromRgb(0x2D, 0x2D, 0x2D)));
                 res["SubtleForeground"] = Frozen(new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99)));
@@ -71,6 +72,7 @@ namespace Calcoo
                 res["ButtonCheckedBg"] = Frozen(new SolidColorBrush(Color.FromRgb(0xCA, 0xCA, 0xCA)));
                 res["CardBackground"] = Frozen(new SolidColorBrush(Color.FromArgb(0xB3, 0xFF, 0xFF, 0xFF)));
                 res["CardBorderBrush"] = Frozen(new SolidColorBrush(Color.FromArgb(0x0F, 0x00, 0x00, 0x00)));
+                res["ButtonBorderBrush"] = Frozen(new SolidColorBrush(Color.FromArgb(0x40, 0x00, 0x00, 0x00)));
                 res["ScrollBarThumbBrush"] = Frozen(new SolidColorBrush(Color.FromRgb(0xCD, 0xCD, 0xCD)));
                 res["ScrollBarTrackBrush"] = Frozen(new SolidColorBrush(Color.FromRgb(0xF0, 0xF0, 0xF0)));
                 res["SubtleForeground"] = Frozen(new SolidColorBrush(Color.FromRgb(0x66, 0x66, 0x66)));

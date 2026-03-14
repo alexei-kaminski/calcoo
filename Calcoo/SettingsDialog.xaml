@@ -76,13 +76,14 @@
         </Style>
         <Style x:Key="CalcButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
             <Setter Property="Margin" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1"
                                 CornerRadius="4"
                                 SnapsToDevicePixels="True">
@@ -151,7 +152,7 @@
                 <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="RpnEnter" Name="RpnEnterTraditional" Content="Traditional" Margin="0,0,0,6"/>
-                        <RadioButton GroupName="RpnEnter" Name="RpnEnterHp28" Content="Hp28"/>
+                        <RadioButton GroupName="RpnEnter" Name="RpnEnterHp28" Content="HP-28"/>
                     </StackPanel>
                 </Border>
 
@@ -159,7 +160,7 @@
                 <Border Grid.Row="3" Grid.Column="2" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="RpnStack" Name="RpnStackInfinite" Content="Infinite" Margin="0,0,0,6"/>
-                        <RadioButton GroupName="RpnStack" Name="RpnStackXyzt" Content="Xyzt"/>
+                        <RadioButton GroupName="RpnStack" Name="RpnStackXyzt" Content="XYZT"/>
                     </StackPanel>
                 </Border>
 
@@ -168,8 +169,19 @@
                 <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                            <CheckBox Content="Round output to" Name="RoundingOutputCheckBox" VerticalAlignment="Center"/>
-                            <ComboBox Name="RoundingDigitsComboBox" Width="52" Margin="8,0,0,0" VerticalAlignment="Center"
+                            <CheckBox Content="Round output" Name="RoundingOutputCheckBox" VerticalAlignment="Center"/>
+                            <TextBlock Text="to" Margin="6,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=RoundingOutputCheckBox}" Value="False">
+                                                <Setter Property="Opacity" Value="0.4"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <ComboBox Name="RoundingDigitsComboBox" Width="52" Margin="6,0,0,0" VerticalAlignment="Center"
                                       SelectionChanged="RoundingDigitsComboBox_SelectionChanged">
                                 <ComboBox.Style>
                                     <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
@@ -181,14 +193,24 @@
                                     </Style>
                                 </ComboBox.Style>
                             </ComboBox>
-                            <TextBlock Text="digits" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="digits" Margin="6,0,0,0" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=RoundingOutputCheckBox}" Value="False">
+                                                <Setter Property="Opacity" Value="0.4"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </StackPanel>
                         <CheckBox Content="Truncate trailing zeros" Name="TruncateZerosCheckBox"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Row 6-7: Paste Parsing (left) | Customize (right) -->
-                <TextBlock Grid.Row="6" Grid.Column="0" Text="Paste Parsing" Style="{StaticResource SectionHeader}"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Paste parsing" Style="{StaticResource SectionHeader}"/>
                 <Border Grid.Row="7" Grid.Column="0" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="PasteParsing" Name="PasteParsingLocaleBased" Content="Locale-based" Margin="0,0,0,6"/>
@@ -198,7 +220,7 @@
 
                 <TextBlock Grid.Row="6" Grid.Column="2" Text="Customize" Style="{StaticResource SectionHeader}"/>
                 <Border Grid.Row="7" Grid.Column="2" Style="{StaticResource SettingsCard}">
-                    <Button Name="CustomButton" Style="{StaticResource CalcButtonStyle}" HorizontalAlignment="Left" Width="36" Height="36" Padding="0">
+                    <Button Name="CustomButton" Style="{StaticResource CalcButtonStyle}" BorderBrush="{DynamicResource ButtonBorderBrush}" HorizontalAlignment="Left" Width="36" Height="36" Padding="0">
                         <Frame Source="pack://application:,,,/Resources/Icons/Buttons/Custom.xaml" NavigationUIVisibility="Hidden" Margin="4"/>
                     </Button>
                 </Border>

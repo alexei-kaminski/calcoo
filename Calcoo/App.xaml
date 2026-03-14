@@ -14,6 +14,7 @@
         <SolidColorBrush x:Key="ButtonCheckedBg" Color="#CACACA"/>
         <SolidColorBrush x:Key="CardBackground" Color="#B3FFFFFF"/>
         <SolidColorBrush x:Key="CardBorderBrush" Color="#0F000000"/>
+        <SolidColorBrush x:Key="ButtonBorderBrush" Color="#40000000"/>
         <SolidColorBrush x:Key="SubtleForeground" Color="#666666"/>
         <SolidColorBrush x:Key="AccentButtonBackground" Color="#0067C0"/>
         <SolidColorBrush x:Key="AccentButtonForeground" Color="#FFFFFF"/>
