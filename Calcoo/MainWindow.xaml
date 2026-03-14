@@ -132,7 +132,6 @@
             <ColumnDefinition Width="16" />
         </Grid.ColumnDefinitions>
 
-
         <Border Style="{StaticResource DisplayStyle}" Grid.ColumnSpan="15" Grid.Column="10" Grid.Row="0" Grid.RowSpan="2">
             <Canvas Name="MainDisplayCanvas"/>
         </Border>
