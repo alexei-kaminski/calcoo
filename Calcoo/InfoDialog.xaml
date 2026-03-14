@@ -6,31 +6,6 @@
         Background="{DynamicResource AppBackground}" Foreground="{DynamicResource TextForeground}"
         FontFamily="Segoe UI Variable, Segoe UI" FontSize="14">
     <Window.Resources>
-        <Style x:Key="AccentButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="24,6"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}"
-                                CornerRadius="4" Padding="{TemplateBinding Padding}"
-                                SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.7"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -78,9 +53,7 @@
 
         <TabControl Grid.Row="0" Margin="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <TabItem Header="Shortcuts">
-                    <Border Name="ShortcutBorder" Background="{DynamicResource CardBackground}"
-                            BorderBrush="{DynamicResource CardBorderBrush}"
-                            BorderThickness="1" CornerRadius="4" Padding="16,8" Margin="0,8,0,0">
+                    <Border Name="ShortcutBorder" Style="{StaticResource TabContentCard}" Padding="16,8">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid Name="ShortcutGrid" Margin="0,0,12,0">
                             <Grid.ColumnDefinitions>
@@ -185,9 +158,7 @@
                     </Border>
                 </TabItem>
                 <TabItem Header="Help">
-                    <Border Background="{DynamicResource CardBackground}"
-                            BorderBrush="{DynamicResource CardBorderBrush}"
-                            BorderThickness="1" CornerRadius="4" Padding="16,12" Margin="0,8,0,0"
+                    <Border Style="{StaticResource TabContentCard}"
                             Width="{Binding ElementName=ShortcutBorder, Path=ActualWidth}"
                             Height="{Binding ElementName=ShortcutBorder, Path=ActualHeight}">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -212,9 +183,7 @@
                     </Border>
                 </TabItem>
                 <TabItem Header="License">
-                    <Border Background="{DynamicResource CardBackground}"
-                            BorderBrush="{DynamicResource CardBorderBrush}"
-                            BorderThickness="1" CornerRadius="4" Padding="16,12" Margin="0,8,0,0"
+                    <Border Style="{StaticResource TabContentCard}"
                             Width="{Binding ElementName=ShortcutBorder, Path=ActualWidth}"
                             Height="{Binding ElementName=ShortcutBorder, Path=ActualHeight}">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -234,9 +203,7 @@
                     </Border>
                 </TabItem>
                 <TabItem Header="About">
-                    <Border Background="{DynamicResource CardBackground}"
-                            BorderBrush="{DynamicResource CardBorderBrush}"
-                            BorderThickness="1" CornerRadius="4" Padding="16,12" Margin="0,8,0,0"
+                    <Border Style="{StaticResource TabContentCard}"
                             Width="{Binding ElementName=ShortcutBorder, Path=ActualWidth}"
                             Height="{Binding ElementName=ShortcutBorder, Path=ActualHeight}">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
