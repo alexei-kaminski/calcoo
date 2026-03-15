@@ -13,9 +13,10 @@ Calcoo is an RPN and algebraic scientific calculator designed to provide maximum
 - Undo/redo (up to 200 steps)
 - Degree and radian angle modes
 - Multiple display formats (fixed, scientific, engineering)
+- Displays for the memory and operation registers
 - Copy/paste with locale-aware number parsing
 - Customizable command button
-- Keyboard shortcuts for all operations
+- Keyboard shortcuts for all basic operations
 - Scalable vector UI that maintains aspect ratio
 - Dark/light theme following Windows system setting
 
