@@ -24,6 +24,7 @@ namespace Calcoo
             NewSettings = settings.Clone();
             _maxRoundLength = maxRoundLength;
 
+            CustomButton.ToolTip = CommandExtensions.CustomButtonTooltip;
             AutoreleaseArcButton.IsChecked = settings.arcAutorelease;
             AutoreleaseHypButton.IsChecked = settings.hypAutorelease;
 

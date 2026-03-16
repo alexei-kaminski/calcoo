@@ -364,7 +364,7 @@ namespace Calcoo
             CreateButton(Command.Digit5, 12, 5, 2, 2, new[] { new[] { Key.D5, Key.NumPad5 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit2, 12, 7, 2, 2, new[] { new[] { Key.D2, Key.NumPad2 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Sign, 12, 9, 2, 2, new[] { new[] { Key.M } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Custom, 12, 12, 2, 2, new Key[][] { }, "Custom command", iconPath, mainGrid, false, true);
+            CreateButton(Command.Custom, 12, 12, 2, 2, new Key[][] { }, CommandExtensions.CustomButtonTooltip, iconPath, mainGrid, false, true);
             CreateButton(Command.Digit9, 14, 3, 2, 2, new[] { new[] { Key.D9, Key.NumPad9 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit6, 14, 5, 2, 2, new[] { new[] { Key.D6, Key.NumPad6 } }, "", iconPath, mainGrid, false, true);
             CreateButton(Command.Digit3, 14, 7, 2, 2, new[] { new[] { Key.D3, Key.NumPad3 } }, "", iconPath, mainGrid, false, true);

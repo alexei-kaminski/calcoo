@@ -120,6 +120,8 @@ namespace Calcoo
             });
 
 
+        public const string CustomButtonTooltip = "Custom command";
+
         public static Command TrigBareToDressed(this Command trigFunction, bool arcOn, bool hypOn)
         {
             switch (trigFunction)

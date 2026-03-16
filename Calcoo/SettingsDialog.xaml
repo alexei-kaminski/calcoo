@@ -153,7 +153,7 @@
 
                 <TextBlock Grid.Row="6" Grid.Column="2" Text="Customize" Style="{StaticResource SectionHeader}"/>
                 <Border Grid.Row="7" Grid.Column="2" Style="{StaticResource SettingsCard}">
-                    <Button Name="CustomButton" Style="{StaticResource CalcButtonStyle}" BorderBrush="{DynamicResource ButtonBorderBrush}" HorizontalAlignment="Left" Width="36" Height="36" Padding="0" ToolTip="Custom command">
+                    <Button Name="CustomButton" Style="{StaticResource CalcButtonStyle}" BorderBrush="{DynamicResource ButtonBorderBrush}" HorizontalAlignment="Left" Width="36" Height="36" Padding="0">
                         <Frame Source="pack://application:,,,/Resources/Icons/Buttons/Custom.xaml" NavigationUIVisibility="Hidden" Margin="4"/>
                     </Button>
                 </Border>
