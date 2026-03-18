@@ -6,7 +6,7 @@ namespace Calcoo
     {
         private const double Epsilon = 1e-15;
 
-        /**
+        /*
          * Factorial using the Stirling formula for large arguments.
          */
         static public double Fact(double x,
@@ -54,19 +54,19 @@ namespace Calcoo
                           ))))))));
         }
 
-        /**
-     * An estimate whether x can fit into display with nExpDigits for the exp part.
-     */
+        /*
+         * An estimate whether x can fit into display with nExpDigits for the exp part.
+         */
 
         public static bool FactCanDo(double x,
             int nExpDigits)
         {
             /*
-         * determines if the factorial is too large to be shown by calcoo this
-         * is only an estimate, it still can turn out to be larger than the
-         * calcoo's max number, but if it returns FALSE it is at least
-         * guaranteed that the factorial will fit into double
-         */
+             * determines if the factorial is too large to be shown by calcoo this
+             * is only an estimate, it still can turn out to be larger than the
+             * calcoo's max number, but if it returns FALSE it is at least
+             * guaranteed that the factorial will fit into double
+             */
 
             if (x < 0.0)
                 return false;

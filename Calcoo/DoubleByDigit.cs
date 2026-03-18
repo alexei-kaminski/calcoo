@@ -283,11 +283,11 @@ namespace Calcoo
             // x is not zero, continue
 
             /*
-         * Now, the special cases have been considered, and we can proceed with
-         * a regular case. This is not trivial, however. The main problem arises
-         * when x=0.9999999999999...., so rounding of x for displaying may lead
-         * to changes in the exp part, see the "!!!" comment
-         */
+             * Now, the special cases have been considered, and we can proceed with
+             * a regular case. This is not trivial, however. The main problem arises
+             * when x=0.9999999999999...., so rounding of x for displaying may lead
+             * to changes in the exp part, see the "!!!" comment
+             */
 
             // sign - note the the sigh of zero is "+", like in all calculators
             dbd._sign = x >= 0.0 ? 1 : -1;
@@ -296,10 +296,10 @@ namespace Calcoo
 
             /* truncating all but first "nDigitsToRoundTo" digits of x */
             /*
-         * for numbers <1 that can be displayed without exponent this
-         * interpretation will be redone later, because in this case additional
-         * rounding may be needed
-         */
+             * for numbers <1 that can be displayed without exponent this
+             * interpretation will be redone later, because in this case additional
+             * rounding may be needed
+             */
 
             long abs1X = (long)Math.Round((absX / Math.Pow(dBase, exponent + 1))
                                            * Math.Pow(dBase, nDigitsToRoundTo));
@@ -307,9 +307,9 @@ namespace Calcoo
             if (abs1X >= Math.Pow(dBase, nDigitsToRoundTo))
             {
                 /*
-             * !!! rounding has promoted x to the next order - this is what we
-             * mentioned before
-             */
+                 * !!! rounding has promoted x to the next order - this is what we
+                 * mentioned before
+                 */
                 abs1X = (long)Math.Round(abs1X / dBase);
                 exponent += 1;
             }
@@ -319,11 +319,11 @@ namespace Calcoo
                 && (Math.Round(abs1X / dBase) >= Math.Pow(dBase, nDigitsToRoundTo - 1)))
             {
                 /*
-             * a very special case of, say, x=0.999999997, when the introduction
-             * of the zero before the dot changes the integer part from 0 to 1
-             * thus leading to switching between the types of format
-             * distinguished below
-             */
+                 * a very special case of, say, x=0.999999997, when the introduction
+                 * of the zero before the dot changes the integer part from 0 to 1
+                 * thus leading to switching between the types of format
+                 * distinguished below
+                 */
                 dbd._intField.Add(1);
                 return dbd;
             }
@@ -341,17 +341,17 @@ namespace Calcoo
             }
 
             /*
-         * By this point, we have determined all the digits of x to display and
-         * the exponent. Now we are going to figure out what digits to put
-         * before and after the dot
-         */
+             * By this point, we have determined all the digits of x to display and
+             * the exponent. Now we are going to figure out what digits to put
+             * before and after the dot
+             */
 
             if ((0 <= exponent) && (exponent < mantissaLength) && !forceExp)
             {
                 /*
-             * x can be displayed without the exponent and x>=1, so there is NO
-             * need to introduce heading zeros
-             */
+                 * x can be displayed without the exponent and x>=1, so there is NO
+                 * need to introduce heading zeros
+                 */
                 int intLength = exponent + 1;
 
                 for (int i = 0; i < intLength; ++i)
@@ -365,9 +365,9 @@ namespace Calcoo
                      && !forceExp)
             {
                 /*
-             * x can be displayed without the exponent and x<1, so there IS a
-             * need to introduce heading zeros
-             */
+                 * x can be displayed without the exponent and x<1, so there IS a
+                 * need to introduce heading zeros
+                 */
                 dbd._intField.Add(0);
 
                 int nHeadingZeros = -exponent - 1;
@@ -419,9 +419,9 @@ namespace Calcoo
                 else
                 {
                     /*
-                 * engineering format: the exponent must be a multiple of
-                 * ExpDivisor
-                 */
+                     * engineering format: the exponent must be a multiple of
+                     * ExpDivisor
+                     */
                     int exponentAdj = Math.Abs(exponent) % expDivisor;
                     if (exponent < 0 && exponentAdj != 0)
                         exponentAdj = expDivisor - exponentAdj;
@@ -440,9 +440,9 @@ namespace Calcoo
                 if (tmp != 0)
                 {
                     /*
-                 * when exponential format is enforced, the exp part may be
-                 * equal to zero; there is no need to display it then
-                 */
+                     * when exponential format is enforced, the exp part may be
+                     * equal to zero; there is no need to display it then
+                     */
                     var digitsOfExpReversed = new List<int>();
 
                     while (tmp > 0)
