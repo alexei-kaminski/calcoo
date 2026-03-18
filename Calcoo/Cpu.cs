@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Calcoo
 {
@@ -27,6 +28,12 @@ namespace Calcoo
         }
 
         private const int BinopPriorityMin = 0; // used for = and )
+
+        private static readonly Dictionary<Settings.AngleUnits, double> HalfCircle = new()
+        {
+            { Settings.AngleUnits.Deg, 180.0 },
+            { Settings.AngleUnits.Rad, Math.PI },
+        };
 
         public enum UnaryOp
         {
@@ -520,18 +527,14 @@ namespace Calcoo
             _lastAction = Action.Input;
         }
 
-        private static double AngleToRad(double a,
-            Settings.AngleUnits units)
+        private static double AngleToRad(double a, Settings.AngleUnits units)
         {
-            switch (units)
-            {
-                case Settings.AngleUnits.Rad:
-                    return a;
-                case Settings.AngleUnits.Deg:
-                    return a * Math.PI / 180.0;
-                default:
-                    throw new Exception("unknown angle units " + units);
-            }
+            return a * Math.PI / HalfCircle[units];
+        }
+
+        private static double AngleFromRad(double a, Settings.AngleUnits units)
+        {
+            return a * HalfCircle[units] / Math.PI;
         }
 
         // Checks whether angle/period is close to an integer.
@@ -541,58 +544,17 @@ namespace Calcoo
             return Math.Abs(ratio - Math.Round(ratio)) < CpuPrecision * Math.Max(1.0, Math.Abs(ratio));
         }
 
-        // Checks whether angle is a multiple of period (e.g., 180° or π).
-        // In degrees mode, uses exact modular arithmetic; in radians, checks angle/π ≈ integer.
-        private static bool IsMultipleOf(double angle, double degPeriod, double radPeriod,
-            Settings.AngleUnits units)
+        // Checks whether angle is a multiple of half-circle (180° or π).
+        private static bool IsMultipleOf(double angle, Settings.AngleUnits units)
         {
-            switch (units)
-            {
-                case Settings.AngleUnits.Deg:
-                    return IsNearInteger(angle / degPeriod);
-                case Settings.AngleUnits.Rad:
-                    return IsNearInteger(angle / radPeriod);
-                default:
-                    throw new Exception("unknown angle units " + units);
-            }
+            return IsNearInteger(angle / HalfCircle[units]);
         }
 
-        // Checks whether angle is an odd multiple of half-period (e.g., 90°, 270°, ...).
-        private static bool IsOddMultipleOfHalf(double angle, double degPeriod, double radPeriod,
-            Settings.AngleUnits units)
+        // Checks whether angle is an odd multiple of quarter-circle (90°, 270°, ...).
+        private static bool IsOddMultipleOfHalf(double angle, Settings.AngleUnits units)
         {
-            double degHalf = degPeriod / 2.0;
-            double radHalf = radPeriod / 2.0;
-            switch (units)
-            {
-                case Settings.AngleUnits.Deg:
-                    {
-                        double ratio = angle / degHalf;
-                        return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
-                    }
-                case Settings.AngleUnits.Rad:
-                    {
-                        double ratio = angle / radHalf;
-                        // Odd multiple: ratio is an odd integer
-                        return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
-                    }
-                default:
-                    throw new Exception("unknown angle units " + units);
-            }
-        }
-
-        private static double AngleFromRad(double a,
-            Settings.AngleUnits units)
-        {
-            switch (units)
-            {
-                case Settings.AngleUnits.Rad:
-                    return a;
-                case Settings.AngleUnits.Deg:
-                    return a * 180.0 / Math.PI;
-                default:
-                    throw new Exception("unknown angle units " + units);
-            }
+            double ratio = angle / (HalfCircle[units] / 2.0);
+            return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
         }
 
         private void ExecuteDot()
@@ -958,7 +920,7 @@ namespace Calcoo
                         X = Double.NaN;
                     break;
                 case UnaryOp.Sin:
-                    if (IsMultipleOf(X, 180.0, Math.PI, AngleUnits))
+                    if (IsMultipleOf(X, AngleUnits))
                         X = 0.0;
                     else
                         X = Math.Sin(AngleToRad(X, AngleUnits));
@@ -979,7 +941,7 @@ namespace Calcoo
                     X = Math.Asinh(X);
                     break;
                 case UnaryOp.Cos:
-                    if (IsOddMultipleOfHalf(X, 180.0, Math.PI, AngleUnits))
+                    if (IsOddMultipleOfHalf(X, AngleUnits))
                         X = 0.0;
                     else
                         X = Math.Cos(AngleToRad(X, AngleUnits));
@@ -1000,9 +962,9 @@ namespace Calcoo
                     X = Math.Acosh(X);
                     break;
                 case UnaryOp.Tan:
-                    if (IsOddMultipleOfHalf(X, 180.0, Math.PI, AngleUnits))
+                    if (IsOddMultipleOfHalf(X, AngleUnits))
                         X = Double.NaN;
-                    else if (IsMultipleOf(X, 180.0, Math.PI, AngleUnits))
+                    else if (IsMultipleOf(X, AngleUnits))
                         X = 0.0;
                     else
                         X = Math.Tan(AngleToRad(X, AngleUnits));
