@@ -35,8 +35,8 @@ namespace Calcoo
         public MainWindow()
         {
             var settings = Settings.Load(InputLength);
-            cpu = new Cpu(settings.mode, settings.angleUnits, InputLength, ExpInputLength, NumBase, NMem,
-                settings.enterMode, settings.stackMode);
+            cpu = new Cpu(settings.Mode, settings.AngleUnits, InputLength, ExpInputLength, NumBase, NMem,
+                settings.EnterMode, settings.StackMode);
             undoStack = new LinkedList<Cpu>();
             redoStack = new LinkedList<Cpu>();
 
@@ -70,15 +70,15 @@ namespace Calcoo
 
             body = new Body(MainGrid, displayCanvas, NumBase, InputLength, ExpInputLength);
 
-            body.DisplayOnlyActiveButtonsForMode(settings.mode);
-            body.arcAutorelease = settings.arcAutorelease;
-            body.hypAutorelease = settings.hypAutorelease;
-            body.pasteParsingAlgorithm = settings.pasteParsingAlgorithm;
-            body.round = settings.round;
-            body.roundLength = settings.roundLength;
-            body.truncateZeros = settings.truncateZeros;
-            body.displayFormat = settings.displayFormat;
-            _customButtonCommand = settings.customButtonCommand;
+            body.DisplayOnlyActiveButtonsForMode(settings.Mode);
+            body.ArcAutorelease = settings.ArcAutorelease;
+            body.HypAutorelease = settings.HypAutorelease;
+            body.PasteParsingAlgorithm = settings.PasteParsingAlgorithm;
+            body.Round = settings.Round;
+            body.RoundLength = settings.RoundLength;
+            body.TruncateZeros = settings.TruncateZeros;
+            body.DisplayFormat = settings.DisplayFormat;
+            _customButtonCommand = settings.CustomButtonCommand;
             body.UndoEnabled = false;
             body.RedoEnabled = false;
 
@@ -215,9 +215,9 @@ namespace Calcoo
         private void ProcessCommand(Command command)
         {
             // ignore illegal commands invoked by shortcuts
-            if ((command == Command.StackDown || command == Command.StackUp) && cpu.Mode == Settings.Mode.Alg)
+            if ((command == Command.StackDown || command == Command.StackUp) && cpu.Mode == Settings.ModeType.Alg)
                 return;
-            if ((command == Command.LeftParen || command == Command.RightParen) && cpu.Mode == Settings.Mode.Rpn)
+            if ((command == Command.LeftParen || command == Command.RightParen) && cpu.Mode == Settings.ModeType.Rpn)
                 return;
 
             switch (command)
@@ -231,36 +231,36 @@ namespace Calcoo
                     var settings = new Settings(cpu.StackMode,
                         cpu.Mode,
                         cpu.EnterMode,
-                        body.round,
-                        body.roundLength,
-                        body.truncateZeros,
-                        body.arcAutorelease,
-                        body.hypAutorelease,
-                        body.pasteParsingAlgorithm,
+                        body.Round,
+                        body.RoundLength,
+                        body.TruncateZeros,
+                        body.ArcAutorelease,
+                        body.HypAutorelease,
+                        body.PasteParsingAlgorithm,
                         _customButtonCommand,
                         cpu.AngleUnits,
-                        body.displayFormat);
+                        body.DisplayFormat);
                     var settingsDialog = new SettingsDialog(settings, InputLength);
                     settingsDialog.Owner = this;
                     settingsDialog.ShowDialog();
                     if (settingsDialog.WasChanged)
                     {
-                        if (settingsDialog.NewSettings.enterMode != cpu.EnterMode)
-                            cpu.EnterMode = settingsDialog.NewSettings.enterMode;
-                        if (settingsDialog.NewSettings.stackMode != cpu.StackMode)
-                            cpu.StackMode = settingsDialog.NewSettings.stackMode;
-                        if (settingsDialog.NewSettings.mode != cpu.Mode)
+                        if (settingsDialog.NewSettings.EnterMode != cpu.EnterMode)
+                            cpu.EnterMode = settingsDialog.NewSettings.EnterMode;
+                        if (settingsDialog.NewSettings.StackMode != cpu.StackMode)
+                            cpu.StackMode = settingsDialog.NewSettings.StackMode;
+                        if (settingsDialog.NewSettings.Mode != cpu.Mode)
                         {
-                            cpu.Mode = settingsDialog.NewSettings.mode;
-                            body.DisplayOnlyActiveButtonsForMode(settingsDialog.NewSettings.mode);
+                            cpu.Mode = settingsDialog.NewSettings.Mode;
+                            body.DisplayOnlyActiveButtonsForMode(settingsDialog.NewSettings.Mode);
                         }
-                        body.arcAutorelease = settingsDialog.NewSettings.arcAutorelease;
-                        body.hypAutorelease = settingsDialog.NewSettings.hypAutorelease;
-                        body.pasteParsingAlgorithm = settingsDialog.NewSettings.pasteParsingAlgorithm;
-                        body.round = settingsDialog.NewSettings.round;
-                        body.roundLength = settingsDialog.NewSettings.roundLength;
-                        body.truncateZeros = settingsDialog.NewSettings.truncateZeros;
-                        _customButtonCommand = settingsDialog.NewSettings.customButtonCommand;
+                        body.ArcAutorelease = settingsDialog.NewSettings.ArcAutorelease;
+                        body.HypAutorelease = settingsDialog.NewSettings.HypAutorelease;
+                        body.PasteParsingAlgorithm = settingsDialog.NewSettings.PasteParsingAlgorithm;
+                        body.Round = settingsDialog.NewSettings.Round;
+                        body.RoundLength = settingsDialog.NewSettings.RoundLength;
+                        body.TruncateZeros = settingsDialog.NewSettings.TruncateZeros;
+                        _customButtonCommand = settingsDialog.NewSettings.CustomButtonCommand;
                         settingsDialog.NewSettings.Save();
                     }
                     break;
@@ -305,7 +305,7 @@ namespace Calcoo
                         if (!Clipboard.ContainsText())
                             break;
                         string textToPaste = Clipboard.GetText(TextDataFormat.Text);
-                        double value = TextUtil.TextToDouble(textToPaste, body.pasteParsingAlgorithm == Settings.PasteParsingAlgorithm.LocaleBased);
+                        double value = TextUtil.TextToDouble(textToPaste, body.PasteParsingAlgorithm == Settings.PasteParsingAlgorithmType.LocaleBased);
                         if (Double.IsNaN(value))
                             break;
 
@@ -345,12 +345,12 @@ namespace Calcoo
                         }
                         else
                             cpu.Execute(command);
-                        if (body.arcAutorelease)
+                        if (body.ArcAutorelease)
                             body.Arc = false;
-                        if (body.hypAutorelease)
+                        if (body.HypAutorelease)
                             body.Hyp = false;
                     }
-                    else if (command == Command.Enter && cpu.Mode == Settings.Mode.Alg)
+                    else if (command == Command.Enter && cpu.Mode == Settings.ModeType.Alg)
                         // "ENTER" and "EQ" share a shortcut which calls Command.Enter
                         cpu.Execute(Command.Eq);
                     else

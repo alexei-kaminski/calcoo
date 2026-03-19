@@ -11,15 +11,15 @@ namespace Calcoo.Test
         private const int ExpInputLength = 2;
         private const int NumBase = 10;
         private const int NMem = 2;
-        private const Settings.EnterMode DefaultEnterMode = Settings.EnterMode.Traditional;
-        private const Settings.StackMode DefaultStackMode = Settings.StackMode.Infinite;
+        private const Settings.EnterModeType DefaultEnterMode = Settings.EnterModeType.Traditional;
+        private const Settings.StackModeType DefaultStackMode = Settings.StackModeType.Infinite;
 
         // testing public functions
 
         [Test]
         public void CloneTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode,
                 DefaultStackMode);
 
@@ -51,7 +51,7 @@ namespace Calcoo.Test
         public void IsInputInProgressTest()
         {
             // RPN
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "RPN - blank");
             cpu.Execute(Command.Digit1);
@@ -65,7 +65,7 @@ namespace Calcoo.Test
             cpu.Execute(Command.ClearAll);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "RPN - after clear");
             // ALG
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "ALG - blank");
             cpu.Execute(Command.Digit1);
@@ -84,7 +84,7 @@ namespace Calcoo.Test
         public void GetStackTest()
         {
             // RPN
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             String[] rpnSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Enter" };
@@ -96,7 +96,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetStack().PeekValue(0), Is.EqualTo(7.23).Within(Cpu.CpuPrecision), "RPN");
 
             // ALG
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             String[] algSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Add" };
@@ -112,7 +112,7 @@ namespace Calcoo.Test
         public void GetInputTest()
         {
             // RPN
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             String[] rpnSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3" };
@@ -121,7 +121,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetInput().ToDouble(NumBase), Is.EqualTo(7.23).Within(Cpu.CpuPrecision), "RPN");
 
             // ALG
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode,
                 DefaultStackMode);
 
@@ -135,7 +135,7 @@ namespace Calcoo.Test
         public void GetXTest()
         {
             // RPN
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             String[] rpnSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Enter" };
@@ -144,7 +144,7 @@ namespace Calcoo.Test
             Assert.That(cpu.X, Is.EqualTo(7.23).Within(Cpu.CpuPrecision), "RPN");
 
             // ALG
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             String[] algSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Eq" };
@@ -156,7 +156,7 @@ namespace Calcoo.Test
         [Test]
         public void GetMemTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             String[] rpnSetupKeystrokes =
@@ -179,7 +179,7 @@ namespace Calcoo.Test
         [Test]
         public void GetActiveMemNumTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             Assert.That(cpu.ActiveMemNum, Is.EqualTo(0), "blank cpu");
@@ -202,43 +202,43 @@ namespace Calcoo.Test
         [Test]
         public void GetAngleUnitsTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.That(cpu.AngleUnits, Is.EqualTo(Settings.AngleUnits.Deg), "blank cpu");
+            Assert.That(cpu.AngleUnits, Is.EqualTo(Settings.AngleUnitsType.Deg), "blank cpu");
             cpu.Execute(Command.DegRad);
-            Assert.That(cpu.AngleUnits, Is.EqualTo(Settings.AngleUnits.Rad), "switched once");
+            Assert.That(cpu.AngleUnits, Is.EqualTo(Settings.AngleUnitsType.Rad), "switched once");
         }
 
         [Test]
         public void SetEnterModeTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             Assert.That(cpu.EnterMode, Is.EqualTo(DefaultEnterMode), "blank cpu");
-            cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterMode.Hp28), "set to HP28");
-            cpu.EnterMode = Settings.EnterMode.Traditional;
-            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterMode.Traditional), "set to TRADITIONAL");
-            cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterMode.Hp28), "set to HP28 again");
+            cpu.EnterMode = Settings.EnterModeType.Hp28;
+            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterModeType.Hp28), "set to HP28");
+            cpu.EnterMode = Settings.EnterModeType.Traditional;
+            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterModeType.Traditional), "set to TRADITIONAL");
+            cpu.EnterMode = Settings.EnterModeType.Hp28;
+            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterModeType.Hp28), "set to HP28 again");
 
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter",
                     "Digit3", "Enter", "Digit3", "Add", "Add", "Add", "Add", "Add"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(18.0).Within(1e-7), "3<Enter>3<Enter>3<Enter>3<Enter>3<Enter>3+++++");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter",
                     "Digit3", "Enter", "Digit3", "Add", "Add", "Add", "Add", "Add"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(12.0).Within(1e-7), "3<Enter>3<Enter>3<Enter>3<Enter>3<Enter>3+++++");
         }
 
@@ -247,39 +247,39 @@ namespace Calcoo.Test
         {
             // identical to the tests in SetEnterModeTest - keeping both in case we
             // discover problems specific to the getter
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             Assert.That(cpu.EnterMode, Is.EqualTo(DefaultEnterMode), "blank cpu");
-            cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterMode.Hp28), "set to HP28");
-            cpu.EnterMode = Settings.EnterMode.Traditional;
-            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterMode.Traditional), "set to TRADITIONAL");
-            cpu.EnterMode = Settings.EnterMode.Hp28;
-            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterMode.Hp28), "set to HP28 again");
+            cpu.EnterMode = Settings.EnterModeType.Hp28;
+            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterModeType.Hp28), "set to HP28");
+            cpu.EnterMode = Settings.EnterModeType.Traditional;
+            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterModeType.Traditional), "set to TRADITIONAL");
+            cpu.EnterMode = Settings.EnterModeType.Hp28;
+            Assert.That(cpu.EnterMode, Is.EqualTo(Settings.EnterModeType.Hp28), "set to HP28 again");
         }
 
         [Test]
         public void SetStackModeTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             Assert.That(cpu.StackMode, Is.EqualTo(DefaultStackMode), "blank cpu");
-            cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackMode.Xyzt), "set to XYZT");
-            cpu.StackMode = Settings.StackMode.Infinite;
-            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackMode.Infinite), "set to INFINITE");
-            cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackMode.Xyzt), "set to XYZT again");
+            cpu.StackMode = Settings.StackModeType.Xyzt;
+            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackModeType.Xyzt), "set to XYZT");
+            cpu.StackMode = Settings.StackModeType.Infinite;
+            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackModeType.Infinite), "set to INFINITE");
+            cpu.StackMode = Settings.StackModeType.Xyzt;
+            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackModeType.Xyzt), "set to XYZT again");
 
             Assert.That(
-                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(6.0).Within(1e-7), "3<Enter>+");
             Assert.That(
-                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Hp28, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "3<Enter>+");
         }
 
@@ -288,38 +288,38 @@ namespace Calcoo.Test
         {
             // identical to the tests in SetStackModeTest - keeping both in case we
             // discover problems specific to the getter
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             Assert.That(cpu.StackMode, Is.EqualTo(DefaultStackMode), "blank cpu");
-            cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackMode.Xyzt), "set to XYZT");
-            cpu.StackMode = Settings.StackMode.Infinite;
-            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackMode.Infinite), "set to INFINITE");
-            cpu.StackMode = Settings.StackMode.Xyzt;
-            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackMode.Xyzt), "set to XYZT again");
+            cpu.StackMode = Settings.StackModeType.Xyzt;
+            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackModeType.Xyzt), "set to XYZT");
+            cpu.StackMode = Settings.StackModeType.Infinite;
+            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackModeType.Infinite), "set to INFINITE");
+            cpu.StackMode = Settings.StackModeType.Xyzt;
+            Assert.That(cpu.StackMode, Is.EqualTo(Settings.StackModeType.Xyzt), "set to XYZT again");
         }
 
         [Test]
         public void SetModeTest()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Rpn), "blank cpu RPN");
-            cpu.Mode = Settings.Mode.Alg;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Alg), "RPN - set to ALG");
-            cpu.Mode = Settings.Mode.Rpn;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Rpn), "RPN - set to RPN again");
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Rpn), "blank cpu RPN");
+            cpu.Mode = Settings.ModeType.Alg;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Alg), "RPN - set to ALG");
+            cpu.Mode = Settings.ModeType.Rpn;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Rpn), "RPN - set to RPN again");
 
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Alg), "blank cpu ALG");
-            cpu.Mode = Settings.Mode.Rpn;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Rpn), "ALG - set to RPN");
-            cpu.Mode = Settings.Mode.Alg;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Alg), "ALG - set to ALG again");
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Alg), "blank cpu ALG");
+            cpu.Mode = Settings.ModeType.Rpn;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Rpn), "ALG - set to RPN");
+            cpu.Mode = Settings.ModeType.Alg;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Alg), "ALG - set to ALG again");
         }
 
         [Test]
@@ -327,23 +327,23 @@ namespace Calcoo.Test
         {
             // identical to the tests in SetModeTest - keeping both in case we
             // discover problems specific to the getter
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Rpn), "blank cpu RPN");
-            cpu.Mode = Settings.Mode.Alg;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Alg), "RPN - set to ALG");
-            cpu.Mode = Settings.Mode.Rpn;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Rpn), "RPN - set to RPN again");
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Rpn), "blank cpu RPN");
+            cpu.Mode = Settings.ModeType.Alg;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Alg), "RPN - set to ALG");
+            cpu.Mode = Settings.ModeType.Rpn;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Rpn), "RPN - set to RPN again");
 
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Alg), "blank cpu ALG");
-            cpu.Mode = Settings.Mode.Rpn;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Rpn), "ALG - set to RPN");
-            cpu.Mode = Settings.Mode.Alg;
-            Assert.That(cpu.Mode, Is.EqualTo(Settings.Mode.Alg), "ALG - set to ALG again");
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Alg), "blank cpu ALG");
+            cpu.Mode = Settings.ModeType.Rpn;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Rpn), "ALG - set to RPN");
+            cpu.Mode = Settings.ModeType.Alg;
+            Assert.That(cpu.Mode, Is.EqualTo(Settings.ModeType.Alg), "ALG - set to ALG again");
         }
 
         // indirect testing of private functions
@@ -353,17 +353,17 @@ namespace Calcoo.Test
         {
             // trivial input
             Assert.That(
-                RunCpu(new[] { "Digit8", "Digit6", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Digit6", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(86.0).Within(1e-17), "86");
 
             // special cases
             // empty
-            var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(0), "empty");
             // input starts with 0
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Digit0);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(0), "input starts with 0 - 1");
@@ -371,7 +371,7 @@ namespace Calcoo.Test
             cpu.Execute(Command.Digit1);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(1), "input starts with 0 - 2");
             // input starts with dot
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Dot);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(1), "input starts with dot - 1");
@@ -383,7 +383,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetInput().GetNFracDigits(), Is.EqualTo(1), "input starts with dot - 2 - frac");
             Assert.That(cpu.GetInput().GetFracDigit(0), Is.EqualTo(1), "input starts with dot - 2 - frac digit");
             // input starts with exp
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Exp);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(1), "input starts with exp - 1");
@@ -397,7 +397,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetInput().GetNExpDigits(), Is.EqualTo(ExpInputLength), "input starts with exp - 2 - exp");
             Assert.That(cpu.GetInput().GetExpDigit(ExpInputLength - 1), Is.EqualTo(1), "input starts with exp - 2 - exp digit");
             // input starts with sign
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Sign);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(0), "input starts with sign - 1");
@@ -414,13 +414,13 @@ namespace Calcoo.Test
         public void ExecuteDotTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit8", "Dot", "Digit6", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Dot", "Digit6", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(8.6).Within(Cpu.CpuPrecision * 8.6), "8.6");
             // number entry starting with a dot
             Assert.That(
-                RunCpu(new[] { "Dot", "Digit6", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Dot", "Digit6", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.6).Within(Cpu.CpuPrecision * 0.6), "0.6");
         }
 
@@ -428,24 +428,24 @@ namespace Calcoo.Test
         public void ExecuteMantissaSignTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit8", "Digit6", "MantissaSign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Digit6", "MantissaSign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(-86.0).Within(1e-17), "-86");
 
             Assert.That(
-                RunCpu(new[] { "Digit8", "Digit6", "MantissaSign", "MantissaSign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Digit6", "MantissaSign", "MantissaSign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(86.0).Within(1e-17), "--86");
 
             Assert.That(
                 RunCpu(new[] { "Digit8", "Digit6", "Exp", "Digit1", "MantissaSign", "MantissaSign", "Eq" },
-                    Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                    Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(860).Within(1e-17), "--86e1");
 
             Assert.That(
-                RunCpu(new[] { "Digit8", "Digit6", "Exp", "Digit1", "MantissaSign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Digit6", "Exp", "Digit1", "MantissaSign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(-860).Within(1e-17), "-86e1");
         }
 
@@ -453,31 +453,31 @@ namespace Calcoo.Test
         public void ExecuteCurrentSignTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit8", "Digit6", "Sign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Digit6", "Sign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(-86.0).Within(1e-17), "-86");
 
             Assert.That(
-                RunCpu(new[] { "Digit8", "Digit6", "Sign", "Sign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Digit6", "Sign", "Sign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(86.0).Within(1e-17), "--86");
 
             Assert.That(
                 RunCpu(new[] { "Digit8", "Digit6", "Dot", "Digit3", "Sign", "Eq" },
-                    Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                    Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(-86.3).Within(1e-17), "-86.3");
 
             Assert.That(
                 RunCpu(new[] { "Digit8", "Digit6", "Dot", "Digit3", "Sign", "Sign", "Eq" },
-                    Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                    Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(86.3).Within(1e-17), "--86.3");
 
             Assert.That(
                 RunCpu(new[] { "Digit8", "Digit6", "Dot", "Digit3", "Exp", "Digit2", "Sign", "Eq" },
-                    Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                    Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(86.3e-2).Within(1e-17), "86.3e-2");
 
             Assert.That(
@@ -485,8 +485,8 @@ namespace Calcoo.Test
                 {
                     "Digit8", "Digit6", "Dot", "Digit3", "Exp", "Digit2", "Sign",
                     "Sign", "Eq"
-                }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(86.3e2).Within(1e-17), "86.3e2");
 
             Assert.That(
@@ -494,8 +494,8 @@ namespace Calcoo.Test
                 {
                     "Digit8", "Digit6", "Dot", "Sign", "Digit3", "Exp", "Digit2",
                     "Sign", "Eq"
-                }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(-86.3e-2).Within(1e-17), "-86.3e-2");
         }
 
@@ -503,8 +503,8 @@ namespace Calcoo.Test
         public void ExecuteExpTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit8", "Exp", "Digit1", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Exp", "Digit1", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(80.0).Within(1e-17), "8e1");
         }
 
@@ -512,29 +512,29 @@ namespace Calcoo.Test
         public void ExecuteExpSignTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit8", "Exp", "Digit1", "ExpSign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Exp", "Digit1", "ExpSign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.8).Within(1e-17), "8e-1");
 
             Assert.That(
-                RunCpu(new[] { "Digit8", "Exp", "Digit1", "ExpSign", "ExpSign", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Exp", "Digit1", "ExpSign", "ExpSign", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(80.0).Within(1e-17), "8e--1");
         }
 
         [Test]
         public void ExecuteClearXTest()
         {
-            Assert.That(RunCpu(new[] { "Pi", "ClearX" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+            Assert.That(RunCpu(new[] { "Pi", "ClearX" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.0).Within(1e-17), "pi");
 
             Assert.That(
-                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearX", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearX", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(8.0).Within(1e-17), "8+6<Cx>=");
             Assert.That(
-                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearX", "Digit5", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearX", "Digit5", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(13.0).Within(1e-17), "8+6<Cx>5=");
         }
 
@@ -542,19 +542,19 @@ namespace Calcoo.Test
         public void ExecuteClearAllTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearAll", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearAll", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.0).Within(1e-17), "8+6<CA>=");
             Assert.That(
-                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearAll", "Digit5", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit8", "Add", "Digit6", "ClearAll", "Digit5", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(5.0).Within(1e-17), "8+6<CA>5=");
         }
 
         [Test]
         public void ExecutePiTest()
         {
-            Assert.That(RunCpu(new[] { "Pi" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+            Assert.That(RunCpu(new[] { "Pi" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.PI).Within(Cpu.CpuPrecision * 1e-5), "pi");
         }
 
@@ -562,7 +562,7 @@ namespace Calcoo.Test
         public void ExecutePasteTest()
         {
             // RPN
-            Cpu cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            Cpu cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             cpu.ExecutePaste(2.12);
@@ -581,7 +581,7 @@ namespace Calcoo.Test
             Assert.That(cpu.X, Is.EqualTo(10.36).Within(Cpu.CpuPrecision), "RPN on input in progress 2");
 
             // ALG
-            cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             cpu.ExecutePaste(2.12);
@@ -604,151 +604,151 @@ namespace Calcoo.Test
             // ALG mode
             // simple operations
             Assert.That(
-                RunCpu(new[] { "Digit2", "Add", "Digit3", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Add", "Digit3", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2+3");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Sub", "Digit3", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Sub", "Digit3", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 - 3.0)).Within(1e-7), "2-3");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Mul", "Digit3", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Mul", "Digit3", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 * 3.0)).Within(1e-7), "2*3");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Div", "Digit3", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Div", "Digit3", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 / 3.0)).Within(1e-7), "2/3");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Pow", "Digit3", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Pow", "Digit3", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Pow(2.0, 3.0)).Within(1e-7), "2^3");
             // binop priority
             Assert.That(
-                RunCpu(new[] { "Digit2", "Add", "Digit3", "Add" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Add", "Digit3", "Add" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2+3+");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Add", "Digit3", "Mul" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Add", "Digit3", "Mul" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((3.0)).Within(1e-7), "2+3*");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Mul", "Digit3", "Mul" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Mul", "Digit3", "Mul" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 * 3.0)).Within(1e-7), "2*3*");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Mul", "Digit3", "Pow" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Mul", "Digit3", "Pow" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((3.0)).Within(1e-7), "2*3^");
             Assert.That(
                 RunCpu(new[] { "Digit1", "Add", "Digit2", "Mul", "Digit3", "Pow", "Digit4", "Eq" },
-                    Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                    Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((163.0)).Within(1e-7), "1+2*3^4");
             // RPN mode - traditional stack
             // simple operations
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2 3 +");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Sub" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Sub" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 - 3.0)).Within(1e-7), "2 3 -");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Mul" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Mul" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 * 3.0)).Within(1e-7), "2 3 *");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Div" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Div" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 / 3.0)).Within(1e-7), "2 3 /");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Pow" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Pow" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(Math.Pow(2.0, 3.0)).Within(1e-7), "2 3 ^");
             // enter followed by op
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Add" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Add" }, Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 + 2.0)).Within(1e-7), "2 +");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Mul" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Mul" }, Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 * 2.0)).Within(1e-7), "2 *");
             // operation chains
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Add", "Ln", "Mul" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0 * Math.Log(3.0 + 4.0)).Within(1e-7), "2 3 4 + ln *");
             // RPN mode - HP28 stack
             // simple operations - same as traditional stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2 3 +");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Sub" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Sub" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 - 3.0)).Within(1e-7), "2 3 -");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Mul" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Mul" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 * 3.0)).Within(1e-7), "2 3 *");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Div" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Div" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 / 3.0)).Within(1e-7), "2 3 /");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Pow" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Pow" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(Math.Pow(2.0, 3.0)).Within(1e-7), "2 3 ^");
             // enter followed by op - behavior different from traditional stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Add" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Add" }, Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0)).Within(1e-7), "2 +");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Mul" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Mul" }, Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((0.0)).Within(1e-7), "2 *");
             // operation chains - same as traditional stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Add", "Ln", "Mul" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0 * Math.Log(3.0 + 4.0)).Within(1e-7), "2 3 4 + ln *");
             // non-trivial cases - testing only RPN since the behavior is determined
             // by the low-level routines which are shared between RPN and ALG modes
             // less simple cases
             Assert.That(
                 RunCpu(new[] { "Digit2", "Dot", "Digit3", "Enter", "Digit0", "Pow" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(1.0).Within(Cpu.CpuPrecision), "2.3 ^ 0.0");
             Assert.That(
                 RunCpu(new[] { "Digit0", "Enter", "Digit4", "Dot", "Digit6", "Pow" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-15), "0.0 ^ 4.6");
             // precision smart sum
             Assert.That(
@@ -758,28 +758,28 @@ namespace Calcoo.Test
                     "Digit1", "Digit0", "Digit0", "Sub",
                     "Digit0", "Dot", "Digit1", "Sub"
                 },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-15), "100.1 - 100.0 - 0.1");
             // overflows
             Assert.That(Double.IsNaN(
                 RunCpu(new[] { "Digit2", "Dot", "Digit3", "Enter", "Digit0", "Div" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite)
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite)
                 ), Is.True, "2.3 / 0.0");
             Assert.That(Double.IsNaN(
                 RunCpu(new[] { "Digit0", "Enter", "Digit0", "Pow" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite)
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite)
                 ), Is.True, "0.0 ^ 0.0");
             Assert.That(Double.IsNaN(
                 RunCpu(new[] { "Digit0", "Enter", "Digit1", "Sign", "Pow" },
-                    Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite)
+                    Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite)
                 ), Is.True, "0.0 ^ -1.0");
             Assert.That(
                 Double.IsNaN(
@@ -788,9 +788,9 @@ namespace Calcoo.Test
                         "Digit2", "Dot", "Digit3", "Sign", "Enter", "Digit1", "Dot",
                         "Digit1", "Pow"
                     },
-                        Settings.Mode.Rpn, Settings.AngleUnits.Deg,
-                        Settings.EnterMode.Hp28,
-                        Settings.StackMode.Infinite)
+                        Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
+                        Settings.EnterModeType.Hp28,
+                        Settings.StackModeType.Infinite)
                     ), Is.True, "-2.3 ^ 1.1");
         }
 
@@ -798,11 +798,11 @@ namespace Calcoo.Test
         public void ExecuteEqTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit2", "Add", "Digit3", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Add", "Digit3", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2+3");
 
 
-            Assert.That(() => RunCpu(new[] { "Eq" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg),
+            Assert.That(() => RunCpu(new[] { "Eq" }, Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg),
                 Throws.InstanceOf<Exception>(), "  throw at EQ in RPN mode");
         }
 
@@ -810,12 +810,12 @@ namespace Calcoo.Test
         public void ExecuteEnterTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2+3");
 
 
-            Assert.That(() => RunCpu(new[] { "Enter" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+            Assert.That(() => RunCpu(new[] { "Enter" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Throws.InstanceOf<Exception>(), "  throw at Enter in Alg mode");
         }
 
@@ -824,21 +824,21 @@ namespace Calcoo.Test
         {
             // ALG mode
             Assert.That(
-                RunCpu(new[] { "Digit2", "Div", "Digit3", "ExchXy", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Div", "Digit3", "ExchXy", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo((3.0 / 2.0)).Within(1e-7), "2 / 3 ExchXY =");
             // RPN mode
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "ExchXy", "Div" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "ExchXy", "Div" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Traditional,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((3.0 / 2.0)).Within(1e-7), "2 3 ExchXY /");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "ExchXy", "Div" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg,
-                    Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "ExchXy", "Div" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg,
+                    Settings.EnterModeType.Hp28,
+                    Settings.StackModeType.Infinite),
                 Is.EqualTo((3.0 / 2.0)).Within(1e-7), "2 3 ExchXY /");
         }
 
@@ -848,142 +848,142 @@ namespace Calcoo.Test
             // infinite stack
             // one number in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 up up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 up up up");
             // two numbers in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 up up up");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 4 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 4 up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(4.0).Within(1e-7), "infinite: 2 3 4 up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 4 up up up up");
             // xyzt stack
             // one number in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up up up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 up up up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp", "StackUp", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up up up up up");
             // two numbers in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 up");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 up up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 up up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp", "StackUp",
                     "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 up up up up up");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 4 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 up up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 4 up up up up up");
             // four numbers in the stack
             Assert.That(
@@ -992,40 +992,40 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp"
                 },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp", "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up up");
             // five numbers in the stack - the highest number should not matter as
             // only the lowest four are rotated
@@ -1034,40 +1034,40 @@ namespace Calcoo.Test
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 7 2 3 4 5 up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp", "StackUp", "StackUp", "StackUp"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up up");
         }
 
@@ -1077,76 +1077,76 @@ namespace Calcoo.Test
             // infinite stack
             // one number in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 down");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "StackDown", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 down down");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 down down down");
             // two numbers in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 down");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 down down down");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 4 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 4 down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(4.0).Within(1e-7), "infinite: 2 3 4 down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 4 down down down down");
             // xyzt stack
             // one number in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackDown", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down down");
             Assert.That(
-                RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1154,73 +1154,73 @@ namespace Calcoo.Test
                     "Digit2", "StackDown", "StackDown", "StackDown", "StackDown",
                     "StackDown"
                 },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down down down down down");
             // two numbers in the stack
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 down");
             Assert.That(
-                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown",
                     "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 down down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown",
                     "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 down down down down down");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown" },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 4 down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 down down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 down down down down down");
             // four numbers in the stack
             Assert.That(
@@ -1228,40 +1228,40 @@ namespace Calcoo.Test
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown", "StackDown", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down down");
             // five numbers in the stack - the highest number should not matter as
             // only the lowest four are rotated
@@ -1270,32 +1270,32 @@ namespace Calcoo.Test
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 7 2 3 4 5 down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 down down down");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown", "StackDown", "StackDown"
-                }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1303,8 +1303,8 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown", "StackDown", "StackDown", "StackDown"
                 },
-                    Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Xyzt),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down down");
         }
 
@@ -1312,8 +1312,8 @@ namespace Calcoo.Test
         public void ExecuteLeftParenTest()
         {
             Assert.That(
-                RunCpu(new[] { "LeftParen", "Digit1", "Add", "Digit2", "Eq" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "LeftParen", "Digit1", "Add", "Digit2", "Eq" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "EQ resets lone opening paren");
             // more tests in executeRightParenTest because the require both parens
         }
@@ -1322,8 +1322,8 @@ namespace Calcoo.Test
         public void ExecuteRightParenTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit1", "Add", "Digit2", "RightParen" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Add", "Digit2", "RightParen" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "unmatched closing paren acts as EQ");
             Assert.That(
                 RunCpu(new[]
@@ -1331,15 +1331,15 @@ namespace Calcoo.Test
                     "Digit2", "Mul", "LeftParen", "Digit3", "Add", "Digit4",
                     "RightParen", "Eq"
                 },
-                    Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                    Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(2.0 * (3.0 + 4.0)).Within(1e-7), "2*(3+4)");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit2", "Pow", "LeftParen", "LeftParen", "Digit3", "Add", "Digit4",
                     "RightParen", "Mul", "Digit5", "RightParen", "Eq"
-                }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Pow(2.0, (3.0 + 4.0) * 5.0)).Within(1e-7), "2^((3+4)*5)");
         }
 
@@ -1348,80 +1348,80 @@ namespace Calcoo.Test
         {
             // non-trigonometric unary ops
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit2", "Log10" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit2", "Log10" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Log10(12.0)).Within(1e-7), "log10(12)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Ln" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit0", "Ln" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Log(10.0)).Within(1e-7), "ln(10)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Dot", "Digit3", "TenToX" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Dot", "Digit3", "TenToX" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Pow(10.0, 1.3)).Within(1e-7), "10^1.3");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Dot", "Digit3", "EtoX" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Dot", "Digit3", "EtoX" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Exp(1.3)).Within(1e-7), "e^1.3");
             Assert.That(
-                RunCpu(new[] { "Digit7", "Digit0", "Sqrt" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit7", "Digit0", "Sqrt" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sqrt(70.0)).Within(1e-7), "sqrt(70)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Dot", "Digit3", "Sqr" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Dot", "Digit3", "Sqr" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((1.3 * 1.3)).Within(1e-7), "1.3^2");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Dot", "Digit3", "InvX" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Dot", "Digit3", "InvX" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo((1.0 / 1.3)).Within(1e-7), "1/1.3");
             Assert.That(
-                RunCpu(new[] { "Digit5", "Dot", "Digit6", "Fact" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit5", "Dot", "Digit6", "Fact" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(MathUtil.Fact(5.6, InputLength)).Within(1e-7), "5.6!");
 
             // trigonometric - degrees
             const double dr = Math.PI / 180.0;
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Sin" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit0", "Sin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sin(10.0 * dr)).Within(1e-7), "sin(10 deg)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Cos" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit0", "Cos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Cos(10.0 * dr)).Within(1e-7), "cos(10 deg)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Tan" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit0", "Tan" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Tan(10.0 * dr)).Within(1e-7), "tan(10 deg)");
             // special cases
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Sin" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Sin" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "sin(180 deg)");
             Assert.That(
-                RunCpu(new[] { "Digit9", "Digit0", "Cos" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit9", "Digit0", "Cos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "cos(90 deg)");
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Tan" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg)), Is.True, "tan(90 deg)");
+                Double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Tan" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg)), Is.True, "tan(90 deg)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Tan" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Tan" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "tan(180 deg)");
 
             // trigonometric - radians
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Sin" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit1", "Digit0", "Sin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Sin(10.0)).Within(1e-7), "sin(10 rad)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Cos" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit1", "Digit0", "Cos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Cos(10.0)).Within(1e-7), "cos(10 rad)");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "Tan" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit1", "Digit0", "Tan" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Tan(10.0)).Within(1e-7), "tan(10 rad)");
             // special cases
-            Assert.That(RunCpu(new[] { "Pi", "Sin" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+            Assert.That(RunCpu(new[] { "Pi", "Sin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "sin(pi)");
 
             Assert.That(
-                RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Cos" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Cos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "cos(pi/2)");
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Tan" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad)), Is.EqualTo(true), "tan(pi/2)");
+                Double.IsNaN(RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Tan" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad)), Is.EqualTo(true), "tan(pi/2)");
             Assert.That(
-                RunCpu(new[] { "Pi", "Tan" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Pi", "Tan" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "tan(180 deg)");
         }
 
@@ -1429,25 +1429,25 @@ namespace Calcoo.Test
         public void ExecuteMemoryOpTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit3", "XToMem", "ClearX", "MemToX" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit3", "XToMem", "ClearX", "MemToX" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "XToMem, CLEAR_X, MemToX");
 
             Assert.That(
-                RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "MemToX" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "MemToX" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "XToMem, SQRT, MemToX");
             Assert.That(
-                RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "ExchXMem" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "ExchXMem" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "XToMem, SQRT, EXCH_X_MEM");
             Assert.That(
                 RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "ExchXMem", "ClearX", "ExchXMem" },
-                    Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                    Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sqrt(3.0)).Within(1e-7), "XToMem, SQRT, EXCH_X_MEM, CLEAR_X, EXCH_X_MEM");
             Assert.That(
-                RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "MemPlus", "MemToX" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "MemPlus", "MemToX" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0 + Math.Sqrt(3.0)).Within(1e-7), "XToMem, SQRT, MEM_PLUS, MemToX");
         }
 
@@ -1455,21 +1455,21 @@ namespace Calcoo.Test
         public void ExecuteSwitchToMemTest()
         {
             Assert.That(
-                RunCpu(new[] { "Digit3", "XToMem", "ClearX", "MemToX" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit3", "XToMem", "ClearX", "MemToX" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "XToMem, CLEAR_X, MemToX");
             Assert.That(
                 RunCpu(new[] { "Digit3", "XToMem", "Sqrt", "Mem1", "XToMem", "Mem0", "MemToX" },
-                    Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                    Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "XToMem, SQRT, Mem1, XToMem, Mem0, MemToX");
             Assert.That(
                 RunCpu(new[]
                 {
                     "Digit3", "XToMem", "Sqrt", "Mem1", "XToMem", "Mem0", "MemToX", "Mem1",
                     "MemToX"
-                }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sqrt(3.0)).Within(1e-7), "XToMem, SQRT, Mem1, XToMem, Mem0, MemToX, Mem1, MemToX");
         }
 
@@ -1478,29 +1478,29 @@ namespace Calcoo.Test
         {
             const double dr = Math.PI / 180.0;
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "Sin" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "Sin" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sin(10.0)).Within(1e-7), "sin(10 rad) - one deg/rad switch");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "Sin" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "Sin" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Sin(10.0 * dr)).Within(1e-7), "sin(10 deg) - one deg/rad switch");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "DegRad", "Sin" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "DegRad", "Sin" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sin(10.0 * dr)).Within(1e-7), "sin(10 deg) - two deg/rad switches");
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "DegRad", "Sin" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit1", "Digit0", "DegRad", "DegRad", "Sin" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Sin(10.0)).Within(1e-7), "sin(10 rad) - two deg/rad switches");
         }
 
         // framework for testing cpu operations
         private static double RunCpu(String[] keystrokes,
-            Settings.Mode mode,
-            Settings.AngleUnits angleUnits,
-            Settings.EnterMode enterMode,
-            Settings.StackMode stackMode)
+            Settings.ModeType mode,
+            Settings.AngleUnitsType angleUnits,
+            Settings.EnterModeType enterMode,
+            Settings.StackModeType stackMode)
         {
             var cpu = new Cpu(mode, angleUnits, InputLength, ExpInputLength, NumBase, NMem, enterMode, stackMode);
             for (int i = 0; i < keystrokes.Length; ++i)
@@ -1509,10 +1509,10 @@ namespace Calcoo.Test
         }
 
         private double RunCpu(String[] keystrokes,
-            Settings.Mode mode,
-            Settings.AngleUnits angleUnits)
+            Settings.ModeType mode,
+            Settings.AngleUnitsType angleUnits)
         {
-            if (mode != Settings.Mode.Alg)
+            if (mode != Settings.ModeType.Alg)
                 throw new Exception("must specify stack and enter mode explicitly for the RPN mode tests");
             return RunCpu(keystrokes, mode, angleUnits, DefaultEnterMode, DefaultStackMode);
         }
@@ -1520,7 +1520,7 @@ namespace Calcoo.Test
         [Test]
         public void GetMemAtBoundaryDoesNotThrow()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             // NMem is 2, so valid indices are 0 and 1. GetMem(NMem) should be caught
@@ -1536,30 +1536,30 @@ namespace Calcoo.Test
         {
             // sin(-180 deg) should snap to 0, just like sin(180 deg)
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Sign", "Sin" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Sign", "Sin" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "sin(-180 deg)");
             // cos(-90 deg) should snap to 0, just like cos(90 deg)
             Assert.That(
-                RunCpu(new[] { "Digit9", "Digit0", "Sign", "Cos" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit9", "Digit0", "Sign", "Cos" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "cos(-90 deg)");
             // tan(-180 deg) should snap to 0, just like tan(180 deg)
             Assert.That(
-                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Sign", "Tan" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Sign", "Tan" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "tan(-180 deg)");
             // tan(-90 deg) should be NaN, just like tan(90 deg)
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Sign", "Tan" }, Settings.Mode.Alg,
-                    Settings.AngleUnits.Deg)), Is.True, "tan(-90 deg)");
+                Double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Sign", "Tan" }, Settings.ModeType.Alg,
+                    Settings.AngleUnitsType.Deg)), Is.True, "tan(-90 deg)");
         }
 
         [Test]
         public void TrigZeroSnapWorksForLargeAngles()
         {
             // Large multiples of 180 degrees — the old relative-epsilon check was fragile here
-            var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             // sin(360000000 deg) = sin(2000000 * 180) should be exactly 0
@@ -1605,7 +1605,7 @@ namespace Calcoo.Test
         [Test]
         public void TrigZeroSnapWorksForLargeRadians()
         {
-            var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Rad, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Alg, Settings.AngleUnitsType.Rad, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             // sin(2000000 * pi) should be exactly 0
@@ -1632,7 +1632,7 @@ namespace Calcoo.Test
         [Test]
         public void GetMemNegativeIndexThrowsDescriptiveException()
         {
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
 
             // Negative index should be caught by the guard and throw Exception,
@@ -1656,7 +1656,7 @@ namespace Calcoo.Test
                     "Digit2", "Mul", "LeftParen",
                     "Digit3", "Add", "Digit4", "Add", "Digit5", "Add", "Digit6", "Add", "Digit7",
                     "RightParen", "Eq"
-                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(50.0).Within(1e-7), "2*(3+4+5+6+7)");
 
             // Nested: 1 + (2 * (3 + 4 + 5)) = 1 + 2*12 = 25
@@ -1667,7 +1667,7 @@ namespace Calcoo.Test
                     "Digit2", "Mul", "LeftParen",
                     "Digit3", "Add", "Digit4", "Add", "Digit5",
                     "RightParen", "RightParen", "Eq"
-                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(25.0).Within(1e-7), "1+(2*(3+4+5))");
 
             // Triple nesting: ((2 + 3) * (4 + 5)) = 5 * 9 = 45
@@ -1676,7 +1676,7 @@ namespace Calcoo.Test
                 {
                     "LeftParen", "Digit2", "Add", "Digit3", "RightParen",
                     "Mul", "LeftParen", "Digit4", "Add", "Digit5", "RightParen", "Eq"
-                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(45.0).Within(1e-7), "(2+3)*(4+5)");
 
             // Extra close-parens should not crash (acts like =)
@@ -1684,7 +1684,7 @@ namespace Calcoo.Test
                 RunCpu(new[]
                 {
                     "Digit2", "Add", "Digit3", "RightParen", "RightParen"
-                }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(5.0).Within(1e-7), "2+3)) - extra close-parens");
         }
 
@@ -1693,35 +1693,35 @@ namespace Calcoo.Test
         {
             // asin in degrees
             Assert.That(
-                RunCpu(new[] { "Dot", "Digit5", "Asin" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Dot", "Digit5", "Asin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(30.0).Within(1e-7), "asin(0.5) deg");
             // acos in degrees
             Assert.That(
-                RunCpu(new[] { "Dot", "Digit5", "Acos" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Dot", "Digit5", "Acos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(60.0).Within(1e-7), "acos(0.5) deg");
             // atan in degrees
             Assert.That(
-                RunCpu(new[] { "Digit1", "Atan" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Atan" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(45.0).Within(1e-7), "atan(1) deg");
             // asin in radians
             Assert.That(
-                RunCpu(new[] { "Dot", "Digit5", "Asin" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Dot", "Digit5", "Asin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Asin(0.5)).Within(1e-12), "asin(0.5) rad");
             // acos in radians
             Assert.That(
-                RunCpu(new[] { "Dot", "Digit5", "Acos" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Dot", "Digit5", "Acos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Acos(0.5)).Within(1e-12), "acos(0.5) rad");
             // atan in radians
             Assert.That(
-                RunCpu(new[] { "Digit1", "Atan" }, Settings.Mode.Alg, Settings.AngleUnits.Rad),
+                RunCpu(new[] { "Digit1", "Atan" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(Math.Atan(1.0)).Within(1e-12), "atan(1) rad");
             // asin out of range
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit2", "Asin" }, Settings.Mode.Alg, Settings.AngleUnits.Deg)),
+                Double.IsNaN(RunCpu(new[] { "Digit2", "Asin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
                 Is.True, "asin(2) = NaN");
             // acos out of range
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit2", "Acos" }, Settings.Mode.Alg, Settings.AngleUnits.Deg)),
+                Double.IsNaN(RunCpu(new[] { "Digit2", "Acos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
                 Is.True, "acos(2) = NaN");
         }
 
@@ -1730,31 +1730,31 @@ namespace Calcoo.Test
         {
             // sinh
             Assert.That(
-                RunCpu(new[] { "Digit1", "Sinh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Sinh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Sinh(1.0)).Within(1e-12), "sinh(1)");
             // cosh
             Assert.That(
-                RunCpu(new[] { "Digit1", "Cosh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Cosh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Cosh(1.0)).Within(1e-12), "cosh(1)");
             // tanh
             Assert.That(
-                RunCpu(new[] { "Digit1", "Tanh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit1", "Tanh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Tanh(1.0)).Within(1e-12), "tanh(1)");
             // asinh
             Assert.That(
-                RunCpu(new[] { "Digit2", "Asinh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Asinh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Asinh(2.0)).Within(1e-12), "asinh(2)");
             // acosh
             Assert.That(
-                RunCpu(new[] { "Digit2", "Acosh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit2", "Acosh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Acosh(2.0)).Within(1e-12), "acosh(2)");
             // atanh
             Assert.That(
-                RunCpu(new[] { "Dot", "Digit5", "Atanh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Dot", "Digit5", "Atanh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(Math.Atanh(0.5)).Within(1e-12), "atanh(0.5)");
             // acosh of value < 1 = NaN
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Dot", "Digit5", "Acosh" }, Settings.Mode.Alg, Settings.AngleUnits.Deg)),
+                Double.IsNaN(RunCpu(new[] { "Dot", "Digit5", "Acosh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
                 Is.True, "acosh(0.5) = NaN");
         }
 
@@ -1763,13 +1763,13 @@ namespace Calcoo.Test
         {
             // In RPN mode, Pi should push the current X onto the stack
             Assert.That(
-                RunCpu(new[] { "Digit5", "Pi", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit5", "Pi", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(5.0 + Math.PI).Within(1e-7), "5 Pi +");
             // Pi after Enter
             Assert.That(
-                RunCpu(new[] { "Digit3", "Enter", "Pi", "Mul" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit3", "Enter", "Pi", "Mul" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Traditional, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0 * Math.PI).Within(1e-7), "3 Enter Pi *");
         }
 
@@ -1778,13 +1778,13 @@ namespace Calcoo.Test
         {
             // HP28 enter mode: Enter does not duplicate X, it only pushes
             Assert.That(
-                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Hp28, Settings.StackModeType.Infinite),
                 Is.EqualTo(3.0).Within(1e-7), "HP28: 3 Enter + = 3 (no dup)");
             // HP28: two values then add
             Assert.That(
-                RunCpu(new[] { "Digit3", "Enter", "Digit4", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                RunCpu(new[] { "Digit3", "Enter", "Digit4", "Add" }, Settings.ModeType.Rpn,
+                    Settings.AngleUnitsType.Deg, Settings.EnterModeType.Hp28, Settings.StackModeType.Infinite),
                 Is.EqualTo(7.0).Within(1e-7), "HP28: 3 Enter 4 + = 7");
         }
 
@@ -1794,11 +1794,11 @@ namespace Calcoo.Test
             // Test chained operations in ALG mode
             Assert.That(
                 RunCpu(new[] { "Digit2", "Add", "Digit3", "Mul", "Digit4", "Eq" },
-                    Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                    Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(14.0).Within(1e-7), "2+3*4 = 14");
             // Test Eq on blank (just a number)
             Assert.That(
-                RunCpu(new[] { "Digit7", "Eq" }, Settings.Mode.Alg, Settings.AngleUnits.Deg),
+                RunCpu(new[] { "Digit7", "Eq" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(7.0).Within(1e-7), "7 =");
         }
 
@@ -1809,7 +1809,7 @@ namespace Calcoo.Test
             // Set up: push 5 onto stack as Y, type 0 as X.
             // Custom sequence "InvX Add" should error on InvX (1/0 = NaN)
             // and NOT proceed to Add (which would consume Y=5 from the stack).
-            var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
+            var cpu = new Cpu(Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode, DefaultStackMode);
             cpu.Execute(Command.Digit5);
             cpu.Execute(Command.Enter);

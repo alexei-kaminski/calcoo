@@ -10,11 +10,11 @@ namespace Calcoo
         private const char Unassigned = 'u';
 
 
-        private static double TextToDoubleWithGuidance(String text,
+        private static double TextToDoubleWithGuidance(string text,
             char decimalChar,
             char groupingChar)
         {
-            String simplifiedText = text;
+            string simplifiedText = text;
             if (groupingChar != Unassigned)
                 simplifiedText = simplifiedText.Replace(Char.ToString(groupingChar), "");
             if (decimalChar != Unassigned)
@@ -23,7 +23,7 @@ namespace Calcoo
             return TextToDouble(simplifiedText, true);
         }
 
-        public static double TextToDouble(String text,
+        public static double TextToDouble(string text,
             bool useNumberFormatParser)
         {
             if (useNumberFormatParser)
@@ -42,7 +42,7 @@ namespace Calcoo
                 // heuristic parser - it tries to figure out which character
                 // between the two (',' and '.') is the decimal character, and
                 // which is the grouping character
-                String simplifiedText = text.Trim();
+                string simplifiedText = text.Trim();
 
                 var allowedChars =
                     new HashSet<char>(new[]

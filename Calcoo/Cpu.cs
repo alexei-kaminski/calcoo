@@ -11,7 +11,7 @@ namespace Calcoo
         int ActiveMemNum { get; }
         IDoubleByDigitGetters GetInput();
         bool IsInputInProgress();
-        Settings.AngleUnits AngleUnits { get; }
+        Settings.AngleUnitsType AngleUnits { get; }
     }
 
     public class Cpu : ICpuOutput
@@ -29,10 +29,10 @@ namespace Calcoo
 
         private const int BinopPriorityMin = 0; // used for = and )
 
-        private static readonly Dictionary<Settings.AngleUnits, double> HalfCircle = new()
+        private static readonly Dictionary<Settings.AngleUnitsType, double> HalfCircle = new()
         {
-            { Settings.AngleUnits.Deg, 180.0 },
-            { Settings.AngleUnits.Rad, Math.PI },
+            { Settings.AngleUnitsType.Deg, 180.0 },
+            { Settings.AngleUnitsType.Rad, Math.PI },
         };
 
         public enum UnaryOp
@@ -86,9 +86,9 @@ namespace Calcoo
             return _lastAction == Action.Input || _lastAction == Action.Clear;
         }
 
-        private Settings.Mode _Mode;
+        private Settings.ModeType _Mode;
 
-        public Settings.Mode Mode
+        public Settings.ModeType Mode
         {
             get { return _Mode; }
             set
@@ -133,11 +133,11 @@ namespace Calcoo
 
         public int ActiveMemNum { get; private set; }
 
-        public Settings.AngleUnits AngleUnits { get; private set; }
+        public Settings.AngleUnitsType AngleUnits { get; private set; }
 
-        public Settings.EnterMode EnterMode { get; set; }
+        public Settings.EnterModeType EnterMode { get; set; }
 
-        public Settings.StackMode StackMode
+        public Settings.StackModeType StackMode
         {
             get { return _stack.StackMode; }
             set { _stack.StackMode = value; }
@@ -160,14 +160,14 @@ namespace Calcoo
             throw new Exception("Instantiating CPU without specifying the mode - RPN or Algebraic");
         }
 
-        public Cpu(Settings.Mode mode,
-            Settings.AngleUnits angleUnits,
+        public Cpu(Settings.ModeType mode,
+            Settings.AngleUnitsType angleUnits,
             int inputLength,
             int expInputLength,
             int numBase,
             int nMem,
-            Settings.EnterMode enterMode,
-            Settings.StackMode stackMode)
+            Settings.EnterModeType enterMode,
+            Settings.StackModeType stackMode)
         {
             // setting the s
             _numBase = numBase;
@@ -455,7 +455,7 @@ namespace Calcoo
         {
             switch (Mode)
             {
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     switch (_lastAction)
                     {
                         case Action.Clear:
@@ -470,7 +470,7 @@ namespace Calcoo
                             break;
                     }
                     break;
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     switch (_lastAction)
                     {
                         case Action.Clear:
@@ -527,12 +527,12 @@ namespace Calcoo
             _lastAction = Action.Input;
         }
 
-        private static double AngleToRad(double a, Settings.AngleUnits units)
+        private static double AngleToRad(double a, Settings.AngleUnitsType units)
         {
             return a * Math.PI / HalfCircle[units];
         }
 
-        private static double AngleFromRad(double a, Settings.AngleUnits units)
+        private static double AngleFromRad(double a, Settings.AngleUnitsType units)
         {
             return a * HalfCircle[units] / Math.PI;
         }
@@ -545,13 +545,13 @@ namespace Calcoo
         }
 
         // Checks whether angle is a multiple of half-circle (180° or π).
-        private static bool IsMultipleOf(double angle, Settings.AngleUnits units)
+        private static bool IsMultipleOf(double angle, Settings.AngleUnitsType units)
         {
             return IsNearInteger(angle / HalfCircle[units]);
         }
 
         // Checks whether angle is an odd multiple of quarter-circle (90°, 270°, ...).
-        private static bool IsOddMultipleOfHalf(double angle, Settings.AngleUnits units)
+        private static bool IsOddMultipleOfHalf(double angle, Settings.AngleUnitsType units)
         {
             double ratio = angle / (HalfCircle[units] / 2.0);
             return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
@@ -561,7 +561,7 @@ namespace Calcoo
         {
             if (_lastAction != Action.Input)
             {
-                if (Mode == Settings.Mode.Rpn && _lastAction == Action.Enter)
+                if (Mode == Settings.ModeType.Rpn && _lastAction == Action.Enter)
                     _stack.Push(X);
                 _input.Clear();
                 _lastAction = Action.Input;
@@ -588,7 +588,7 @@ namespace Calcoo
         {
             if (_lastAction != Action.Input)
             {
-                if (Mode == Settings.Mode.Rpn && _lastAction == Action.Enter)
+                if (Mode == Settings.ModeType.Rpn && _lastAction == Action.Enter)
                     _stack.Push(X);
                 _input.Clear();
                 _input.AddIntDigit(1);
@@ -635,7 +635,7 @@ namespace Calcoo
 
         private void ExecutePi()
         {
-            if (Mode == Settings.Mode.Rpn)
+            if (Mode == Settings.ModeType.Rpn)
             {
                 FinalizeInput();
                 _stack.Push(X);
@@ -646,7 +646,7 @@ namespace Calcoo
 
         public void ExecutePaste(double z)
         {
-            if (Mode == Settings.Mode.Rpn)
+            if (Mode == Settings.ModeType.Rpn)
             {
                 FinalizeInput();
                 _stack.Push(X);
@@ -663,12 +663,12 @@ namespace Calcoo
 
             switch (Mode)
             {
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     double y = _stack.Pop();
                     X = ComputeBinaryOp(y, X, binaryOp, _numBase);
                     _lastAction = Action.Enter; // no need to use ACTION_BINOP in RPN
                     break;
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     if (!_stack.IsEmpty()
                         && BinaryOpPriority(_stack.GetOp()) >= BinaryOpPriority(binaryOp))
                         DoBinaryOpChain(BinaryOpPriority(binaryOp), false);
@@ -700,7 +700,7 @@ namespace Calcoo
         private void DoBinaryOpChain(int initPriority,
             bool parenClosed)
         {
-            if (Mode == Settings.Mode.Rpn)
+            if (Mode == Settings.ModeType.Rpn)
                 throw new Exception("DoBinaryOpChain called in RPN mode");
             // aux function; performs the chain of binary operations from the stack,
             // stopping the chain at a paren or at a lower-priority operation
@@ -771,9 +771,9 @@ namespace Calcoo
         {
             switch (Mode)
             {
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     throw new Exception("ExecuteEq called in RPN mode");
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     FinalizeInput();
                     DoBinaryOpChain(BinopPriorityMin, false);
                     _stack.Clear();
@@ -788,17 +788,17 @@ namespace Calcoo
         {
             switch (Mode)
             {
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     throw new Exception("ExecuteEnter called in ALG mode");
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     switch (EnterMode)
                     {
-                        case Settings.EnterMode.Traditional:
+                        case Settings.EnterModeType.Traditional:
                             FinalizeInput();
                             _stack.Push(X);
                             _lastAction = Action.EnterPush;
                             break;
-                        case Settings.EnterMode.Hp28:
+                        case Settings.EnterModeType.Hp28:
                             if (_lastAction == Action.Input)
                                 X = _input.ToDouble(_numBase);
                             else
@@ -837,7 +837,7 @@ namespace Calcoo
 
         private void ExecuteLeftParen()
         {
-            if (Mode == Settings.Mode.Rpn)
+            if (Mode == Settings.ModeType.Rpn)
                 throw new Exception("cannot be called in RPN mode");
 
             if (_lastAction == Action.Binop)
@@ -846,7 +846,7 @@ namespace Calcoo
 
         private void ExecuteRightParen()
         {
-            if (Mode == Settings.Mode.Rpn)
+            if (Mode == Settings.ModeType.Rpn)
                 throw new Exception("cannot be called in RPN mode");
 
             FinalizeInput();
@@ -998,10 +998,10 @@ namespace Calcoo
                 case MemoryOp.MemToX:
                     switch (Mode)
                     {
-                        case Settings.Mode.Rpn:
+                        case Settings.ModeType.Rpn:
                             _stack.Push(X);
                             break;
-                        case Settings.Mode.Alg:
+                        case Settings.ModeType.Alg:
                             break;
                         default:
                             throw new Exception("unknown cpu mode " + Mode);
@@ -1039,11 +1039,11 @@ namespace Calcoo
         {
             switch (AngleUnits)
             {
-                case Settings.AngleUnits.Deg:
-                    AngleUnits = Settings.AngleUnits.Rad;
+                case Settings.AngleUnitsType.Deg:
+                    AngleUnits = Settings.AngleUnitsType.Rad;
                     break;
-                case Settings.AngleUnits.Rad:
-                    AngleUnits = Settings.AngleUnits.Deg;
+                case Settings.AngleUnitsType.Rad:
+                    AngleUnits = Settings.AngleUnitsType.Deg;
                     break;
                 default:
                     throw new Exception("unknown current angle units " + AngleUnits);

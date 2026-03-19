@@ -9,8 +9,7 @@ namespace Calcoo
         /*
          * Factorial using the Stirling formula for large arguments.
          */
-        static public double Fact(double x,
-                            int nSignificantDigits)
+        public static double Fact(double x, int nSignificantDigits)
         {
             /*
              * if calcoo is unable to show all the meaningful digits of the result,

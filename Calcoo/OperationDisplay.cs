@@ -14,7 +14,7 @@ namespace Calcoo
             int yMargin,
             int xSize,
             int ySize,
-            String iconSet,
+            string iconSet,
             Canvas parent)
         {
             _ops = new Dictionary<Cpu.BinaryOp, DisplayGlyph>();

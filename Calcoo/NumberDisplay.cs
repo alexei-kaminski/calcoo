@@ -48,7 +48,7 @@ namespace Calcoo
             /* Things to show */
             for (int n = 0; n < numBase; ++n)
             {
-                String thisDigitIcon = iconSet + "Digit" + n;
+                string thisDigitIcon = iconSet + "Digit" + n;
 
                 for (int i = 0; i < inputLength; ++i)
                 {
@@ -63,8 +63,8 @@ namespace Calcoo
                         yMargin, cellWidth, cellHeight, thisDigitIcon, parent);
             }
 
-            String dotIcon = iconSet + "Dot";
-            String minusIcon = iconSet + "Minus";
+            string dotIcon = iconSet + "Dot";
+            string minusIcon = iconSet + "Minus";
 
             for (int i = 0; i < inputLength; i++)
             {
@@ -76,7 +76,7 @@ namespace Calcoo
 
             if (hasTicks)
             {
-                String tickIcon = iconSet + "Tick";
+                string tickIcon = iconSet + "Tick";
                 for (int i = 0; i < inputLength; ++i)
                 {
                     _intTicks[i] = new DisplayGlyph(xMargin + cellWidth * i + tickOffsetX,

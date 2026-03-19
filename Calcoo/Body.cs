@@ -24,15 +24,15 @@ namespace Calcoo
         private readonly OperationDisplay[] _operationDisplays;
         private readonly LabelDisplay[] _regLabelDisplays;
         private readonly NumberDisplay[] _memDisplays;
-        private readonly IndicatorDisplay<Settings.DisplayFormat> _displayFormatDisplay;
-        private readonly IndicatorDisplay<Settings.AngleUnits> _angleUnitsDisplay;
+        private readonly IndicatorDisplay<Settings.DisplayFormatType> _displayFormatDisplay;
+        private readonly IndicatorDisplay<Settings.AngleUnitsType> _angleUnitsDisplay;
         private readonly Frame _activeMemIcon;
 
         private readonly int _inputLength, _expInputLength, _numBase;
-        public Settings.DisplayFormat displayFormat;
-        public bool round;
-        public int roundLength;
-        public bool truncateZeros;
+        public Settings.DisplayFormatType DisplayFormat { get; set; }
+        public bool Round { get; set; }
+        public int RoundLength { get; set; }
+        public bool TruncateZeros { get; set; }
 
         public class DisplayCanvas
         {
@@ -48,9 +48,9 @@ namespace Calcoo
             }
         }
 
-        public bool arcAutorelease;
-        public bool hypAutorelease;
-        public Settings.PasteParsingAlgorithm pasteParsingAlgorithm;
+        public bool ArcAutorelease { get; set; }
+        public bool HypAutorelease { get; set; }
+        public Settings.PasteParsingAlgorithmType PasteParsingAlgorithm { get; set; }
 
         public bool Arc
         {
@@ -76,9 +76,9 @@ namespace Calcoo
             set { _buttons[Command.Redo].IsEnabled = value; }
         }
 
-        public Settings.DisplayFormat GetDisplayFormat()
+        public Settings.DisplayFormatType GetDisplayFormat()
         {
-            return displayFormat;
+            return DisplayFormat;
         }
 
         public string GetMainDisplayString()
@@ -88,16 +88,16 @@ namespace Calcoo
 
         public void SwitchDisplayFormat()
         {
-            switch (displayFormat)
+            switch (DisplayFormat)
             {
-                case Settings.DisplayFormat.Fix:
-                    displayFormat = Settings.DisplayFormat.Sci;
+                case Settings.DisplayFormatType.Fix:
+                    DisplayFormat = Settings.DisplayFormatType.Sci;
                     break;
-                case Settings.DisplayFormat.Sci:
-                    displayFormat = Settings.DisplayFormat.Eng;
+                case Settings.DisplayFormatType.Sci:
+                    DisplayFormat = Settings.DisplayFormatType.Eng;
                     break;
-                case Settings.DisplayFormat.Eng:
-                    displayFormat = Settings.DisplayFormat.Fix;
+                case Settings.DisplayFormatType.Eng:
+                    DisplayFormat = Settings.DisplayFormatType.Fix;
                     break;
             }
         }
@@ -308,17 +308,17 @@ namespace Calcoo
                     displayCanvas.RegisterLabelDisplays[i]);
             }
 
-            _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32, 16,
-                new[] { Settings.DisplayFormat.Eng, Settings.DisplayFormat.Sci, Settings.DisplayFormat.Fix },
+            _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormatType>(-1, -1, 32, 16,
+                new[] { Settings.DisplayFormatType.Eng, Settings.DisplayFormatType.Sci, Settings.DisplayFormatType.Fix },
                 "/Icons/Displays/Indicator/", displayCanvas.FormatDisplay);
-            _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(-1, -1, 32, 16,
-                new[] { Settings.AngleUnits.Deg, Settings.AngleUnits.Rad }, "/Icons/Displays/Indicator/",
+            _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnitsType>(-1, -1, 32, 16,
+                new[] { Settings.AngleUnitsType.Deg, Settings.AngleUnitsType.Rad }, "/Icons/Displays/Indicator/",
                 displayCanvas.DegRadDisplay);
 
-            displayFormat = Settings.DisplayFormat.Fix;
-            round = false;
-            roundLength = inputLength;
-            truncateZeros = false;
+            DisplayFormat = Settings.DisplayFormatType.Fix;
+            Round = false;
+            RoundLength = inputLength;
+            TruncateZeros = false;
 
             _numBase = numBase;
             _expInputLength = expInputLength;
@@ -331,7 +331,7 @@ namespace Calcoo
 
         private void CreateButtons(Grid mainGrid)
         {
-            const String iconPath = "/Icons/Buttons/";
+            const string iconPath = "/Icons/Buttons/";
 
             CreateButton(Command.DegRad, 0, 4, 2, 1, new Key[][] { }, "Change angle units", iconPath, mainGrid, false, false);
             CreateButton(Command.Info, 0, 6, 2, 2, new[] { new Key[] { }, new[] { Key.Oem2 } }, "About/Help", iconPath, mainGrid, false, true);
@@ -398,17 +398,17 @@ namespace Calcoo
             AddCommandShortcuts(Command.Exit, new[] { new Key[] { }, new Key[] { }, new[] { Key.Q } });
         }
 
-        public void DisplayOnlyActiveButtonsForMode(Settings.Mode mode)
+        public void DisplayOnlyActiveButtonsForMode(Settings.ModeType mode)
         {
             switch (mode)
             {
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     foreach (var rpnFunc in CommandExtensions.RpnOnly)
                         _buttons[rpnFunc].Visibility = Visibility.Visible;
                     foreach (var algFunc in CommandExtensions.AlgOnly)
                         _buttons[algFunc].Visibility = Visibility.Hidden;
                     break;
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     foreach (var rpnFunc in CommandExtensions.RpnOnly)
                         _buttons[rpnFunc].Visibility = Visibility.Hidden;
                     foreach (var algFunc in CommandExtensions.AlgOnly)
@@ -441,8 +441,8 @@ namespace Calcoo
             }
             else
                 _mainDisplayContent = DoubleByDigit.FromDouble(cpuOutput.X, _inputLength, _expInputLength,
-                    displayFormat != Settings.DisplayFormat.Fix,
-                    Settings.ExpDivisor(displayFormat), (round ? roundLength : _inputLength), round && !truncateZeros,
+                    DisplayFormat != Settings.DisplayFormatType.Fix,
+                    Settings.ExpDivisor(DisplayFormat), (Round ? RoundLength : _inputLength), Round && !TruncateZeros,
                     _numBase);
 
             _mainDisplay.Show(_mainDisplayContent);
@@ -451,19 +451,19 @@ namespace Calcoo
             {
                 _regNumDisplays[i].Show(DoubleByDigit.FromDouble(cpuOutput.GetStack().PeekValue(i), _inputLength,
                     _expInputLength,
-                    displayFormat != Settings.DisplayFormat.Fix, Settings.ExpDivisor(displayFormat),
-                    (round
-                        ? roundLength
+                    DisplayFormat != Settings.DisplayFormatType.Fix, Settings.ExpDivisor(DisplayFormat),
+                    (Round
+                        ? RoundLength
                         : _inputLength),
-                    round && !truncateZeros, _numBase));
+                    Round && !TruncateZeros, _numBase));
                 _operationDisplays[i].Show(cpuOutput.GetStack().PeekOp(i), cpuOutput.GetStack().PeekParenExists(i));
             }
 
             for (int i = 0; i < _memDisplays.Length; ++i)
             {
                 DoubleByDigit dbd = DoubleByDigit.FromDouble(cpuOutput.GetMem(i), _inputLength, _expInputLength,
-                    displayFormat != Settings.DisplayFormat.Fix,
-                    Settings.ExpDivisor(displayFormat), (round ? roundLength : _inputLength), round && !truncateZeros,
+                    DisplayFormat != Settings.DisplayFormatType.Fix,
+                    Settings.ExpDivisor(DisplayFormat), (Round ? RoundLength : _inputLength), Round && !TruncateZeros,
                     _numBase);
                 _memDisplays[i].Show(dbd);
                 if (i == cpuOutput.ActiveMemNum)
@@ -473,7 +473,7 @@ namespace Calcoo
             }
 
             _angleUnitsDisplay.Show(cpuOutput.AngleUnits);
-            _displayFormatDisplay.Show(displayFormat);
+            _displayFormatDisplay.Show(DisplayFormat);
 
             if (_mainDisplayContent.IsOverflow())
             {

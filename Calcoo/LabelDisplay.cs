@@ -9,7 +9,7 @@ namespace Calcoo
             int yPos,
             int xSize,
             int ySize,
-            String icon,
+            string icon,
             Canvas parent)
         {
             ShownGlyphs.Push(new DisplayGlyph(xPos, yPos, xSize, ySize, icon, parent));

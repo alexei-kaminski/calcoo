@@ -13,7 +13,7 @@ namespace Calcoo
             int xSize,
             int ySize,
             IEnumerable<T> values,
-            String iconSet,
+            string iconSet,
             Canvas parent)
         {
             _icons = new Dictionary<T, DisplayGlyph>();

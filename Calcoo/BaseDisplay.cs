@@ -30,7 +30,7 @@ namespace Calcoo
         protected class DisplayGlyph
         {
             private readonly int _x, _y, _xSize, _ySize;
-            private readonly String _icon;
+            private readonly string _icon;
             private readonly Canvas _parent;
             private ContentControl _box;
 
@@ -38,7 +38,7 @@ namespace Calcoo
                 int y,
                 int xSize,
                 int ySize,
-                String icon,
+                string icon,
                 Canvas parent)
             {
                 _x = x;

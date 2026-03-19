@@ -27,21 +27,21 @@ namespace Calcoo.Test
         [Test]
         public void IsValidButtonTest()
         {
-            Assert.That(Command.Eq.IsValidButton(Settings.Mode.Rpn), Is.EqualTo(false), "EQ-RPN");
-            Assert.That(Command.LeftParen.IsValidButton(Settings.Mode.Rpn), Is.EqualTo(false), "LEFT_PAREN-RPN");
-            Assert.That(Command.RightParen.IsValidButton(Settings.Mode.Rpn), Is.EqualTo(false), "RIGHT_PAREN-RPN");
+            Assert.That(Command.Eq.IsValidButton(Settings.ModeType.Rpn), Is.EqualTo(false), "EQ-RPN");
+            Assert.That(Command.LeftParen.IsValidButton(Settings.ModeType.Rpn), Is.EqualTo(false), "LEFT_PAREN-RPN");
+            Assert.That(Command.RightParen.IsValidButton(Settings.ModeType.Rpn), Is.EqualTo(false), "RIGHT_PAREN-RPN");
 
-            Assert.That(Command.Enter.IsValidButton(Settings.Mode.Rpn), Is.EqualTo(true), "ENTER-RPN");
-            Assert.That(Command.StackDown.IsValidButton(Settings.Mode.Rpn), Is.EqualTo(true), "STACK_DOWN-RPN");
-            Assert.That(Command.StackUp.IsValidButton(Settings.Mode.Rpn), Is.EqualTo(true), "STACK_UP-RPN");
+            Assert.That(Command.Enter.IsValidButton(Settings.ModeType.Rpn), Is.EqualTo(true), "ENTER-RPN");
+            Assert.That(Command.StackDown.IsValidButton(Settings.ModeType.Rpn), Is.EqualTo(true), "STACK_DOWN-RPN");
+            Assert.That(Command.StackUp.IsValidButton(Settings.ModeType.Rpn), Is.EqualTo(true), "STACK_UP-RPN");
 
-            Assert.That(Command.Eq.IsValidButton(Settings.Mode.Alg), Is.EqualTo(true), "EQ-ALG");
-            Assert.That(Command.LeftParen.IsValidButton(Settings.Mode.Alg), Is.EqualTo(true), "LEFT_PAREN-ALG");
-            Assert.That(Command.RightParen.IsValidButton(Settings.Mode.Alg), Is.EqualTo(true), "RIGHT_PAREN-ALG");
+            Assert.That(Command.Eq.IsValidButton(Settings.ModeType.Alg), Is.EqualTo(true), "EQ-ALG");
+            Assert.That(Command.LeftParen.IsValidButton(Settings.ModeType.Alg), Is.EqualTo(true), "LEFT_PAREN-ALG");
+            Assert.That(Command.RightParen.IsValidButton(Settings.ModeType.Alg), Is.EqualTo(true), "RIGHT_PAREN-ALG");
 
-            Assert.That(Command.Enter.IsValidButton(Settings.Mode.Alg), Is.EqualTo(false), "ENTER-ALG");
-            Assert.That(Command.StackDown.IsValidButton(Settings.Mode.Alg), Is.EqualTo(false), "STACK_DOWN-ALG");
-            Assert.That(Command.StackUp.IsValidButton(Settings.Mode.Alg), Is.EqualTo(false), "STACK_UP-ALG");
+            Assert.That(Command.Enter.IsValidButton(Settings.ModeType.Alg), Is.EqualTo(false), "ENTER-ALG");
+            Assert.That(Command.StackDown.IsValidButton(Settings.ModeType.Alg), Is.EqualTo(false), "STACK_DOWN-ALG");
+            Assert.That(Command.StackUp.IsValidButton(Settings.ModeType.Alg), Is.EqualTo(false), "STACK_UP-ALG");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Calcoo
         int GetSign();
         int GetExpSign();
         double ToDouble(int numBase);
-        String ToString();
+        string ToString();
     }
 
     public class DoubleByDigit : IDoubleByDigitGetters
@@ -193,7 +193,7 @@ namespace Calcoo
             return x;
         }
 
-        public override String ToString()
+        public override string ToString()
         {
             if (_overflow)
                 return "error";

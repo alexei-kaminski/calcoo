@@ -13,26 +13,26 @@ namespace Calcoo
 
     public class CpuStack : ICpuStackGetters
     {
-        public Settings.StackMode StackMode { get; set; }
+        public Settings.StackModeType StackMode { get; set; }
 
-        private readonly Settings.Mode _mode;
+        private readonly Settings.ModeType _mode;
 
         private CpuStack()
         {
             throw new Exception("Instantiating modeless CpuStack");
         }
 
-        public CpuStack(Settings.Mode mode)
+        public CpuStack(Settings.ModeType mode)
         {
-            if (mode != Settings.Mode.Alg)
+            if (mode != Settings.ModeType.Alg)
                 throw new Exception("stack mode must be specified in non-ALG mode stack construction "
                                     + mode.ToString());
             _stack = new LinkedList<StackElement>();
             _mode = mode;
         }
 
-        public CpuStack(Settings.Mode mode,
-            Settings.StackMode stackMode)
+        public CpuStack(Settings.ModeType mode,
+            Settings.StackModeType stackMode)
         {
             _stack = new LinkedList<StackElement>();
             _mode = mode;
@@ -87,7 +87,7 @@ namespace Calcoo
         public void Push(double z,
             Cpu.BinaryOp op)
         {
-            if (_mode != Settings.Mode.Alg)
+            if (_mode != Settings.ModeType.Alg)
                 throw new Exception("Alg stack push called in non-Alg mode " + _mode.ToString());
             _stack.AddFirst(new StackElement(z, op, 0));
         }
@@ -95,10 +95,10 @@ namespace Calcoo
 
         public void Push(double z)
         {
-            if (_mode != Settings.Mode.Rpn)
+            if (_mode != Settings.ModeType.Rpn)
                 throw new Exception("RPN stack push called in non-RPN mode");
             _stack.AddFirst(new StackElement(z));
-            if (StackMode == Settings.StackMode.Xyzt && _stack.Count > 3)
+            if (StackMode == Settings.StackModeType.Xyzt && _stack.Count > 3)
                 _stack.RemoveLast();
         }
 
@@ -120,7 +120,7 @@ namespace Calcoo
 
         public bool ExistOpenParen()
         {
-            if (_mode != Settings.Mode.Alg)
+            if (_mode != Settings.ModeType.Alg)
                 throw new Exception("Alg stack existOpenParen called in non-Alg mode " + _mode.ToString());
             foreach (var stackElement in _stack)
             {
@@ -137,7 +137,7 @@ namespace Calcoo
 
         public Cpu.BinaryOp GetOp()
         {
-            if (_mode != Settings.Mode.Alg)
+            if (_mode != Settings.ModeType.Alg)
                 throw new Exception("Alg stack GetOp called in non-Alg mode " + _mode.ToString());
             if (IsEmpty())
                 throw new Exception("GetOp called on empty stack");
@@ -174,7 +174,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek op at negative depth " + i);
-            if (_stack.Count > i && _mode == Settings.Mode.Alg)
+            if (_stack.Count > i && _mode == Settings.ModeType.Alg)
                 return PeekElement(i).Op;
 
             return null;
@@ -184,7 +184,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek paren at negative depth " + i);
-            if (_stack.Count > i && _mode == Settings.Mode.Alg)
+            if (_stack.Count > i && _mode == Settings.ModeType.Alg)
                 return (PeekElement(i).NumberOfParens > 0);
 
             return false;
@@ -199,7 +199,7 @@ namespace Calcoo
 
         public bool HeadParenExists()
         {
-            if (_mode != Settings.Mode.Alg)
+            if (_mode != Settings.ModeType.Alg)
                 throw new Exception("Alg stack HeadParenExists called in non-Alg mode " + _mode.ToString());
             if (IsEmpty())
                 throw new Exception("HeadParenExists called on empty stack");
@@ -208,14 +208,14 @@ namespace Calcoo
 
         public void HeadParenAdd()
         {
-            if (_mode != Settings.Mode.Alg)
+            if (_mode != Settings.ModeType.Alg)
                 throw new Exception("Alg stack headParenAdd called in non-ALG mode " + _mode.ToString());
             _stack.First().NumberOfParens++;
         }
 
         public void HeadParenRemove()
         {
-            if (_mode != Settings.Mode.Alg)
+            if (_mode != Settings.ModeType.Alg)
                 throw new Exception("Alg stack headParenRemove called in non-ALG mode " + _mode.ToString());
             if (_stack.First().NumberOfParens == 0)
                 throw new Exception("HeadParenRemove when none exist");
@@ -226,12 +226,12 @@ namespace Calcoo
         {
             switch (_mode)
             {
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     throw new Exception("stack RollUp called in Alg mode");
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     switch (StackMode)
                     {
-                        case Settings.StackMode.Infinite:
+                        case Settings.StackModeType.Infinite:
                             if (!_stack.Any())
                                 return x;
 
@@ -240,7 +240,7 @@ namespace Calcoo
                             _stack.RemoveLast();
                             return val;
 
-                        case Settings.StackMode.Xyzt:
+                        case Settings.StackModeType.Xyzt:
                             // simple popping and re-pushing is less error-prone
                             // Note: Even if the stack had less than three elements,
                             // there will be exactly three elements after the roll.
@@ -267,19 +267,19 @@ namespace Calcoo
         {
             switch (_mode)
             {
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     throw new Exception("stack RollDown called in Alg mode");
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     switch (StackMode)
                     {
-                        case Settings.StackMode.Infinite:
+                        case Settings.StackModeType.Infinite:
                             if (!_stack.Any())
                                 return x;
 
                             _stack.AddLast(new StackElement(x));
                             return Pop();
 
-                        case Settings.StackMode.Xyzt:
+                        case Settings.StackModeType.Xyzt:
                             // simple popping and re-pushing is less error-prone
                             // Note: Even if the stack had less than three elements,
                             // there will be exactly three elements after the roll.
@@ -305,11 +305,11 @@ namespace Calcoo
         {
             switch (_mode)
             {
-                case Settings.Mode.Rpn:
+                case Settings.ModeType.Rpn:
                     double varRpn = Pop();
                     Push(x);
                     return varRpn;
-                case Settings.Mode.Alg:
+                case Settings.ModeType.Alg:
                     if (!_stack.Any())
                         return x;
 
