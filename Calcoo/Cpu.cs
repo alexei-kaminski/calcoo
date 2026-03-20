@@ -169,7 +169,6 @@ namespace Calcoo
             Settings.EnterModeType enterMode,
             Settings.StackModeType stackMode)
         {
-            // setting the s
             _numBase = numBase;
 
             // creating the structures

@@ -289,7 +289,7 @@ namespace Calcoo
              * to changes in the exp part, see the "!!!" comment
              */
 
-            // sign - note the the sigh of zero is "+", like in all calculators
+            // sign - note the sign of zero is "+", like in all calculators
             dbd._sign = x >= 0.0 ? 1 : -1;
 
             int exponent = (int)Math.Floor(Math.Log(absX) / Math.Log(dBase));
