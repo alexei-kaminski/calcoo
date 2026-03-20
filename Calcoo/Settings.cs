@@ -200,7 +200,7 @@ namespace Calcoo
                 settings.StackMode = Defaults.StackMode;
             if (!Enum.TryParse((string)rk.GetValue(Names.enterMode, Defaults.EnterMode.ToString(), RegistryValueOptions.None), out settings.EnterMode))
                 settings.EnterMode = Defaults.EnterMode;
-            if (!Boolean.TryParse((string)rk.GetValue(Names.round, Defaults.Round.ToString(), RegistryValueOptions.None), out settings.Round))
+            if (!bool.TryParse((string)rk.GetValue(Names.round, Defaults.Round.ToString(), RegistryValueOptions.None), out settings.Round))
                 settings.Round = Defaults.Round;
             try
             {
@@ -213,11 +213,11 @@ namespace Calcoo
             {
                 settings.RoundLength = defaultRoundLength;
             }
-            if (!Boolean.TryParse((string)rk.GetValue(Names.truncateZeros, Defaults.TruncateZeros.ToString(), RegistryValueOptions.None), out settings.TruncateZeros))
+            if (!bool.TryParse((string)rk.GetValue(Names.truncateZeros, Defaults.TruncateZeros.ToString(), RegistryValueOptions.None), out settings.TruncateZeros))
                 settings.TruncateZeros = Defaults.TruncateZeros;
-            if (!Boolean.TryParse((string)rk.GetValue(Names.arcAutorelease, Defaults.ArcAutorelease.ToString(), RegistryValueOptions.None), out settings.ArcAutorelease))
+            if (!bool.TryParse((string)rk.GetValue(Names.arcAutorelease, Defaults.ArcAutorelease.ToString(), RegistryValueOptions.None), out settings.ArcAutorelease))
                 settings.ArcAutorelease = Defaults.ArcAutorelease;
-            if (!Boolean.TryParse((string)rk.GetValue(Names.hypAutorelease, Defaults.HypAutorelease.ToString(), RegistryValueOptions.None), out settings.HypAutorelease))
+            if (!bool.TryParse((string)rk.GetValue(Names.hypAutorelease, Defaults.HypAutorelease.ToString(), RegistryValueOptions.None), out settings.HypAutorelease))
                 settings.HypAutorelease = Defaults.HypAutorelease;
             if (!Enum.TryParse((string)rk.GetValue(Names.pasteParsingAlgorithm, Defaults.PasteParsingAlgorithm.ToString(), RegistryValueOptions.None), out settings.PasteParsingAlgorithm))
                 settings.PasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;

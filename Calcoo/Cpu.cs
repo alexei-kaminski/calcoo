@@ -756,10 +756,10 @@ namespace Calcoo
                     if (b != 0.0)
                         return a / b;
                     else
-                        return Double.NaN;
+                        return double.NaN;
                 case BinaryOp.Pow:
                     if ((a == 0.0 && b <= 0.0) || (a < 0 && b != Math.Floor(b)))
-                        return Double.NaN;
+                        return double.NaN;
                     else
                         return Math.Pow(a, b);
                 default:
@@ -878,31 +878,31 @@ namespace Calcoo
                     if (X > 0.0)
                         X = Math.Log10(X);
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.TenToX:
                     if (X < Math.Pow(10.0, _expInputLength))
                         X = Math.Pow(10.0, X);
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Ln:
                     if (X > 0.0)
                         X = Math.Log(X);
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.EtoX:
                     if (X * Math.Log10(Math.E) < Math.Pow(10.0, _expInputLength))
                         X = Math.Exp(X);
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Sqrt:
                     if (X >= 0.0)
                         X = Math.Sqrt(X);
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Sqr:
                     X = X * X;
@@ -911,13 +911,13 @@ namespace Calcoo
                     if (X != 0.0)
                         X = 1.0 / X;
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Fact:
                     if (MathUtil.FactCanDo(X, _expInputLength))
                         X = MathUtil.Fact(X, _inputLength);
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Sin:
                     if (IsMultipleOf(X, AngleUnits))
@@ -932,7 +932,7 @@ namespace Calcoo
                         X = AngleFromRad(X, AngleUnits);
                     }
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Sinh:
                     X = Math.Sinh(X);
@@ -953,7 +953,7 @@ namespace Calcoo
                         X = AngleFromRad(X, AngleUnits);
                     }
                     else
-                        X = Double.NaN;
+                        X = double.NaN;
                     break;
                 case UnaryOp.Cosh:
                     X = Math.Cosh(X);
@@ -963,7 +963,7 @@ namespace Calcoo
                     break;
                 case UnaryOp.Tan:
                     if (IsOddMultipleOfHalf(X, AngleUnits))
-                        X = Double.NaN;
+                        X = double.NaN;
                     else if (IsMultipleOf(X, AngleUnits))
                         X = 0.0;
                     else

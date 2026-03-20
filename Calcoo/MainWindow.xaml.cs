@@ -306,7 +306,7 @@ namespace Calcoo
                             break;
                         string textToPaste = Clipboard.GetText(TextDataFormat.Text);
                         double value = TextUtil.TextToDouble(textToPaste, body.PasteParsingAlgorithm == Settings.PasteParsingAlgorithmType.LocaleBased);
-                        if (Double.IsNaN(value))
+                        if (double.IsNaN(value))
                             break;
 
                         PushUndo();

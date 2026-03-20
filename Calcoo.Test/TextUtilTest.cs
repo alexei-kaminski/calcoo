@@ -268,7 +268,7 @@ namespace Calcoo.Test
 
             foreach (String testCase in testCasesInvalid)
             {
-                Assert.That(Double.IsNaN(TextUtil.TextToDouble(testCase, false)), Is.EqualTo(true),
+                Assert.That(double.IsNaN(TextUtil.TextToDouble(testCase, false)), Is.EqualTo(true),
                     "invalid " + testCase + ", heuristic parser");
             }
         }
@@ -276,8 +276,8 @@ namespace Calcoo.Test
         [Test]
         public void TextToDoubleEmptyStringReturnsNaN()
         {
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("", false)), Is.True, "empty string");
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("   ", false)), Is.True, "whitespace only");
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("", false)), Is.True, "empty string");
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("   ", false)), Is.True, "whitespace only");
         }
 
         [Test]
@@ -286,9 +286,9 @@ namespace Calcoo.Test
             // Input with trailing non-numeric chars — parseable portion is truncated (line 59-61)
             // The truncation limits separator scanning but the full string is still
             // passed to the locale parser, which fails on trailing letters → NaN
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("42abc", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("42abc", false)), Is.True,
                 "trailing letters cause NaN");
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("123.45xyz", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("123.45xyz", false)), Is.True,
                 "trailing letters with dot cause NaN");
         }
 
@@ -306,9 +306,9 @@ namespace Calcoo.Test
         public void TextToDoubleHeuristicBothMultipleReturnsNaN()
         {
             // Both '.' and ',' appear multiple times (line 105)
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("1.000.000,000,00", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("1.000.000,000,00", false)), Is.True,
                 "both . and , multiple times");
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("1,000,000.000.00", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("1,000,000.000.00", false)), Is.True,
                 "both , and . multiple times");
         }
 
@@ -317,9 +317,9 @@ namespace Calcoo.Test
         {
             // More than 3 digits before first separator with grouping chars present (line 132)
             // Need multiple of one separator type so line 109 branch is entered
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("12345,678,901.23", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("12345,678,901.23", false)), Is.True,
                 "5 leading digits with grouping commas");
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("12345.678.901,23", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("12345.678.901,23", false)), Is.True,
                 "5 leading digits with grouping dots");
         }
 
@@ -328,9 +328,9 @@ namespace Calcoo.Test
         {
             // One dot and one comma, 4 apart, but positions don't match leading-zero
             // or currency patterns (line 185)
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("12.345,6", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("12.345,6", false)), Is.True,
                 "ambiguous 12.345,6");
-            Assert.That(Double.IsNaN(TextUtil.TextToDouble("12,345.6", false)), Is.True,
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("12,345.6", false)), Is.True,
                 "ambiguous 12,345.6");
         }
     }

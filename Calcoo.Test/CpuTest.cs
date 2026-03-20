@@ -763,26 +763,26 @@ namespace Calcoo.Test
                     Settings.StackModeType.Infinite),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-15), "100.1 - 100.0 - 0.1");
             // overflows
-            Assert.That(Double.IsNaN(
+            Assert.That(double.IsNaN(
                 RunCpu(new[] { "Digit2", "Dot", "Digit3", "Enter", "Digit0", "Div" },
                     Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
                     Settings.EnterModeType.Hp28,
                     Settings.StackModeType.Infinite)
                 ), Is.True, "2.3 / 0.0");
-            Assert.That(Double.IsNaN(
+            Assert.That(double.IsNaN(
                 RunCpu(new[] { "Digit0", "Enter", "Digit0", "Pow" },
                     Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
                     Settings.EnterModeType.Hp28,
                     Settings.StackModeType.Infinite)
                 ), Is.True, "0.0 ^ 0.0");
-            Assert.That(Double.IsNaN(
+            Assert.That(double.IsNaN(
                 RunCpu(new[] { "Digit0", "Enter", "Digit1", "Sign", "Pow" },
                     Settings.ModeType.Rpn, Settings.AngleUnitsType.Deg,
                     Settings.EnterModeType.Hp28,
                     Settings.StackModeType.Infinite)
                 ), Is.True, "0.0 ^ -1.0");
             Assert.That(
-                Double.IsNaN(
+                double.IsNaN(
                     RunCpu(new[]
                     {
                         "Digit2", "Dot", "Digit3", "Sign", "Enter", "Digit1", "Dot",
@@ -1393,7 +1393,7 @@ namespace Calcoo.Test
                 RunCpu(new[] { "Digit9", "Digit0", "Cos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "cos(90 deg)");
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Tan" }, Settings.ModeType.Alg,
+                double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Tan" }, Settings.ModeType.Alg,
                     Settings.AngleUnitsType.Deg)), Is.True, "tan(90 deg)");
             Assert.That(
                 RunCpu(new[] { "Digit1", "Digit8", "Digit0", "Tan" }, Settings.ModeType.Alg,
@@ -1418,7 +1418,7 @@ namespace Calcoo.Test
                 RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Cos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "cos(pi/2)");
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Tan" }, Settings.ModeType.Alg,
+                double.IsNaN(RunCpu(new[] { "Pi", "Div", "Digit2", "Eq", "Tan" }, Settings.ModeType.Alg,
                     Settings.AngleUnitsType.Rad)), Is.EqualTo(true), "tan(pi/2)");
             Assert.That(
                 RunCpu(new[] { "Pi", "Tan" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Rad),
@@ -1551,7 +1551,7 @@ namespace Calcoo.Test
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-5), "tan(-180 deg)");
             // tan(-90 deg) should be NaN, just like tan(90 deg)
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Sign", "Tan" }, Settings.ModeType.Alg,
+                double.IsNaN(RunCpu(new[] { "Digit9", "Digit0", "Sign", "Tan" }, Settings.ModeType.Alg,
                     Settings.AngleUnitsType.Deg)), Is.True, "tan(-90 deg)");
         }
 
@@ -1717,11 +1717,11 @@ namespace Calcoo.Test
                 Is.EqualTo(Math.Atan(1.0)).Within(1e-12), "atan(1) rad");
             // asin out of range
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit2", "Asin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
+                double.IsNaN(RunCpu(new[] { "Digit2", "Asin" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
                 Is.True, "asin(2) = NaN");
             // acos out of range
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Digit2", "Acos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
+                double.IsNaN(RunCpu(new[] { "Digit2", "Acos" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
                 Is.True, "acos(2) = NaN");
         }
 
@@ -1754,7 +1754,7 @@ namespace Calcoo.Test
                 Is.EqualTo(Math.Atanh(0.5)).Within(1e-12), "atanh(0.5)");
             // acosh of value < 1 = NaN
             Assert.That(
-                Double.IsNaN(RunCpu(new[] { "Dot", "Digit5", "Acosh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
+                double.IsNaN(RunCpu(new[] { "Dot", "Digit5", "Acosh" }, Settings.ModeType.Alg, Settings.AngleUnitsType.Deg)),
                 Is.True, "acosh(0.5) = NaN");
         }
 

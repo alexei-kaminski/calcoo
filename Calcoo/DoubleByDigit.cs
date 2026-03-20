@@ -161,7 +161,7 @@ namespace Calcoo
         public double ToDouble(int numBase)
         {
             if (_overflow)
-                return Double.NaN;
+                return double.NaN;
             // empty input returns zero by design
             double dBase = numBase;
             double x = 0.0;
@@ -254,7 +254,7 @@ namespace Calcoo
 
             // First, we consider some special cases of too large or too small x
 
-            if (Double.IsNaN(x) || Double.IsInfinity(x))
+            if (double.IsNaN(x) || double.IsInfinity(x))
             {
                 dbd._overflow = true;
                 return dbd;

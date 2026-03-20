@@ -88,7 +88,7 @@ namespace Calcoo.Test
             Assert.That(dbd.ToDouble(10), Is.EqualTo(-123.456).Within(Precision * 123.456), "4");
 
             dbd = InitDoubleByDigit(new[] { 1, 2, 3 }, new[] { 4, 5, 6 }, new[] { 7, 8, 9 }, -1, -1, true);
-            Assert.That(Double.IsNaN(dbd.ToDouble(10)), Is.EqualTo(true), "overflown");
+            Assert.That(double.IsNaN(dbd.ToDouble(10)), Is.EqualTo(true), "overflown");
         }
 
         [Test]
@@ -99,15 +99,15 @@ namespace Calcoo.Test
          */
 
             // not numbers
-            DoubleByDigit dbd = DoubleByDigit.FromDouble(Double.NaN, MantissaLength, ExpLength, false, 1, MantissaLength,
+            DoubleByDigit dbd = DoubleByDigit.FromDouble(double.NaN, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
 
-            dbd = DoubleByDigit.FromDouble(Double.PositiveInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
+            dbd = DoubleByDigit.FromDouble(double.PositiveInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
 
-            dbd = DoubleByDigit.FromDouble(Double.NegativeInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
+            dbd = DoubleByDigit.FromDouble(double.NegativeInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
 

@@ -16,9 +16,9 @@ namespace Calcoo
         {
             string simplifiedText = text;
             if (groupingChar != Unassigned)
-                simplifiedText = simplifiedText.Replace(Char.ToString(groupingChar), "");
+                simplifiedText = simplifiedText.Replace(char.ToString(groupingChar), "");
             if (decimalChar != Unassigned)
-                simplifiedText = simplifiedText.Replace(Char.ToString(decimalChar),
+                simplifiedText = simplifiedText.Replace(char.ToString(decimalChar),
                     CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             return TextToDouble(simplifiedText, true);
         }
@@ -30,11 +30,11 @@ namespace Calcoo
             {
                 try
                 {
-                    return Double.Parse(text);
+                    return double.Parse(text);
                 }
                 catch (Exception)
                 {
-                    return Double.NaN;
+                    return double.NaN;
                 }
             }
             else
@@ -50,7 +50,7 @@ namespace Calcoo
                 char[] textAsChars = simplifiedText.ToCharArray();
 
                 if (textAsChars.Length == 0 || !allowedChars.Contains(textAsChars[0]))
-                    return Double.NaN;
+                    return double.NaN;
 
                 int parseableLength = textAsChars.Length;
                 for (int i = 0; i < textAsChars.Length; ++i)
@@ -102,7 +102,7 @@ namespace Calcoo
                 }
 
                 if (symPositions[','].Count > 1 && symPositions['.'].Count > 1)
-                    return Double.NaN; // Parsing failed because encountered both '.' and ',' multiple times.
+                    return double.NaN; // Parsing failed because encountered both '.' and ',' multiple times.
                 // This can be improved by trying to make parsing possible by
                 // discarding some ending portion of the string.
 
@@ -129,7 +129,7 @@ namespace Calcoo
                         symPositions[groupingChar].First());
                     if (firstSeparatorCharPosition > 4
                         || (firstSeparatorCharPosition == 4 && textAsChars[0] != '-' && textAsChars[0] != '+'))
-                        return Double.NaN;
+                        return double.NaN;
                     // the number starts with more than three digits in a row even though grouping chars are present
 
                     // checking the grouping chars before the decimal char
@@ -141,12 +141,12 @@ namespace Calcoo
                                symPositions[groupingChar].Peek() < decimalCharPosition)
                         {
                             if (symPositions[groupingChar].Peek() != prevSeparatorCharPosition + 4)
-                                return Double.NaN;
+                                return double.NaN;
                             // separator chars are separated by the number of digits other than 4
                             prevSeparatorCharPosition = symPositions[groupingChar].Dequeue();
                         }
                         if (decimalCharPosition != prevSeparatorCharPosition + 4)
-                            return Double.NaN;
+                            return double.NaN;
                         // separator char and decimal char are separated by the number of digits other than 4
                     }
 
@@ -155,7 +155,7 @@ namespace Calcoo
                     while (symPositions[groupingChar].Any())
                     {
                         if (symPositions[groupingChar].Peek() != prevSeparatorCharPosition + 4)
-                            return Double.NaN; // separator chars are separated by the number of digits other than 4
+                            return double.NaN; // separator chars are separated by the number of digits other than 4
                         prevSeparatorCharPosition = symPositions[groupingChar].Dequeue();
                     }
                     return TextToDoubleWithGuidance(simplifiedText, decimalChar, groupingChar);
@@ -164,7 +164,7 @@ namespace Calcoo
                 {
                     // the most difficult case, one of each potential separator
                     if (Math.Abs(symPositions['.'].Peek() - symPositions[','].Peek()) != 4)
-                        return Double.NaN;
+                        return double.NaN;
                     int firstPosition = Math.Min(symPositions['.'].Peek(), symPositions[','].Peek());
                     int secondPosition = Math.Max(symPositions['.'].Peek(), symPositions[','].Peek());
                     if (firstPosition == 0
@@ -182,9 +182,9 @@ namespace Calcoo
                         return TextToDoubleWithGuidance(simplifiedText, textAsChars[secondPosition],
                             textAsChars[firstPosition]);
 
-                    return Double.NaN;
+                    return double.NaN;
                 }
-                return Double.NaN; // unreachable; required by compiler
+                return double.NaN; // unreachable; required by compiler
             }
         }
     }
