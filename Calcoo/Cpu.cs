@@ -560,8 +560,7 @@ namespace Calcoo
             // stopping the chain at a paren or at a lower-priority operation
             if (parenClosed)
             {
-                // if paren_closed == true, it means there are open parens
-                // currently open
+                // a ) was entered — collapse the stack up to the matching open paren
                 if (_stack.HeadParenExists())
                 {
                     // handling the funny case of just one number in parens,
