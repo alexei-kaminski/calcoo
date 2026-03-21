@@ -12,7 +12,6 @@ namespace Calcoo
     {
         public Settings NewSettings;
         public bool WasChanged;
-        private readonly int _maxRoundLength;
         private bool _initialized;
 
         public SettingsDialog(Settings settings, int maxRoundLength)
@@ -22,8 +21,6 @@ namespace Calcoo
 
             WasChanged = false;
             NewSettings = settings.Clone();
-            _maxRoundLength = maxRoundLength;
-
             CustomButton.ToolTip = CommandExtensions.CustomButtonTooltip;
             AutoreleaseArcButton.IsChecked = settings.ArcAutorelease;
             AutoreleaseHypButton.IsChecked = settings.HypAutorelease;
