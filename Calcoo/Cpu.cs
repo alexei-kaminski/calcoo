@@ -400,22 +400,15 @@ namespace Calcoo
             return a * HalfCircle[units] / Math.PI;
         }
 
-        // Checks whether angle/period is close to an integer.
-        // Uses relative epsilon so it works for large angles.
-        private static bool IsNearInteger(double ratio)
-        {
-            return Math.Abs(ratio - Math.Round(ratio)) < CpuPrecision * Math.Max(1.0, Math.Abs(ratio));
-        }
-
         private static bool IsMultipleOfHalfCircle(double angle, Settings.AngleUnits units)
         {
-            return IsNearInteger(angle / HalfCircle[units]);
+            return MathUtil.IsNearInteger(angle / HalfCircle[units]);
         }
 
         private static bool IsOddMultipleOfQuarterCircle(double angle, Settings.AngleUnits units)
         {
             double ratio = angle / HalfCircle[units];
-            return IsNearInteger(ratio * 2.0) && !IsNearInteger(ratio);
+            return MathUtil.IsNearInteger(ratio * 2.0) && !MathUtil.IsNearInteger(ratio);
         }
 
         private void ExecuteDot()

@@ -6,6 +6,11 @@ namespace Calcoo
     {
         private const double Epsilon = 1e-15;
 
+        public static bool IsNearInteger(double ratio)
+        {
+            return Math.Abs(ratio - Math.Round(ratio)) < Epsilon * Math.Max(1.0, Math.Abs(ratio));
+        }
+
         // Factorial using the Stirling formula for large arguments.
         public static double Fact(double x, int nSignificantDigits)
         {
