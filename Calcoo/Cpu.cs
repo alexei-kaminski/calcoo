@@ -35,40 +35,6 @@ namespace Calcoo
             { Settings.AngleUnits.Rad, Math.PI },
         };
 
-        public enum UnaryOp
-        {
-            // non-trigonometric
-            Log10,
-            TenToX,
-            Ln,
-            EtoX,
-            Sqrt,
-            Sqr,
-            InvX,
-            Fact,
-            // trigonometric
-            Sin,
-            Cos,
-            Tan,
-            Asin,
-            Acos,
-            Atan,
-            Sinh,
-            Cosh,
-            Tanh,
-            Asinh,
-            Acosh,
-            Atanh
-        }
-
-        public enum MemoryOp
-        {
-            MemToX,
-            MemPlus,
-            ExchXMem,
-            XToMem
-        }
-
         // ENTER is after an op or after Enter key in HP-28 mode, EnterPush is after Enter key in Traditional mode
         private enum Action
         {
@@ -239,7 +205,7 @@ namespace Calcoo
                 case Command.MemPlus:
                 case Command.ExchXMem:
                 case Command.XToMem:
-                    ExecuteMemoryOp(_commandToMemoryOp[command]);
+                    ExecuteMemoryOp(command);
                     break;
                 case Command.Mem0:
                 case Command.Mem1:
@@ -265,7 +231,7 @@ namespace Calcoo
                 case Command.Asinh:
                 case Command.Acosh:
                 case Command.Atanh:
-                    ExecuteUnaryOp(_commandToUnaryOp[command]);
+                    ExecuteUnaryOp(command);
                     break;
                 case Command.Eq:
                     ExecuteEq();
@@ -327,38 +293,6 @@ namespace Calcoo
             { Command.Mul, BinaryOp.Mul },
             { Command.Div, BinaryOp.Div },
             { Command.Pow, BinaryOp.Pow },
-        };
-
-        private static readonly Dictionary<Command, UnaryOp> _commandToUnaryOp = new()
-        {
-            { Command.Log10,  UnaryOp.Log10  },
-            { Command.TenToX, UnaryOp.TenToX },
-            { Command.Ln,     UnaryOp.Ln     },
-            { Command.EtoX,   UnaryOp.EtoX   },
-            { Command.Sqrt,   UnaryOp.Sqrt   },
-            { Command.Sqr,    UnaryOp.Sqr    },
-            { Command.InvX,   UnaryOp.InvX   },
-            { Command.Fact,   UnaryOp.Fact   },
-            { Command.Sin,    UnaryOp.Sin    },
-            { Command.Cos,    UnaryOp.Cos    },
-            { Command.Tan,    UnaryOp.Tan    },
-            { Command.Asin,   UnaryOp.Asin   },
-            { Command.Acos,   UnaryOp.Acos   },
-            { Command.Atan,   UnaryOp.Atan   },
-            { Command.Sinh,   UnaryOp.Sinh   },
-            { Command.Cosh,   UnaryOp.Cosh   },
-            { Command.Tanh,   UnaryOp.Tanh   },
-            { Command.Asinh,  UnaryOp.Asinh  },
-            { Command.Acosh,  UnaryOp.Acosh  },
-            { Command.Atanh,  UnaryOp.Atanh  },
-        };
-
-        private static readonly Dictionary<Command, MemoryOp> _commandToMemoryOp = new()
-        {
-            { Command.MemToX,   MemoryOp.MemToX   },
-            { Command.MemPlus,  MemoryOp.MemPlus  },
-            { Command.ExchXMem, MemoryOp.ExchXMem },
-            { Command.XToMem,   MemoryOp.XToMem   },
         };
 
         private static readonly Dictionary<Command, int> _commandToDigit = new()
@@ -800,64 +734,64 @@ namespace Calcoo
             _lastAction = Action.Enter;
         }
 
-        private void ExecuteUnaryOp(UnaryOp unaryOp)
+        private void ExecuteUnaryOp(Command command)
         {
             FinalizeInput();
 
-            switch (unaryOp)
+            switch (command)
             {
-                case UnaryOp.Log10:
+                case Command.Log10:
                     if (X > 0.0)
                         X = Math.Log10(X);
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.TenToX:
+                case Command.TenToX:
                     if (X < Math.Pow(10.0, _expInputLength))
                         X = Math.Pow(10.0, X);
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Ln:
+                case Command.Ln:
                     if (X > 0.0)
                         X = Math.Log(X);
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.EtoX:
+                case Command.EtoX:
                     if (X * Math.Log10(Math.E) < Math.Pow(10.0, _expInputLength))
                         X = Math.Exp(X);
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Sqrt:
+                case Command.Sqrt:
                     if (X >= 0.0)
                         X = Math.Sqrt(X);
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Sqr:
+                case Command.Sqr:
                     X = X * X;
                     break;
-                case UnaryOp.InvX:
+                case Command.InvX:
                     if (X != 0.0)
                         X = 1.0 / X;
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Fact:
+                case Command.Fact:
                     if (MathUtil.FactCanDo(X, _expInputLength))
                         X = MathUtil.Fact(X, _inputLength);
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Sin:
+                case Command.Sin:
                     if (IsMultipleOf(X, CurrentAngleUnits))
                         X = 0.0;
                     else
                         X = Math.Sin(AngleToRad(X, CurrentAngleUnits));
                     break;
-                case UnaryOp.Asin:
+                case Command.Asin:
                     if (Math.Abs(X) <= 1.0)
                     {
                         X = Math.Asin(X);
@@ -866,19 +800,19 @@ namespace Calcoo
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Sinh:
+                case Command.Sinh:
                     X = Math.Sinh(X);
                     break;
-                case UnaryOp.Asinh:
+                case Command.Asinh:
                     X = Math.Asinh(X);
                     break;
-                case UnaryOp.Cos:
+                case Command.Cos:
                     if (IsOddMultipleOfHalf(X, CurrentAngleUnits))
                         X = 0.0;
                     else
                         X = Math.Cos(AngleToRad(X, CurrentAngleUnits));
                     break;
-                case UnaryOp.Acos:
+                case Command.Acos:
                     if (Math.Abs(X) <= 1.0)
                     {
                         X = Math.Acos(X);
@@ -887,13 +821,13 @@ namespace Calcoo
                     else
                         X = double.NaN;
                     break;
-                case UnaryOp.Cosh:
+                case Command.Cosh:
                     X = Math.Cosh(X);
                     break;
-                case UnaryOp.Acosh:
+                case Command.Acosh:
                     X = Math.Acosh(X);
                     break;
-                case UnaryOp.Tan:
+                case Command.Tan:
                     if (IsOddMultipleOfHalf(X, CurrentAngleUnits))
                         X = double.NaN;
                     else if (IsMultipleOf(X, CurrentAngleUnits))
@@ -901,33 +835,33 @@ namespace Calcoo
                     else
                         X = Math.Tan(AngleToRad(X, CurrentAngleUnits));
                     break;
-                case UnaryOp.Atan:
+                case Command.Atan:
                     X = Math.Atan(X);
                     X = AngleFromRad(X, CurrentAngleUnits);
                     break;
-                case UnaryOp.Tanh:
+                case Command.Tanh:
                     X = Math.Tanh(X);
                     break;
-                case UnaryOp.Atanh:
+                case Command.Atanh:
                     X = Math.Atanh(X);
                     break;
                 default:
-                    throw new Exception("unknown unary op " + unaryOp);
+                    throw new Exception("unknown unary op " + command);
             }
 
             _lastAction = Action.Enter;
         }
 
-        private void ExecuteMemoryOp(MemoryOp memoryOp)
+        private void ExecuteMemoryOp(Command command)
         {
             FinalizeInput();
 
-            switch (memoryOp)
+            switch (command)
             {
-                case MemoryOp.MemPlus:
+                case Command.MemPlus:
                     _mem[ActiveMemNum] = MathUtil.SmartSum(X, _mem[ActiveMemNum], _numBase);
                     break;
-                case MemoryOp.MemToX:
+                case Command.MemToX:
                     switch (CurrentMode)
                     {
                         case Settings.Mode.Rpn:
@@ -941,16 +875,16 @@ namespace Calcoo
 
                     X = _mem[ActiveMemNum];
                     break;
-                case MemoryOp.XToMem:
+                case Command.XToMem:
                     _mem[ActiveMemNum] = X;
                     break;
-                case MemoryOp.ExchXMem:
+                case Command.ExchXMem:
                     double tmp = X;
                     X = _mem[ActiveMemNum];
                     _mem[ActiveMemNum] = tmp;
                     break;
                 default:
-                    throw new Exception("unknown memory op " + memoryOp);
+                    throw new Exception("unknown memory op " + command);
             }
 
             _lastAction = Action.Enter;
