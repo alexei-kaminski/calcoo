@@ -27,7 +27,7 @@ namespace Calcoo
             var label = sender as Label;
             if (label == null) return;
 
-            string commandName = label.Content.ToString();
+            string commandName = label.Content.ToString() ?? "";
             int caretIndex = CommandTextBox.CaretIndex;
             string text = CommandTextBox.Text;
 

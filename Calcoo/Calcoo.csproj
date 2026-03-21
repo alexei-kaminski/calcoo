@@ -8,6 +8,7 @@
     <AssemblyName>Calcoo</AssemblyName>
     <ApplicationIcon>Resources\calcoo.ico</ApplicationIcon>
     <Version>3.0.1.1</Version>
+    <Nullable>enable</Nullable>
     <Copyright>Copyright (C) 2001-2026 Alexei Kaminski.</Copyright>
   </PropertyGroup>
 

@@ -19,7 +19,7 @@ namespace Calcoo
         private readonly Dictionary<Command, DispatcherTimer> _highlightTimers = new();
 
         private readonly NumberDisplay _mainDisplay;
-        private IDoubleByDigitGetters _mainDisplayContent;
+        private IDoubleByDigitGetters? _mainDisplayContent;
         private readonly NumberDisplay[] _regNumDisplays;
         private readonly OperationDisplay[] _operationDisplays;
         private readonly LabelDisplay[] _regLabelDisplays;
@@ -36,7 +36,7 @@ namespace Calcoo
 
         public class DisplayCanvas
         {
-            public Canvas MainDisplay, DegRadDisplay, FormatDisplay;
+            public Canvas? MainDisplay, DegRadDisplay, FormatDisplay;
             public Canvas[] MemDisplays, RegisterLabelDisplays, RegisterNumberDisplays, RegisterOperationDisplays;
 
             public DisplayCanvas(int nMemDisplays, int nRegisterDisplays)
@@ -83,7 +83,7 @@ namespace Calcoo
 
         public string GetMainDisplayString()
         {
-            return _mainDisplayContent.ToString();
+            return _mainDisplayContent!.ToString();
         }
 
         public void SwitchDisplayFormat()
@@ -177,7 +177,7 @@ namespace Calcoo
             { Command.RightParen, Command.StackUp },
         };
 
-        private ButtonBase FindButton(Command command)
+        private ButtonBase? FindButton(Command command)
         {
             if (_buttons.TryGetValue(command, out var btn))
                 return btn;
@@ -188,12 +188,12 @@ namespace Calcoo
 
         public void HighlightButton(Command command)
         {
-            ButtonBase button = FindButton(command);
+            ButtonBase? button = FindButton(command);
 
             // If button is hidden, try the mode alternate (e.g. Enter↔Eq)
             if ((button == null || button.Visibility != Visibility.Visible)
                 && _modeAlternates.TryGetValue(command, out var alt))
-                button = FindButton(alt);
+                button = FindButton(alt)!;
 
             if (button == null || button.Visibility != Visibility.Visible) return;
 
@@ -239,7 +239,7 @@ namespace Calcoo
             true,
             "/Icons/Displays/Main/",
             numBase,
-            displayCanvas.MainDisplay)
+            displayCanvas.MainDisplay!)
             ;
 
             _memDisplays = new NumberDisplay[displayCanvas.MemDisplays.Length];
@@ -309,10 +309,10 @@ namespace Calcoo
 
             _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32,
                 new[] { Settings.DisplayFormat.Eng, Settings.DisplayFormat.Sci, Settings.DisplayFormat.Fix },
-                "/Icons/Displays/Indicator/", displayCanvas.FormatDisplay);
+                "/Icons/Displays/Indicator/", displayCanvas.FormatDisplay!);
             _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(-1, -1, 32,
                 new[] { Settings.AngleUnits.Deg, Settings.AngleUnits.Rad }, "/Icons/Displays/Indicator/",
-                displayCanvas.DegRadDisplay);
+                displayCanvas.DegRadDisplay!);
 
             CurrentDisplayFormat = Settings.DisplayFormat.Fix;
             Round = false;

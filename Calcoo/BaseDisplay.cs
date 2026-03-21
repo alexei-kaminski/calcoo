@@ -32,7 +32,7 @@ namespace Calcoo
             private readonly int _x, _y, _xSize;
             private readonly string _icon;
             private readonly Canvas _parent;
-            private ContentControl _box;
+            private ContentControl? _box;
 
             public DisplayGlyph(int x,
                 int y,

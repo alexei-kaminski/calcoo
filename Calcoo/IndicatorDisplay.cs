@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Calcoo
 {
-    internal class IndicatorDisplay<T> : BaseDisplay
+    internal class IndicatorDisplay<T> : BaseDisplay where T : notnull
     {
         private readonly Dictionary<T, DisplayGlyph> _icons;
 

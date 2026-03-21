@@ -14,9 +14,7 @@ namespace Calcoo
         private readonly DisplayGlyph[] _dot;
         private readonly DisplayGlyph _e;
         private readonly DisplayGlyph _expPlusSign, _expMinusSign;
-#nullable enable
         private readonly DisplayGlyph? _error;
-#nullable restore
         private readonly DisplayGlyph[,] _expDigits;
 
         private readonly int _inputLength, _expInputLength;
@@ -104,7 +102,7 @@ namespace Calcoo
             if (content.IsOverflow())
             {
                 if (_hasError)
-                    ShownGlyphs.Push(_error);
+                    ShownGlyphs.Push(_error!);
                 Refresh();
                 return;
             }

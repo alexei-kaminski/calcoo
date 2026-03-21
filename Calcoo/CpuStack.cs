@@ -143,7 +143,7 @@ namespace Calcoo
             return _stack.First().Op;
         }
 
-        private StackElement PeekElement(int i)
+        private StackElement? PeekElement(int i)
         {
             if (i < 0)
                 throw new Exception("trying to peek stack at negative depth " + i);
@@ -164,7 +164,7 @@ namespace Calcoo
             if (i < 0)
                 throw new Exception("trying to peek value at negative depth " + i);
             if (_stack.Count > i)
-                return PeekElement(i).Z;
+                return PeekElement(i)!.Z;
 
             return 0.0;
         }
@@ -174,7 +174,7 @@ namespace Calcoo
             if (i < 0)
                 throw new Exception("trying to peek op at negative depth " + i);
             if (_stack.Count > i && _currentMode == Settings.Mode.Alg)
-                return PeekElement(i).Op;
+                return PeekElement(i)!.Op;
 
             return null;
         }
@@ -184,7 +184,7 @@ namespace Calcoo
             if (i < 0)
                 throw new Exception("trying to peek paren at negative depth " + i);
             if (_stack.Count > i && _currentMode == Settings.Mode.Alg)
-                return (PeekElement(i).NumberOfParens > 0);
+                return (PeekElement(i)!.NumberOfParens > 0);
 
             return false;
         }
