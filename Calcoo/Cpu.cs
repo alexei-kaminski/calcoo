@@ -557,13 +557,13 @@ namespace Calcoo
             if (CurrentMode == Settings.Mode.Rpn)
                 throw new Exception("DoBinaryOpChain called in RPN mode");
             // aux function; performs the chain of binary operations from the stack,
-            // stopping the chain at a paren or at a lower-priority operation
+            // stopping the chain at a parenthesis or at a lower-priority operation
             if (parenClosed)
             {
-                // a ) was entered — collapse the stack up to the matching open paren
+                // a ) was entered — collapse the stack up to the matching open parenthesis
                 if (_stack.HeadParenExists())
                 {
-                    // handling the funny case of just one number in parens,
+                    // handling the funny case of just one number in parentheses,
                     // like 2+(3)
                     _stack.HeadParenRemove();
                 }
@@ -582,7 +582,7 @@ namespace Calcoo
                 while (!_stack.IsEmpty()
                        && (
                            (BinaryOpPriority(_stack.GetOp()) >= initPriority && !_stack.HeadParenExists())
-                           // "=" effectively closes all parens
+                           // "=" effectively closes all parentheses
                            || initPriority == BinopPriorityMin
                            ))
                 {
@@ -711,10 +711,10 @@ namespace Calcoo
             }
             else
             {
-                // If an expression starts with an opening paren, it will be ignored
+                // If an expression starts with an opening parenthesis, it will be ignored
                 // by cpu. However, the overall behavior will be adequate (as though
-                // the opening paren was interpreted as a paren. This is because the
-                // closing paren is made to act as "=". Test case: (2+3)/4
+                // the opening parenthesis was interpreted as a parenthesis. This is because the
+                // closing parenthesis is made to act as "=". Test case: (2+3)/4
                 DoBinaryOpChain(BinopPriorityMin, false);
             }
 
