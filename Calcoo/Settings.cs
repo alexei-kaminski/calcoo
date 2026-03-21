@@ -151,19 +151,19 @@ namespace Calcoo
 
         private static class Names
         {
-            public static string registryPath = "Software\\Calcoo\\";
-            public static string stackMode = "StackMode";
-            public static string mode = "Mode";
-            public static string enterMode = "EnterMode";
-            public static string round = "Round";
-            public static string roundLength = "RoundLength";
-            public static string truncateZeros = "TruncateZeros";
-            public static string arcAutorelease = "ArcAutorelease";
-            public static string hypAutorelease = "HypAutorelease";
-            public static string angleUnits = "AngleUnits";
-            public static string displayFormat = "DisplayFormat";
-            public static string pasteParsingAlgorithm = "PasteParsingAlgorithm";
-            public static string customButtonCommand = "CustomButtonCommand";
+            public static string RegistryPath = "Software\\Calcoo";
+            public static string StackMode = "StackMode";
+            public static string Mode = "Mode";
+            public static string EnterMode = "EnterMode";
+            public static string Round = "Round";
+            public static string RoundLength = "RoundLength";
+            public static string TruncateZeros = "TruncateZeros";
+            public static string ArcAutorelease = "ArcAutorelease";
+            public static string HypAutorelease = "HypAutorelease";
+            public static string AngleUnits = "AngleUnits";
+            public static string DisplayFormat = "DisplayFormat";
+            public static string PasteParsingAlgorithm = "PasteParsingAlgorithm";
+            public static string CustomButtonCommand = "CustomButtonCommand";
         }
 
         private static string CleanUpCustomCommand(string customCommand)
@@ -189,22 +189,22 @@ namespace Calcoo
         public static Settings Load(int defaultRoundLength)
         {
             var settings = new Settings(defaultRoundLength);
-            using var rk = Registry.CurrentUser.OpenSubKey(Names.registryPath);
+            using var rk = Registry.CurrentUser.OpenSubKey(Names.RegistryPath);
             if (rk == null)
                 return settings;
 
-            if (!Enum.TryParse((string)rk.GetValue(Names.mode, Defaults.Mode.ToString(), RegistryValueOptions.None), out settings.CurrentMode))
+            if (!Enum.TryParse((string)rk.GetValue(Names.Mode, Defaults.Mode.ToString(), RegistryValueOptions.None), out settings.CurrentMode))
                 settings.CurrentMode = Defaults.Mode;
-            if (!Enum.TryParse((string)rk.GetValue(Names.stackMode, Defaults.StackMode.ToString(), RegistryValueOptions.None), out settings.CurrentStackMode))
+            if (!Enum.TryParse((string)rk.GetValue(Names.StackMode, Defaults.StackMode.ToString(), RegistryValueOptions.None), out settings.CurrentStackMode))
                 settings.CurrentStackMode = Defaults.StackMode;
-            if (!Enum.TryParse((string)rk.GetValue(Names.enterMode, Defaults.EnterMode.ToString(), RegistryValueOptions.None), out settings.CurrentEnterMode))
+            if (!Enum.TryParse((string)rk.GetValue(Names.EnterMode, Defaults.EnterMode.ToString(), RegistryValueOptions.None), out settings.CurrentEnterMode))
                 settings.CurrentEnterMode = Defaults.EnterMode;
-            if (!bool.TryParse((string)rk.GetValue(Names.round, Defaults.Round.ToString(), RegistryValueOptions.None), out settings.Round))
+            if (!bool.TryParse((string)rk.GetValue(Names.Round, Defaults.Round.ToString(), RegistryValueOptions.None), out settings.Round))
                 settings.Round = Defaults.Round;
             try
             {
-                if (rk.GetValueKind(Names.roundLength) == RegistryValueKind.DWord)
-                    settings.RoundLength = (int)rk.GetValue(Names.roundLength, defaultRoundLength, RegistryValueOptions.None);
+                if (rk.GetValueKind(Names.RoundLength) == RegistryValueKind.DWord)
+                    settings.RoundLength = (int)rk.GetValue(Names.RoundLength, defaultRoundLength, RegistryValueOptions.None);
                 else
                     settings.RoundLength = defaultRoundLength;
             }
@@ -212,55 +212,55 @@ namespace Calcoo
             {
                 settings.RoundLength = defaultRoundLength;
             }
-            if (!bool.TryParse((string)rk.GetValue(Names.truncateZeros, Defaults.TruncateZeros.ToString(), RegistryValueOptions.None), out settings.TruncateZeros))
+            if (!bool.TryParse((string)rk.GetValue(Names.TruncateZeros, Defaults.TruncateZeros.ToString(), RegistryValueOptions.None), out settings.TruncateZeros))
                 settings.TruncateZeros = Defaults.TruncateZeros;
-            if (!bool.TryParse((string)rk.GetValue(Names.arcAutorelease, Defaults.ArcAutorelease.ToString(), RegistryValueOptions.None), out settings.ArcAutorelease))
+            if (!bool.TryParse((string)rk.GetValue(Names.ArcAutorelease, Defaults.ArcAutorelease.ToString(), RegistryValueOptions.None), out settings.ArcAutorelease))
                 settings.ArcAutorelease = Defaults.ArcAutorelease;
-            if (!bool.TryParse((string)rk.GetValue(Names.hypAutorelease, Defaults.HypAutorelease.ToString(), RegistryValueOptions.None), out settings.HypAutorelease))
+            if (!bool.TryParse((string)rk.GetValue(Names.HypAutorelease, Defaults.HypAutorelease.ToString(), RegistryValueOptions.None), out settings.HypAutorelease))
                 settings.HypAutorelease = Defaults.HypAutorelease;
-            if (!Enum.TryParse((string)rk.GetValue(Names.pasteParsingAlgorithm, Defaults.PasteParsingAlgorithm.ToString(), RegistryValueOptions.None), out settings.CurrentPasteParsingAlgorithm))
+            if (!Enum.TryParse((string)rk.GetValue(Names.PasteParsingAlgorithm, Defaults.PasteParsingAlgorithm.ToString(), RegistryValueOptions.None), out settings.CurrentPasteParsingAlgorithm))
                 settings.CurrentPasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
-            if (!Enum.TryParse((string)rk.GetValue(Names.angleUnits, Defaults.AngleUnits.ToString(), RegistryValueOptions.None), out settings.CurrentAngleUnits))
+            if (!Enum.TryParse((string)rk.GetValue(Names.AngleUnits, Defaults.AngleUnits.ToString(), RegistryValueOptions.None), out settings.CurrentAngleUnits))
                 settings.CurrentAngleUnits = Defaults.AngleUnits;
-            if (!Enum.TryParse((string)rk.GetValue(Names.displayFormat, Defaults.DisplayFormat.ToString(), RegistryValueOptions.None), out settings.CurrentDisplayFormat))
+            if (!Enum.TryParse((string)rk.GetValue(Names.DisplayFormat, Defaults.DisplayFormat.ToString(), RegistryValueOptions.None), out settings.CurrentDisplayFormat))
                 settings.CurrentDisplayFormat = Defaults.DisplayFormat;
 
-            settings.CustomButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.customButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
+            settings.CustomButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.CustomButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
 
             return settings;
         }
 
         public static void SaveDisplayFormat(DisplayFormat displayFormat)
         {
-            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.RegistryPath);
             if (rk == null) return;
-            rk.SetValue(Names.displayFormat, displayFormat.ToString());
+            rk.SetValue(Names.DisplayFormat, displayFormat.ToString());
         }
 
         public static void SaveAngleUnits(AngleUnits angleUnits)
         {
-            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.RegistryPath);
             if (rk == null) return;
-            rk.SetValue(Names.angleUnits, angleUnits.ToString());
+            rk.SetValue(Names.AngleUnits, angleUnits.ToString());
         }
 
         public void Save()
         {
-            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.RegistryPath);
             if (rk == null) return;
 
-            rk.SetValue(Names.mode, CurrentMode.ToString());
-            rk.SetValue(Names.stackMode, CurrentStackMode.ToString());
-            rk.SetValue(Names.enterMode, CurrentEnterMode.ToString());
-            rk.SetValue(Names.round, Round.ToString());
-            rk.SetValue(Names.roundLength, RoundLength, RegistryValueKind.DWord);
-            rk.SetValue(Names.truncateZeros, TruncateZeros.ToString());
-            rk.SetValue(Names.arcAutorelease, ArcAutorelease.ToString());
-            rk.SetValue(Names.hypAutorelease, HypAutorelease.ToString());
-            rk.SetValue(Names.pasteParsingAlgorithm, CurrentPasteParsingAlgorithm.ToString());
-            rk.SetValue(Names.customButtonCommand, CustomButtonCommand);
-            rk.SetValue(Names.angleUnits, CurrentAngleUnits.ToString());
-            rk.SetValue(Names.displayFormat, CurrentDisplayFormat.ToString());
+            rk.SetValue(Names.Mode, CurrentMode.ToString());
+            rk.SetValue(Names.StackMode, CurrentStackMode.ToString());
+            rk.SetValue(Names.EnterMode, CurrentEnterMode.ToString());
+            rk.SetValue(Names.Round, Round.ToString());
+            rk.SetValue(Names.RoundLength, RoundLength, RegistryValueKind.DWord);
+            rk.SetValue(Names.TruncateZeros, TruncateZeros.ToString());
+            rk.SetValue(Names.ArcAutorelease, ArcAutorelease.ToString());
+            rk.SetValue(Names.HypAutorelease, HypAutorelease.ToString());
+            rk.SetValue(Names.PasteParsingAlgorithm, CurrentPasteParsingAlgorithm.ToString());
+            rk.SetValue(Names.CustomButtonCommand, CustomButtonCommand);
+            rk.SetValue(Names.AngleUnits, CurrentAngleUnits.ToString());
+            rk.SetValue(Names.DisplayFormat, CurrentDisplayFormat.ToString());
         }
     }
 }
