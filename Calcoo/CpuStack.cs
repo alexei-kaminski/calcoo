@@ -13,35 +13,35 @@ namespace Calcoo
 
     public class CpuStack : ICpuStackGetters
     {
-        public Settings.StackModeType StackMode { get; set; }
+        public Settings.StackMode CurrentStackMode { get; set; }
 
-        private readonly Settings.ModeType _mode;
+        private readonly Settings.Mode _currentMode;
 
         private CpuStack()
         {
             throw new Exception("Instantiating modeless CpuStack");
         }
 
-        public CpuStack(Settings.ModeType mode)
+        public CpuStack(Settings.Mode mode)
         {
-            if (mode != Settings.ModeType.Alg)
+            if (mode != Settings.Mode.Alg)
                 throw new Exception("stack mode must be specified in non-ALG mode stack construction "
                                     + mode.ToString());
             _stack = new LinkedList<StackElement>();
-            _mode = mode;
+            _currentMode = mode;
         }
 
-        public CpuStack(Settings.ModeType mode,
-            Settings.StackModeType stackMode)
+        public CpuStack(Settings.Mode mode,
+            Settings.StackMode stackMode)
         {
             _stack = new LinkedList<StackElement>();
-            _mode = mode;
-            StackMode = stackMode;
+            _currentMode = mode;
+            CurrentStackMode = stackMode;
         }
 
         public CpuStack Clone()
         {
-            var clonedStack = new CpuStack(_mode, StackMode);
+            var clonedStack = new CpuStack(_currentMode, CurrentStackMode);
 
             foreach (StackElement e in _stack)
                 clonedStack._stack.AddLast(e.Clone()); // deep copy of the stack
@@ -50,7 +50,7 @@ namespace Calcoo
 
         private class StackElement
         {
-            public double Z; // not readonly becuase may be changed in swap x-y
+            public double Z; // not readonly because may be changed in swap x-y
             public readonly Cpu.BinaryOp Op;
             public int NumberOfParens; // not readonly because may be incremented/decremented
 
@@ -87,18 +87,18 @@ namespace Calcoo
         public void Push(double z,
             Cpu.BinaryOp op)
         {
-            if (_mode != Settings.ModeType.Alg)
-                throw new Exception("Alg stack push called in non-Alg mode " + _mode.ToString());
+            if (_currentMode != Settings.Mode.Alg)
+                throw new Exception("Alg stack push called in non-Alg mode " + _currentMode.ToString());
             _stack.AddFirst(new StackElement(z, op, 0));
         }
 
 
         public void Push(double z)
         {
-            if (_mode != Settings.ModeType.Rpn)
+            if (_currentMode != Settings.Mode.Rpn)
                 throw new Exception("RPN stack push called in non-RPN mode");
             _stack.AddFirst(new StackElement(z));
-            if (StackMode == Settings.StackModeType.Xyzt && _stack.Count > 3)
+            if (CurrentStackMode == Settings.StackMode.Xyzt && _stack.Count > 3)
                 _stack.RemoveLast();
         }
 
@@ -120,8 +120,8 @@ namespace Calcoo
 
         public bool ExistOpenParen()
         {
-            if (_mode != Settings.ModeType.Alg)
-                throw new Exception("Alg stack existOpenParen called in non-Alg mode " + _mode.ToString());
+            if (_currentMode != Settings.Mode.Alg)
+                throw new Exception("Alg stack existOpenParen called in non-Alg mode " + _currentMode.ToString());
             foreach (var stackElement in _stack)
             {
                 if (stackElement.NumberOfParens > 0)
@@ -137,8 +137,8 @@ namespace Calcoo
 
         public Cpu.BinaryOp GetOp()
         {
-            if (_mode != Settings.ModeType.Alg)
-                throw new Exception("Alg stack GetOp called in non-Alg mode " + _mode.ToString());
+            if (_currentMode != Settings.Mode.Alg)
+                throw new Exception("Alg stack GetOp called in non-Alg mode " + _currentMode.ToString());
             if (IsEmpty())
                 throw new Exception("GetOp called on empty stack");
             return _stack.First().Op;
@@ -174,7 +174,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek op at negative depth " + i);
-            if (_stack.Count > i && _mode == Settings.ModeType.Alg)
+            if (_stack.Count > i && _currentMode == Settings.Mode.Alg)
                 return PeekElement(i).Op;
 
             return null;
@@ -184,7 +184,7 @@ namespace Calcoo
         {
             if (i < 0)
                 throw new Exception("trying to peek paren at negative depth " + i);
-            if (_stack.Count > i && _mode == Settings.ModeType.Alg)
+            if (_stack.Count > i && _currentMode == Settings.Mode.Alg)
                 return (PeekElement(i).NumberOfParens > 0);
 
             return false;
@@ -199,8 +199,8 @@ namespace Calcoo
 
         public bool HeadParenExists()
         {
-            if (_mode != Settings.ModeType.Alg)
-                throw new Exception("Alg stack HeadParenExists called in non-Alg mode " + _mode.ToString());
+            if (_currentMode != Settings.Mode.Alg)
+                throw new Exception("Alg stack HeadParenExists called in non-Alg mode " + _currentMode.ToString());
             if (IsEmpty())
                 throw new Exception("HeadParenExists called on empty stack");
             return _stack.First().NumberOfParens > 0;
@@ -208,15 +208,15 @@ namespace Calcoo
 
         public void HeadParenAdd()
         {
-            if (_mode != Settings.ModeType.Alg)
-                throw new Exception("Alg stack headParenAdd called in non-ALG mode " + _mode.ToString());
+            if (_currentMode != Settings.Mode.Alg)
+                throw new Exception("Alg stack headParenAdd called in non-ALG mode " + _currentMode.ToString());
             _stack.First().NumberOfParens++;
         }
 
         public void HeadParenRemove()
         {
-            if (_mode != Settings.ModeType.Alg)
-                throw new Exception("Alg stack headParenRemove called in non-ALG mode " + _mode.ToString());
+            if (_currentMode != Settings.Mode.Alg)
+                throw new Exception("Alg stack headParenRemove called in non-ALG mode " + _currentMode.ToString());
             if (_stack.First().NumberOfParens == 0)
                 throw new Exception("HeadParenRemove when none exist");
             _stack.First().NumberOfParens--;
@@ -224,14 +224,14 @@ namespace Calcoo
 
         public double RollUp(double x)
         {
-            switch (_mode)
+            switch (_currentMode)
             {
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     throw new Exception("stack RollUp called in Alg mode");
-                case Settings.ModeType.Rpn:
-                    switch (StackMode)
+                case Settings.Mode.Rpn:
+                    switch (CurrentStackMode)
                     {
-                        case Settings.StackModeType.Infinite:
+                        case Settings.StackMode.Infinite:
                             if (!_stack.Any())
                                 return x;
 
@@ -240,7 +240,7 @@ namespace Calcoo
                             _stack.RemoveLast();
                             return val;
 
-                        case Settings.StackModeType.Xyzt:
+                        case Settings.StackMode.Xyzt:
                             // simple popping and re-pushing is less error-prone
                             // Note: Even if the stack had less than three elements,
                             // there will be exactly three elements after the roll.
@@ -256,30 +256,30 @@ namespace Calcoo
                             return oldT;
 
                         default:
-                            throw new Exception("unknown stack mode " + StackMode.ToString());
+                            throw new Exception("unknown stack mode " + CurrentStackMode.ToString());
                     }
                 default:
-                    throw new Exception("unknown cpu mode " + _mode.ToString());
+                    throw new Exception("unknown cpu mode " + _currentMode.ToString());
             }
         }
 
         public double RollDown(double x)
         {
-            switch (_mode)
+            switch (_currentMode)
             {
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     throw new Exception("stack RollDown called in Alg mode");
-                case Settings.ModeType.Rpn:
-                    switch (StackMode)
+                case Settings.Mode.Rpn:
+                    switch (CurrentStackMode)
                     {
-                        case Settings.StackModeType.Infinite:
+                        case Settings.StackMode.Infinite:
                             if (!_stack.Any())
                                 return x;
 
                             _stack.AddLast(new StackElement(x));
                             return Pop();
 
-                        case Settings.StackModeType.Xyzt:
+                        case Settings.StackMode.Xyzt:
                             // simple popping and re-pushing is less error-prone
                             // Note: Even if the stack had less than three elements,
                             // there will be exactly three elements after the roll.
@@ -294,22 +294,22 @@ namespace Calcoo
                             Push(oldZ);
                             return oldY;
                         default:
-                            throw new Exception("unknown stack mode " + StackMode.ToString());
+                            throw new Exception("unknown stack mode " + CurrentStackMode.ToString());
                     }
                 default:
-                    throw new Exception("unknown cpu mode " + _mode.ToString());
+                    throw new Exception("unknown cpu mode " + _currentMode.ToString());
             }
         }
 
         public double SwapHeadValue(double x)
         {
-            switch (_mode)
+            switch (_currentMode)
             {
-                case Settings.ModeType.Rpn:
+                case Settings.Mode.Rpn:
                     double varRpn = Pop();
                     Push(x);
                     return varRpn;
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     if (!_stack.Any())
                         return x;
 
@@ -318,7 +318,7 @@ namespace Calcoo
                     return varAlg;
 
                 default:
-                    throw new Exception("unknown cpu mode " + _mode.ToString());
+                    throw new Exception("unknown cpu mode " + _currentMode.ToString());
             }
         }
     }

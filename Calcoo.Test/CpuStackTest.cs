@@ -7,13 +7,13 @@ namespace Calcoo.Test
     public class CpuStackTest
     {
         private const double Precision = 1e-15;
-        private const Settings.StackModeType DefaultStackMode = Settings.StackModeType.Infinite;
+        private const Settings.StackMode DefaultStackMode = Settings.StackMode.Infinite;
 
         [Test]
         public void CloneTest()
         {
             // Alg
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -30,7 +30,7 @@ namespace Calcoo.Test
             clonedStack.Pop();
             Assert.That(clonedStack.IsEmpty(), Is.EqualTo(true), "Alg - two pushes, two pops - empty");
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             stack.Push(3.0);
             clonedStack = stack.Clone();
@@ -48,7 +48,7 @@ namespace Calcoo.Test
             // normal functioning
             // ------------------------------------------------------
             // Alg
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -64,7 +64,7 @@ namespace Calcoo.Test
             Assert.That(stack.GetOp(), Is.EqualTo(Cpu.BinaryOp.Div), "Alg - two pushes, one pop - op");
             Assert.That(stack.HeadParenExists(), Is.EqualTo(true), "Alg - two pushes, one pop - paren");
             // RPN, INFINITE
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(2.0);
             Assert.That(stack.GetValue(), Is.EqualTo(2.0).Within(Precision), "RPN, INFINITE - one push");
             stack.Push(3.0);
@@ -82,7 +82,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - four pushes, four pops");
             // RPN, XYZT
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(2.0);
             Assert.That(stack.GetValue(), Is.EqualTo(2.0).Within(Precision), "RPN, XYZT - one push");
             stack.Push(3.0);
@@ -100,10 +100,10 @@ namespace Calcoo.Test
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - four pushes, three pops");
             // testing for invalid inputs
             // ---------------------------------------------------------------
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(() => stack.Push(2.0), Throws.InstanceOf<Exception>(), "RPN push Alg mode");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             Assert.That(() => stack.Push(2.0, Cpu.BinaryOp.Div), Throws.InstanceOf<Exception>(),
                 " Alg push RPN mode");
         }
@@ -114,7 +114,7 @@ namespace Calcoo.Test
             // normal functioning
             // ------------------------------------------------------
             // Alg
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -125,7 +125,7 @@ namespace Calcoo.Test
             Assert.That(stack.HeadParenExists(), Is.EqualTo(true), "Alg - two pushes, one pop - head paren");
             Assert.That(stack.Pop(), Is.EqualTo(2.0).Within(Precision), "Alg - two pushes, two pops - value");
             // RPN, INFINITE
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(2.0);
             stack.Push(3.0);
             stack.Push(4.0);
@@ -138,7 +138,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(0.0).Within(Precision), "RPN, INFINITE - empty stack pops 0");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - empty stack stays empty after pop");
             // RPN, XYZT
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(2.0);
             stack.Push(3.0);
             stack.Push(4.0);
@@ -156,14 +156,14 @@ namespace Calcoo.Test
         public void ClearTest()
         {
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
             stack.Clear();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "ALG empty after one push, clear");
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             stack.Clear();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN empty after one push, clear");
@@ -173,7 +173,7 @@ namespace Calcoo.Test
         public void ExistOpenParenTest()
         {
             // normal functioning
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(stack.ExistOpenParen(), Is.EqualTo(false), "empty stack");
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
@@ -182,7 +182,7 @@ namespace Calcoo.Test
             stack.Push(3.0, Cpu.BinaryOp.Sub);
             Assert.That(stack.ExistOpenParen(), Is.EqualTo(true), "paren deep");
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             Assert.That(() =>
                 stack.ExistOpenParen(), Throws.InstanceOf<Exception>(), "failed to throw at existOpenParen in RPN mode");
@@ -192,7 +192,7 @@ namespace Calcoo.Test
         public void IsEmptyTest()
         {
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "ALG empty new");
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
@@ -201,7 +201,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "ALG empty after one push, one pop");
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN empty new");
             stack.Push(2.0);
             Assert.That(stack.IsEmpty(), Is.EqualTo(false), "RPN empty after one push");
@@ -213,7 +213,7 @@ namespace Calcoo.Test
         public void GetOpTest()
         {
             // normal functioning
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -223,12 +223,12 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.GetOp(), Is.EqualTo(Cpu.BinaryOp.Div), "ALG - two pushes, one pop - op");
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(() => stack.GetOp(), Throws.InstanceOf<Exception>(),
                 "failed to throw at getOp of empty stack");
 
 
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             Assert.That(() => stack.GetOp(), Throws.InstanceOf<Exception>(), "failed to throw at getOp in RPN mode");
         }
@@ -239,7 +239,7 @@ namespace Calcoo.Test
             // normal functioning
             // ------------------------------------------------------
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -248,11 +248,11 @@ namespace Calcoo.Test
             Assert.That(stack.GetValue(), Is.EqualTo(3.0).Within(Precision), "ALG - two pushes");
             // testing for invalid inputs
             // ---------------------------------------------------------------
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(() => stack.GetValue(), Throws.InstanceOf<Exception>(),
                 "failed to throw at getValue of empty stack, ALG mode");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             Assert.That(() => stack.GetValue(), Throws.InstanceOf<Exception>(),
                 "failed to throw at getValue of empty stack, RPN mode");
         }
@@ -261,12 +261,12 @@ namespace Calcoo.Test
         public void RollUpTest()
         {
             // RPN, INFINITE
-            var stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            var stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             var x = stack.RollUp(2.0);
             Assert.That(x, Is.EqualTo(2.0).Within(Precision), "RPN, INFINITE - empty - obtained");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - empty - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             x = stack.RollUp(2.0);
             Assert.That(x, Is.EqualTo(3.0).Within(Precision), "RPN, INFINITE - one - one roll - obtained");
@@ -277,7 +277,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - one - two rolls and pop - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             stack.Push(4.0);
             x = stack.RollUp(2.0); // stack is, head to tail: 2.0 4.0
@@ -293,7 +293,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - two - three rolls and two pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             stack.Push(4.0);
             stack.Push(7.0);
@@ -314,7 +314,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - three - four rolls and three pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             stack.Push(4.0);
             stack.Push(7.0);
@@ -341,7 +341,7 @@ namespace Calcoo.Test
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - four - five rolls and four pops - head");
 
             // RPN, XYZT
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             x = stack.RollUp(2.0); // stack is, head to tail: 2.0 0.0 0.0
             Assert.That(x, Is.EqualTo(0.0).Within(Precision), "RPN, XYZT - empty - one roll - obtained");
             Assert.That(stack.GetValue(), Is.EqualTo(2.0).Within(Precision), "RPN, XYZT - empty - one roll - head");
@@ -350,7 +350,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(0.0).Within(Precision), "RPN, XYZT - empty - one roll and two pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - empty - one roll and three pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(3.0);
             x = stack.RollUp(2.0); // stack is, head to tail: 2.0 3.0 0.0
             Assert.That(x, Is.EqualTo(0.0).Within(Precision), "RPN, XYZT - one - one roll - obtained");
@@ -363,7 +363,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(3.0).Within(Precision), "RPN, XYZT - one - two rolls and three pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - one - two rollsl and four pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(3.0);
             stack.Push(4.0);
             x = stack.RollUp(2.0); // stack is, head to tail: 2.0 4.0 3.0
@@ -380,7 +380,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(2.0).Within(Precision), "RPN, XYZT - one - three rolls and three pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - two - three rolls and four pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(3.0);
             stack.Push(4.0);
             stack.Push(7.0);
@@ -401,7 +401,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(5.0).Within(Precision), "RPN, XYZT - one - four rolls and three pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - three - four rolls and four pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(9.0); // will be washed away by pushing
             stack.Push(3.0);
             stack.Push(4.0);
@@ -424,7 +424,7 @@ namespace Calcoo.Test
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - three - four rolls and three pops - head");
 
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             Assert.That(() => stack.RollUp(3.0), Throws.InstanceOf<Exception>(),
                 "failed to throw at rollUp in ALG mode");
@@ -434,12 +434,12 @@ namespace Calcoo.Test
         public void RollDownTest()
         {
             // RPN, INFINITE
-            var stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            var stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             var x = stack.RollDown(2.0);
             Assert.That(x, Is.EqualTo(2.0).Within(Precision), "RPN, INFINITE - empty - obtained");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - empty - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             x = stack.RollDown(2.0);
             Assert.That(x, Is.EqualTo(3.0).Within(Precision), "RPN, INFINITE - one - one roll - obtained");
@@ -447,7 +447,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - one - one roll and pop - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             stack.Push(4.0);
             x = stack.RollDown(2.0); // stack is, head to tail: 3.0 2.0
@@ -463,7 +463,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - two - three rolls and two pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             stack.Push(4.0);
             stack.Push(7.0);
@@ -484,7 +484,7 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - three - four rolls and three pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             stack.Push(3.0);
             stack.Push(4.0);
             stack.Push(7.0);
@@ -511,7 +511,7 @@ namespace Calcoo.Test
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, INFINITE - four - five rolls and four pops - head");
 
             // RPN, XYZT
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             x = stack.RollDown(2.0); // stack is, head to tail: 0.0 0.0 2.0
             Assert.That(x, Is.EqualTo(0.0).Within(Precision), "RPN, XYZT - empty - one roll - obtained");
             Assert.That(stack.GetValue(), Is.EqualTo(0.0).Within(Precision), "RPN, XYZT - empty - one roll - head");
@@ -520,7 +520,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(2.0).Within(Precision), "RPN, XYZT - empty - one roll and two pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - empty - one roll and three pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(3.0);
             x = stack.RollDown(2.0); // stack is, head to tail: 0.0 0.0 2.0
             Assert.That(x, Is.EqualTo(3.0).Within(Precision), "RPN, XYZT - one - one roll - obtained");
@@ -533,7 +533,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(4.0).Within(Precision), "RPN, XYZT - one - two rolls and three pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - one - two rolls and four pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(3.0);
             stack.Push(4.0);
             x = stack.RollDown(2.0); // stack is, head to tail: 3.0 0.0 2.0
@@ -550,7 +550,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(6.0).Within(Precision), "RPN, XYZT - two - three rolls and three pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - two - three rolls and four pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(3.0);
             stack.Push(4.0);
             stack.Push(7.0);
@@ -571,7 +571,7 @@ namespace Calcoo.Test
             Assert.That(stack.Pop(), Is.EqualTo(8.0).Within(Precision), "RPN, XYZT - three - three rolls and three pops - head");
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - three - four rolls and five pops - head");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             stack.Push(9.0); // will be washed away by pushing
             stack.Push(3.0);
             stack.Push(4.0);
@@ -594,7 +594,7 @@ namespace Calcoo.Test
             Assert.That(stack.IsEmpty(), Is.EqualTo(true), "RPN, XYZT - three - four rolls and five pops - head");
             // normal functioning
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             Assert.That(() => stack.RollDown(3.0), Throws.InstanceOf<Exception>(),
                 "failed to throw at rollDown in ALG mode");
@@ -604,7 +604,7 @@ namespace Calcoo.Test
         public void HeadParenExistsTest()
         {
             // normal functioning
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(2.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -614,11 +614,11 @@ namespace Calcoo.Test
             stack.Pop();
             Assert.That(stack.HeadParenExists(), Is.EqualTo(true), "ALG - two pushes, one pop - op");
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(() => stack.HeadParenExists(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenExists of empty stack");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             Assert.That(() => stack.HeadParenExists(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenExists in RPN mode");
@@ -628,7 +628,7 @@ namespace Calcoo.Test
         public void HeadParenAddTest()
         {
             // normal functioning
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(3.0, Cpu.BinaryOp.Sub);
             stack.HeadParenAdd();
             Assert.That(stack.HeadParenExists(), Is.EqualTo(true), "ALG - one paren added - op");
@@ -639,11 +639,11 @@ namespace Calcoo.Test
             stack.HeadParenRemove();
             Assert.That(stack.HeadParenExists(), Is.EqualTo(false), "ALG - two parens added, two removed - op");
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(() => stack.HeadParenAdd(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenAdd of empty stack");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             Assert.That(() => stack.HeadParenAdd(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenAdd in RPN mode");
@@ -653,7 +653,7 @@ namespace Calcoo.Test
         public void HeadParenRemoveTest()
         {
             // normal functioning
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(3.0, Cpu.BinaryOp.Sub);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -662,16 +662,16 @@ namespace Calcoo.Test
             stack.HeadParenRemove();
             Assert.That(stack.HeadParenExists(), Is.EqualTo(false), "ALG - two parens added, two removed - op");
             // throws at invalid usage
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(() => stack.HeadParenRemove(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenRemove of empty stack");
 
-            stack = new CpuStack(Settings.ModeType.Alg);
+            stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(3.0, Cpu.BinaryOp.Sub);
             Assert.That(() => stack.HeadParenRemove(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenRemove when none exist");
 
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(2.0);
             Assert.That(() => stack.HeadParenRemove(), Throws.InstanceOf<Exception>(),
                 "failed to throw at headParenRemove in RPN mode");
@@ -681,7 +681,7 @@ namespace Calcoo.Test
         public void SwapHeadValueTest()
         {
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             var x = stack.SwapHeadValue(2.0);
             Assert.That(x, Is.EqualTo(2.0).Within(Precision), "ALG - empty");
             stack.Push(3.0, Cpu.BinaryOp.Div);
@@ -697,7 +697,7 @@ namespace Calcoo.Test
             Assert.That(x, Is.EqualTo(4.0).Within(Precision), "ALG - two - obtained");
             Assert.That(stack.GetValue(), Is.EqualTo(5.0).Within(Precision), "ALG - two - stayed");
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Infinite);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Infinite);
             x = stack.SwapHeadValue(2.0);
             Assert.That(x, Is.EqualTo(0.0).Within(Precision), "RPN, INFINITE - empty - obtained");
             Assert.That(stack.GetValue(), Is.EqualTo(2.0).Within(Precision), "RPN, INFINITE - empty - stayed");
@@ -710,7 +710,7 @@ namespace Calcoo.Test
             Assert.That(x, Is.EqualTo(4.0).Within(Precision), "RPN, INFINITE - two - obtained");
             Assert.That(stack.GetValue(), Is.EqualTo(5.0).Within(Precision), "RPN, INFINITE - two - stayed");
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, Settings.StackModeType.Xyzt);
+            stack = new CpuStack(Settings.Mode.Rpn, Settings.StackMode.Xyzt);
             x = stack.SwapHeadValue(2.0);
             Assert.That(x, Is.EqualTo(0.0).Within(Precision), "RPN, XYZT - empty - obtained");
             Assert.That(stack.GetValue(), Is.EqualTo(2.0).Within(Precision), "RPN, XYZT - empty - stayed");
@@ -728,7 +728,7 @@ namespace Calcoo.Test
         public void PeekValueTest()
         {
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(3.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -740,7 +740,7 @@ namespace Calcoo.Test
                 "failed to throw at peekValue at negative depth in RPN mode");
 
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(3.0);
             stack.Push(4.0);
             Assert.That(stack.PeekValue(0), Is.EqualTo(4.0).Within(Precision), "RPN - 0");
@@ -754,7 +754,7 @@ namespace Calcoo.Test
         public void PeekOpTest()
         {
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(3.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -766,7 +766,7 @@ namespace Calcoo.Test
                 "failed to throw at peekOp at negative depth in RPN mode");
 
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(3.0);
             stack.Push(4.0);
             Assert.That(stack.PeekOp(0), Is.EqualTo(null), "RPN - 0");
@@ -780,7 +780,7 @@ namespace Calcoo.Test
         public void PeekParenExistsTest()
         {
             // ALG
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             stack.Push(3.0, Cpu.BinaryOp.Div);
             stack.HeadParenAdd();
             stack.HeadParenAdd();
@@ -793,7 +793,7 @@ namespace Calcoo.Test
                 "failed to throw at peekOp at negative depth in RPN mode");
 
             // RPN
-            stack = new CpuStack(Settings.ModeType.Rpn, DefaultStackMode);
+            stack = new CpuStack(Settings.Mode.Rpn, DefaultStackMode);
             stack.Push(3.0);
             stack.Push(4.0);
             Assert.That(stack.PeekParenExists(0), Is.EqualTo(false), "RPN - 0");
@@ -807,7 +807,7 @@ namespace Calcoo.Test
         [Test]
         public void GetOpOnEmptyStackThrowsDescriptiveException()
         {
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(stack.IsEmpty(), Is.True);
             Assert.That(() => stack.GetOp(), Throws.TypeOf<Exception>());
         }
@@ -815,7 +815,7 @@ namespace Calcoo.Test
         [Test]
         public void GetValueOnEmptyStackThrowsDescriptiveException()
         {
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(stack.IsEmpty(), Is.True);
             Assert.That(() => stack.GetValue(), Throws.TypeOf<Exception>());
         }
@@ -823,7 +823,7 @@ namespace Calcoo.Test
         [Test]
         public void HeadParenExistsOnEmptyStackThrowsDescriptiveException()
         {
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(stack.IsEmpty(), Is.True);
             Assert.That(() => stack.HeadParenExists(), Throws.TypeOf<Exception>());
         }
@@ -838,7 +838,7 @@ namespace Calcoo.Test
             // Currently not triggerable via Cpu because ExecuteLeftParen only
             // calls HeadParenAdd when _lastAction == Binop (which implies
             // a Push preceded it), but the method itself is unguarded.
-            var stack = new CpuStack(Settings.ModeType.Alg);
+            var stack = new CpuStack(Settings.Mode.Alg);
             Assert.That(stack.IsEmpty(), Is.True);
             // Bug: throws InvalidOperationException from First() instead of
             // a descriptive Exception like the other stack methods.

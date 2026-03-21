@@ -28,53 +28,53 @@ namespace Calcoo
             AutoreleaseArcButton.IsChecked = settings.ArcAutorelease;
             AutoreleaseHypButton.IsChecked = settings.HypAutorelease;
 
-            switch (settings.Mode)
+            switch (settings.CurrentMode)
             {
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     RpnStackInfinite.IsEnabled = false;
                     RpnStackXyzt.IsEnabled = false;
                     RpnEnterTraditional.IsEnabled = false;
                     RpnEnterHp28.IsEnabled = false;
                     ModeAlgebraic.IsChecked = true;
                     break;
-                case Settings.ModeType.Rpn:
+                case Settings.Mode.Rpn:
                     ModeRpn.IsChecked = true;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.Mode), settings.Mode, null);
+                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentMode), settings.CurrentMode, null);
             }
-            switch (settings.StackMode)
+            switch (settings.CurrentStackMode)
             {
-                case Settings.StackModeType.Infinite:
+                case Settings.StackMode.Infinite:
                     RpnStackInfinite.IsChecked = true;
                     break;
-                case Settings.StackModeType.Xyzt:
+                case Settings.StackMode.Xyzt:
                     RpnStackXyzt.IsChecked = true;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.StackMode), settings.StackMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentStackMode), settings.CurrentStackMode, null);
             }
-            switch (settings.EnterMode)
+            switch (settings.CurrentEnterMode)
             {
-                case Settings.EnterModeType.Traditional:
+                case Settings.EnterMode.Traditional:
                     RpnEnterTraditional.IsChecked = true;
                     break;
-                case Settings.EnterModeType.Hp28:
+                case Settings.EnterMode.Hp28:
                     RpnEnterHp28.IsChecked = true;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.EnterMode), settings.EnterMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentEnterMode), settings.CurrentEnterMode, null);
             }
-            switch (settings.PasteParsingAlgorithm)
+            switch (settings.CurrentPasteParsingAlgorithm)
             {
-                case Settings.PasteParsingAlgorithmType.Heuristic:
+                case Settings.PasteParsingAlgorithm.Heuristic:
                     PasteParsingHeuristic.IsChecked = true;
                     break;
-                case Settings.PasteParsingAlgorithmType.LocaleBased:
+                case Settings.PasteParsingAlgorithm.LocaleBased:
                     PasteParsingLocaleBased.IsChecked = true;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.PasteParsingAlgorithm), settings.PasteParsingAlgorithm, null);
+                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentPasteParsingAlgorithm), settings.CurrentPasteParsingAlgorithm, null);
             }
 
             RoundingOutputCheckBox.IsChecked = settings.Round;
@@ -109,44 +109,44 @@ namespace Calcoo
             {
                 switch (b.Name)
                 {
-                    case "ModeAlgebraic" when NewSettings.Mode != Settings.ModeType.Alg:
+                    case "ModeAlgebraic" when NewSettings.CurrentMode != Settings.Mode.Alg:
                         RpnStackInfinite.IsEnabled = false;
                         RpnStackXyzt.IsEnabled = false;
                         RpnEnterTraditional.IsEnabled = false;
                         RpnEnterHp28.IsEnabled = false;
-                        NewSettings.Mode = Settings.ModeType.Alg;
+                        NewSettings.CurrentMode = Settings.Mode.Alg;
                         WasChanged = true;
                         break;
-                    case "ModeRpn" when NewSettings.Mode != Settings.ModeType.Rpn:
+                    case "ModeRpn" when NewSettings.CurrentMode != Settings.Mode.Rpn:
                         RpnStackInfinite.IsEnabled = true;
                         RpnStackXyzt.IsEnabled = true;
                         RpnEnterTraditional.IsEnabled = true;
                         RpnEnterHp28.IsEnabled = true;
-                        NewSettings.Mode = Settings.ModeType.Rpn;
+                        NewSettings.CurrentMode = Settings.Mode.Rpn;
                         WasChanged = true;
                         break;
-                    case "RpnEnterTraditional" when NewSettings.EnterMode != Settings.EnterModeType.Traditional:
-                        NewSettings.EnterMode = Settings.EnterModeType.Traditional;
+                    case "RpnEnterTraditional" when NewSettings.CurrentEnterMode != Settings.EnterMode.Traditional:
+                        NewSettings.CurrentEnterMode = Settings.EnterMode.Traditional;
                         WasChanged = true;
                         break;
-                    case "RpnEnterHp28" when NewSettings.EnterMode != Settings.EnterModeType.Hp28:
-                        NewSettings.EnterMode = Settings.EnterModeType.Hp28;
+                    case "RpnEnterHp28" when NewSettings.CurrentEnterMode != Settings.EnterMode.Hp28:
+                        NewSettings.CurrentEnterMode = Settings.EnterMode.Hp28;
                         WasChanged = true;
                         break;
-                    case "RpnStackInfinite" when NewSettings.StackMode != Settings.StackModeType.Infinite:
-                        NewSettings.StackMode = Settings.StackModeType.Infinite;
+                    case "RpnStackInfinite" when NewSettings.CurrentStackMode != Settings.StackMode.Infinite:
+                        NewSettings.CurrentStackMode = Settings.StackMode.Infinite;
                         WasChanged = true;
                         break;
-                    case "RpnStackXyzt" when NewSettings.StackMode != Settings.StackModeType.Xyzt:
-                        NewSettings.StackMode = Settings.StackModeType.Xyzt;
+                    case "RpnStackXyzt" when NewSettings.CurrentStackMode != Settings.StackMode.Xyzt:
+                        NewSettings.CurrentStackMode = Settings.StackMode.Xyzt;
                         WasChanged = true;
                         break;
-                    case "PasteParsingHeuristic" when NewSettings.PasteParsingAlgorithm != Settings.PasteParsingAlgorithmType.Heuristic:
-                        NewSettings.PasteParsingAlgorithm = Settings.PasteParsingAlgorithmType.Heuristic;
+                    case "PasteParsingHeuristic" when NewSettings.CurrentPasteParsingAlgorithm != Settings.PasteParsingAlgorithm.Heuristic:
+                        NewSettings.CurrentPasteParsingAlgorithm = Settings.PasteParsingAlgorithm.Heuristic;
                         WasChanged = true;
                         break;
-                    case "PasteParsingLocaleBased" when NewSettings.PasteParsingAlgorithm != Settings.PasteParsingAlgorithmType.LocaleBased:
-                        NewSettings.PasteParsingAlgorithm = Settings.PasteParsingAlgorithmType.LocaleBased;
+                    case "PasteParsingLocaleBased" when NewSettings.CurrentPasteParsingAlgorithm != Settings.PasteParsingAlgorithm.LocaleBased:
+                        NewSettings.CurrentPasteParsingAlgorithm = Settings.PasteParsingAlgorithm.LocaleBased;
                         WasChanged = true;
                         break;
                 }

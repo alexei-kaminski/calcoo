@@ -35,8 +35,8 @@ namespace Calcoo
         public MainWindow()
         {
             var settings = Settings.Load(InputLength);
-            cpu = new Cpu(settings.Mode, settings.AngleUnits, InputLength, ExpInputLength, NumBase, NMem,
-                settings.EnterMode, settings.StackMode);
+            cpu = new Cpu(settings.CurrentMode, settings.CurrentAngleUnits, InputLength, ExpInputLength, NumBase, NMem,
+                settings.CurrentEnterMode, settings.CurrentStackMode);
             undoStack = new LinkedList<Cpu>();
             redoStack = new LinkedList<Cpu>();
 
@@ -70,14 +70,14 @@ namespace Calcoo
 
             body = new Body(MainGrid, displayCanvas, NumBase, InputLength, ExpInputLength);
 
-            body.DisplayOnlyActiveButtonsForMode(settings.Mode);
+            body.DisplayOnlyActiveButtonsForMode(settings.CurrentMode);
             body.ArcAutorelease = settings.ArcAutorelease;
             body.HypAutorelease = settings.HypAutorelease;
-            body.PasteParsingAlgorithm = settings.PasteParsingAlgorithm;
+            body.CurrentPasteParsingAlgorithm = settings.CurrentPasteParsingAlgorithm;
             body.Round = settings.Round;
             body.RoundLength = settings.RoundLength;
             body.TruncateZeros = settings.TruncateZeros;
-            body.DisplayFormat = settings.DisplayFormat;
+            body.CurrentDisplayFormat = settings.CurrentDisplayFormat;
             _customButtonCommand = settings.CustomButtonCommand;
             body.UndoEnabled = false;
             body.RedoEnabled = false;
@@ -215,9 +215,9 @@ namespace Calcoo
         private void ProcessCommand(Command command)
         {
             // ignore illegal commands invoked by shortcuts
-            if ((command == Command.StackDown || command == Command.StackUp) && cpu.Mode == Settings.ModeType.Alg)
+            if ((command == Command.StackDown || command == Command.StackUp) && cpu.CurrentMode == Settings.Mode.Alg)
                 return;
-            if ((command == Command.LeftParen || command == Command.RightParen) && cpu.Mode == Settings.ModeType.Rpn)
+            if ((command == Command.LeftParen || command == Command.RightParen) && cpu.CurrentMode == Settings.Mode.Rpn)
                 return;
 
             switch (command)
@@ -228,35 +228,35 @@ namespace Calcoo
                     infoDialog.ShowDialog();
                     break;
                 case Command.Settings:
-                    var settings = new Settings(cpu.StackMode,
-                        cpu.Mode,
-                        cpu.EnterMode,
+                    var settings = new Settings(cpu.CurrentStackMode,
+                        cpu.CurrentMode,
+                        cpu.CurrentEnterMode,
                         body.Round,
                         body.RoundLength,
                         body.TruncateZeros,
                         body.ArcAutorelease,
                         body.HypAutorelease,
-                        body.PasteParsingAlgorithm,
+                        body.CurrentPasteParsingAlgorithm,
                         _customButtonCommand,
-                        cpu.AngleUnits,
-                        body.DisplayFormat);
+                        cpu.CurrentAngleUnits,
+                        body.CurrentDisplayFormat);
                     var settingsDialog = new SettingsDialog(settings, InputLength);
                     settingsDialog.Owner = this;
                     settingsDialog.ShowDialog();
                     if (settingsDialog.WasChanged)
                     {
-                        if (settingsDialog.NewSettings.EnterMode != cpu.EnterMode)
-                            cpu.EnterMode = settingsDialog.NewSettings.EnterMode;
-                        if (settingsDialog.NewSettings.StackMode != cpu.StackMode)
-                            cpu.StackMode = settingsDialog.NewSettings.StackMode;
-                        if (settingsDialog.NewSettings.Mode != cpu.Mode)
+                        if (settingsDialog.NewSettings.CurrentEnterMode != cpu.CurrentEnterMode)
+                            cpu.CurrentEnterMode = settingsDialog.NewSettings.CurrentEnterMode;
+                        if (settingsDialog.NewSettings.CurrentStackMode != cpu.CurrentStackMode)
+                            cpu.CurrentStackMode = settingsDialog.NewSettings.CurrentStackMode;
+                        if (settingsDialog.NewSettings.CurrentMode != cpu.CurrentMode)
                         {
-                            cpu.Mode = settingsDialog.NewSettings.Mode;
-                            body.DisplayOnlyActiveButtonsForMode(settingsDialog.NewSettings.Mode);
+                            cpu.CurrentMode = settingsDialog.NewSettings.CurrentMode;
+                            body.DisplayOnlyActiveButtonsForMode(settingsDialog.NewSettings.CurrentMode);
                         }
                         body.ArcAutorelease = settingsDialog.NewSettings.ArcAutorelease;
                         body.HypAutorelease = settingsDialog.NewSettings.HypAutorelease;
-                        body.PasteParsingAlgorithm = settingsDialog.NewSettings.PasteParsingAlgorithm;
+                        body.CurrentPasteParsingAlgorithm = settingsDialog.NewSettings.CurrentPasteParsingAlgorithm;
                         body.Round = settingsDialog.NewSettings.Round;
                         body.RoundLength = settingsDialog.NewSettings.RoundLength;
                         body.TruncateZeros = settingsDialog.NewSettings.TruncateZeros;
@@ -294,7 +294,7 @@ namespace Calcoo
                     break;
                 case Command.DegRad:
                     cpu.Execute(Command.DegRad);
-                    Settings.SaveAngleUnits(cpu.AngleUnits);
+                    Settings.SaveAngleUnits(cpu.CurrentAngleUnits);
                     break;
                 case Command.Copy:
                     try { Clipboard.SetText(body.GetMainDisplayString()); } catch { }
@@ -305,7 +305,7 @@ namespace Calcoo
                         if (!Clipboard.ContainsText())
                             break;
                         string textToPaste = Clipboard.GetText(TextDataFormat.Text);
-                        double value = TextUtil.TextToDouble(textToPaste, body.PasteParsingAlgorithm == Settings.PasteParsingAlgorithmType.LocaleBased);
+                        double value = TextUtil.TextToDouble(textToPaste, body.CurrentPasteParsingAlgorithm == Settings.PasteParsingAlgorithm.LocaleBased);
                         if (double.IsNaN(value))
                             break;
 
@@ -350,7 +350,7 @@ namespace Calcoo
                         if (body.HypAutorelease)
                             body.Hyp = false;
                     }
-                    else if (command == Command.Enter && cpu.Mode == Settings.ModeType.Alg)
+                    else if (command == Command.Enter && cpu.CurrentMode == Settings.Mode.Alg)
                         // "ENTER" and "EQ" share a shortcut which calls Command.Enter
                         cpu.Execute(Command.Eq);
                     else

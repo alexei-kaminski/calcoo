@@ -161,13 +161,13 @@ namespace Calcoo
             }
         }
 
-        public static bool IsValidButton(this Command function, Settings.ModeType mode)
+        public static bool IsValidButton(this Command function, Settings.Mode mode)
         {
             switch (mode)
             {
-                case Settings.ModeType.Rpn:
+                case Settings.Mode.Rpn:
                     return !AlgOnly.Contains(function);
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     return !RpnOnly.Contains(function);
                 default:
                     throw new Exception("unknown mode " + mode);

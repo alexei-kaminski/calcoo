@@ -8,38 +8,38 @@ namespace Calcoo
 {
     public class Settings
     {
-        public enum StackModeType
+        public enum StackMode
         {
             Xyzt,
             Infinite
         }
 
-        public StackModeType StackMode;
+        public StackMode CurrentStackMode;
 
-        public enum ModeType
+        public enum Mode
         {
             Rpn,
             Alg
         }
 
-        public ModeType Mode;
+        public Mode CurrentMode;
 
 
-        public enum EnterModeType
+        public enum EnterMode
         {
             Traditional,
             Hp28
         }
 
-        public EnterModeType EnterMode;
+        public EnterMode CurrentEnterMode;
 
-        public enum PasteParsingAlgorithmType
+        public enum PasteParsingAlgorithm
         {
             LocaleBased,
             Heuristic
         }
 
-        public PasteParsingAlgorithmType PasteParsingAlgorithm;
+        public PasteParsingAlgorithm CurrentPasteParsingAlgorithm;
 
 
         public bool Round;
@@ -50,104 +50,104 @@ namespace Calcoo
 
         public string CustomButtonCommand;
 
-        public AngleUnitsType AngleUnits;
-        public DisplayFormatType DisplayFormat;
+        public AngleUnits CurrentAngleUnits;
+        public DisplayFormat CurrentDisplayFormat;
 
         private static class Defaults
         {
-            public const StackModeType StackMode = Settings.StackModeType.Infinite;
-            public const ModeType Mode = Settings.ModeType.Alg;
-            public const EnterModeType EnterMode = Settings.EnterModeType.Traditional;
+            public const StackMode StackMode = Settings.StackMode.Infinite;
+            public const Mode Mode = Settings.Mode.Alg;
+            public const EnterMode EnterMode = Settings.EnterMode.Traditional;
             public const bool Round = false;
             public const bool TruncateZeros = false;
             public const bool ArcAutorelease = true;
             public const bool HypAutorelease = true;
-            public const AngleUnitsType AngleUnits = Settings.AngleUnitsType.Deg;
-            public const DisplayFormatType DisplayFormat = Settings.DisplayFormatType.Fix;
+            public const AngleUnits AngleUnits = Settings.AngleUnits.Deg;
+            public const DisplayFormat DisplayFormat = Settings.DisplayFormat.Fix;
 
-            public const PasteParsingAlgorithmType PasteParsingAlgorithm =
-                Settings.PasteParsingAlgorithmType.LocaleBased;
+            public const PasteParsingAlgorithm PasteParsingAlgorithm =
+                Settings.PasteParsingAlgorithm.LocaleBased;
 
             public const string CustomButtonCommand = "";
         }
 
         // set by the buttons
-        public enum AngleUnitsType
+        public enum AngleUnits
         {
             Deg,
             Rad
         }
 
-        public enum DisplayFormatType
+        public enum DisplayFormat
         {
             Fix,
             Sci,
             Eng
         }
 
-        public static int ExpDivisor(DisplayFormatType displayFormat)
+        public static int ExpDivisor(DisplayFormat displayFormat)
         {
-            return (displayFormat == DisplayFormatType.Eng ? 3 : 1);
+            return (displayFormat == DisplayFormat.Eng ? 3 : 1);
         }
 
-        public Settings(StackModeType stackMode,
-            ModeType mode,
-            EnterModeType enterMode,
+        public Settings(StackMode stackMode,
+            Mode mode,
+            EnterMode enterMode,
             bool round,
             int roundLength,
             bool truncateZeros,
             bool arcAutorelease,
             bool hypAutorelease,
-            PasteParsingAlgorithmType pasteParsingAlgorithm,
+            PasteParsingAlgorithm pasteParsingAlgorithm,
             string customButtonCommand,
-            AngleUnitsType angleUnits,
-            DisplayFormatType displayFormat)
+            AngleUnits angleUnits,
+            DisplayFormat displayFormat)
         {
-            this.StackMode = stackMode;
-            this.Mode = mode;
-            this.EnterMode = enterMode;
+            this.CurrentStackMode = stackMode;
+            this.CurrentMode = mode;
+            this.CurrentEnterMode = enterMode;
             this.Round = round;
             this.RoundLength = roundLength;
             this.TruncateZeros = truncateZeros;
             this.ArcAutorelease = arcAutorelease;
             this.HypAutorelease = hypAutorelease;
-            this.PasteParsingAlgorithm = pasteParsingAlgorithm;
+            this.CurrentPasteParsingAlgorithm = pasteParsingAlgorithm;
             this.CustomButtonCommand = customButtonCommand;
-            this.AngleUnits = angleUnits;
-            this.DisplayFormat = displayFormat;
+            this.CurrentAngleUnits = angleUnits;
+            this.CurrentDisplayFormat = displayFormat;
         }
 
         public Settings Clone()
         {
             return new Settings(
-                StackMode,
-                Mode,
-                EnterMode,
+                CurrentStackMode,
+                CurrentMode,
+                CurrentEnterMode,
                 Round,
                 RoundLength,
                 TruncateZeros,
                 ArcAutorelease,
                 HypAutorelease,
-                PasteParsingAlgorithm,
+                CurrentPasteParsingAlgorithm,
                 CustomButtonCommand,
-                AngleUnits,
-                DisplayFormat);
+                CurrentAngleUnits,
+                CurrentDisplayFormat);
         }
 
         public Settings(int roundLength)
         {
-            StackMode = Defaults.StackMode;
-            Mode = Defaults.Mode;
-            EnterMode = Defaults.EnterMode;
+            CurrentStackMode = Defaults.StackMode;
+            CurrentMode = Defaults.Mode;
+            CurrentEnterMode = Defaults.EnterMode;
             Round = Defaults.Round;
             RoundLength = roundLength;
             TruncateZeros = Defaults.TruncateZeros;
             ArcAutorelease = Defaults.ArcAutorelease;
             HypAutorelease = Defaults.HypAutorelease;
-            PasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
+            CurrentPasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
             CustomButtonCommand = Defaults.CustomButtonCommand;
-            AngleUnits = Defaults.AngleUnits;
-            DisplayFormat = Defaults.DisplayFormat;
+            CurrentAngleUnits = Defaults.AngleUnits;
+            CurrentDisplayFormat = Defaults.DisplayFormat;
         }
 
         private static class Names
@@ -194,12 +194,12 @@ namespace Calcoo
             if (rk == null)
                 return settings;
 
-            if (!Enum.TryParse((string)rk.GetValue(Names.mode, Defaults.Mode.ToString(), RegistryValueOptions.None), out settings.Mode))
-                settings.Mode = Defaults.Mode;
-            if (!Enum.TryParse((string)rk.GetValue(Names.stackMode, Defaults.StackMode.ToString(), RegistryValueOptions.None), out settings.StackMode))
-                settings.StackMode = Defaults.StackMode;
-            if (!Enum.TryParse((string)rk.GetValue(Names.enterMode, Defaults.EnterMode.ToString(), RegistryValueOptions.None), out settings.EnterMode))
-                settings.EnterMode = Defaults.EnterMode;
+            if (!Enum.TryParse((string)rk.GetValue(Names.mode, Defaults.Mode.ToString(), RegistryValueOptions.None), out settings.CurrentMode))
+                settings.CurrentMode = Defaults.Mode;
+            if (!Enum.TryParse((string)rk.GetValue(Names.stackMode, Defaults.StackMode.ToString(), RegistryValueOptions.None), out settings.CurrentStackMode))
+                settings.CurrentStackMode = Defaults.StackMode;
+            if (!Enum.TryParse((string)rk.GetValue(Names.enterMode, Defaults.EnterMode.ToString(), RegistryValueOptions.None), out settings.CurrentEnterMode))
+                settings.CurrentEnterMode = Defaults.EnterMode;
             if (!bool.TryParse((string)rk.GetValue(Names.round, Defaults.Round.ToString(), RegistryValueOptions.None), out settings.Round))
                 settings.Round = Defaults.Round;
             try
@@ -219,26 +219,26 @@ namespace Calcoo
                 settings.ArcAutorelease = Defaults.ArcAutorelease;
             if (!bool.TryParse((string)rk.GetValue(Names.hypAutorelease, Defaults.HypAutorelease.ToString(), RegistryValueOptions.None), out settings.HypAutorelease))
                 settings.HypAutorelease = Defaults.HypAutorelease;
-            if (!Enum.TryParse((string)rk.GetValue(Names.pasteParsingAlgorithm, Defaults.PasteParsingAlgorithm.ToString(), RegistryValueOptions.None), out settings.PasteParsingAlgorithm))
-                settings.PasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
-            if (!Enum.TryParse((string)rk.GetValue(Names.angleUnits, Defaults.AngleUnits.ToString(), RegistryValueOptions.None), out settings.AngleUnits))
-                settings.AngleUnits = Defaults.AngleUnits;
-            if (!Enum.TryParse((string)rk.GetValue(Names.displayFormat, Defaults.DisplayFormat.ToString(), RegistryValueOptions.None), out settings.DisplayFormat))
-                settings.DisplayFormat = Defaults.DisplayFormat;
+            if (!Enum.TryParse((string)rk.GetValue(Names.pasteParsingAlgorithm, Defaults.PasteParsingAlgorithm.ToString(), RegistryValueOptions.None), out settings.CurrentPasteParsingAlgorithm))
+                settings.CurrentPasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
+            if (!Enum.TryParse((string)rk.GetValue(Names.angleUnits, Defaults.AngleUnits.ToString(), RegistryValueOptions.None), out settings.CurrentAngleUnits))
+                settings.CurrentAngleUnits = Defaults.AngleUnits;
+            if (!Enum.TryParse((string)rk.GetValue(Names.displayFormat, Defaults.DisplayFormat.ToString(), RegistryValueOptions.None), out settings.CurrentDisplayFormat))
+                settings.CurrentDisplayFormat = Defaults.DisplayFormat;
 
             settings.CustomButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.customButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
 
             return settings;
         }
 
-        public static void SaveDisplayFormat(DisplayFormatType displayFormat)
+        public static void SaveDisplayFormat(DisplayFormat displayFormat)
         {
             using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
             if (rk == null) return;
             rk.SetValue(Names.displayFormat, displayFormat.ToString());
         }
 
-        public static void SaveAngleUnits(AngleUnitsType angleUnits)
+        public static void SaveAngleUnits(AngleUnits angleUnits)
         {
             using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
             if (rk == null) return;
@@ -250,18 +250,18 @@ namespace Calcoo
             using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.registryPath);
             if (rk == null) return;
 
-            rk.SetValue(Names.mode, Mode.ToString());
-            rk.SetValue(Names.stackMode, StackMode.ToString());
-            rk.SetValue(Names.enterMode, EnterMode.ToString());
+            rk.SetValue(Names.mode, CurrentMode.ToString());
+            rk.SetValue(Names.stackMode, CurrentStackMode.ToString());
+            rk.SetValue(Names.enterMode, CurrentEnterMode.ToString());
             rk.SetValue(Names.round, Round.ToString());
             rk.SetValue(Names.roundLength, RoundLength, RegistryValueKind.DWord);
             rk.SetValue(Names.truncateZeros, TruncateZeros.ToString());
             rk.SetValue(Names.arcAutorelease, ArcAutorelease.ToString());
             rk.SetValue(Names.hypAutorelease, HypAutorelease.ToString());
-            rk.SetValue(Names.pasteParsingAlgorithm, PasteParsingAlgorithm.ToString());
+            rk.SetValue(Names.pasteParsingAlgorithm, CurrentPasteParsingAlgorithm.ToString());
             rk.SetValue(Names.customButtonCommand, CustomButtonCommand);
-            rk.SetValue(Names.angleUnits, AngleUnits.ToString());
-            rk.SetValue(Names.displayFormat, DisplayFormat.ToString());
+            rk.SetValue(Names.angleUnits, CurrentAngleUnits.ToString());
+            rk.SetValue(Names.displayFormat, CurrentDisplayFormat.ToString());
         }
     }
 }

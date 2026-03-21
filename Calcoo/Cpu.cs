@@ -11,7 +11,7 @@ namespace Calcoo
         int ActiveMemNum { get; }
         IDoubleByDigitGetters GetInput();
         bool IsInputInProgress();
-        Settings.AngleUnitsType AngleUnits { get; }
+        Settings.AngleUnits CurrentAngleUnits { get; }
     }
 
     public class Cpu : ICpuOutput
@@ -29,10 +29,10 @@ namespace Calcoo
 
         private const int BinopPriorityMin = 0; // used for = and )
 
-        private static readonly Dictionary<Settings.AngleUnitsType, double> HalfCircle = new()
+        private static readonly Dictionary<Settings.AngleUnits, double> HalfCircle = new()
         {
-            { Settings.AngleUnitsType.Deg, 180.0 },
-            { Settings.AngleUnitsType.Rad, Math.PI },
+            { Settings.AngleUnits.Deg, 180.0 },
+            { Settings.AngleUnits.Rad, Math.PI },
         };
 
         public enum UnaryOp
@@ -86,19 +86,19 @@ namespace Calcoo
             return _lastAction == Action.Input || _lastAction == Action.Clear;
         }
 
-        private Settings.ModeType _Mode;
+        private Settings.Mode _currentMode;
 
-        public Settings.ModeType Mode
+        public Settings.Mode CurrentMode
         {
-            get { return _Mode; }
+            get { return _currentMode; }
             set
             {
-                if (_Mode == value)
+                if (_currentMode == value)
                     return;
 
                 ResetRegisters();
-                _Mode = value;
-                _stack = new CpuStack(value, _stack.StackMode);
+                _currentMode = value;
+                _stack = new CpuStack(value, _stack.CurrentStackMode);
             }
         }
 
@@ -133,14 +133,14 @@ namespace Calcoo
 
         public int ActiveMemNum { get; private set; }
 
-        public Settings.AngleUnitsType AngleUnits { get; private set; }
+        public Settings.AngleUnits CurrentAngleUnits { get; private set; }
 
-        public Settings.EnterModeType EnterMode { get; set; }
+        public Settings.EnterMode CurrentEnterMode { get; set; }
 
-        public Settings.StackModeType StackMode
+        public Settings.StackMode CurrentStackMode
         {
-            get { return _stack.StackMode; }
-            set { _stack.StackMode = value; }
+            get { return _stack.CurrentStackMode; }
+            set { _stack.CurrentStackMode = value; }
         }
 
         private readonly int _inputLength;
@@ -153,21 +153,21 @@ namespace Calcoo
             Exp
         }
 
-        private InputField _inputField;
+        private InputField _currentInputField;
 
         private Cpu()
         {
             throw new Exception("Instantiating CPU without specifying the mode - RPN or Algebraic");
         }
 
-        public Cpu(Settings.ModeType mode,
-            Settings.AngleUnitsType angleUnits,
+        public Cpu(Settings.Mode mode,
+            Settings.AngleUnits angleUnits,
             int inputLength,
             int expInputLength,
             int numBase,
             int nMem,
-            Settings.EnterModeType enterMode,
-            Settings.StackModeType stackMode)
+            Settings.EnterMode enterMode,
+            Settings.StackMode stackMode)
         {
             _numBase = numBase;
 
@@ -175,14 +175,14 @@ namespace Calcoo
             _input = new DoubleByDigit();
             _inputLength = inputLength;
             _expInputLength = expInputLength;
-            _inputField = InputField.Int;
+            _currentInputField = InputField.Int;
             _stack = new CpuStack(mode, stackMode);
             _mem = new double[nMem];
 
             // setting the current settings
-            _Mode = mode;
-            AngleUnits = angleUnits;
-            EnterMode = enterMode;
+            _currentMode = mode;
+            CurrentAngleUnits = angleUnits;
+            CurrentEnterMode = enterMode;
 
             // resetting variables to the default state
             ActiveMemNum = 0;
@@ -192,8 +192,8 @@ namespace Calcoo
 
         public Cpu Clone()
         {
-            var clonedCpu = new Cpu(Mode, AngleUnits, _inputLength, _expInputLength, _numBase, _mem.Length, EnterMode,
-                _stack.StackMode);
+            var clonedCpu = new Cpu(CurrentMode, CurrentAngleUnits, _inputLength, _expInputLength, _numBase, _mem.Length, CurrentEnterMode,
+                _stack.CurrentStackMode);
             clonedCpu._lastAction = _lastAction;
             clonedCpu.ActiveMemNum = ActiveMemNum;
             clonedCpu.X = X;
@@ -201,7 +201,7 @@ namespace Calcoo
                 clonedCpu._mem[m] = _mem[m];
             clonedCpu._stack = _stack.Clone();
             clonedCpu._input = _input.Clone();
-            clonedCpu._inputField = _inputField;
+            clonedCpu._currentInputField = _currentInputField;
             return clonedCpu;
         }
 
@@ -452,16 +452,16 @@ namespace Calcoo
 
         private void ExecuteDigit(int digitEntered)
         {
-            switch (Mode)
+            switch (CurrentMode)
             {
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     switch (_lastAction)
                     {
                         case Action.Clear:
                         case Action.Enter:
                         case Action.Binop:
                             _input.Clear();
-                            _inputField = InputField.Int;
+                            _currentInputField = InputField.Int;
                             break;
                         case Action.EnterPush:
                             throw new Exception("the cpu's last action may not be EnterPush in ALG mode");
@@ -469,7 +469,7 @@ namespace Calcoo
                             break;
                     }
                     break;
-                case Settings.ModeType.Rpn:
+                case Settings.Mode.Rpn:
                     switch (_lastAction)
                     {
                         case Action.Clear:
@@ -477,7 +477,7 @@ namespace Calcoo
                             // directly with the main display, and the other displays must
                             // have been taken care of before
                             _input.Clear();
-                            _inputField = InputField.Int;
+                            _currentInputField = InputField.Int;
                             break;
                         case Action.Enter:
                             // this action type is set by the <Enter> button in the
@@ -485,13 +485,13 @@ namespace Calcoo
                             // something into X, like Pi, M->x
                             _stack.Push(X);
                             _input.Clear();
-                            _inputField = InputField.Int;
+                            _currentInputField = InputField.Int;
                             break;
                         case Action.EnterPush:
                             // this action type is set by the <Enter> button in the
                             // traditional enter mode
                             _input.Clear();
-                            _inputField = InputField.Int;
+                            _currentInputField = InputField.Int;
                             break;
                         case Action.Input:
                             break;
@@ -500,10 +500,10 @@ namespace Calcoo
                     }
                     break;
                 default:
-                    throw new Exception("unknown cpu mode " + Mode);
+                    throw new Exception("unknown cpu mode " + CurrentMode);
             }
 
-            switch (_inputField)
+            switch (_currentInputField)
             {
                 case InputField.Int:
                     if (_input.GetNIntDigits() < _inputLength)
@@ -520,18 +520,18 @@ namespace Calcoo
                     _input.AddExpDigit(digitEntered, _expInputLength);
                     break;
                 default:
-                    throw new Exception("invalid current input field " + _inputField);
+                    throw new Exception("invalid current input field " + _currentInputField);
             }
 
             _lastAction = Action.Input;
         }
 
-        private static double AngleToRad(double a, Settings.AngleUnitsType units)
+        private static double AngleToRad(double a, Settings.AngleUnits units)
         {
             return a * Math.PI / HalfCircle[units];
         }
 
-        private static double AngleFromRad(double a, Settings.AngleUnitsType units)
+        private static double AngleFromRad(double a, Settings.AngleUnits units)
         {
             return a * HalfCircle[units] / Math.PI;
         }
@@ -544,13 +544,13 @@ namespace Calcoo
         }
 
         // Checks whether angle is a multiple of half-circle (180° or π).
-        private static bool IsMultipleOf(double angle, Settings.AngleUnitsType units)
+        private static bool IsMultipleOf(double angle, Settings.AngleUnits units)
         {
             return IsNearInteger(angle / HalfCircle[units]);
         }
 
         // Checks whether angle is an odd multiple of quarter-circle (90°, 270°, ...).
-        private static bool IsOddMultipleOfHalf(double angle, Settings.AngleUnitsType units)
+        private static bool IsOddMultipleOfHalf(double angle, Settings.AngleUnits units)
         {
             double ratio = angle / (HalfCircle[units] / 2.0);
             return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
@@ -560,18 +560,18 @@ namespace Calcoo
         {
             if (_lastAction != Action.Input)
             {
-                if (Mode == Settings.ModeType.Rpn && _lastAction == Action.Enter)
+                if (CurrentMode == Settings.Mode.Rpn && _lastAction == Action.Enter)
                     _stack.Push(X);
                 _input.Clear();
                 _lastAction = Action.Input;
-                _inputField = InputField.Int;
+                _currentInputField = InputField.Int;
             }
 
-            if (_inputField == InputField.Int)
+            if (_currentInputField == InputField.Int)
             {
                 if (_input.GetNIntDigits() == 0)
                     _input.AddIntDigit(0);
-                _inputField = InputField.Frac;
+                _currentInputField = InputField.Frac;
             }
         }
 
@@ -587,24 +587,24 @@ namespace Calcoo
         {
             if (_lastAction != Action.Input)
             {
-                if (Mode == Settings.ModeType.Rpn && _lastAction == Action.Enter)
+                if (CurrentMode == Settings.Mode.Rpn && _lastAction == Action.Enter)
                     _stack.Push(X);
                 _input.Clear();
                 _input.AddIntDigit(1);
                 _lastAction = Action.Input;
-                _inputField = InputField.Int;
+                _currentInputField = InputField.Int;
             }
 
-            if (_inputField != InputField.Exp)
+            if (_currentInputField != InputField.Exp)
             {
-                _inputField = InputField.Exp;
+                _currentInputField = InputField.Exp;
                 _input.AddExpDigit(0, _expInputLength);
             }
         }
 
         private void ExecuteExpSign()
         {
-            if (_inputField != InputField.Exp || _lastAction != Action.Input)
+            if (_currentInputField != InputField.Exp || _lastAction != Action.Input)
                 return;
             _input.InverseExpSign();
         }
@@ -612,7 +612,7 @@ namespace Calcoo
         private void ExecuteCurrentSign()
         {
             if (IsInputInProgress())
-                if (_inputField != InputField.Exp)
+                if (_currentInputField != InputField.Exp)
                     _input.InverseSign();
                 else
                     _input.InverseExpSign();
@@ -634,7 +634,7 @@ namespace Calcoo
 
         private void ExecutePi()
         {
-            if (Mode == Settings.ModeType.Rpn)
+            if (CurrentMode == Settings.Mode.Rpn)
             {
                 FinalizeInput();
                 _stack.Push(X);
@@ -645,7 +645,7 @@ namespace Calcoo
 
         public void ExecutePaste(double z)
         {
-            if (Mode == Settings.ModeType.Rpn)
+            if (CurrentMode == Settings.Mode.Rpn)
             {
                 FinalizeInput();
                 _stack.Push(X);
@@ -660,14 +660,14 @@ namespace Calcoo
         {
             FinalizeInput();
 
-            switch (Mode)
+            switch (CurrentMode)
             {
-                case Settings.ModeType.Rpn:
+                case Settings.Mode.Rpn:
                     double y = _stack.Pop();
                     X = ComputeBinaryOp(y, X, binaryOp, _numBase);
                     _lastAction = Action.Enter; // no need to use ACTION_BINOP in RPN
                     break;
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     if (!_stack.IsEmpty()
                         && BinaryOpPriority(_stack.GetOp()) >= BinaryOpPriority(binaryOp))
                         DoBinaryOpChain(BinaryOpPriority(binaryOp), false);
@@ -675,7 +675,7 @@ namespace Calcoo
                     _lastAction = Action.Binop;
                     break;
                 default:
-                    throw new Exception("unknown cpu mode " + Mode);
+                    throw new Exception("unknown cpu mode " + CurrentMode);
             }
         }
 
@@ -699,7 +699,7 @@ namespace Calcoo
         private void DoBinaryOpChain(int initPriority,
             bool parenClosed)
         {
-            if (Mode == Settings.ModeType.Rpn)
+            if (CurrentMode == Settings.Mode.Rpn)
                 throw new Exception("DoBinaryOpChain called in RPN mode");
             // aux function; performs the chain of binary operations from the stack,
             // stopping the chain at a paren or at a lower-priority operation
@@ -768,36 +768,36 @@ namespace Calcoo
 
         private void ExecuteEq()
         {
-            switch (Mode)
+            switch (CurrentMode)
             {
-                case Settings.ModeType.Rpn:
+                case Settings.Mode.Rpn:
                     throw new Exception("ExecuteEq called in RPN mode");
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     FinalizeInput();
                     DoBinaryOpChain(BinopPriorityMin, false);
                     _stack.Clear();
                     _lastAction = Action.Enter;
                     break;
                 default:
-                    throw new Exception("unknown cpu mode " + Mode);
+                    throw new Exception("unknown cpu mode " + CurrentMode);
             }
         }
 
         private void ExecuteEnter()
         {
-            switch (Mode)
+            switch (CurrentMode)
             {
-                case Settings.ModeType.Alg:
+                case Settings.Mode.Alg:
                     throw new Exception("ExecuteEnter called in ALG mode");
-                case Settings.ModeType.Rpn:
-                    switch (EnterMode)
+                case Settings.Mode.Rpn:
+                    switch (CurrentEnterMode)
                     {
-                        case Settings.EnterModeType.Traditional:
+                        case Settings.EnterMode.Traditional:
                             FinalizeInput();
                             _stack.Push(X);
                             _lastAction = Action.EnterPush;
                             break;
-                        case Settings.EnterModeType.Hp28:
+                        case Settings.EnterMode.Hp28:
                             if (_lastAction == Action.Input)
                                 X = _input.ToDouble(_numBase);
                             else
@@ -805,11 +805,11 @@ namespace Calcoo
                             _lastAction = Action.Enter;
                             break;
                         default:
-                            throw new Exception("unknown enter mode " + EnterMode);
+                            throw new Exception("unknown enter mode " + CurrentEnterMode);
                     }
                     break;
                 default:
-                    throw new Exception("unknown cpu mode " + Mode);
+                    throw new Exception("unknown cpu mode " + CurrentMode);
             }
         }
 
@@ -836,7 +836,7 @@ namespace Calcoo
 
         private void ExecuteLeftParen()
         {
-            if (Mode == Settings.ModeType.Rpn)
+            if (CurrentMode == Settings.Mode.Rpn)
                 throw new Exception("cannot be called in RPN mode");
 
             if (_lastAction == Action.Binop)
@@ -845,7 +845,7 @@ namespace Calcoo
 
         private void ExecuteRightParen()
         {
-            if (Mode == Settings.ModeType.Rpn)
+            if (CurrentMode == Settings.Mode.Rpn)
                 throw new Exception("cannot be called in RPN mode");
 
             FinalizeInput();
@@ -919,16 +919,16 @@ namespace Calcoo
                         X = double.NaN;
                     break;
                 case UnaryOp.Sin:
-                    if (IsMultipleOf(X, AngleUnits))
+                    if (IsMultipleOf(X, CurrentAngleUnits))
                         X = 0.0;
                     else
-                        X = Math.Sin(AngleToRad(X, AngleUnits));
+                        X = Math.Sin(AngleToRad(X, CurrentAngleUnits));
                     break;
                 case UnaryOp.Asin:
                     if (Math.Abs(X) <= 1.0)
                     {
                         X = Math.Asin(X);
-                        X = AngleFromRad(X, AngleUnits);
+                        X = AngleFromRad(X, CurrentAngleUnits);
                     }
                     else
                         X = double.NaN;
@@ -940,16 +940,16 @@ namespace Calcoo
                     X = Math.Asinh(X);
                     break;
                 case UnaryOp.Cos:
-                    if (IsOddMultipleOfHalf(X, AngleUnits))
+                    if (IsOddMultipleOfHalf(X, CurrentAngleUnits))
                         X = 0.0;
                     else
-                        X = Math.Cos(AngleToRad(X, AngleUnits));
+                        X = Math.Cos(AngleToRad(X, CurrentAngleUnits));
                     break;
                 case UnaryOp.Acos:
                     if (Math.Abs(X) <= 1.0)
                     {
                         X = Math.Acos(X);
-                        X = AngleFromRad(X, AngleUnits);
+                        X = AngleFromRad(X, CurrentAngleUnits);
                     }
                     else
                         X = double.NaN;
@@ -961,16 +961,16 @@ namespace Calcoo
                     X = Math.Acosh(X);
                     break;
                 case UnaryOp.Tan:
-                    if (IsOddMultipleOfHalf(X, AngleUnits))
+                    if (IsOddMultipleOfHalf(X, CurrentAngleUnits))
                         X = double.NaN;
-                    else if (IsMultipleOf(X, AngleUnits))
+                    else if (IsMultipleOf(X, CurrentAngleUnits))
                         X = 0.0;
                     else
-                        X = Math.Tan(AngleToRad(X, AngleUnits));
+                        X = Math.Tan(AngleToRad(X, CurrentAngleUnits));
                     break;
                 case UnaryOp.Atan:
                     X = Math.Atan(X);
-                    X = AngleFromRad(X, AngleUnits);
+                    X = AngleFromRad(X, CurrentAngleUnits);
                     break;
                 case UnaryOp.Tanh:
                     X = Math.Tanh(X);
@@ -995,15 +995,15 @@ namespace Calcoo
                     _mem[ActiveMemNum] = MathUtil.SmartSum(X, _mem[ActiveMemNum], _numBase);
                     break;
                 case MemoryOp.MemToX:
-                    switch (Mode)
+                    switch (CurrentMode)
                     {
-                        case Settings.ModeType.Rpn:
+                        case Settings.Mode.Rpn:
                             _stack.Push(X);
                             break;
-                        case Settings.ModeType.Alg:
+                        case Settings.Mode.Alg:
                             break;
                         default:
-                            throw new Exception("unknown cpu mode " + Mode);
+                            throw new Exception("unknown cpu mode " + CurrentMode);
                     }
 
                     X = _mem[ActiveMemNum];
@@ -1036,16 +1036,16 @@ namespace Calcoo
 
         private void ExecuteDegRad()
         {
-            switch (AngleUnits)
+            switch (CurrentAngleUnits)
             {
-                case Settings.AngleUnitsType.Deg:
-                    AngleUnits = Settings.AngleUnitsType.Rad;
+                case Settings.AngleUnits.Deg:
+                    CurrentAngleUnits = Settings.AngleUnits.Rad;
                     break;
-                case Settings.AngleUnitsType.Rad:
-                    AngleUnits = Settings.AngleUnitsType.Deg;
+                case Settings.AngleUnits.Rad:
+                    CurrentAngleUnits = Settings.AngleUnits.Deg;
                     break;
                 default:
-                    throw new Exception("unknown current angle units " + AngleUnits);
+                    throw new Exception("unknown current angle units " + CurrentAngleUnits);
             }
         }
     }
