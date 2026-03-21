@@ -121,43 +121,27 @@ namespace Calcoo
 
         public const string CustomButtonTooltip = "Custom command";
 
+        private static readonly Dictionary<(Command, bool, bool), Command> _trigDressed = new()
+        {
+            { (Command.Sin, false, false), Command.Sin   },
+            { (Command.Sin, true,  false), Command.Asin  },
+            { (Command.Sin, false, true),  Command.Sinh  },
+            { (Command.Sin, true,  true),  Command.Asinh },
+            { (Command.Cos, false, false), Command.Cos   },
+            { (Command.Cos, true,  false), Command.Acos  },
+            { (Command.Cos, false, true),  Command.Cosh  },
+            { (Command.Cos, true,  true),  Command.Acosh },
+            { (Command.Tan, false, false), Command.Tan   },
+            { (Command.Tan, true,  false), Command.Atan  },
+            { (Command.Tan, false, true),  Command.Tanh  },
+            { (Command.Tan, true,  true),  Command.Atanh },
+        };
+
         public static Command TrigBareToDressed(this Command trigFunction, bool arcOn, bool hypOn)
         {
-            switch (trigFunction)
-            {
-                case Command.Sin:
-                    if (arcOn)
-                        if (hypOn)
-                            return Command.Asinh;
-                        else
-                            return Command.Asin;
-                    else if (hypOn)
-                        return Command.Sinh;
-                    else
-                        return Command.Sin;
-                case Command.Cos:
-                    if (arcOn)
-                        if (hypOn)
-                            return Command.Acosh;
-                        else
-                            return Command.Acos;
-                    else if (hypOn)
-                        return Command.Cosh;
-                    else
-                        return Command.Cos;
-                case Command.Tan:
-                    if (arcOn)
-                        if (hypOn)
-                            return Command.Atanh;
-                        else
-                            return Command.Atan;
-                    else if (hypOn)
-                        return Command.Tanh;
-                    else
-                        return Command.Tan;
-                default:
-                    throw new Exception("Function " + trigFunction + " is not a bare trig function (sin, cos, tan)");
-            }
+            if (_trigDressed.TryGetValue((trigFunction, arcOn, hypOn), out var result))
+                return result;
+            throw new Exception("Function " + trigFunction + " is not a bare trig function (sin, cos, tan)");
         }
 
         public static bool IsValidButton(this Command function, Settings.Mode mode)
