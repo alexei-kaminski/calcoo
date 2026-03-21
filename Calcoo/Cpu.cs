@@ -340,9 +340,6 @@ namespace Calcoo
                     switch (_lastAction)
                     {
                         case Action.Clear:
-                            // no need to call cpu_to_output, because input routine works
-                            // directly with the main display, and the other displays must
-                            // have been taken care of before
                             _input.Clear();
                             _currentInputField = InputField.Int;
                             break;
