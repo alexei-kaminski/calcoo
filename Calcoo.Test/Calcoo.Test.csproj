@@ -5,6 +5,8 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>Calcoo.Test</RootNamespace>
     <AssemblyName>Calcoo.Test</AssemblyName>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
