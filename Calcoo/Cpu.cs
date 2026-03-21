@@ -520,7 +520,7 @@ namespace Calcoo
                 case Settings.Mode.Rpn:
                     double y = _stack.Pop();
                     X = ComputeBinaryOp(y, X, binaryOp, _numBase);
-                    _lastAction = Action.Enter; // no need to use ACTION_BINOP in RPN
+                    _lastAction = Action.Enter; // no need to use Action.Binop in RPN
                     break;
                 case Settings.Mode.Alg:
                     if (!_stack.IsEmpty()
