@@ -407,17 +407,15 @@ namespace Calcoo
             return Math.Abs(ratio - Math.Round(ratio)) < CpuPrecision * Math.Max(1.0, Math.Abs(ratio));
         }
 
-        // Checks whether angle is a multiple of half-circle (180° or π).
-        private static bool IsMultipleOf(double angle, Settings.AngleUnits units)
+        private static bool IsMultipleOfHalfCircle(double angle, Settings.AngleUnits units)
         {
             return IsNearInteger(angle / HalfCircle[units]);
         }
 
-        // Checks whether angle is an odd multiple of quarter-circle (90°, 270°, ...).
-        private static bool IsOddMultipleOfHalf(double angle, Settings.AngleUnits units)
+        private static bool IsOddMultipleOfQuarterCircle(double angle, Settings.AngleUnits units)
         {
-            double ratio = angle / (HalfCircle[units] / 2.0);
-            return IsNearInteger(ratio) && Math.Abs(Math.Round(ratio) % 2.0) > 0.5;
+            double ratio = angle / HalfCircle[units];
+            return IsNearInteger(ratio * 2.0) && !IsNearInteger(ratio);
         }
 
         private void ExecuteDot()
@@ -783,7 +781,7 @@ namespace Calcoo
                         X = double.NaN;
                     break;
                 case Command.Sin:
-                    if (IsMultipleOf(X, CurrentAngleUnits))
+                    if (IsMultipleOfHalfCircle(X, CurrentAngleUnits))
                         X = 0.0;
                     else
                         X = Math.Sin(AngleToRad(X, CurrentAngleUnits));
@@ -804,7 +802,7 @@ namespace Calcoo
                     X = Math.Asinh(X);
                     break;
                 case Command.Cos:
-                    if (IsOddMultipleOfHalf(X, CurrentAngleUnits))
+                    if (IsOddMultipleOfQuarterCircle(X, CurrentAngleUnits))
                         X = 0.0;
                     else
                         X = Math.Cos(AngleToRad(X, CurrentAngleUnits));
@@ -825,9 +823,9 @@ namespace Calcoo
                     X = Math.Acosh(X);
                     break;
                 case Command.Tan:
-                    if (IsOddMultipleOfHalf(X, CurrentAngleUnits))
+                    if (IsOddMultipleOfQuarterCircle(X, CurrentAngleUnits))
                         X = double.NaN;
-                    else if (IsMultipleOf(X, CurrentAngleUnits))
+                    else if (IsMultipleOfHalfCircle(X, CurrentAngleUnits))
                         X = 0.0;
                     else
                         X = Math.Tan(AngleToRad(X, CurrentAngleUnits));
