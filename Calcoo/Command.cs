@@ -144,17 +144,11 @@ namespace Calcoo
             throw new Exception("Function " + trigFunction + " is not a bare trig function (sin, cos, tan)");
         }
 
-        public static bool IsValidButton(this Command function, Settings.Mode mode)
+        public static bool IsValidButton(this Command function, Settings.Mode mode) => mode switch
         {
-            switch (mode)
-            {
-                case Settings.Mode.Rpn:
-                    return !AlgOnly.Contains(function);
-                case Settings.Mode.Alg:
-                    return !RpnOnly.Contains(function);
-                default:
-                    throw new Exception("unknown mode " + mode);
-            }
-        }
+            Settings.Mode.Rpn => !AlgOnly.Contains(function),
+            Settings.Mode.Alg => !RpnOnly.Contains(function),
+            _ => throw new Exception("unknown mode " + mode)
+        };
     }
 }

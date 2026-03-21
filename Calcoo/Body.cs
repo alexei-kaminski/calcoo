@@ -88,18 +88,13 @@ namespace Calcoo
 
         public void SwitchDisplayFormat()
         {
-            switch (CurrentDisplayFormat)
+            CurrentDisplayFormat = CurrentDisplayFormat switch
             {
-                case Settings.DisplayFormat.Fix:
-                    CurrentDisplayFormat = Settings.DisplayFormat.Sci;
-                    break;
-                case Settings.DisplayFormat.Sci:
-                    CurrentDisplayFormat = Settings.DisplayFormat.Eng;
-                    break;
-                case Settings.DisplayFormat.Eng:
-                    CurrentDisplayFormat = Settings.DisplayFormat.Fix;
-                    break;
-            }
+                Settings.DisplayFormat.Fix => Settings.DisplayFormat.Sci,
+                Settings.DisplayFormat.Sci => Settings.DisplayFormat.Eng,
+                Settings.DisplayFormat.Eng => Settings.DisplayFormat.Fix,
+                _ => throw new Exception("unknown display format " + CurrentDisplayFormat)
+            };
         }
 
         private void CreateButton(Command function, int xPos, int yPos, int xSize, int ySize, Key[][] shortcuts,
@@ -396,6 +391,8 @@ namespace Calcoo
                     foreach (var algFunc in CommandExtensions.AlgOnly)
                         _buttons[algFunc].Visibility = Visibility.Visible;
                     break;
+                default:
+                    throw new Exception("unknown mode " + mode);
             }
         }
 

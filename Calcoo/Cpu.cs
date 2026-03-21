@@ -534,22 +534,13 @@ namespace Calcoo
             }
         }
 
-        private static int BinaryOpPriority(BinaryOp binaryOp)
+        private static int BinaryOpPriority(BinaryOp binaryOp) => binaryOp switch
         {
-            switch (binaryOp)
-            {
-                case BinaryOp.Add:
-                case BinaryOp.Sub:
-                    return BinopPriorityMin + 1;
-                case BinaryOp.Mul:
-                case BinaryOp.Div:
-                    return BinopPriorityMin + 2;
-                case BinaryOp.Pow:
-                    return BinopPriorityMin + 3;
-                default:
-                    throw new Exception("unknown binaryOp " + binaryOp);
-            }
-        }
+            BinaryOp.Add or BinaryOp.Sub => BinopPriorityMin + 1,
+            BinaryOp.Mul or BinaryOp.Div => BinopPriorityMin + 2,
+            BinaryOp.Pow                 => BinopPriorityMin + 3,
+            _ => throw new Exception("unknown binaryOp " + binaryOp)
+        };
 
         private void DoBinaryOpChain(int initPriority,
             bool parenClosed)
@@ -595,43 +586,28 @@ namespace Calcoo
         private static double ComputeBinaryOp(double a,
             double b,
             BinaryOp binaryOp,
-            int baseForPrecision)
+            int baseForPrecision) => binaryOp switch
         {
-            switch (binaryOp)
-            {
-                case BinaryOp.Add:
-                    return MathUtil.SmartSum(a, b, baseForPrecision);
-                case BinaryOp.Sub:
-                    return MathUtil.SmartSum(a, -b, baseForPrecision);
-                case BinaryOp.Mul:
-                    return a * b;
-                case BinaryOp.Div:
-                    if (b != 0.0)
-                        return a / b;
-                    else
-                        return double.NaN;
-                case BinaryOp.Pow:
-                    if ((a == 0.0 && b <= 0.0) || (a < 0 && b != Math.Floor(b)))
-                        return double.NaN;
-                    else
-                        return Math.Pow(a, b);
-                default:
-                    throw new Exception("unknown binaryOp " + binaryOp);
-            }
-        }
+            BinaryOp.Add => MathUtil.SmartSum(a, b, baseForPrecision),
+            BinaryOp.Sub => MathUtil.SmartSum(a, -b, baseForPrecision),
+            BinaryOp.Mul => a * b,
+            BinaryOp.Div => b != 0.0 ? a / b : double.NaN,
+            BinaryOp.Pow => (a == 0.0 && b <= 0.0) || (a < 0 && b != Math.Floor(b)) ? double.NaN : Math.Pow(a, b),
+            _ => throw new Exception("unknown binaryOp " + binaryOp)
+        };
 
         private void ExecuteEq()
         {
             switch (CurrentMode)
             {
-                case Settings.Mode.Rpn:
-                    throw new Exception("ExecuteEq called in RPN mode");
                 case Settings.Mode.Alg:
                     FinalizeInput();
                     DoBinaryOpChain(BinopPriorityMin, false);
                     _stack.Clear();
                     _lastAction = Action.Enter;
                     break;
+                case Settings.Mode.Rpn:
+                    throw new Exception("ExecuteEq called in RPN mode");
                 default:
                     throw new Exception("unknown cpu mode " + CurrentMode);
             }
@@ -641,8 +617,6 @@ namespace Calcoo
         {
             switch (CurrentMode)
             {
-                case Settings.Mode.Alg:
-                    throw new Exception("ExecuteEnter called in ALG mode");
                 case Settings.Mode.Rpn:
                     switch (CurrentEnterMode)
                     {
@@ -662,6 +636,8 @@ namespace Calcoo
                             throw new Exception("unknown enter mode " + CurrentEnterMode);
                     }
                     break;
+                case Settings.Mode.Alg:
+                    throw new Exception("ExecuteEnter called in ALG mode");
                 default:
                     throw new Exception("unknown cpu mode " + CurrentMode);
             }
@@ -888,17 +864,12 @@ namespace Calcoo
 
         private void ExecuteDegRad()
         {
-            switch (CurrentAngleUnits)
+            CurrentAngleUnits = CurrentAngleUnits switch
             {
-                case Settings.AngleUnits.Deg:
-                    CurrentAngleUnits = Settings.AngleUnits.Rad;
-                    break;
-                case Settings.AngleUnits.Rad:
-                    CurrentAngleUnits = Settings.AngleUnits.Deg;
-                    break;
-                default:
-                    throw new Exception("unknown current angle units " + CurrentAngleUnits);
-            }
+                Settings.AngleUnits.Deg => Settings.AngleUnits.Rad,
+                Settings.AngleUnits.Rad => Settings.AngleUnits.Deg,
+                _ => throw new Exception("unknown current angle units " + CurrentAngleUnits)
+            };
         }
     }
 }

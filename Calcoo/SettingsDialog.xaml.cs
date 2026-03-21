@@ -40,39 +40,27 @@ namespace Calcoo
                 default:
                     throw new ArgumentOutOfRangeException(nameof(settings.CurrentMode), settings.CurrentMode, null);
             }
-            switch (settings.CurrentStackMode)
+
+            (settings.CurrentStackMode switch
             {
-                case Settings.StackMode.Infinite:
-                    RpnStackInfinite.IsChecked = true;
-                    break;
-                case Settings.StackMode.Xyzt:
-                    RpnStackXyzt.IsChecked = true;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentStackMode), settings.CurrentStackMode, null);
-            }
-            switch (settings.CurrentEnterMode)
+                Settings.StackMode.Infinite => RpnStackInfinite,
+                Settings.StackMode.Xyzt     => RpnStackXyzt,
+                _ => throw new ArgumentOutOfRangeException(nameof(settings.CurrentStackMode), settings.CurrentStackMode, null)
+            }).IsChecked = true;
+
+            (settings.CurrentEnterMode switch
             {
-                case Settings.EnterMode.Traditional:
-                    RpnEnterTraditional.IsChecked = true;
-                    break;
-                case Settings.EnterMode.Hp28:
-                    RpnEnterHp28.IsChecked = true;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentEnterMode), settings.CurrentEnterMode, null);
-            }
-            switch (settings.CurrentPasteParsingAlgorithm)
+                Settings.EnterMode.Traditional => RpnEnterTraditional,
+                Settings.EnterMode.Hp28        => RpnEnterHp28,
+                _ => throw new ArgumentOutOfRangeException(nameof(settings.CurrentEnterMode), settings.CurrentEnterMode, null)
+            }).IsChecked = true;
+
+            (settings.CurrentPasteParsingAlgorithm switch
             {
-                case Settings.PasteParsingAlgorithm.Heuristic:
-                    PasteParsingHeuristic.IsChecked = true;
-                    break;
-                case Settings.PasteParsingAlgorithm.LocaleBased:
-                    PasteParsingLocaleBased.IsChecked = true;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(settings.CurrentPasteParsingAlgorithm), settings.CurrentPasteParsingAlgorithm, null);
-            }
+                Settings.PasteParsingAlgorithm.Heuristic   => PasteParsingHeuristic,
+                Settings.PasteParsingAlgorithm.LocaleBased => PasteParsingLocaleBased,
+                _ => throw new ArgumentOutOfRangeException(nameof(settings.CurrentPasteParsingAlgorithm), settings.CurrentPasteParsingAlgorithm, null)
+            }).IsChecked = true;
 
             RoundingOutputCheckBox.IsChecked = settings.Round;
             for (int i = maxRoundLength; i >= 1; i--)
