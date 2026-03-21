@@ -166,17 +166,6 @@ namespace Calcoo
             return null;
         }
 
-        // Buttons that share a grid position and swap visibility by mode
-        private static readonly Dictionary<Command, Command> _modeAlternates = new()
-        {
-            { Command.Enter, Command.Eq },
-            { Command.Eq, Command.Enter },
-            { Command.StackDown, Command.LeftParen },
-            { Command.LeftParen, Command.StackDown },
-            { Command.StackUp, Command.RightParen },
-            { Command.RightParen, Command.StackUp },
-        };
-
         private ButtonBase? FindButton(Command command)
         {
             if (_buttons.TryGetValue(command, out var btn))
@@ -189,12 +178,6 @@ namespace Calcoo
         public void HighlightButton(Command command)
         {
             ButtonBase? button = FindButton(command);
-
-            // If button is hidden, try the mode alternate (e.g. Enter↔Eq)
-            if ((button == null || button.Visibility != Visibility.Visible)
-                && _modeAlternates.TryGetValue(command, out var alt))
-                button = FindButton(alt)!;
-
             if (button == null || button.Visibility != Visibility.Visible) return;
 
             if (_highlightTimers.TryGetValue(command, out var existing))
