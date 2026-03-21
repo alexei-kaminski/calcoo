@@ -10,7 +10,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Microsoft.Win32;
 
-
 namespace Calcoo
 {
     /// <summary>

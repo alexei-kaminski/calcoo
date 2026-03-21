@@ -9,7 +9,6 @@ namespace Calcoo
         private readonly Dictionary<Cpu.BinaryOp, DisplayGlyph> _ops;
         private readonly DisplayGlyph _paren;
 
-
         public OperationDisplay(int xMargin,
             int yMargin,
             int xSize,

@@ -24,7 +24,6 @@ namespace Calcoo
 
         public Mode CurrentMode;
 
-
         public enum EnterMode
         {
             Traditional,

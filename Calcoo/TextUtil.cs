@@ -9,7 +9,6 @@ namespace Calcoo
     {
         private const char Unassigned = 'u';
 
-
         private static double TextToDoubleWithGuidance(string text,
             char decimalChar,
             char groupingChar)

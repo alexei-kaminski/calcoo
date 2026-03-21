@@ -92,7 +92,6 @@ namespace Calcoo
             _stack.AddFirst(new StackElement(z, op, 0));
         }
 
-
         public void Push(double z)
         {
             if (_currentMode != Settings.Mode.Rpn)

@@ -119,7 +119,6 @@ namespace Calcoo
                 Command.Paste
             });
 
-
         public const string CustomButtonTooltip = "Custom command";
 
         public static Command TrigBareToDressed(this Command trigFunction, bool arcOn, bool hypOn)

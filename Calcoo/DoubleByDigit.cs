@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace Calcoo
 {
     public interface IDoubleByDigitGetters
@@ -28,7 +27,6 @@ namespace Calcoo
         private int _sign;
         private int _expSign;
         private bool _overflow;
-
 
         public DoubleByDigit()
         {
