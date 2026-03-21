@@ -435,7 +435,7 @@ namespace Calcoo
             if (IsInputInProgress())
                 _input.InverseSign();
             else
-                X = -X; // since sign change does not toggle INPUT_IN_PROGRESS
+                X = -X; // since sign change does not set _lastAction to Action.Input
         }
 
         private void ExecuteExp()
@@ -472,7 +472,7 @@ namespace Calcoo
                 else
                     _input.InverseExpSign();
             else
-                X = -X; // since sign change does not toggle INPUT_IN_PROGRESS
+                X = -X; // since sign change does not set _lastAction to Action.Input
         }
 
         private void ExecuteClearAll()
