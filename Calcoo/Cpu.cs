@@ -226,24 +226,24 @@ namespace Calcoo
                 case Command.Digit7:
                 case Command.Digit8:
                 case Command.Digit9:
-                    ExecuteDigit(CommandToDigit(command));
+                    ExecuteDigit(_commandToDigit[command]);
                     break;
                 case Command.Add:
                 case Command.Sub:
                 case Command.Mul:
                 case Command.Div:
                 case Command.Pow:
-                    ExecuteBinaryOp(CommandToBinaryOp(command));
+                    ExecuteBinaryOp(_commandToBinaryOp[command]);
                     break;
                 case Command.MemToX:
                 case Command.MemPlus:
                 case Command.ExchXMem:
                 case Command.XToMem:
-                    ExecuteMemoryOp(CommandToMemoryOp(command));
+                    ExecuteMemoryOp(_commandToMemoryOp[command]);
                     break;
                 case Command.Mem0:
                 case Command.Mem1:
-                    ExecuteSwitchToMem(CommandToMemIndex(command));
+                    ExecuteSwitchToMem(_commandToMemIndex[command]);
                     break;
                 case Command.Log10:
                 case Command.TenToX:
@@ -265,7 +265,7 @@ namespace Calcoo
                 case Command.Asinh:
                 case Command.Acosh:
                 case Command.Atanh:
-                    ExecuteUnaryOp(CommandToUnaryOp(command));
+                    ExecuteUnaryOp(_commandToUnaryOp[command]);
                     break;
                 case Command.Eq:
                     ExecuteEq();
@@ -320,132 +320,66 @@ namespace Calcoo
             }
         }
 
-        private static BinaryOp CommandToBinaryOp(Command command)
+        private static readonly Dictionary<Command, BinaryOp> _commandToBinaryOp = new()
         {
-            switch (command)
-            {
-                case Command.Add:
-                    return BinaryOp.Add;
-                case Command.Sub:
-                    return BinaryOp.Sub;
-                case Command.Mul:
-                    return BinaryOp.Mul;
-                case Command.Div:
-                    return BinaryOp.Div;
-                case Command.Pow:
-                    return BinaryOp.Pow;
-                default:
-                    throw new Exception("illegal BinaryOp command " + command);
-            }
-        }
+            { Command.Add, BinaryOp.Add },
+            { Command.Sub, BinaryOp.Sub },
+            { Command.Mul, BinaryOp.Mul },
+            { Command.Div, BinaryOp.Div },
+            { Command.Pow, BinaryOp.Pow },
+        };
 
-        private static UnaryOp CommandToUnaryOp(Command command)
+        private static readonly Dictionary<Command, UnaryOp> _commandToUnaryOp = new()
         {
-            switch (command)
-            {
-                case Command.Log10:
-                    return UnaryOp.Log10;
-                case Command.TenToX:
-                    return UnaryOp.TenToX;
-                case Command.Ln:
-                    return UnaryOp.Ln;
-                case Command.EtoX:
-                    return UnaryOp.EtoX;
-                case Command.Sqrt:
-                    return UnaryOp.Sqrt;
-                case Command.Sqr:
-                    return UnaryOp.Sqr;
-                case Command.InvX:
-                    return UnaryOp.InvX;
-                case Command.Fact:
-                    return UnaryOp.Fact;
-                case Command.Sin:
-                    return UnaryOp.Sin;
-                case Command.Cos:
-                    return UnaryOp.Cos;
-                case Command.Tan:
-                    return UnaryOp.Tan;
-                case Command.Asin:
-                    return UnaryOp.Asin;
-                case Command.Sinh:
-                    return UnaryOp.Sinh;
-                case Command.Asinh:
-                    return UnaryOp.Asinh;
-                case Command.Acos:
-                    return UnaryOp.Acos;
-                case Command.Cosh:
-                    return UnaryOp.Cosh;
-                case Command.Acosh:
-                    return UnaryOp.Acosh;
-                case Command.Atan:
-                    return UnaryOp.Atan;
-                case Command.Tanh:
-                    return UnaryOp.Tanh;
-                case Command.Atanh:
-                    return UnaryOp.Atanh;
-                default:
-                    throw new Exception("illegal UnaryOp command " + command);
-            }
-        }
+            { Command.Log10,  UnaryOp.Log10  },
+            { Command.TenToX, UnaryOp.TenToX },
+            { Command.Ln,     UnaryOp.Ln     },
+            { Command.EtoX,   UnaryOp.EtoX   },
+            { Command.Sqrt,   UnaryOp.Sqrt   },
+            { Command.Sqr,    UnaryOp.Sqr    },
+            { Command.InvX,   UnaryOp.InvX   },
+            { Command.Fact,   UnaryOp.Fact   },
+            { Command.Sin,    UnaryOp.Sin    },
+            { Command.Cos,    UnaryOp.Cos    },
+            { Command.Tan,    UnaryOp.Tan    },
+            { Command.Asin,   UnaryOp.Asin   },
+            { Command.Acos,   UnaryOp.Acos   },
+            { Command.Atan,   UnaryOp.Atan   },
+            { Command.Sinh,   UnaryOp.Sinh   },
+            { Command.Cosh,   UnaryOp.Cosh   },
+            { Command.Tanh,   UnaryOp.Tanh   },
+            { Command.Asinh,  UnaryOp.Asinh  },
+            { Command.Acosh,  UnaryOp.Acosh  },
+            { Command.Atanh,  UnaryOp.Atanh  },
+        };
 
-        private static MemoryOp CommandToMemoryOp(Command command)
+        private static readonly Dictionary<Command, MemoryOp> _commandToMemoryOp = new()
         {
-            switch (command)
-            {
-                case Command.MemToX:
-                    return MemoryOp.MemToX;
-                case Command.MemPlus:
-                    return MemoryOp.MemPlus;
-                case Command.ExchXMem:
-                    return MemoryOp.ExchXMem;
-                case Command.XToMem:
-                    return MemoryOp.XToMem;
-                default:
-                    throw new Exception("illegal MemoryOp command " + command);
-            }
-        }
+            { Command.MemToX,   MemoryOp.MemToX   },
+            { Command.MemPlus,  MemoryOp.MemPlus  },
+            { Command.ExchXMem, MemoryOp.ExchXMem },
+            { Command.XToMem,   MemoryOp.XToMem   },
+        };
 
-        private int CommandToDigit(Command command)
+        private static readonly Dictionary<Command, int> _commandToDigit = new()
         {
-            switch (command)
-            {
-                case Command.Digit0:
-                    return 0;
-                case Command.Digit1:
-                    return 1;
-                case Command.Digit2:
-                    return 2;
-                case Command.Digit3:
-                    return 3;
-                case Command.Digit4:
-                    return 4;
-                case Command.Digit5:
-                    return 5;
-                case Command.Digit6:
-                    return 6;
-                case Command.Digit7:
-                    return 7;
-                case Command.Digit8:
-                    return 8;
-                case Command.Digit9:
-                    return 9;
-                default:
-                    throw new Exception("illegal digit command " + command.ToString());
-            }
-        }
+            { Command.Digit0, 0 },
+            { Command.Digit1, 1 },
+            { Command.Digit2, 2 },
+            { Command.Digit3, 3 },
+            { Command.Digit4, 4 },
+            { Command.Digit5, 5 },
+            { Command.Digit6, 6 },
+            { Command.Digit7, 7 },
+            { Command.Digit8, 8 },
+            { Command.Digit9, 9 },
+        };
 
-        private int CommandToMemIndex(Command command)
+        private static readonly Dictionary<Command, int> _commandToMemIndex = new()
         {
-            switch (command)
-            {
-                case Command.Mem0:
-                    return 0;
-                case Command.Mem1:
-                    return 1;
-                default:
-                    throw new Exception("illegal mem index command " + command);
-            }
-        }
+            { Command.Mem0, 0 },
+            { Command.Mem1, 1 },
+        };
 
         // number input
 
