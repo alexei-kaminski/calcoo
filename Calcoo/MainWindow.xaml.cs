@@ -17,8 +17,8 @@ namespace Calcoo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Cpu cpu;
-        private LinkedList<Cpu> undoStack, redoStack;
+        private Cpu _cpu;
+        private LinkedList<Cpu> _undoStack, _redoStack;
         private const int ExpInputLength = 2;
         private const int NumBase = 10;
         private const int NMem = 2;
@@ -34,10 +34,10 @@ namespace Calcoo
         public MainWindow()
         {
             var settings = Settings.Load(InputLength);
-            cpu = new Cpu(settings.CurrentMode, settings.CurrentAngleUnits, InputLength, ExpInputLength, NumBase, NMem,
+            _cpu = new Cpu(settings.CurrentMode, settings.CurrentAngleUnits, InputLength, ExpInputLength, NumBase, NMem,
                 settings.CurrentEnterMode, settings.CurrentStackMode);
-            undoStack = new LinkedList<Cpu>();
-            redoStack = new LinkedList<Cpu>();
+            _undoStack = new LinkedList<Cpu>();
+            _redoStack = new LinkedList<Cpu>();
 
             InitializeComponent();
 
@@ -81,7 +81,7 @@ namespace Calcoo
             body.UndoEnabled = false;
             body.RedoEnabled = false;
 
-            body.Refresh(cpu);
+            body.Refresh(_cpu);
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -214,7 +214,7 @@ namespace Calcoo
         private void ProcessCommand(Command command)
         {
             // ignore illegal commands invoked by shortcuts
-            if (!command.IsValidButton(cpu.CurrentMode)) return;
+            if (!command.IsValidButton(_cpu.CurrentMode)) return;
 
             switch (command)
             {
@@ -224,9 +224,9 @@ namespace Calcoo
                     infoDialog.ShowDialog();
                     break;
                 case Command.Settings:
-                    var settings = new Settings(cpu.CurrentStackMode,
-                        cpu.CurrentMode,
-                        cpu.CurrentEnterMode,
+                    var settings = new Settings(_cpu.CurrentStackMode,
+                        _cpu.CurrentMode,
+                        _cpu.CurrentEnterMode,
                         body.Round,
                         body.RoundLength,
                         body.TruncateZeros,
@@ -234,20 +234,20 @@ namespace Calcoo
                         body.HypAutorelease,
                         body.CurrentPasteParsingAlgorithm,
                         _customButtonCommand,
-                        cpu.CurrentAngleUnits,
+                        _cpu.CurrentAngleUnits,
                         body.CurrentDisplayFormat);
                     var settingsDialog = new SettingsDialog(settings, InputLength);
                     settingsDialog.Owner = this;
                     settingsDialog.ShowDialog();
                     if (settingsDialog.WasChanged)
                     {
-                        if (settingsDialog.NewSettings.CurrentEnterMode != cpu.CurrentEnterMode)
-                            cpu.CurrentEnterMode = settingsDialog.NewSettings.CurrentEnterMode;
-                        if (settingsDialog.NewSettings.CurrentStackMode != cpu.CurrentStackMode)
-                            cpu.CurrentStackMode = settingsDialog.NewSettings.CurrentStackMode;
-                        if (settingsDialog.NewSettings.CurrentMode != cpu.CurrentMode)
+                        if (settingsDialog.NewSettings.CurrentEnterMode != _cpu.CurrentEnterMode)
+                            _cpu.CurrentEnterMode = settingsDialog.NewSettings.CurrentEnterMode;
+                        if (settingsDialog.NewSettings.CurrentStackMode != _cpu.CurrentStackMode)
+                            _cpu.CurrentStackMode = settingsDialog.NewSettings.CurrentStackMode;
+                        if (settingsDialog.NewSettings.CurrentMode != _cpu.CurrentMode)
                         {
-                            cpu.CurrentMode = settingsDialog.NewSettings.CurrentMode;
+                            _cpu.CurrentMode = settingsDialog.NewSettings.CurrentMode;
                             body.DisplayOnlyActiveButtonsForMode(settingsDialog.NewSettings.CurrentMode);
                         }
                         body.ArcAutorelease = settingsDialog.NewSettings.ArcAutorelease;
@@ -261,26 +261,26 @@ namespace Calcoo
                     }
                     break;
                 case Command.Undo:
-                    if (undoStack.Any())
+                    if (_undoStack.Any())
                     {
-                        redoStack.AddFirst(cpu);
-                        cpu = undoStack.First();
-                        undoStack.RemoveFirst();
+                        _redoStack.AddFirst(_cpu);
+                        _cpu = _undoStack.First();
+                        _undoStack.RemoveFirst();
 
                         body.RedoEnabled = true;
-                        if (!undoStack.Any())
+                        if (!_undoStack.Any())
                             body.UndoEnabled = false;
                     }
                     break;
                 case Command.Redo:
-                    if (redoStack.Any())
+                    if (_redoStack.Any())
                     {
-                        undoStack.AddFirst(cpu);
-                        cpu = redoStack.First();
-                        redoStack.RemoveFirst();
+                        _undoStack.AddFirst(_cpu);
+                        _cpu = _redoStack.First();
+                        _redoStack.RemoveFirst();
 
                         body.UndoEnabled = true;
-                        if (!redoStack.Any())
+                        if (!_redoStack.Any())
                             body.RedoEnabled = false;
                     }
                     break;
@@ -289,8 +289,8 @@ namespace Calcoo
                     Settings.SaveDisplayFormat(body.GetDisplayFormat());
                     break;
                 case Command.DegRad:
-                    cpu.Execute(Command.DegRad);
-                    Settings.SaveAngleUnits(cpu.CurrentAngleUnits);
+                    _cpu.Execute(Command.DegRad);
+                    Settings.SaveAngleUnits(_cpu.CurrentAngleUnits);
                     break;
                 case Command.Copy:
                     try { Clipboard.SetText(body.GetMainDisplayString()); } catch { }
@@ -306,7 +306,7 @@ namespace Calcoo
                             break;
 
                         PushUndo();
-                        cpu.ExecutePaste(value);
+                        _cpu.ExecutePaste(value);
                     }
                     catch { }
                     break;
@@ -316,11 +316,11 @@ namespace Calcoo
                         PushUndo();
                         foreach (string token in _customButtonCommand.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                         {
-                            if (!double.IsFinite(cpu.X))
+                            if (!double.IsFinite(_cpu.X))
                                 break;
                             if (Enum.TryParse(token, out Command parsed)
                                 && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
-                                cpu.Execute(parsed);
+                                _cpu.Execute(parsed);
                         }
                     }
                     break;
@@ -337,36 +337,36 @@ namespace Calcoo
                         if (CommandExtensions.TrigBare.Contains(command))
                         {
                             Command dressedCommand = command.TrigBareToDressed(body.Arc, body.Hyp);
-                            cpu.Execute(dressedCommand);
+                            _cpu.Execute(dressedCommand);
                         }
                         else
-                            cpu.Execute(command);
+                            _cpu.Execute(command);
                         if (body.ArcAutorelease)
                             body.Arc = false;
                         if (body.HypAutorelease)
                             body.Hyp = false;
                     }
-                    else if (command == Command.Enter && cpu.CurrentMode == Settings.Mode.Alg)
+                    else if (command == Command.Enter && _cpu.CurrentMode == Settings.Mode.Alg)
                         // "ENTER" and "EQ" share a shortcut which calls Command.Enter
-                        cpu.Execute(Command.Eq);
+                        _cpu.Execute(Command.Eq);
                     else
                         // non-trigonometric buttons
-                        cpu.Execute(command);
+                        _cpu.Execute(command);
 
                     break;
             }
 
-            body.Refresh(cpu);
+            body.Refresh(_cpu);
         }
 
         private void PushUndo()
         {
-            redoStack.Clear();
-            undoStack.AddFirst(cpu.Clone());
+            _redoStack.Clear();
+            _undoStack.AddFirst(_cpu.Clone());
             body.UndoEnabled = true;
             body.RedoEnabled = false;
-            if (undoStack.Count > UndoStackSize)
-                undoStack.RemoveLast();
+            if (_undoStack.Count > UndoStackSize)
+                _undoStack.RemoveLast();
         }
     }
 }

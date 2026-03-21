@@ -29,7 +29,7 @@ namespace Calcoo
 
         private const int BinopPriorityMin = 0; // used for = and )
 
-        private static readonly Dictionary<Settings.AngleUnits, double> HalfCircle = new()
+        private static readonly Dictionary<Settings.AngleUnits, double> _halfCircle = new()
         {
             { Settings.AngleUnits.Deg, 180.0 },
             { Settings.AngleUnits.Rad, Math.PI },
@@ -392,22 +392,22 @@ namespace Calcoo
 
         private static double AngleToRad(double a, Settings.AngleUnits units)
         {
-            return a * Math.PI / HalfCircle[units];
+            return a * Math.PI / _halfCircle[units];
         }
 
         private static double AngleFromRad(double a, Settings.AngleUnits units)
         {
-            return a * HalfCircle[units] / Math.PI;
+            return a * _halfCircle[units] / Math.PI;
         }
 
         private static bool IsMultipleOfHalfCircle(double angle, Settings.AngleUnits units)
         {
-            return MathUtil.IsNearInteger(angle / HalfCircle[units]);
+            return MathUtil.IsNearInteger(angle / _halfCircle[units]);
         }
 
         private static bool IsOddMultipleOfQuarterCircle(double angle, Settings.AngleUnits units)
         {
-            double ratio = angle / HalfCircle[units];
+            double ratio = angle / _halfCircle[units];
             return MathUtil.IsNearInteger(ratio * 2.0) && !MathUtil.IsNearInteger(ratio);
         }
 
