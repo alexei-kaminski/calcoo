@@ -214,10 +214,7 @@ namespace Calcoo
         private void ProcessCommand(Command command)
         {
             // ignore illegal commands invoked by shortcuts
-            if ((command == Command.StackDown || command == Command.StackUp) && cpu.CurrentMode == Settings.Mode.Alg)
-                return;
-            if ((command == Command.LeftParen || command == Command.RightParen) && cpu.CurrentMode == Settings.Mode.Rpn)
-                return;
+            if (!command.IsValidButton(cpu.CurrentMode)) return;
 
             switch (command)
             {
