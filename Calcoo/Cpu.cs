@@ -109,7 +109,6 @@ namespace Calcoo
             return _stack;
         }
 
-        // Input input;
         private DoubleByDigit _input;
 
         public IDoubleByDigitGetters GetInput()
