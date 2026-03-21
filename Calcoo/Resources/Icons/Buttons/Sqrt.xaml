@@ -1,2 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform"><Canvas Name="svgSqrt" Width="1000" Height="1000"><Canvas.RenderTransform><TranslateTransform X="0" Y="0"/></Canvas.RenderTransform><Canvas.Resources/><!--Unknown tag: metadata--><!--Unknown tag: sodipodi:namedview--><Canvas Name="Layer1"><Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="pathSqrt1" StrokeThickness="69" Stroke="{DynamicResource IconForeground}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"><Path.Data><PathGeometry Figures="M223 460l45 -20 93 204 56 -380 283 0 0 70" FillRule="evenodd"/></Path.Data></Path></Canvas></Canvas></Viewbox>
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Canvas Width="1000" Height="1000">
+        <Path Stroke="{DynamicResource IconForeground}" StrokeThickness="69" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round">
+            <Path.Data><PathGeometry Figures="M199 470l49 -21 103 224 61 -418 311 0 0 77" FillRule="EvenOdd"/></Path.Data>
+        </Path>
+    </Canvas>
+</Viewbox>
