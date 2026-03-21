@@ -29,7 +29,7 @@ namespace Calcoo
 
         protected class DisplayGlyph
         {
-            private readonly int _x, _y, _xSize, _ySize;
+            private readonly int _x, _y, _xSize;
             private readonly string _icon;
             private readonly Canvas _parent;
             private ContentControl _box;
@@ -37,14 +37,12 @@ namespace Calcoo
             public DisplayGlyph(int x,
                 int y,
                 int xSize,
-                int ySize,
                 string icon,
                 Canvas parent)
             {
                 _x = x;
                 _y = y;
                 _xSize = xSize;
-                _ySize = ySize;
                 _icon = icon;
                 _parent = parent;
             }
@@ -55,7 +53,6 @@ namespace Calcoo
                 {
                     _box = new ContentControl { };
                     _box.Width = _xSize;
-                    //_box.Height = _ySize;
                     var uri = new Uri("Resources" + _icon + ".xaml", UriKind.Relative);
                     _box.Content = Application.LoadComponent(uri);
                     Canvas.SetLeft(_box, _x);

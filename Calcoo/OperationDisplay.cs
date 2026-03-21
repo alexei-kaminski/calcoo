@@ -19,9 +19,9 @@ namespace Calcoo
             _ops = new Dictionary<Cpu.BinaryOp, DisplayGlyph>();
 
             foreach (Cpu.BinaryOp op in Enum.GetValues(typeof(Cpu.BinaryOp)))
-                _ops.Add(op, new DisplayGlyph(xMargin, yMargin, xSize, ySize, iconSet + op, parent));
+                _ops.Add(op, new DisplayGlyph(xMargin, yMargin, xSize, iconSet + op, parent));
 
-            _paren = new DisplayGlyph(xMargin, yMargin, xSize, ySize, iconSet + "Paren", parent);
+            _paren = new DisplayGlyph(xMargin, yMargin, xSize, iconSet + "Paren", parent);
         }
 
         public void Show(Cpu.BinaryOp? op,

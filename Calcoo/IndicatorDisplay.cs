@@ -11,14 +11,13 @@ namespace Calcoo
         public IndicatorDisplay(int xPos,
             int yPos,
             int xSize,
-            int ySize,
             IEnumerable<T> values,
             string iconSet,
             Canvas parent)
         {
             _icons = new Dictionary<T, DisplayGlyph>();
             foreach (var value in values)
-                _icons.Add(value, new DisplayGlyph(xPos, yPos, xSize, ySize, iconSet + value, parent));
+                _icons.Add(value, new DisplayGlyph(xPos, yPos, xSize, iconSet + value, parent));
         }
 
         public void Show(T value)

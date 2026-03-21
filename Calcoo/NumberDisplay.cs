@@ -33,8 +33,6 @@ namespace Calcoo
             _hasTicks = hasTicks;
             _hasError = hasError;
 
-            int cellHeight = 2;
-
             _minusSign = new DisplayGlyph[inputLength];
             _intDigits = new DisplayGlyph[inputLength, numBase];
             _fracDigits = new DisplayGlyph[inputLength, numBase];
@@ -52,15 +50,15 @@ namespace Calcoo
 
                 for (int i = 0; i < inputLength; ++i)
                 {
-                    _intDigits[i, n] = new DisplayGlyph(xMargin + cellWidth * (i + 1), yMargin, cellWidth, cellHeight,
+                    _intDigits[i, n] = new DisplayGlyph(xMargin + cellWidth * (i + 1), yMargin, cellWidth,
                         thisDigitIcon, parent);
                     _fracDigits[i, n] = new DisplayGlyph(xMargin + dotWidth + cellWidth * (i + 1), yMargin, cellWidth,
-                        cellHeight, thisDigitIcon, parent);
+                        thisDigitIcon, parent);
                 }
 
                 for (int i = 0; i < expInputLength; ++i)
                     _expDigits[i, n] = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth * (i + 2),
-                        yMargin, cellWidth, cellHeight, thisDigitIcon, parent);
+                        yMargin, cellWidth, thisDigitIcon, parent);
             }
 
             string dotIcon = iconSet + "Dot";
@@ -69,8 +67,8 @@ namespace Calcoo
             for (int i = 0; i < inputLength; i++)
             {
                 _dot[i] = new DisplayGlyph(xMargin + cellWidth * (i + 2) + dotOffsetX, yMargin + dotOffsetY, dotWidth,
-                    dotWidth, dotIcon, parent);
-                _minusSign[i] = new DisplayGlyph(xMargin + cellWidth * i, yMargin, cellWidth, cellHeight, minusIcon,
+                    dotIcon, parent);
+                _minusSign[i] = new DisplayGlyph(xMargin + cellWidth * i, yMargin, cellWidth, minusIcon,
                     parent);
             }
 
@@ -80,20 +78,20 @@ namespace Calcoo
                 for (int i = 0; i < inputLength; ++i)
                 {
                     _intTicks[i] = new DisplayGlyph(xMargin + cellWidth * i + tickOffsetX,
-                        yMargin + tickOffsetY, tickWidth, tickWidth, tickIcon, parent);
+                        yMargin + tickOffsetY, tickWidth, tickIcon, parent);
                     _fracTicks[i] = new DisplayGlyph(xMargin + cellWidth * i + dotWidth + tickOffsetX,
-                        yMargin + tickOffsetY, tickWidth, tickWidth, tickIcon, parent);
+                        yMargin + tickOffsetY, tickWidth, tickIcon, parent);
                 }
             }
 
-            _expMinusSign = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth, yMargin, cellWidth, cellHeight,
+            _expMinusSign = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth, yMargin, cellWidth,
                 minusIcon, parent);
-            _expPlusSign = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth, yMargin, cellWidth, cellHeight,
+            _expPlusSign = new DisplayGlyph(xMargin + displayExpOffsetX + cellWidth, yMargin, cellWidth,
                 iconSet + "Plus", parent);
-            _e = new DisplayGlyph(xMargin + displayExpOffsetX, yMargin, cellWidth, cellHeight,
+            _e = new DisplayGlyph(xMargin + displayExpOffsetX, yMargin, cellWidth,
                 iconSet + "E", parent);
             if (hasError)
-                _error = new DisplayGlyph(xMargin + errorOffsetX, yMargin, cellWidth, cellHeight, iconSet + "Error",
+                _error = new DisplayGlyph(xMargin + errorOffsetX, yMargin, cellWidth, iconSet + "Error",
                     parent);
             else
                 _error = null;

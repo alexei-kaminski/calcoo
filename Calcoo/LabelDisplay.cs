@@ -8,11 +8,10 @@ namespace Calcoo
         public LabelDisplay(int xPos,
             int yPos,
             int xSize,
-            int ySize,
             string icon,
             Canvas parent)
         {
-            ShownGlyphs.Push(new DisplayGlyph(xPos, yPos, xSize, ySize, icon, parent));
+            ShownGlyphs.Push(new DisplayGlyph(xPos, yPos, xSize, icon, parent));
             Refresh();
         }
     }

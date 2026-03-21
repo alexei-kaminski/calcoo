@@ -303,15 +303,14 @@ namespace Calcoo
                 _regLabelDisplays[i] = new LabelDisplay(2,
                     0,
                     12,
-                    16,
                     "/Icons/Displays/Label/Register" + i,
                     displayCanvas.RegisterLabelDisplays[i]);
             }
 
-            _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32, 16,
+            _displayFormatDisplay = new IndicatorDisplay<Settings.DisplayFormat>(-1, -1, 32,
                 new[] { Settings.DisplayFormat.Eng, Settings.DisplayFormat.Sci, Settings.DisplayFormat.Fix },
                 "/Icons/Displays/Indicator/", displayCanvas.FormatDisplay);
-            _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(-1, -1, 32, 16,
+            _angleUnitsDisplay = new IndicatorDisplay<Settings.AngleUnits>(-1, -1, 32,
                 new[] { Settings.AngleUnits.Deg, Settings.AngleUnits.Rad }, "/Icons/Displays/Indicator/",
                 displayCanvas.DegRadDisplay);
 
