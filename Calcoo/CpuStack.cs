@@ -322,4 +322,3 @@ namespace Calcoo
         }
     }
 }
-
