@@ -103,7 +103,7 @@ namespace Calcoo
         }
 
         private void CreateButton(Command function, int xPos, int yPos, int xSize, int ySize, Key[][] shortcuts,
-            string tooltip, string iconSet, Grid mainGrid, bool isToggle, bool hasIcon)
+            string? tooltip, string iconSet, Grid mainGrid, bool isToggle, bool hasIcon)
         {
             ButtonBase newButton;
             if (isToggle)
@@ -119,7 +119,7 @@ namespace Calcoo
                 newButton = b;
             }
 
-            if (tooltip.Length != 0)
+            if (tooltip != null)
             {
                 var tt = new ToolTip();
                 tt.Content = tooltip;
@@ -338,53 +338,53 @@ namespace Calcoo
             CreateButton(Command.Copy, 0, 10, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.C } }, "Copy", iconPath, mainGrid, false, true);
             CreateButton(Command.Paste, 0, 12, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.V } }, "Paste", iconPath, mainGrid, false, true);
 
-            CreateButton(Command.Sin, 3, 4, 2, 2, new[] { new[] { Key.S } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Cos, 3, 6, 2, 2, new[] { new[] { Key.C } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Tan, 3, 8, 2, 2, new[] { new[] { Key.T } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Arc, 3, 10, 2, 2, new[] { new[] { Key.A } }, "", iconPath, mainGrid, true, true);
-            CreateButton(Command.Hyp, 3, 12, 2, 2, new[] { new[] { Key.H } }, "", iconPath, mainGrid, true, true);
-            CreateButton(Command.Sqr, 5, 4, 2, 2, new[] { new[] { Key.Q } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.EtoX, 5, 6, 2, 2, new[] { new[] { Key.X } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.TenToX, 5, 8, 2, 2, new[] { new[] { Key.D } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Pow, 5, 10, 2, 2, new[] { new[] { Key.R } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Pi, 5, 12, 2, 2, new[] { new[] { Key.P } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Sqrt, 7, 4, 2, 2, new[] { new[] { Key.W } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Ln, 7, 6, 2, 2, new[] { new[] { Key.N } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.Sin, 3, 4, 2, 2, new[] { new[] { Key.S } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Cos, 3, 6, 2, 2, new[] { new[] { Key.C } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Tan, 3, 8, 2, 2, new[] { new[] { Key.T } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Arc, 3, 10, 2, 2, new[] { new[] { Key.A } }, null, iconPath, mainGrid, true, true);
+            CreateButton(Command.Hyp, 3, 12, 2, 2, new[] { new[] { Key.H } }, null, iconPath, mainGrid, true, true);
+            CreateButton(Command.Sqr, 5, 4, 2, 2, new[] { new[] { Key.Q } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.EtoX, 5, 6, 2, 2, new[] { new[] { Key.X } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.TenToX, 5, 8, 2, 2, new[] { new[] { Key.D } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Pow, 5, 10, 2, 2, new[] { new[] { Key.R } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Pi, 5, 12, 2, 2, new[] { new[] { Key.P } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Sqrt, 7, 4, 2, 2, new[] { new[] { Key.W } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Ln, 7, 6, 2, 2, new[] { new[] { Key.N } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.Log10, 7, 8, 2, 2, new[] { new[] { Key.G } }, "Base-10 log", iconPath, mainGrid, false, true);
-            CreateButton(Command.InvX, 7, 10, 2, 2, new[] { new[] { Key.I } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Fact, 7, 12, 2, 2, new[] { new[] { Key.F } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.InvX, 7, 10, 2, 2, new[] { new[] { Key.I } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Fact, 7, 12, 2, 2, new[] { new[] { Key.F } }, null, iconPath, mainGrid, false, true);
 
-            CreateButton(Command.Digit7, 10, 3, 2, 2, new[] { new[] { Key.D7, Key.NumPad7 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit4, 10, 5, 2, 2, new[] { new[] { Key.D4, Key.NumPad4 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit1, 10, 7, 2, 2, new[] { new[] { Key.D1, Key.NumPad1 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit0, 10, 9, 2, 2, new[] { new[] { Key.D0, Key.NumPad0 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Exp, 10, 12, 2, 2, new[] { new[] { Key.E } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit8, 12, 3, 2, 2, new[] { new[] { Key.D8, Key.NumPad8 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit5, 12, 5, 2, 2, new[] { new[] { Key.D5, Key.NumPad5 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit2, 12, 7, 2, 2, new[] { new[] { Key.D2, Key.NumPad2 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Sign, 12, 9, 2, 2, new[] { new[] { Key.M } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit7, 10, 3, 2, 2, new[] { new[] { Key.D7, Key.NumPad7 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit4, 10, 5, 2, 2, new[] { new[] { Key.D4, Key.NumPad4 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit1, 10, 7, 2, 2, new[] { new[] { Key.D1, Key.NumPad1 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit0, 10, 9, 2, 2, new[] { new[] { Key.D0, Key.NumPad0 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Exp, 10, 12, 2, 2, new[] { new[] { Key.E } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit8, 12, 3, 2, 2, new[] { new[] { Key.D8, Key.NumPad8 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit5, 12, 5, 2, 2, new[] { new[] { Key.D5, Key.NumPad5 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit2, 12, 7, 2, 2, new[] { new[] { Key.D2, Key.NumPad2 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Sign, 12, 9, 2, 2, new[] { new[] { Key.M } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.Custom, 12, 12, 2, 2, new Key[][] { }, CommandExtensions.CustomButtonTooltip, iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit9, 14, 3, 2, 2, new[] { new[] { Key.D9, Key.NumPad9 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit6, 14, 5, 2, 2, new[] { new[] { Key.D6, Key.NumPad6 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Digit3, 14, 7, 2, 2, new[] { new[] { Key.D3, Key.NumPad3 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Dot, 14, 9, 2, 2, new[] { new[] { Key.OemComma, Key.OemPeriod, Key.Decimal } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit9, 14, 3, 2, 2, new[] { new[] { Key.D9, Key.NumPad9 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit6, 14, 5, 2, 2, new[] { new[] { Key.D6, Key.NumPad6 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Digit3, 14, 7, 2, 2, new[] { new[] { Key.D3, Key.NumPad3 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Dot, 14, 9, 2, 2, new[] { new[] { Key.OemComma, Key.OemPeriod, Key.Decimal } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.Format, 14, 12, 2, 1, new Key[][] { }, "Change display format", iconPath, mainGrid, false, false);
 
-            CreateButton(Command.Add, 17, 3, 2, 2, new[] { new[] { Key.Add }, new[] { Key.OemPlus } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Mul, 17, 5, 2, 2, new[] { new[] { Key.Multiply }, new[] { Key.D8 } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.Add, 17, 3, 2, 2, new[] { new[] { Key.Add }, new[] { Key.OemPlus } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Mul, 17, 5, 2, 2, new[] { new[] { Key.Multiply }, new[] { Key.D8 } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.ExchXy, 17, 7, 2, 2, new[] { new[] { Key.Y } }, "Swap X and Y", iconPath, mainGrid, false, true);
             CreateButton(Command.XToMem, 17, 10, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.M } }, "STO", iconPath, mainGrid, false, true);
-            CreateButton(Command.Mem0, 17, 12, 1, 1, new[] { new Key[] { }, new Key[] { }, new[] { Key.D1 } }, "", iconPath, mainGrid, false, false);
-            CreateButton(Command.Mem1, 17, 13, 1, 1, new[] { new Key[] { }, new Key[] { }, new[] { Key.D2 } }, "", iconPath, mainGrid, false, false);
-            CreateButton(Command.Sub, 19, 3, 2, 2, new[] { new[] { Key.Subtract, Key.OemMinus } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Div, 19, 5, 2, 2, new[] { new[] { Key.Divide, Key.Oem2 } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.LeftParen, 19, 7, 2, 2, new[] { new[] { Key.Oem4 }, new[] { Key.D9 } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.Mem0, 17, 12, 1, 1, new[] { new Key[] { }, new Key[] { }, new[] { Key.D1 } }, null, iconPath, mainGrid, false, false);
+            CreateButton(Command.Mem1, 17, 13, 1, 1, new[] { new Key[] { }, new Key[] { }, new[] { Key.D2 } }, null, iconPath, mainGrid, false, false);
+            CreateButton(Command.Sub, 19, 3, 2, 2, new[] { new[] { Key.Subtract, Key.OemMinus } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Div, 19, 5, 2, 2, new[] { new[] { Key.Divide, Key.Oem2 } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.LeftParen, 19, 7, 2, 2, new[] { new[] { Key.Oem4 }, new[] { Key.D9 } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.StackDown, 19, 7, 2, 2, new[] { new[] { Key.Down } }, "Scroll stack down", iconPath, mainGrid, false, true);
             CreateButton(Command.MemToX, 19, 10, 2, 2, new[] { new Key[] { }, new Key[] { }, new[] { Key.R } }, "RCL", iconPath, mainGrid, false, true);
-            CreateButton(Command.ClearAll, 21, 3, 2, 2, new[] { new[] { Key.Escape } }, "", iconPath, mainGrid, false, true);
-            CreateButton(Command.Eq, 21, 5, 2, 2, new[] { new[] { Key.OemPlus } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.ClearAll, 21, 3, 2, 2, new[] { new[] { Key.Escape } }, null, iconPath, mainGrid, false, true);
+            CreateButton(Command.Eq, 21, 5, 2, 2, new[] { new[] { Key.OemPlus } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.Enter, 21, 5, 2, 2, new[] { new[] { Key.Return } }, "Enter", iconPath, mainGrid, false, true);
-            CreateButton(Command.RightParen, 21, 7, 2, 2, new[] { new[] { Key.Oem6 }, new[] { Key.D0 } }, "", iconPath, mainGrid, false, true);
+            CreateButton(Command.RightParen, 21, 7, 2, 2, new[] { new[] { Key.Oem6 }, new[] { Key.D0 } }, null, iconPath, mainGrid, false, true);
             CreateButton(Command.StackUp, 21, 7, 2, 2, new[] { new[] { Key.Up } }, "Scroll stack up", iconPath, mainGrid, false, true);
             CreateButton(Command.MemPlus, 21, 10, 2, 2, new Key[][] { }, "Add X to memory", iconPath, mainGrid, false, true);
             CreateButton(Command.Undo, 23, 3, 2, 2, new[] { new[] { Key.Back, Key.Left }, new Key[] { }, new[] { Key.Z } }, "Undo", iconPath, mainGrid, false, true);
