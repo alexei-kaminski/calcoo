@@ -866,9 +866,7 @@ namespace Calcoo
                     _mem[ActiveMemNum] = X;
                     break;
                 case Command.ExchXMem:
-                    double tmp = X;
-                    X = _mem[ActiveMemNum];
-                    _mem[ActiveMemNum] = tmp;
+                    (X, _mem[ActiveMemNum]) = (_mem[ActiveMemNum], X);
                     break;
                 default:
                     throw new Exception("unknown memory op " + command);
