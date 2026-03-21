@@ -6,18 +6,14 @@ namespace Calcoo
     {
         private const double Epsilon = 1e-15;
 
-        /*
-         * Factorial using the Stirling formula for large arguments.
-         */
+        // Factorial using the Stirling formula for large arguments.
         public static double Fact(double x, int nSignificantDigits)
         {
-            /*
-             * if calcoo is unable to show all the meaningful digits of the result,
-             * there is no point in the exact calculation, so we can use the
-             * Stirling formula for the approximate calculation. Otherwise, we call
-             * FactJr(x), which calculates the factorial of integer numbers exactly,
-             * but is slower
-             */
+            // if calcoo is unable to show all the meaningful digits of the result,
+            // there is no point in the exact calculation, so we can use the
+            // Stirling formula for the approximate calculation. Otherwise, we call
+            // FactJr(x), which calculates the factorial of integer numbers exactly,
+            // but is slower
             // log_10 of the Stirling formula
             double log10XFact = (x + 0.5) * Math.Log10(x) - x * Math.Log10(Math.E);
             if (log10XFact > nSignificantDigits)
@@ -53,19 +49,15 @@ namespace Calcoo
                           ))))))));
         }
 
-        /*
-         * An estimate whether x can fit into display with nExpDigits for the exp part.
-         */
+        // An estimate whether x can fit into display with nExpDigits for the exp part.
 
         public static bool FactCanDo(double x,
             int nExpDigits)
         {
-            /*
-             * determines if the factorial is too large to be shown by calcoo this
-             * is only an estimate, it still can turn out to be larger than the
-             * calcoo's max number, but if it returns FALSE it is at least
-             * guaranteed that the factorial will fit into double
-             */
+            // determines if the factorial is too large to be shown by calcoo this
+            // is only an estimate, it still can turn out to be larger than the
+            // calcoo's max number, but if it returns FALSE it is at least
+            // guaranteed that the factorial will fit into double
 
             if (x < 0.0)
                 return false;
@@ -75,9 +67,7 @@ namespace Calcoo
             return (log10XFact < Math.Pow(10, nExpDigits));
         }
 
-        /**
-     * We have to add up the numbers cleverly to have 100.1 - 100.0 - 0.1 == 0.
-     */
+        // We have to add up the numbers cleverly to have 100.1 - 100.0 - 0.1 == 0.
 
         public static double SmartSum(double a,
             double b,

@@ -38,7 +38,7 @@ namespace Calcoo.Test
             dbd = InitDoubleByDigit(new[] { 1, 2, 3 }, new[] { 4, 5, 6 }, new[] { 7, 8, 9 }, -1, -1, true);
             clonedDbd = dbd.Clone();
             Assert.That(clonedDbd.IsOverflow(), Is.EqualTo(true), "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] { 1, 2, 3 }, new[] { 4, 5, 6 }, new[] { 0, 0 }, -1, 1, false, "4");
 
             dbd = InitDoubleByDigit(new[] { 1, 2, 3 }, new[] { 4, 5, 6 }, new[] { 7, 8, 9 }, -1, -1, true);
-            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); // the content should not matter if overflown
         }
 
         [Test]
@@ -94,57 +94,53 @@ namespace Calcoo.Test
         [Test]
         public void FromDoubleTest()
         {
-            /*
-         * numbers causing overflow
-         */
+            // numbers causing overflow
 
             // not numbers
             DoubleByDigit dbd = DoubleByDigit.FromDouble(double.NaN, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
-            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); // the content should not matter if overflown
 
             dbd = DoubleByDigit.FromDouble(double.PositiveInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
-            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); // the content should not matter if overflown
 
             dbd = DoubleByDigit.FromDouble(double.NegativeInfinity, MantissaLength, ExpLength, false, 1, MantissaLength,
                 false, 10);
-            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); /*- the content should not matter if overflown */
+            Assert.That(dbd.IsOverflow(), Is.EqualTo(true), "overflown"); // the content should not matter if overflown
 
             // too large to be displayed
             double d = 1e101;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
 
             d = -1e101;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
 
             d = 1e100;
             dbd = DoubleByDigit.FromDouble(1e100, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
 
             d = -1e100;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
 
             d = 9.99999999999999999999e99; // overflow caused by rounding
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
 
             d = -9.99999999999999999999e99;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
             Assert.That(dbd.IsOverflow(), Is.EqualTo(true), d.ToString(CultureInfo.CurrentCulture) + "overflown");
-            /*- the content should not matter if overflown */
+            // the content should not matter if overflown
 
-            /*
-         * numbers displayed in fixed format
-         */
+            // numbers displayed in fixed format
 
             // so small it is zero
             d = 1e-100;
@@ -258,9 +254,7 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] { 1 }, new int[] { }, new int[] { }, -1, 1, false,
                 d.ToString(CultureInfo.CurrentCulture));
 
-            /*
-         * numbers requiring exponential format
-         */
+            // numbers requiring exponential format
             // regular number, mantissa shorter than MantissaLength
             d = 2.345e23;
             dbd = DoubleByDigit.FromDouble(d, MantissaLength, ExpLength, false, 1, MantissaLength, false, 10);
@@ -316,9 +310,7 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] { 1 }, new int[] { }, new[] { 9, 9 }, -1, -1,
                 false, d.ToString(CultureInfo.CurrentCulture));
 
-            /*
-         * numbers forced into exponential format
-         */
+            // numbers forced into exponential format
             // regular number, mantissa shorter than MantissaLength
             // exp format on its own, just checking that forcing does not spoil
             // anything
@@ -407,9 +399,7 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] { 2 }, new[] { 3, 4, 5 }, new[] { 0, 1 }, -1, -1, false,
                 d.ToString(CultureInfo.CurrentCulture) + testSubcase);
 
-            /*
-         * numbers forced into engineering format
-         */
+            // numbers forced into engineering format
             // regular number, mantissa shorter than MantissaLength
             testSubcase = ", forced into eng";
             d = 2.345e23;
@@ -488,9 +478,7 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] { 2, 3, 4 }, new[] { 5 }, new[] { 0, 3 }, -1, -1, false,
                 d.ToString(CultureInfo.CurrentCulture) + testSubcase);
 
-            /*
-         * truncation
-         */
+            // truncation
             testSubcase = ", truncated";
 
             // exp number, round up
@@ -570,9 +558,7 @@ namespace Calcoo.Test
             CompareDoubleByDigit(dbd, new[] { 2, 3, 0 }, new int[] { }, new int[] { }, -1, 1,
                 false, d.ToString(CultureInfo.CurrentCulture) + testSubcase);
 
-            /*
-         * truncation
-         */
+            // truncation
             testSubcase = ", truncated, trailing zeros kept";
 
             // fix number, round up after decimal point

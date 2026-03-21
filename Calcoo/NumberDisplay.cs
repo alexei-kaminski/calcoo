@@ -45,7 +45,7 @@ namespace Calcoo
 
             int displayExpOffsetX = cellWidth * (inputLength + 1) + dotWidth;
 
-            /* Things to show */
+            // Things to show
             for (int n = 0; n < numBase; ++n)
             {
                 string thisDigitIcon = iconSet + "Digit" + n;

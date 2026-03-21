@@ -282,34 +282,28 @@ namespace Calcoo
 
             // x is not zero, continue
 
-            /*
-             * Now, the special cases have been considered, and we can proceed with
-             * a regular case. This is not trivial, however. The main problem arises
-             * when x=0.9999999999999...., so rounding of x for displaying may lead
-             * to changes in the exp part, see the "!!!" comment
-             */
+            // Now, the special cases have been considered, and we can proceed with
+            // a regular case. This is not trivial, however. The main problem arises
+            // when x=0.9999999999999...., so rounding of x for displaying may lead
+            // to changes in the exp part, see the "!!!" comment
 
             // sign - note the sign of zero is "+", like in all calculators
             dbd._sign = x >= 0.0 ? 1 : -1;
 
             int exponent = (int)Math.Floor(Math.Log(absX) / Math.Log(dBase));
 
-            /* truncating all but first "nDigitsToRoundTo" digits of x */
-            /*
-             * for numbers <1 that can be displayed without exponent this
-             * interpretation will be redone later, because in this case additional
-             * rounding may be needed
-             */
+            // truncating all but first "nDigitsToRoundTo" digits of x
+            // for numbers <1 that can be displayed without exponent this
+            // interpretation will be redone later, because in this case additional
+            // rounding may be needed
 
             long abs1X = (long)Math.Round((absX / Math.Pow(dBase, exponent + 1))
                                            * Math.Pow(dBase, nDigitsToRoundTo));
 
             if (abs1X >= Math.Pow(dBase, nDigitsToRoundTo))
             {
-                /*
-                 * !!! rounding has promoted x to the next order - this is what we
-                 * mentioned before
-                 */
+                // !!! rounding has promoted x to the next order - this is what we
+                // mentioned before
                 abs1X = (long)Math.Round(abs1X / dBase);
                 exponent += 1;
             }
@@ -318,21 +312,19 @@ namespace Calcoo
                 && !forceExp
                 && (Math.Round(abs1X / dBase) >= Math.Pow(dBase, nDigitsToRoundTo - 1)))
             {
-                /*
-                 * a very special case of, say, x=0.999999997, when the introduction
-                 * of the zero before the dot changes the integer part from 0 to 1
-                 * thus leading to switching between the types of format
-                 * distinguished below
-                 */
+                // a very special case of, say, x=0.999999997, when the introduction
+                // of the zero before the dot changes the integer part from 0 to 1
+                // thus leading to switching between the types of format
+                // distinguished below
                 dbd._intField.Add(1);
                 return dbd;
             }
 
-            /* padding with zeros to the full mantissaLength */
+            // padding with zeros to the full mantissaLength
             abs1X *= (long)Math.Pow(dBase, mantissaLength - nDigitsToRoundTo);
 
             int[] digitsOfX = new int[mantissaLength];
-            /* interpreting meaningful digits of x */
+            // interpreting meaningful digits of x
             for (int i = mantissaLength - 1; i >= 0; --i)
             {
                 int lastDigit = (int)(abs1X % numBase);
@@ -340,18 +332,14 @@ namespace Calcoo
                 abs1X = (abs1X - lastDigit) / numBase;
             }
 
-            /*
-             * By this point, we have determined all the digits of x to display and
-             * the exponent. Now we are going to figure out what digits to put
-             * before and after the dot
-             */
+            // By this point, we have determined all the digits of x to display and
+            // the exponent. Now we are going to figure out what digits to put
+            // before and after the dot
 
             if ((0 <= exponent) && (exponent < mantissaLength) && !forceExp)
             {
-                /*
-                 * x can be displayed without the exponent and x>=1, so there is NO
-                 * need to introduce heading zeros
-                 */
+                // x can be displayed without the exponent and x>=1, so there is NO
+                // need to introduce heading zeros
                 int intLength = exponent + 1;
 
                 for (int i = 0; i < intLength; ++i)
@@ -364,10 +352,8 @@ namespace Calcoo
             else if ((-mantissaLength < exponent) && (exponent < 0)
                      && !forceExp)
             {
-                /*
-                 * x can be displayed without the exponent and x<1, so there IS a
-                 * need to introduce heading zeros
-                 */
+                // x can be displayed without the exponent and x<1, so there IS a
+                // need to introduce heading zeros
                 dbd._intField.Add(0);
 
                 int nHeadingZeros = -exponent - 1;
@@ -378,13 +364,13 @@ namespace Calcoo
                 if (nSignifDigits > nDigitsToRoundTo)
                     nSignifDigits = nDigitsToRoundTo;
 
-                /* separating first "signif_digit_num" digits of x */
+                // separating first "signif_digit_num" digits of x
                 long abs2X = (long)Math.Round((absX / Math.Pow(dBase, exponent + 1))
                                                * Math.Pow(dBase, nSignifDigits));
 
                 if (abs2X >= Math.Pow(dBase, nSignifDigits))
                 {
-                    /* rounding promoted x to the next order */
+                    // rounding promoted x to the next order
                     if (nSignifDigits < nDigitsToRoundTo)
                     {
                         nSignifDigits++;
@@ -400,7 +386,7 @@ namespace Calcoo
                     abs2X = (long)Math.Round((double)(abs2X - lastDigit) / numBase);
                 }
 
-                /* interpreting meaningful digits of x */
+                // interpreting meaningful digits of x
                 for (int i = 0; i < nSignifDigits; i++)
                 {
                     dbd._fracField.Add(digitsOfX[i]);
@@ -408,7 +394,7 @@ namespace Calcoo
             }
             else
             {
-                /* exponent is needed to display x */
+                // exponent is needed to display x
 
                 if (expDivisor == 1)
                 {
@@ -418,10 +404,8 @@ namespace Calcoo
                 }
                 else
                 {
-                    /*
-                     * engineering format: the exponent must be a multiple of
-                     * ExpDivisor
-                     */
+                    // engineering format: the exponent must be a multiple of
+                    // ExpDivisor
                     int exponentAdj = Math.Abs(exponent) % expDivisor;
                     if (exponent < 0 && exponentAdj != 0)
                         exponentAdj = expDivisor - exponentAdj;
@@ -435,14 +419,12 @@ namespace Calcoo
                     exponent -= exponentAdj;
                 }
 
-                /* processing exp part */
+                // processing exp part
                 int tmp = Math.Abs(exponent);
                 if (tmp != 0)
                 {
-                    /*
-                     * when exponential format is enforced, the exp part may be
-                     * equal to zero; there is no need to display it then
-                     */
+                    // when exponential format is enforced, the exp part may be
+                    // equal to zero; there is no need to display it then
                     var digitsOfExpReversed = new List<int>();
 
                     while (tmp > 0)
@@ -464,9 +446,9 @@ namespace Calcoo
                 }
             }
 
-            /* getting rid of trailing zeros in frac */
+            // getting rid of trailing zeros in frac
             while ((dbd._fracField.Count > 0) // if nothing more to trim, stop
-                   && (dbd._fracField[dbd._fracField.Count - 1] == 0) /*- if non-zero, stop */
+                   && (dbd._fracField[dbd._fracField.Count - 1] == 0) // if non-zero, stop
                    && !(forceRoundedMantissaLength
                         && (dbd._intField.Count + dbd._fracField.Count <= nDigitsToRoundTo)))
                 dbd._fracField.RemoveAt(dbd._fracField.Count - 1);
