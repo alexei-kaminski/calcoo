@@ -119,15 +119,26 @@ namespace Calcoo
 
             var source = HwndSource.FromHwnd(hwnd);
             source?.AddHook(WndProc);
+
+            var sysMenu = GetSystemMenu(hwnd, false);
+            InsertMenu(sysMenu, 0xF060, MF_BYCOMMAND | MF_STRING, IDM_STAY_ON_TOP, "Stay on top");
+            InsertMenu(sysMenu, 0xF060, MF_BYCOMMAND | MF_SEPARATOR, 0, null);
         }
 
 
+        private const int WM_SYSCOMMAND = 0x0112;
         private const int WM_SIZING = 0x0214;
         private const int WM_SETTINGCHANGE = 0x001A;
         private const int WMSZ_TOP = 3;
         private const int WMSZ_TOPLEFT = 4;
         private const int WMSZ_TOPRIGHT = 5;
         private const int WMSZ_BOTTOM = 6;
+        private const uint IDM_STAY_ON_TOP = 0xA000;
+        private const uint MF_SEPARATOR = 0x0800;
+        private const uint MF_STRING = 0x0000;
+        private const uint MF_BYCOMMAND = 0x0000;
+        private const uint MF_CHECKED = 0x0008;
+        private const uint MF_UNCHECKED = 0x0000;
 
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT { public int Left, Top, Right, Bottom; }
@@ -138,10 +149,27 @@ namespace Calcoo
         [DllImport("user32.dll")]
         private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern bool AppendMenu(IntPtr hMenu, uint uFlags, uint uIDNewItem, string? lpNewItem);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern bool InsertMenu(IntPtr hMenu, uint uPosition, uint uFlags, uint uIDNewItem, string? lpNewItem);
+
+        [DllImport("user32.dll")]
+        private static extern bool CheckMenuItem(IntPtr hMenu, uint uIDCheckItem, uint uCheck);
+
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WM_SETTINGCHANGE)
+            if (msg == WM_SYSCOMMAND && (wParam.ToInt64() & 0xFFF0) == IDM_STAY_ON_TOP)
+            {
+                SetStayOnTop(!Topmost);
+                handled = true;
+            }
+            else if (msg == WM_SETTINGCHANGE)
             {
                 bool isDark = App.DetectDarkMode();
                 if (isDark != App.IsDarkMode)
@@ -178,6 +206,13 @@ namespace Calcoo
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (Keyboard.Modifiers == ModifierKeys.Alt)
+            {
+                Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+                if (key == Key.Up)   { SetStayOnTop(true);  e.Handled = true; return; }
+                if (key == Key.Down) { SetStayOnTop(false); e.Handled = true; return; }
+            }
+
             Command? command = body.TranslateShortcut(e.Key, Keyboard.Modifiers.HasFlag(ModifierKeys.Control), Keyboard.Modifiers.HasFlag(ModifierKeys.Shift));
             switch (command)
             {
@@ -348,6 +383,14 @@ namespace Calcoo
             }
 
             body.Refresh(_cpu);
+        }
+
+        private void SetStayOnTop(bool value)
+        {
+            Topmost = value;
+            var hwnd = new WindowInteropHelper(this).Handle;
+            var sysMenu = GetSystemMenu(hwnd, false);
+            CheckMenuItem(sysMenu, IDM_STAY_ON_TOP, MF_BYCOMMAND | (Topmost ? MF_CHECKED : MF_UNCHECKED));
         }
 
         private void PushUndo()

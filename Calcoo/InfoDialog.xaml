@@ -92,6 +92,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <!-- Headers -->
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Shortcut" FontWeight="SemiBold" HorizontalAlignment="Right" Margin="0,3"/>
@@ -125,9 +126,9 @@
                             <TextBlock Grid.Row="13" Grid.Column="2" Text="evaluate (algebraic mode)" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="14" Grid.Column="0" Text="Enter" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="14" Grid.Column="2" Text="enter (RPN mode)" HorizontalAlignment="Left" Margin="0,3"/>
-                            <TextBlock Grid.Row="15" Grid.Column="0" Text="BackSpace Ctrl-z LeftArrow" HorizontalAlignment="Right" Margin="0,3"/>
+                            <TextBlock Grid.Row="15" Grid.Column="0" Text="BackSpace Ctrl-z Left" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="15" Grid.Column="2" Text="undo" HorizontalAlignment="Left" Margin="0,3"/>
-                            <TextBlock Grid.Row="16" Grid.Column="0" Text="Ctrl-y RightArrow" HorizontalAlignment="Right" Margin="0,3"/>
+                            <TextBlock Grid.Row="16" Grid.Column="0" Text="Ctrl-y Right" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="16" Grid.Column="2" Text="redo" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="17" Grid.Column="0" Text="Ctrl-c Ctrl-v" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="17" Grid.Column="2" Text="copy paste" HorizontalAlignment="Left" Margin="0,3"/>
@@ -137,7 +138,7 @@
                             <TextBlock Grid.Row="19" Grid.Column="2" Text="change exp sign" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="20" Grid.Column="0" Text="m" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="20" Grid.Column="2" Text="change the current sign" HorizontalAlignment="Left" Margin="0,3"/>
-                            <TextBlock Grid.Row="21" Grid.Column="0" Text="UpArrow/DownArrow" HorizontalAlignment="Right" Margin="0,3"/>
+                            <TextBlock Grid.Row="21" Grid.Column="0" Text="Up/Down" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="21" Grid.Column="2" Text="scroll stack up/down (RPN mode)" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="22" Grid.Column="0" Text="y" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="22" Grid.Column="2" Text="swap registers X and Y" HorizontalAlignment="Left" Margin="0,3"/>
@@ -151,8 +152,10 @@
                             <TextBlock Grid.Row="26" Grid.Column="2" Text="info/help" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="27" Grid.Column="0" Text="!" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="27" Grid.Column="2" Text="settings" HorizontalAlignment="Left" Margin="0,3"/>
-                            <TextBlock Grid.Row="28" Grid.Column="0" Text="Ctrl-q" HorizontalAlignment="Right" Margin="0,3"/>
-                            <TextBlock Grid.Row="28" Grid.Column="2" Text="exit" HorizontalAlignment="Left" Margin="0,3"/>
+                            <TextBlock Grid.Row="28" Grid.Column="0" Text="Alt-Up/Alt-Down" HorizontalAlignment="Right" Margin="0,3"/>
+                            <TextBlock Grid.Row="28" Grid.Column="2" Text="stay on top on/off" HorizontalAlignment="Left" Margin="0,3"/>
+                            <TextBlock Grid.Row="29" Grid.Column="0" Text="Ctrl-q" HorizontalAlignment="Right" Margin="0,3"/>
+                            <TextBlock Grid.Row="29" Grid.Column="2" Text="exit" HorizontalAlignment="Left" Margin="0,3"/>
                         </Grid>
                         </ScrollViewer>
                     </Border>
