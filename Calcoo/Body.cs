@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Threading;
 
 namespace Calcoo
@@ -127,13 +128,13 @@ namespace Calcoo
                 newButton.ToolTip = tt;
             }
 
-            var frm = new Frame();
             newButton.Name = function.ToString();
             if (iconSet != null)
             {
-                frm.Source = new Uri("pack://application:,,,/Resources" + iconSet + newButton.Name + ".xaml",
+                var uri = new Uri("pack://application:,,,/Resources" + iconSet + newButton.Name + ".xaml",
                     UriKind.Absolute);
-                newButton.Content = frm;
+                var stream = Application.GetResourceStream(uri)!.Stream;
+                newButton.Content = (UIElement)XamlReader.Load(stream);
             }
 
             Grid.SetColumn(newButton, xPos);
