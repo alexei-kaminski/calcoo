@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -67,7 +66,7 @@ namespace Calcoo
             displayCanvas.RegisterOperationDisplays[1] = Register1OperationCanvas;
             displayCanvas.RegisterOperationDisplays[2] = Register2OperationCanvas;
 
-            body = new Body(MainGrid, displayCanvas, NumBase, InputLength, ExpInputLength);
+            body = new Body(MainGrid, displayCanvas, NumBase, InputLength, ExpInputLength, ProcessCommand);
 
             body.DisplayOnlyActiveButtonsForMode(settings.CurrentMode);
             body.ArcAutorelease = settings.ArcAutorelease;
@@ -175,18 +174,6 @@ namespace Calcoo
                 handled = true;
             }
             return IntPtr.Zero;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (e.Source is ToggleButton)
-                return;
-
-            if (e.Source is not Button b)
-                return;
-
-            if (Enum.TryParse(b.Name, out Command command))
-                ProcessCommand(command);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

@@ -17,6 +17,7 @@ namespace Calcoo
         private readonly Dictionary<Command, ToggleButton> _toggleButtons;
         private readonly Dictionary<Key, Command>[] _shortcuts;
         private readonly Dictionary<Command, DispatcherTimer> _highlightTimers = new();
+        private readonly Action<Command> _onButtonClick;
 
         private readonly NumberDisplay _mainDisplay;
         private IDoubleByDigitGetters? _mainDisplayContent;
@@ -110,6 +111,7 @@ namespace Calcoo
             else
             {
                 var b = new Button();
+                b.Click += (_, _) => _onButtonClick(function);
                 _buttons.Add(function, b);
                 newButton = b;
             }
@@ -191,8 +193,9 @@ namespace Calcoo
             timer.Start();
         }
 
-        public Body(Grid mainGrid, DisplayCanvas displayCanvas, int numBase, int inputLength, int expInputLength)
+        public Body(Grid mainGrid, DisplayCanvas displayCanvas, int numBase, int inputLength, int expInputLength, Action<Command> onButtonClick)
         {
+            _onButtonClick = onButtonClick;
             _buttons = new Dictionary<Command, Button>();
             _toggleButtons = new Dictionary<Command, ToggleButton>();
             _shortcuts = new Dictionary<Key, Command>[4];

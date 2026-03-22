@@ -4,7 +4,6 @@
         xmlns:local="clr-namespace:Calcoo"
         Title="Calcoo" Height="270"
         Icon="pack://application:,,,/Resources/calcoo.ico"
-        Button.Click="Button_Click"
         KeyDown="Window_KeyDown"
         Background="{DynamicResource AppBackground}">
 
