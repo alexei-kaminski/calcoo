@@ -178,13 +178,13 @@ namespace Calcoo
             if (_highlightTimers.TryGetValue(command, out var existing))
                 existing.Stop();
 
-            button.Tag = "Highlighted";
+            ButtonProperties.SetIsHighlighted(button, true);
 
             var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(150) };
             timer.Tick += (s, e) =>
             {
                 timer.Stop();
-                button.Tag = null;
+                ButtonProperties.SetIsHighlighted(button, false);
                 _highlightTimers.Remove(command);
             };
             _highlightTimers[command] = timer;

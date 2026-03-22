@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Calcoo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Calcoo"
         Title="Calcoo" Height="270"
         Icon="pack://application:,,,/Resources/calcoo.ico"
         Button.Click="Button_Click"
@@ -37,7 +38,7 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="content" Property="Opacity" Value="0.5" />
                             </Trigger>
-                            <Trigger Property="Tag" Value="Highlighted">
+                            <Trigger Property="local:ButtonProperties.IsHighlighted" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -71,7 +72,7 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="content" Property="Opacity" Value="0.5" />
                             </Trigger>
-                            <Trigger Property="Tag" Value="Highlighted">
+                            <Trigger Property="local:ButtonProperties.IsHighlighted" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBg}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
