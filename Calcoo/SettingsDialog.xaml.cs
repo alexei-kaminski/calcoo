@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace Calcoo
 {
@@ -88,103 +87,119 @@ namespace Calcoo
             }
         }
 
-        private void Settings_Button_Click(object sender, RoutedEventArgs e)
+        private void ModeAlgebraic_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Source is RadioButton b)
-            {
-                switch (b.Name)
-                {
-                    case "ModeAlgebraic" when NewSettings.CurrentMode != Settings.Mode.Alg:
-                        RpnStackInfinite.IsEnabled = false;
-                        RpnStackXyzt.IsEnabled = false;
-                        RpnEnterTraditional.IsEnabled = false;
-                        RpnEnterHp28.IsEnabled = false;
-                        NewSettings.CurrentMode = Settings.Mode.Alg;
-                        WasChanged = true;
-                        break;
-                    case "ModeRpn" when NewSettings.CurrentMode != Settings.Mode.Rpn:
-                        RpnStackInfinite.IsEnabled = true;
-                        RpnStackXyzt.IsEnabled = true;
-                        RpnEnterTraditional.IsEnabled = true;
-                        RpnEnterHp28.IsEnabled = true;
-                        NewSettings.CurrentMode = Settings.Mode.Rpn;
-                        WasChanged = true;
-                        break;
-                    case "RpnEnterTraditional" when NewSettings.CurrentEnterMode != Settings.EnterMode.Traditional:
-                        NewSettings.CurrentEnterMode = Settings.EnterMode.Traditional;
-                        WasChanged = true;
-                        break;
-                    case "RpnEnterHp28" when NewSettings.CurrentEnterMode != Settings.EnterMode.Hp28:
-                        NewSettings.CurrentEnterMode = Settings.EnterMode.Hp28;
-                        WasChanged = true;
-                        break;
-                    case "RpnStackInfinite" when NewSettings.CurrentStackMode != Settings.StackMode.Infinite:
-                        NewSettings.CurrentStackMode = Settings.StackMode.Infinite;
-                        WasChanged = true;
-                        break;
-                    case "RpnStackXyzt" when NewSettings.CurrentStackMode != Settings.StackMode.Xyzt:
-                        NewSettings.CurrentStackMode = Settings.StackMode.Xyzt;
-                        WasChanged = true;
-                        break;
-                    case "PasteParsingHeuristic" when NewSettings.CurrentPasteParsingAlgorithm != Settings.PasteParsingAlgorithm.Heuristic:
-                        NewSettings.CurrentPasteParsingAlgorithm = Settings.PasteParsingAlgorithm.Heuristic;
-                        WasChanged = true;
-                        break;
-                    case "PasteParsingLocaleBased" when NewSettings.CurrentPasteParsingAlgorithm != Settings.PasteParsingAlgorithm.LocaleBased:
-                        NewSettings.CurrentPasteParsingAlgorithm = Settings.PasteParsingAlgorithm.LocaleBased;
-                        WasChanged = true;
-                        break;
-                }
-                return;
-            }
+            if (NewSettings.CurrentMode == Settings.Mode.Alg) return;
+            RpnStackInfinite.IsEnabled = false;
+            RpnStackXyzt.IsEnabled = false;
+            RpnEnterTraditional.IsEnabled = false;
+            RpnEnterHp28.IsEnabled = false;
+            NewSettings.CurrentMode = Settings.Mode.Alg;
+            WasChanged = true;
+        }
 
-            if (e.Source is CheckBox cb)
-            {
-                bool value = cb.IsChecked == true;
-                switch (cb.Name)
-                {
-                    case "AutoreleaseArcButton" when NewSettings.ArcAutorelease != value:
-                        NewSettings.ArcAutorelease = value;
-                        WasChanged = true;
-                        break;
-                    case "AutoreleaseHypButton" when NewSettings.HypAutorelease != value:
-                        NewSettings.HypAutorelease = value;
-                        WasChanged = true;
-                        break;
-                    case "RoundingOutputCheckBox" when NewSettings.Round != value:
-                        NewSettings.Round = value;
-                        UpdateRoundingControlsEnabled(NewSettings.Round);
-                        WasChanged = true;
-                        break;
-                    case "TruncateZerosCheckBox" when NewSettings.TruncateZeros != value:
-                        NewSettings.TruncateZeros = value;
-                        WasChanged = true;
-                        break;
-                }
-                return;
-            }
+        private void ModeRpn_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentMode == Settings.Mode.Rpn) return;
+            RpnStackInfinite.IsEnabled = true;
+            RpnStackXyzt.IsEnabled = true;
+            RpnEnterTraditional.IsEnabled = true;
+            RpnEnterHp28.IsEnabled = true;
+            NewSettings.CurrentMode = Settings.Mode.Rpn;
+            WasChanged = true;
+        }
 
-            if (e.Source is Button btn)
+        private void RpnEnterTraditional_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentEnterMode == Settings.EnterMode.Traditional) return;
+            NewSettings.CurrentEnterMode = Settings.EnterMode.Traditional;
+            WasChanged = true;
+        }
+
+        private void RpnEnterHp28_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentEnterMode == Settings.EnterMode.Hp28) return;
+            NewSettings.CurrentEnterMode = Settings.EnterMode.Hp28;
+            WasChanged = true;
+        }
+
+        private void RpnStackInfinite_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentStackMode == Settings.StackMode.Infinite) return;
+            NewSettings.CurrentStackMode = Settings.StackMode.Infinite;
+            WasChanged = true;
+        }
+
+        private void RpnStackXyzt_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentStackMode == Settings.StackMode.Xyzt) return;
+            NewSettings.CurrentStackMode = Settings.StackMode.Xyzt;
+            WasChanged = true;
+        }
+
+        private void PasteParsingLocaleBased_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentPasteParsingAlgorithm == Settings.PasteParsingAlgorithm.LocaleBased) return;
+            NewSettings.CurrentPasteParsingAlgorithm = Settings.PasteParsingAlgorithm.LocaleBased;
+            WasChanged = true;
+        }
+
+        private void PasteParsingHeuristic_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentPasteParsingAlgorithm == Settings.PasteParsingAlgorithm.Heuristic) return;
+            NewSettings.CurrentPasteParsingAlgorithm = Settings.PasteParsingAlgorithm.Heuristic;
+            WasChanged = true;
+        }
+
+        private void AutoreleaseArcButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool value = AutoreleaseArcButton.IsChecked == true;
+            if (NewSettings.ArcAutorelease == value) return;
+            NewSettings.ArcAutorelease = value;
+            WasChanged = true;
+        }
+
+        private void AutoreleaseHypButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool value = AutoreleaseHypButton.IsChecked == true;
+            if (NewSettings.HypAutorelease == value) return;
+            NewSettings.HypAutorelease = value;
+            WasChanged = true;
+        }
+
+        private void RoundingOutputCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            bool value = RoundingOutputCheckBox.IsChecked == true;
+            if (NewSettings.Round == value) return;
+            NewSettings.Round = value;
+            UpdateRoundingControlsEnabled(NewSettings.Round);
+            WasChanged = true;
+        }
+
+        private void TruncateZerosCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            bool value = TruncateZerosCheckBox.IsChecked == true;
+            if (NewSettings.TruncateZeros == value) return;
+            NewSettings.TruncateZeros = value;
+            WasChanged = true;
+        }
+
+        private void SettingsOk_Click(object sender, RoutedEventArgs e) => Close();
+
+        private void SettingsCancel_Click(object sender, RoutedEventArgs e)
+        {
+            WasChanged = false;
+            Close();
+        }
+
+        private void CustomButton_Click(object sender, RoutedEventArgs e)
+        {
+            var customButtonDialog = new CustomButtonDialog(NewSettings.CustomButtonCommand);
+            customButtonDialog.Owner = this;
+            if (customButtonDialog.ShowDialog() == true)
             {
-                switch (btn.Name)
-                {
-                    case "SettingsOk":
-                        Close();
-                        break;
-                    case "SettingsCancel":
-                        WasChanged = false;
-                        Close();
-                        break;
-                    case "CustomButton":
-                        var customButtonDialog = new CustomButtonDialog(NewSettings.CustomButtonCommand);
-                        customButtonDialog.Owner = this;
-                        if (customButtonDialog.ShowDialog() == true)
-                        {
-                            NewSettings.CustomButtonCommand = customButtonDialog.CommandText;
-                            WasChanged = true;
-                        }
-                        break;
-                }
+                NewSettings.CustomButtonCommand = customButtonDialog.CommandText;
+                WasChanged = true;
             }
         }
     }
