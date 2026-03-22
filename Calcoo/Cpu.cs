@@ -667,7 +667,7 @@ namespace Calcoo
         private void ExecuteLeftParen()
         {
             if (CurrentMode == Settings.Mode.Rpn)
-                throw new Exception("cannot be called in RPN mode");
+                throw new Exception("'(' cannot be called in RPN mode");
 
             if (_lastAction == Action.Binop)
                 _stack.HeadParenAdd();
@@ -676,7 +676,7 @@ namespace Calcoo
         private void ExecuteRightParen()
         {
             if (CurrentMode == Settings.Mode.Rpn)
-                throw new Exception("cannot be called in RPN mode");
+                throw new Exception("')' cannot be called in RPN mode");
 
             FinalizeInput();
 

@@ -123,6 +123,7 @@ namespace Calcoo
 
         private static readonly Dictionary<(Command, bool, bool), Command> _trigDressed = new()
         {
+            // function     arc    hyp
             { (Command.Sin, false, false), Command.Sin   },
             { (Command.Sin, true,  false), Command.Asin  },
             { (Command.Sin, false, true),  Command.Sinh  },
