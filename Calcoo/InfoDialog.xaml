@@ -210,10 +210,10 @@
                             <TextBlock TextAlignment="Center" Margin="0,4">Calcoo — scientific calculator. Version <Run x:Name="AboutVersionRun"/>.</TextBlock>
                             <TextBlock x:Name="AboutCopyrightText" TextAlignment="Center" Margin="0,4"/>
                             <TextBlock TextAlignment="Center" Margin="0,4">
-                                Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/alexei-kaminski/calcoo">https://github.com/alexei-kaminski/calcoo</Hyperlink>
+                                Webpage: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/alexei-kaminski/calcoo">https://github.com/alexei-kaminski/calcoo</Hyperlink><Run>.</Run>
                             </TextBlock>
                             <TextBlock TextAlignment="Center" Margin="0,4">
-                                Feedback: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="mailto:calcoo.calculator@gmail.com">calcoo.calculator@gmail.com</Hyperlink>
+                                Feedback: <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="mailto:calcoo.calculator@gmail.com">calcoo.calculator@gmail.com</Hyperlink><Run>.</Run>
                             </TextBlock>
                         </StackPanel>
                     </Border>

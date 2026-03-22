@@ -18,7 +18,7 @@ namespace Calcoo
             var version = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 ?.InformationalVersion.Split('+')[0] ?? "unknown";
-            Title = $"Calcoo Info — {version}";
+            Title = $"Calcoo {version}";
             LicenseVersionRun.Text = version;
             AboutVersionRun.Text = version;
             var copyright = Assembly.GetExecutingAssembly()

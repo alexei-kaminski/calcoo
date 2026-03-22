@@ -249,6 +249,10 @@ namespace Calcoo
                         {
                             _cpu.CurrentMode = settingsDialog.NewSettings.CurrentMode;
                             body.DisplayOnlyActiveButtonsForMode(settingsDialog.NewSettings.CurrentMode);
+                            _undoStack.Clear();
+                            _redoStack.Clear();
+                            body.UndoEnabled = false;
+                            body.RedoEnabled = false;
                         }
                         body.ArcAutorelease = settingsDialog.NewSettings.ArcAutorelease;
                         body.HypAutorelease = settingsDialog.NewSettings.HypAutorelease;
