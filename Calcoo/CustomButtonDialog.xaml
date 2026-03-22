@@ -6,16 +6,27 @@
         Background="{DynamicResource AppBackground}" Foreground="{DynamicResource TextForeground}"
         FontFamily="Segoe UI Variable, Segoe UI" FontSize="14">
     <Window.Resources>
-        <Style x:Key="CommandLabel" TargetType="Label">
+        <Style x:Key="CommandLabelStyle" TargetType="Button">
             <Setter Property="Foreground" Value="{DynamicResource AccentButtonBackground}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Padding" Value="4,2"/>
             <Setter Property="FontSize" Value="12"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.7"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -52,98 +63,98 @@
                     <!-- Math functions -->
                     <StackPanel Grid.Column="0">
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Log10" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="TenToX" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Ln" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="EtoX" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Pow" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Log10" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="TenToX" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Ln" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="EtoX" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Pow" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Sqrt" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Sqr" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="InvX" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Pi" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Fact" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Sqrt" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Sqr" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="InvX" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Pi" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Fact" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Sin" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Asin" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Sinh" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Asinh" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Sin" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Asin" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Sinh" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Asinh" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Cos" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Acos" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Cosh" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Acosh" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Cos" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Acos" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Cosh" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Acosh" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Tan" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Atan" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Tanh" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Atanh" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Tan" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Atan" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Tanh" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Atanh" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                     </StackPanel>
 
                     <!-- Digits -->
                     <StackPanel Grid.Column="2">
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Digit7" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Digit8" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Digit9" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Digit7" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Digit8" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Digit9" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Digit4" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Digit5" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Digit6" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Digit4" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Digit5" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Digit6" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Digit1" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Digit2" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Digit3" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Digit1" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Digit2" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Digit3" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Digit0" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Dot" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="MantissaSign" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Digit0" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Dot" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="MantissaSign" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Sign" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Exp" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="ExpSign" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Sign" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Exp" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="ExpSign" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                     </StackPanel>
 
                     <!-- Operations -->
                     <StackPanel Grid.Column="4">
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Add" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Sub" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Mul" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Div" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="ClearAll" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="Add" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Sub" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Mul" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Div" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="ClearAll" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="ExchXy" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="LeftParen" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="RightParen" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Eq" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="ExchXy" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="LeftParen" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="RightParen" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Eq" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="StackDown" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="StackUp" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Enter" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="ClearX" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="StackDown" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="StackUp" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Enter" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="ClearX" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="MemToX" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="MemPlus" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="XToMem" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="MemToX" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="MemPlus" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="XToMem" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="ExchXMem" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Mem0" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
-                            <Label Content="Mem1" MouseDown="CommandLabel_MouseDown" Style="{StaticResource CommandLabel}"/>
+                            <Button Content="ExchXMem" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Mem0" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Mem1" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

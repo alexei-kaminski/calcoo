@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Calcoo
 {
@@ -22,12 +21,11 @@ namespace Calcoo
             CommandText = "";
         }
 
-        private void CommandLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CommandLabel_Click(object sender, RoutedEventArgs e)
         {
-            var label = sender as Label;
-            if (label == null) return;
+            if (sender is not Button button) return;
 
-            string commandName = label.Content.ToString() ?? "";
+            string commandName = button.Content.ToString() ?? "";
             int caretIndex = CommandTextBox.CaretIndex;
             string text = CommandTextBox.Text;
 
