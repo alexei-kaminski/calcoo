@@ -200,6 +200,10 @@ namespace Calcoo
 
         private void ProcessCommand(Command command)
         {
+            // Enter and Eq share a shortcut: Enter maps to Eq in algebraic mode
+            if (command == Command.Enter && _cpu.CurrentMode == Settings.Mode.Alg)
+                command = Command.Eq;
+
             // ignore illegal commands invoked by shortcuts
             if (!command.IsValidButton(_cpu.CurrentMode)) return;
 
@@ -337,11 +341,7 @@ namespace Calcoo
                         if (body.HypAutorelease)
                             body.Hyp = false;
                     }
-                    else if (command == Command.Enter && _cpu.CurrentMode == Settings.Mode.Alg)
-                        // "ENTER" and "EQ" share a shortcut which calls Command.Enter
-                        _cpu.Execute(Command.Eq);
                     else
-                        // non-trigonometric buttons
                         _cpu.Execute(command);
 
                     break;
