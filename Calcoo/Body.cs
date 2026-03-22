@@ -18,6 +18,8 @@ namespace Calcoo
         private readonly Dictionary<Key, Command>[] _shortcuts;
         private readonly Dictionary<Command, DispatcherTimer> _highlightTimers = new();
         private readonly Action<Command> _onButtonClick;
+        private readonly Style _calcButtonStyle;
+        private readonly Style _calcToggleButtonStyle;
 
         private readonly NumberDisplay _mainDisplay;
         private IDoubleByDigitGetters? _mainDisplayContent;
@@ -105,12 +107,14 @@ namespace Calcoo
             if (isToggle)
             {
                 var tb = new ToggleButton();
+                tb.Style = _calcToggleButtonStyle;
                 _toggleButtons.Add(function, tb);
                 newButton = tb;
             }
             else
             {
                 var b = new Button();
+                b.Style = _calcButtonStyle;
                 b.Click += (_, _) => _onButtonClick(function);
                 _buttons.Add(function, b);
                 newButton = b;
@@ -196,6 +200,8 @@ namespace Calcoo
         public Body(Grid mainGrid, DisplayCanvas displayCanvas, int numBase, int inputLength, int expInputLength, Action<Command> onButtonClick)
         {
             _onButtonClick = onButtonClick;
+            _calcButtonStyle = (Style)Application.Current.FindResource("CalcButtonStyle");
+            _calcToggleButtonStyle = (Style)Application.Current.FindResource("CalcToggleButtonStyle");
             _buttons = new Dictionary<Command, Button>();
             _toggleButtons = new Dictionary<Command, ToggleButton>();
             _shortcuts = new Dictionary<Key, Command>[4];
