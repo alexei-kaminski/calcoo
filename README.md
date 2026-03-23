@@ -44,9 +44,9 @@ dotnet test Calcoo.Test/Calcoo.Test.csproj
 dotnet publish Calcoo -c Release -r win-x64 --no-self-contained
 ```
 
-Requires [Inno Setup 6](https://jrsoftware.org/isinfo.php). Output: `Calcoo.Setup/Release/Calcoo.Setup.exe`
+Requires [Inno Setup 6](https://jrsoftware.org/isinfo.php) to build. Output: `Calcoo.Setup/Release/Calcoo.Setup.exe`
 
-The installer is not required to compile and run Calcoo.
+The installer is not required to compile and run Calcoo. Inno Setup is not required to use the installer.
 
 ## License
 
