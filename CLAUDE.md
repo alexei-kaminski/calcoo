@@ -27,7 +27,7 @@ The app follows an MVC-like pattern with these core components:
 - **DoubleByDigit** (`DoubleByDigit.cs`) — Manages digit-by-digit numeric input (integer part, fractional part, exponent, signs). Converts accumulated digits to `double`. Implements `IDoubleByDigitGetters`.
 - **Body** (`Body.cs`) — Internal UI controller. Bridges CPU state to WPF display elements. Manages button collections, keyboard shortcut translation, Arc/Hyp toggle state, and display refresh.
 - **MainWindow** (`MainWindow.xaml.cs`) — WPF window and orchestrator. Owns the undo/redo stacks (`LinkedList<Cpu>`, max 200 entries). Routes button clicks and keyboard input through Body to CPU.
-- **Command** (`Command.cs`) — Enum of 76+ calculator commands with extension methods for mode-specific availability and trig function transformations.
+- **Command** (`Command.cs`) — Enum of 68 calculator commands with extension methods for mode-specific availability and trig function transformations.
 - **Settings** (`Settings.cs`) — Configuration enums (Mode, StackMode, AngleUnits, DisplayFormat, etc.) persisted to Windows Registry.
 - **MathUtil** (`MathUtil.cs`) — Factorial (Stirling + recursive), specialized trig/hyperbolic implementations with Taylor series.
 - **TextUtil** (`TextUtil.cs`) — Number formatting for display and clipboard parsing (locale-aware and heuristic modes).
@@ -41,13 +41,13 @@ User input → `MainWindow` → `Body.ButtonPressed()` → `Cpu` executes comman
 
 - **Framework:** NUnit 4.5
 - **Test files:** `CpuTest.cs`, `CpuStackTest.cs`, `DoubleByDigitTest.cs`, `MathUtilTest.cs`, `TextUtilTest.cs`, `CommandTest.cs`
-- **80 test methods** covering core computation logic
+- **92 test methods** covering core computation logic
 - Tests use `[TestFixture]` and `[Test]` attributes
 
 ## Key Design Details
 
 - All source lives in the `Calcoo` namespace (tests in `Calcoo.Test`)
 - CPU precision constant: `1e-15`
-- Two calculation modes affect command availability: RPN-only commands (Enter, RotateUp, RotateDown, ExchXY) and Alg-only commands (OpenBracket, CloseBracket, Equals)
+- Two calculation modes affect command availability: RPN-only commands (Enter, StackUp, StackDown, ExchXy) and Alg-only commands (LeftParen, RightParen, Eq)
 - Vector icon resources are in `Resources/Icons/` (XAML format)
 - SDK-style .csproj format with PackageReference
