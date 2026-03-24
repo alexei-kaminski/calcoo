@@ -333,5 +333,29 @@ namespace Calcoo.Test
             Assert.That(double.IsNaN(TextUtil.TextToDouble("12,345.6", false)), Is.True,
                 "ambiguous 12,345.6");
         }
+
+        [Test, SetCulture("en-US")]
+        public void NativeParserRespectsCulture_EnUS()
+        {
+            Assert.That(TextUtil.TextToDouble("3.14", true), Is.EqualTo(3.14).Within(1e-12));
+            // "1.000" in en-US: dot is decimal separator → 1.0
+            Assert.That(TextUtil.TextToDouble("1.000", true), Is.EqualTo(1.0).Within(1e-12));
+            // en-US format with both separators: comma=thousands, dot=decimal
+            Assert.That(TextUtil.TextToDouble("1,234.56", true), Is.EqualTo(1234.56).Within(1e-12));
+            // German format (dot=thousands, comma=decimal) fails in en-US
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("1.234,56", true)), Is.True);
+        }
+
+        [Test, SetCulture("de-DE")]
+        public void NativeParserRespectsCulture_DeDE()
+        {
+            Assert.That(TextUtil.TextToDouble("3,14", true), Is.EqualTo(3.14).Within(1e-12));
+            // "1.000" in de-DE: dot is thousands separator → 1000.0
+            Assert.That(TextUtil.TextToDouble("1.000", true), Is.EqualTo(1000.0).Within(1e-12));
+            // German format with both separators: dot=thousands, comma=decimal
+            Assert.That(TextUtil.TextToDouble("1.234,56", true), Is.EqualTo(1234.56).Within(1e-12));
+            // en-US format (comma=thousands, dot=decimal) fails in de-DE
+            Assert.That(double.IsNaN(TextUtil.TextToDouble("1,234.56", true)), Is.True);
+        }
     }
 }
