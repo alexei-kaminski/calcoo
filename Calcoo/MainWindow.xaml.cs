@@ -77,6 +77,7 @@ namespace Calcoo
             body.TruncateZeros = settings.TruncateZeros;
             body.CurrentDisplayFormat = settings.CurrentDisplayFormat;
             _customButtonCommand = settings.CustomButtonCommand;
+            Topmost = settings.StayOnTop;
             body.UndoEnabled = false;
             body.RedoEnabled = false;
 
@@ -123,6 +124,8 @@ namespace Calcoo
             var sysMenu = GetSystemMenu(hwnd, false);
             InsertMenu(sysMenu, 0xF060, MF_BYCOMMAND | MF_STRING, IDM_STAY_ON_TOP, "Stay on top");
             InsertMenu(sysMenu, 0xF060, MF_BYCOMMAND | MF_SEPARATOR, 0, null);
+            if (Topmost)
+                CheckMenuItem(sysMenu, IDM_STAY_ON_TOP, MF_BYCOMMAND | MF_CHECKED);
         }
 
 
@@ -391,6 +394,7 @@ namespace Calcoo
             var hwnd = new WindowInteropHelper(this).Handle;
             var sysMenu = GetSystemMenu(hwnd, false);
             CheckMenuItem(sysMenu, IDM_STAY_ON_TOP, MF_BYCOMMAND | (Topmost ? MF_CHECKED : MF_UNCHECKED));
+            Settings.SaveStayOnTop(value);
         }
 
         private void PushUndo()

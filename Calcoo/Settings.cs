@@ -46,6 +46,7 @@ namespace Calcoo
         public bool TruncateZeros;
         public bool ArcAutorelease;
         public bool HypAutorelease;
+        public bool StayOnTop;
 
         public string CustomButtonCommand;
 
@@ -61,6 +62,7 @@ namespace Calcoo
             public const bool TruncateZeros = false;
             public const bool ArcAutorelease = true;
             public const bool HypAutorelease = true;
+            public const bool StayOnTop = false;
             public const AngleUnits AngleUnits = Settings.AngleUnits.Deg;
             public const DisplayFormat DisplayFormat = Settings.DisplayFormat.Fix;
 
@@ -164,6 +166,7 @@ namespace Calcoo
             public static string DisplayFormat = "DisplayFormat";
             public static string PasteParsingAlgorithm = "PasteParsingAlgorithm";
             public static string CustomButtonCommand = "CustomButtonCommand";
+            public static string StayOnTop = "StayOnTop";
         }
 
         private static string CleanUpCustomCommand(string customCommand)
@@ -226,8 +229,17 @@ namespace Calcoo
                 settings.CurrentDisplayFormat = Defaults.DisplayFormat;
 
             settings.CustomButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.CustomButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
+            if (!bool.TryParse((string)rk.GetValue(Names.StayOnTop, Defaults.StayOnTop.ToString(), RegistryValueOptions.None), out settings.StayOnTop))
+                settings.StayOnTop = Defaults.StayOnTop;
 
             return settings;
+        }
+
+        public static void SaveStayOnTop(bool stayOnTop)
+        {
+            using RegistryKey rk = Registry.CurrentUser.CreateSubKey(Names.RegistryPath);
+            if (rk == null) return;
+            rk.SetValue(Names.StayOnTop, stayOnTop.ToString());
         }
 
         public static void SaveDisplayFormat(DisplayFormat displayFormat)
@@ -261,6 +273,7 @@ namespace Calcoo
             rk.SetValue(Names.CustomButtonCommand, CustomButtonCommand);
             rk.SetValue(Names.AngleUnits, CurrentAngleUnits.ToString());
             rk.SetValue(Names.DisplayFormat, CurrentDisplayFormat.ToString());
+            rk.SetValue(Names.StayOnTop, StayOnTop.ToString());
         }
     }
 }
