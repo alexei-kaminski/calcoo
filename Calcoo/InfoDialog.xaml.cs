@@ -21,9 +21,9 @@ namespace Calcoo
             Title = $"Calcoo {version}";
             LicenseVersionRun.Text = version;
             AboutVersionRun.Text = version;
-            var copyright = Assembly.GetExecutingAssembly()
+            var copyright = (Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyCopyrightAttribute>()
-                ?.Copyright ?? "";
+                ?.Copyright ?? "").Replace("-", "\u200A\u2013\u200A");
             LicenseCopyrightRun.Text = copyright;
             AboutCopyrightText.Text = copyright;
         }
