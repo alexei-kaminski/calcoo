@@ -41,6 +41,12 @@
             <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" MaxWidth="520"
                        Foreground="{DynamicResource SubtleForeground}">Define a sequence of operations for the &#x25C7; button. Click the operations below to insert them, separated by spaces.</TextBlock>
 
+            <!-- Tooltip input -->
+            <TextBlock Text="Tooltip" Style="{StaticResource SectionHeader}" Margin="0,4,0,0"/>
+            <Border Style="{StaticResource SettingsCard}">
+                <TextBox Name="TooltipTextBox" TextWrapping="Wrap"/>
+            </Border>
+
             <!-- Command input -->
             <TextBlock Text="Custom command" Style="{StaticResource SectionHeader}" Margin="0,4,0,0"/>
             <Border Style="{StaticResource SettingsCard}">

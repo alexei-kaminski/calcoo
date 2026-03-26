@@ -20,7 +20,6 @@ namespace Calcoo
 
             WasChanged = false;
             NewSettings = settings.Clone();
-            CustomButton.ToolTip = CommandExtensions.CustomButtonTooltip;
             AutoreleaseArcButton.IsChecked = settings.ArcAutorelease;
             AutoreleaseHypButton.IsChecked = settings.HypAutorelease;
 
@@ -194,11 +193,12 @@ namespace Calcoo
 
         private void CustomButton_Click(object sender, RoutedEventArgs e)
         {
-            var customButtonDialog = new CustomButtonDialog(NewSettings.CustomButtonCommand);
+            var customButtonDialog = new CustomButtonDialog(NewSettings.CustomButtonCommand, NewSettings.CustomButtonTooltip);
             customButtonDialog.Owner = this;
             if (customButtonDialog.ShowDialog() == true)
             {
                 NewSettings.CustomButtonCommand = customButtonDialog.CommandText;
+                NewSettings.CustomButtonTooltip = customButtonDialog.TooltipText;
                 WasChanged = true;
             }
         }

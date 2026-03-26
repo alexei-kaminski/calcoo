@@ -49,6 +49,7 @@ namespace Calcoo
         public bool StayOnTop;
 
         public string CustomButtonCommand;
+        public string CustomButtonTooltip;
 
         public AngleUnits CurrentAngleUnits;
         public DisplayFormat CurrentDisplayFormat;
@@ -70,6 +71,7 @@ namespace Calcoo
                 Settings.PasteParsingAlgorithm.LocaleBased;
 
             public const string CustomButtonCommand = "";
+            public const string CustomButtonTooltip = "Custom command";
         }
 
         // set by the buttons
@@ -101,6 +103,7 @@ namespace Calcoo
             bool hypAutorelease,
             PasteParsingAlgorithm pasteParsingAlgorithm,
             string customButtonCommand,
+            string customButtonTooltip,
             AngleUnits angleUnits,
             DisplayFormat displayFormat)
         {
@@ -114,6 +117,7 @@ namespace Calcoo
             this.HypAutorelease = hypAutorelease;
             this.CurrentPasteParsingAlgorithm = pasteParsingAlgorithm;
             this.CustomButtonCommand = customButtonCommand;
+            this.CustomButtonTooltip = customButtonTooltip;
             this.CurrentAngleUnits = angleUnits;
             this.CurrentDisplayFormat = displayFormat;
         }
@@ -131,6 +135,7 @@ namespace Calcoo
                 HypAutorelease,
                 CurrentPasteParsingAlgorithm,
                 CustomButtonCommand,
+                CustomButtonTooltip,
                 CurrentAngleUnits,
                 CurrentDisplayFormat);
         }
@@ -147,6 +152,7 @@ namespace Calcoo
             HypAutorelease = Defaults.HypAutorelease;
             CurrentPasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
             CustomButtonCommand = Defaults.CustomButtonCommand;
+            CustomButtonTooltip = Defaults.CustomButtonTooltip;
             CurrentAngleUnits = Defaults.AngleUnits;
             CurrentDisplayFormat = Defaults.DisplayFormat;
         }
@@ -166,6 +172,7 @@ namespace Calcoo
             public static string DisplayFormat = "DisplayFormat";
             public static string PasteParsingAlgorithm = "PasteParsingAlgorithm";
             public static string CustomButtonCommand = "CustomButtonCommand";
+            public static string CustomButtonTooltip = "CustomButtonTooltip";
             public static string StayOnTop = "StayOnTop";
         }
 
@@ -229,6 +236,7 @@ namespace Calcoo
                 settings.CurrentDisplayFormat = Defaults.DisplayFormat;
 
             settings.CustomButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.CustomButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
+            settings.CustomButtonTooltip = rk.GetValue(Names.CustomButtonTooltip, Defaults.CustomButtonTooltip, RegistryValueOptions.None) as string ?? Defaults.CustomButtonTooltip;
             if (!bool.TryParse((string)rk.GetValue(Names.StayOnTop, Defaults.StayOnTop.ToString(), RegistryValueOptions.None), out settings.StayOnTop))
                 settings.StayOnTop = Defaults.StayOnTop;
 
@@ -271,6 +279,7 @@ namespace Calcoo
             rk.SetValue(Names.HypAutorelease, HypAutorelease.ToString());
             rk.SetValue(Names.PasteParsingAlgorithm, CurrentPasteParsingAlgorithm.ToString());
             rk.SetValue(Names.CustomButtonCommand, CustomButtonCommand);
+            rk.SetValue(Names.CustomButtonTooltip, CustomButtonTooltip);
             rk.SetValue(Names.AngleUnits, CurrentAngleUnits.ToString());
             rk.SetValue(Names.DisplayFormat, CurrentDisplayFormat.ToString());
             rk.SetValue(Names.StayOnTop, StayOnTop.ToString());

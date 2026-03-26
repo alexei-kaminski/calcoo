@@ -12,13 +12,16 @@ namespace Calcoo
     public partial class CustomButtonDialog : Window
     {
         public string CommandText { get; private set; }
+        public string TooltipText { get; private set; }
 
-        public CustomButtonDialog(string currentCommand)
+        public CustomButtonDialog(string currentCommand, string currentTooltip)
         {
             InitializeComponent();
             App.ApplyDialogTheme(this);
             CommandTextBox.Text = currentCommand ?? "";
+            TooltipTextBox.Text = currentTooltip ?? "";
             CommandText = "";
+            TooltipText = "";
         }
 
         private void CommandLabel_Click(object sender, RoutedEventArgs e)
@@ -83,6 +86,7 @@ namespace Calcoo
             TidyUp();
             if (!Validate()) return;
             CommandText = CommandTextBox.Text;
+            TooltipText = TooltipTextBox.Text.Trim();
             DialogResult = true;
         }
 

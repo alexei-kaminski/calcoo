@@ -29,6 +29,7 @@ namespace Calcoo
         private double _aspectRatio;
         private int _chromeWidth, _chromeHeight;
         private string _customButtonCommand;
+        private string _customButtonTooltip;
 
         public MainWindow()
         {
@@ -77,11 +78,13 @@ namespace Calcoo
             body.TruncateZeros = settings.TruncateZeros;
             body.CurrentDisplayFormat = settings.CurrentDisplayFormat;
             _customButtonCommand = settings.CustomButtonCommand;
+            _customButtonTooltip = settings.CustomButtonTooltip;
             Topmost = settings.StayOnTop;
             body.UndoEnabled = false;
             body.RedoEnabled = false;
 
             body.Refresh(_cpu);
+            body.SetCustomButtonTooltip(_customButtonTooltip);
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -263,6 +266,7 @@ namespace Calcoo
                         body.HypAutorelease,
                         body.CurrentPasteParsingAlgorithm,
                         _customButtonCommand,
+                        _customButtonTooltip,
                         _cpu.CurrentAngleUnits,
                         body.CurrentDisplayFormat);
                     var settingsDialog = new SettingsDialog(settings, InputLength);
@@ -290,6 +294,8 @@ namespace Calcoo
                         body.RoundLength = settingsDialog.NewSettings.RoundLength;
                         body.TruncateZeros = settingsDialog.NewSettings.TruncateZeros;
                         _customButtonCommand = settingsDialog.NewSettings.CustomButtonCommand;
+                        _customButtonTooltip = settingsDialog.NewSettings.CustomButtonTooltip;
+                        body.SetCustomButtonTooltip(_customButtonTooltip);
                         settingsDialog.NewSettings.Save();
                     }
                     break;

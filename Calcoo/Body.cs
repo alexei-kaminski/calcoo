@@ -80,6 +80,13 @@ namespace Calcoo
             set { _buttons[Command.Redo].IsEnabled = value; }
         }
 
+        public void SetCustomButtonTooltip(string tooltip)
+        {
+            var tt = new ToolTip();
+            tt.Content = tooltip;
+            _buttons[Command.Custom].ToolTip = tt;
+        }
+
         public Settings.DisplayFormat GetDisplayFormat()
         {
             return CurrentDisplayFormat;
