@@ -113,9 +113,9 @@
                             <TextBlock Grid.Row="7" Grid.Column="0" Text="n g" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="7" Grid.Column="2" Text="ln log" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="8" Grid.Column="0" Text="x d" HorizontalAlignment="Right" Margin="0,3"/>
-                            <TextBlock Grid.Row="8" Grid.Column="2" Text="e^x 10^x" HorizontalAlignment="Left" Margin="0,3"/>
+                            <TextBlock Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" Margin="0,3">e<InlineUIContainer BaselineAlignment="Top"><TextBlock FontSize="11" Text="x" Padding="0"/></InlineUIContainer> 10<InlineUIContainer BaselineAlignment="Top"><TextBlock FontSize="11" Text="x" Padding="0"/></InlineUIContainer></TextBlock>
                             <TextBlock Grid.Row="9" Grid.Column="0" Text="q w r" HorizontalAlignment="Right" Margin="0,3"/>
-                            <TextBlock Grid.Row="9" Grid.Column="2" Text="x^2 sqrt y^x" HorizontalAlignment="Left" Margin="0,3"/>
+                            <TextBlock Grid.Row="9" Grid.Column="2" HorizontalAlignment="Left" Margin="0,3">x<InlineUIContainer BaselineAlignment="Top"><TextBlock FontSize="10" Text="2" Padding="0"/></InlineUIContainer> sqrt y<InlineUIContainer BaselineAlignment="Top"><TextBlock FontSize="11" Text="x" Padding="0"/></InlineUIContainer></TextBlock>
                             <TextBlock Grid.Row="10" Grid.Column="0" Text="i p f" HorizontalAlignment="Right" Margin="0,3"/>
                             <TextBlock Grid.Row="10" Grid.Column="2" Text="1/x pi x!" HorizontalAlignment="Left" Margin="0,3"/>
                             <TextBlock Grid.Row="11" Grid.Column="0" Text="a h" HorizontalAlignment="Right" Margin="0,3"/>
