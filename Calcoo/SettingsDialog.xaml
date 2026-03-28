@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Calcoo Settings" SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" UseLayoutRounding="True"
         Background="{DynamicResource AppBackground}" Foreground="{DynamicResource TextForeground}"
         FontFamily="Segoe UI Variable, Segoe UI" FontSize="14">
     <Grid>
@@ -13,8 +13,10 @@
 
         <!-- Scrollable content -->
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" MaxHeight="500">
-            <Grid Margin="16">
+            <Grid Margin="16,0,16,8">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="8"/>
                     <ColumnDefinition Width="*"/>
@@ -26,48 +28,45 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="8"/>
                 </Grid.RowDefinitions>
 
-                <!-- Row 0-1: Autorelease (left) | Mode (right) -->
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Autorelease" Style="{StaticResource SectionHeader}" Margin="0,0,0,0"/>
+                <!-- Row 0-1: Mode (col 0) | RPN Enter (col 2) | RPN Stack (col 4) -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Mode" Style="{StaticResource SectionHeader}"/>
                 <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource SettingsCard}">
-                    <StackPanel>
-                        <CheckBox Content="arc button" Name="AutoreleaseArcButton" Margin="0,0,0,6" Click="AutoreleaseArcButton_Click"/>
-                        <CheckBox Content="hyp button" Name="AutoreleaseHypButton" Click="AutoreleaseHypButton_Click"/>
-                    </StackPanel>
-                </Border>
-
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Mode" Style="{StaticResource SectionHeader}" Margin="0,0,0,0"/>
-                <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="Mode" Name="ModeRpn" Content="RPN" Margin="0,0,0,6" Click="ModeRpn_Click"/>
                         <RadioButton GroupName="Mode" Name="ModeAlgebraic" Content="Algebraic" Click="ModeAlgebraic_Click"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Row 2-3: RPN Enter (left) | RPN Stack (right) -->
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="RPN Enter" Style="{StaticResource SectionHeader}"/>
-                <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource SettingsCard}">
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="RPN Enter" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="RpnEnter" Name="RpnEnterTraditional" Content="Traditional" Margin="0,0,0,6" Click="RpnEnterTraditional_Click"/>
                         <RadioButton GroupName="RpnEnter" Name="RpnEnterHp28" Content="HP-28" Click="RpnEnterHp28_Click"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="RPN Stack" Style="{StaticResource SectionHeader}"/>
-                <Border Grid.Row="3" Grid.Column="2" Style="{StaticResource SettingsCard}">
+                <TextBlock Grid.Row="0" Grid.Column="4" Text="RPN Stack" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="1" Grid.Column="4" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="RpnStack" Name="RpnStackInfinite" Content="Infinite" Margin="0,0,0,6" Click="RpnStackInfinite_Click"/>
                         <RadioButton GroupName="RpnStack" Name="RpnStackXyzt" Content="XYZT" Click="RpnStackXyzt_Click"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Row 4-5: Rounding (full width) -->
-                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="Rounding" Style="{StaticResource SectionHeader}"/>
-                <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource SettingsCard}">
+                <!-- Row 2-3: Autorelease (col 0) | Rounding (col 2, colspan 3) -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Autorelease" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource SettingsCard}">
+                    <StackPanel>
+                        <CheckBox Content="arc button" Name="AutoreleaseArcButton" Margin="0,0,0,6" Click="AutoreleaseArcButton_Click"/>
+                        <CheckBox Content="hyp button" Name="AutoreleaseHypButton" Click="AutoreleaseHypButton_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Text="Rounding" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                             <CheckBox Content="Round output" Name="RoundingOutputCheckBox" VerticalAlignment="Center" Click="RoundingOutputCheckBox_Click"/>
@@ -110,17 +109,25 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Row 6-7: Paste Parsing (left) | Customize (right) -->
-                <TextBlock Grid.Row="6" Grid.Column="0" Text="Paste parsing" Style="{StaticResource SectionHeader}"/>
-                <Border Grid.Row="7" Grid.Column="0" Style="{StaticResource SettingsCard}">
+                <!-- Row 4-5: Paste Parsing (col 0) | Customize (col 2) | Random Numbers (col 4) -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Paste parsing" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="5" Grid.Column="0" Style="{StaticResource SettingsCard}">
                     <StackPanel>
                         <RadioButton GroupName="PasteParsing" Name="PasteParsingLocaleBased" Content="Locale-based" Margin="0,0,0,6" Click="PasteParsingLocaleBased_Click"/>
                         <RadioButton GroupName="PasteParsing" Name="PasteParsingHeuristic" Content="Heuristic" Click="PasteParsingHeuristic_Click"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Grid.Row="6" Grid.Column="2" Text="Customize" Style="{StaticResource SectionHeader}"/>
-                <Border Grid.Row="7" Grid.Column="2" Style="{StaticResource SettingsCard}">
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="Random numbers" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="5" Grid.Column="2" Style="{StaticResource SettingsCard}">
+                    <StackPanel>
+                        <RadioButton GroupName="RandomDistribution" Name="RandomDistributionUniform" Content="Uniform [0, 1)" Margin="0,0,0,6" Click="RandomDistributionUniform_Click"/>
+                        <RadioButton GroupName="RandomDistribution" Name="RandomDistributionNormal" Content="Normal (0, 1)" Click="RandomDistributionNormal_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Grid.Row="4" Grid.Column="4" Text="Customize" Style="{StaticResource SectionHeader}"/>
+                <Border Grid.Row="5" Grid.Column="4" Style="{StaticResource SettingsCard}">
                     <Button Name="CustomButton" Style="{StaticResource CalcButtonStyle}" BorderBrush="{DynamicResource ButtonBorderBrush}" HorizontalAlignment="Left" Width="36" Height="36" Padding="0" Click="CustomButton_Click">
                         <Frame Source="pack://application:,,,/Resources/Icons/Buttons/Custom.xaml" NavigationUIVisibility="Hidden" Margin="4"/>
                     </Button>

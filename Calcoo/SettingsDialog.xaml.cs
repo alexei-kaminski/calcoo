@@ -66,6 +66,14 @@ namespace Calcoo
             RoundingDigitsComboBox.SelectedItem = settings.RoundLength;
             TruncateZerosCheckBox.IsChecked = settings.TruncateZeros;
             UpdateRoundingControlsEnabled(settings.Round);
+
+            (settings.CurrentRandomDistribution switch
+            {
+                Settings.RandomDistribution.Uniform => RandomDistributionUniform,
+                Settings.RandomDistribution.Normal  => RandomDistributionNormal,
+                _ => throw new ArgumentOutOfRangeException(nameof(settings.CurrentRandomDistribution), settings.CurrentRandomDistribution, null)
+            }).IsChecked = true;
+
             _initialized = true;
         }
 
@@ -180,6 +188,20 @@ namespace Calcoo
             bool value = TruncateZerosCheckBox.IsChecked == true;
             if (NewSettings.TruncateZeros == value) return;
             NewSettings.TruncateZeros = value;
+            WasChanged = true;
+        }
+
+        private void RandomDistributionUniform_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentRandomDistribution == Settings.RandomDistribution.Uniform) return;
+            NewSettings.CurrentRandomDistribution = Settings.RandomDistribution.Uniform;
+            WasChanged = true;
+        }
+
+        private void RandomDistributionNormal_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewSettings.CurrentRandomDistribution == Settings.RandomDistribution.Normal) return;
+            NewSettings.CurrentRandomDistribution = Settings.RandomDistribution.Normal;
             WasChanged = true;
         }
 

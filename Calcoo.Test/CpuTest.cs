@@ -13,6 +13,7 @@ namespace Calcoo.Test
         private const int NMem = 2;
         private const Settings.EnterMode DefaultEnterMode = Settings.EnterMode.Traditional;
         private const Settings.StackMode DefaultStackMode = Settings.StackMode.Infinite;
+        private const Settings.RandomDistribution DefaultRandomDistribution = Settings.RandomDistribution.Uniform;
 
         // testing public functions
 
@@ -21,7 +22,7 @@ namespace Calcoo.Test
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode,
-                DefaultStackMode);
+                DefaultStackMode, DefaultRandomDistribution);
 
             String[] setupKeystrokes =
             {
@@ -52,7 +53,7 @@ namespace Calcoo.Test
         {
             // RPN
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "RPN - blank");
             cpu.Execute(Command.Digit1);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "RPN - after digit");
@@ -66,7 +67,7 @@ namespace Calcoo.Test
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "RPN - after clear");
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "ALG - blank");
             cpu.Execute(Command.Digit1);
             Assert.That(cpu.IsInputInProgress(), Is.EqualTo(true), "ALG - after digit");
@@ -85,7 +86,7 @@ namespace Calcoo.Test
         {
             // RPN
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             String[] rpnSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Enter" };
             foreach (String ks in rpnSetupKeystrokes)
@@ -97,7 +98,7 @@ namespace Calcoo.Test
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             String[] algSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Add" };
             foreach (String ks in algSetupKeystrokes)
@@ -113,7 +114,7 @@ namespace Calcoo.Test
         {
             // RPN
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             String[] rpnSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3" };
             foreach (String ks in rpnSetupKeystrokes)
@@ -123,7 +124,7 @@ namespace Calcoo.Test
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
                 DefaultEnterMode,
-                DefaultStackMode);
+                DefaultStackMode, DefaultRandomDistribution);
 
             String[] algSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3" };
             foreach (String ks in algSetupKeystrokes)
@@ -136,7 +137,7 @@ namespace Calcoo.Test
         {
             // RPN
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             String[] rpnSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Enter" };
             foreach (String ks in rpnSetupKeystrokes)
@@ -145,7 +146,7 @@ namespace Calcoo.Test
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             String[] algSetupKeystrokes = { "Digit7", "Dot", "Digit2", "Digit3", "Eq" };
             foreach (String ks in algSetupKeystrokes)
@@ -157,7 +158,7 @@ namespace Calcoo.Test
         public void GetMemTest()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             String[] rpnSetupKeystrokes =
             {
@@ -180,7 +181,7 @@ namespace Calcoo.Test
         public void GetActiveMemNumTest()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.ActiveMemNum, Is.EqualTo(0), "blank cpu");
 
@@ -203,7 +204,7 @@ namespace Calcoo.Test
         public void GetAngleUnitsTest()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentAngleUnits, Is.EqualTo(Settings.AngleUnits.Deg), "blank cpu");
             cpu.Execute(Command.DegRad);
@@ -214,7 +215,7 @@ namespace Calcoo.Test
         public void SetEnterModeTest()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentEnterMode, Is.EqualTo(DefaultEnterMode), "blank cpu");
             cpu.CurrentEnterMode = Settings.EnterMode.Hp28;
@@ -230,7 +231,7 @@ namespace Calcoo.Test
                     "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter",
                     "Digit3", "Enter", "Digit3", "Add", "Add", "Add", "Add", "Add"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(18.0).Within(1e-7), "3<Enter>3<Enter>3<Enter>3<Enter>3<Enter>3+++++");
             Assert.That(
                 RunCpu(new[]
@@ -238,7 +239,7 @@ namespace Calcoo.Test
                     "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter", "Digit3", "Enter",
                     "Digit3", "Enter", "Digit3", "Add", "Add", "Add", "Add", "Add"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(12.0).Within(1e-7), "3<Enter>3<Enter>3<Enter>3<Enter>3<Enter>3+++++");
         }
 
@@ -248,7 +249,7 @@ namespace Calcoo.Test
             // identical to the tests in SetEnterModeTest - keeping both in case we
             // discover problems specific to the getter
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentEnterMode, Is.EqualTo(DefaultEnterMode), "blank cpu");
             cpu.CurrentEnterMode = Settings.EnterMode.Hp28;
@@ -263,7 +264,7 @@ namespace Calcoo.Test
         public void SetStackModeTest()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentStackMode, Is.EqualTo(DefaultStackMode), "blank cpu");
             cpu.CurrentStackMode = Settings.StackMode.Xyzt;
@@ -275,11 +276,11 @@ namespace Calcoo.Test
 
             Assert.That(
                 RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(6.0).Within(1e-7), "3<Enter>+");
             Assert.That(
                 RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "3<Enter>+");
         }
 
@@ -289,7 +290,7 @@ namespace Calcoo.Test
             // identical to the tests in SetStackModeTest - keeping both in case we
             // discover problems specific to the getter
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentStackMode, Is.EqualTo(DefaultStackMode), "blank cpu");
             cpu.CurrentStackMode = Settings.StackMode.Xyzt;
@@ -304,7 +305,7 @@ namespace Calcoo.Test
         public void SetModeTest()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentMode, Is.EqualTo(Settings.Mode.Rpn), "blank cpu RPN");
             cpu.CurrentMode = Settings.Mode.Alg;
@@ -313,7 +314,7 @@ namespace Calcoo.Test
             Assert.That(cpu.CurrentMode, Is.EqualTo(Settings.Mode.Rpn), "RPN - set to RPN again");
 
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentMode, Is.EqualTo(Settings.Mode.Alg), "blank cpu ALG");
             cpu.CurrentMode = Settings.Mode.Rpn;
@@ -328,7 +329,7 @@ namespace Calcoo.Test
             // identical to the tests in SetModeTest - keeping both in case we
             // discover problems specific to the getter
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentMode, Is.EqualTo(Settings.Mode.Rpn), "blank cpu RPN");
             cpu.CurrentMode = Settings.Mode.Alg;
@@ -337,7 +338,7 @@ namespace Calcoo.Test
             Assert.That(cpu.CurrentMode, Is.EqualTo(Settings.Mode.Rpn), "RPN - set to RPN again");
 
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             Assert.That(cpu.CurrentMode, Is.EqualTo(Settings.Mode.Alg), "blank cpu ALG");
             cpu.CurrentMode = Settings.Mode.Rpn;
@@ -360,11 +361,11 @@ namespace Calcoo.Test
             // special cases
             // empty
             var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(0), "empty");
             // input starts with 0
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             cpu.Execute(Command.Digit0);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(0), "input starts with 0 - 1");
             Assert.That(cpu.GetInput().GetNFracDigits(), Is.EqualTo(0), "input starts with 0 - 1 - frac");
@@ -372,7 +373,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(1), "input starts with 0 - 2");
             // input starts with dot
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             cpu.Execute(Command.Dot);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(1), "input starts with dot - 1");
             Assert.That(cpu.GetInput().GetIntDigit(0), Is.EqualTo(0), "input starts with dot - 1 - int digit");
@@ -384,7 +385,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetInput().GetFracDigit(0), Is.EqualTo(1), "input starts with dot - 2 - frac digit");
             // input starts with exp
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             cpu.Execute(Command.Exp);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(1), "input starts with exp - 1");
             Assert.That(cpu.GetInput().GetIntDigit(0), Is.EqualTo(1), "input starts with exp - 1 - int digit");
@@ -398,7 +399,7 @@ namespace Calcoo.Test
             Assert.That(cpu.GetInput().GetExpDigit(ExpInputLength - 1), Is.EqualTo(1), "input starts with exp - 2 - exp digit");
             // input starts with sign
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             cpu.Execute(Command.Sign);
             Assert.That(cpu.GetInput().GetNIntDigits(), Is.EqualTo(0), "input starts with sign - 1");
             Assert.That(cpu.GetInput().GetSign(), Is.EqualTo(-1), "input starts with sign - 1 - sign");
@@ -563,7 +564,7 @@ namespace Calcoo.Test
         {
             // RPN
             Cpu cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             cpu.ExecutePaste(2.12);
             Assert.That(cpu.X, Is.EqualTo(2.12).Within(Cpu.CpuPrecision), "RPN on blank");
@@ -582,7 +583,7 @@ namespace Calcoo.Test
 
             // ALG
             cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             cpu.ExecutePaste(2.12);
             Assert.That(cpu.X, Is.EqualTo(2.12).Within(Cpu.CpuPrecision), "ALG on blank");
@@ -641,49 +642,49 @@ namespace Calcoo.Test
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2 3 +");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Sub" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 - 3.0)).Within(1e-7), "2 3 -");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Mul" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 * 3.0)).Within(1e-7), "2 3 *");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Div" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 / 3.0)).Within(1e-7), "2 3 /");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Pow" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(Math.Pow(2.0, 3.0)).Within(1e-7), "2 3 ^");
             // enter followed by op
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Add" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 + 2.0)).Within(1e-7), "2 +");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Mul" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 * 2.0)).Within(1e-7), "2 *");
             // operation chains
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Add", "Ln", "Mul" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0 * Math.Log(3.0 + 4.0)).Within(1e-7), "2 3 4 + ln *");
             // RPN mode - HP28 stack
             // simple operations - same as traditional stack
@@ -691,49 +692,49 @@ namespace Calcoo.Test
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2 3 +");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Sub" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 - 3.0)).Within(1e-7), "2 3 -");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Mul" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 * 3.0)).Within(1e-7), "2 3 *");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Div" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 / 3.0)).Within(1e-7), "2 3 /");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Pow" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(Math.Pow(2.0, 3.0)).Within(1e-7), "2 3 ^");
             // enter followed by op - behavior different from traditional stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Add" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0)).Within(1e-7), "2 +");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Mul" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((0.0)).Within(1e-7), "2 *");
             // operation chains - same as traditional stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Add", "Ln", "Mul" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0 * Math.Log(3.0 + 4.0)).Within(1e-7), "2 3 4 + ln *");
             // non-trivial cases - testing only RPN since the behavior is determined
             // by the low-level routines which are shared between RPN and ALG modes
@@ -742,13 +743,13 @@ namespace Calcoo.Test
                 RunCpu(new[] { "Digit2", "Dot", "Digit3", "Enter", "Digit0", "Pow" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(1.0).Within(Cpu.CpuPrecision), "2.3 ^ 0.0");
             Assert.That(
                 RunCpu(new[] { "Digit0", "Enter", "Digit4", "Dot", "Digit6", "Pow" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-15), "0.0 ^ 4.6");
             // precision smart sum
             Assert.That(
@@ -760,26 +761,26 @@ namespace Calcoo.Test
                 },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(Cpu.CpuPrecision * 1e-15), "100.1 - 100.0 - 0.1");
             // overflows
             Assert.That(double.IsNaN(
                 RunCpu(new[] { "Digit2", "Dot", "Digit3", "Enter", "Digit0", "Div" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite)
+                    Settings.StackMode.Infinite, DefaultRandomDistribution)
                 ), Is.True, "2.3 / 0.0");
             Assert.That(double.IsNaN(
                 RunCpu(new[] { "Digit0", "Enter", "Digit0", "Pow" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite)
+                    Settings.StackMode.Infinite, DefaultRandomDistribution)
                 ), Is.True, "0.0 ^ 0.0");
             Assert.That(double.IsNaN(
                 RunCpu(new[] { "Digit0", "Enter", "Digit1", "Sign", "Pow" },
                     Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite)
+                    Settings.StackMode.Infinite, DefaultRandomDistribution)
                 ), Is.True, "0.0 ^ -1.0");
             Assert.That(
                 double.IsNaN(
@@ -790,7 +791,7 @@ namespace Calcoo.Test
                     },
                         Settings.Mode.Rpn, Settings.AngleUnits.Deg,
                         Settings.EnterMode.Hp28,
-                        Settings.StackMode.Infinite)
+                        Settings.StackMode.Infinite, DefaultRandomDistribution)
                     ), Is.True, "-2.3 ^ 1.1");
         }
 
@@ -811,7 +812,7 @@ namespace Calcoo.Test
         {
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((2.0 + 3.0)).Within(1e-7), "2+3");
 
 
@@ -832,13 +833,13 @@ namespace Calcoo.Test
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "ExchXy", "Div" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Traditional,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((3.0 / 2.0)).Within(1e-7), "2 3 ExchXY /");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "ExchXy", "Div" }, Settings.Mode.Rpn,
                     Settings.AngleUnits.Deg,
                     Settings.EnterMode.Hp28,
-                    Settings.StackMode.Infinite),
+                    Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo((3.0 / 2.0)).Within(1e-7), "2 3 ExchXY /");
         }
 
@@ -849,40 +850,40 @@ namespace Calcoo.Test
             // one number in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 up up up");
             // two numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 up up up");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 4 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 4 up up");
             Assert.That(
                 RunCpu(new[]
@@ -890,7 +891,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "infinite: 2 3 4 up up up");
             Assert.That(
                 RunCpu(new[]
@@ -898,49 +899,49 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 4 up up up up");
             // xyzt stack
             // one number in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 up up up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackUp", "StackUp", "StackUp", "StackUp", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 up up up up up");
             // two numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 up up up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 up up up up");
             Assert.That(
                 RunCpu(new[]
@@ -948,18 +949,18 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "StackUp", "StackUp", "StackUp", "StackUp",
                     "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 up up up up up");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 4 up");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 up up");
             Assert.That(
                 RunCpu(new[]
@@ -967,7 +968,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 up up up");
             Assert.That(
                 RunCpu(new[]
@@ -975,7 +976,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 up up up up");
             Assert.That(
                 RunCpu(new[]
@@ -983,7 +984,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackUp", "StackUp",
                     "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 4 up up up up up");
             // four numbers in the stack
             Assert.That(
@@ -993,7 +994,7 @@ namespace Calcoo.Test
                     "StackUp"
                 },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 up");
             Assert.That(
                 RunCpu(new[]
@@ -1001,7 +1002,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 up up");
             Assert.That(
                 RunCpu(new[]
@@ -1009,7 +1010,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 up up up");
             Assert.That(
                 RunCpu(new[]
@@ -1017,7 +1018,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up");
             Assert.That(
                 RunCpu(new[]
@@ -1025,7 +1026,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackUp", "StackUp", "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up up");
             // five numbers in the stack - the highest number should not matter as
             // only the lowest four are rotated
@@ -1035,7 +1036,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 7 2 3 4 5 up");
             Assert.That(
                 RunCpu(new[]
@@ -1043,7 +1044,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 up up");
             Assert.That(
                 RunCpu(new[]
@@ -1051,7 +1052,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 up up up");
             Assert.That(
                 RunCpu(new[]
@@ -1059,7 +1060,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up");
             Assert.That(
                 RunCpu(new[]
@@ -1067,7 +1068,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackUp", "StackUp", "StackUp", "StackUp", "StackUp"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 up up up up up");
         }
 
@@ -1078,40 +1079,40 @@ namespace Calcoo.Test
             // one number in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 down down down");
             // two numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 down down down");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 4 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "infinite: 2 3 4 down down");
             Assert.That(
                 RunCpu(new[]
@@ -1119,7 +1120,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "infinite: 2 3 4 down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1127,26 +1128,26 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "infinite: 2 3 4 down down down down");
             // xyzt stack
             // one number in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "StackDown", "StackDown", "StackDown", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1155,21 +1156,21 @@ namespace Calcoo.Test
                     "StackDown"
                 },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 down down down down down");
             // two numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 down down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1177,7 +1178,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown",
                     "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1185,18 +1186,18 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "StackDown", "StackDown", "StackDown",
                     "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 down down down down down");
             // three numbers in the stack
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 down");
             Assert.That(
                 RunCpu(new[] { "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown" },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 down down");
             Assert.That(
                 RunCpu(new[]
@@ -1204,7 +1205,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(0.0).Within(1e-7), "xyzt: 2 3 4 down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1212,7 +1213,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1220,7 +1221,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "StackDown", "StackDown",
                     "StackDown", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 down down down down down");
             // four numbers in the stack
             Assert.That(
@@ -1229,7 +1230,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 down");
             Assert.That(
                 RunCpu(new[]
@@ -1237,7 +1238,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 down down");
             Assert.That(
                 RunCpu(new[]
@@ -1245,7 +1246,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1253,7 +1254,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1261,7 +1262,7 @@ namespace Calcoo.Test
                     "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter", "Digit5",
                     "StackDown", "StackDown", "StackDown", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down down");
             // five numbers in the stack - the highest number should not matter as
             // only the lowest four are rotated
@@ -1271,7 +1272,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 7 2 3 4 5 down");
             Assert.That(
                 RunCpu(new[]
@@ -1279,7 +1280,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "xyzt: 2 3 4 5 down down");
             Assert.That(
                 RunCpu(new[]
@@ -1287,7 +1288,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(2.0).Within(1e-7), "xyzt: 2 3 4 5 down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1295,7 +1296,7 @@ namespace Calcoo.Test
                     "Digit7", "Enter", "Digit2", "Enter", "Digit3", "Enter", "Digit4", "Enter",
                     "Digit5", "StackDown", "StackDown", "StackDown", "StackDown"
                 }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(5.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down");
             Assert.That(
                 RunCpu(new[]
@@ -1304,7 +1305,7 @@ namespace Calcoo.Test
                     "Digit5", "StackDown", "StackDown", "StackDown", "StackDown", "StackDown"
                 },
                     Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Xyzt, DefaultRandomDistribution),
                 Is.EqualTo(4.0).Within(1e-7), "xyzt: 2 3 4 5 down down down down down");
         }
 
@@ -1500,9 +1501,10 @@ namespace Calcoo.Test
             Settings.Mode mode,
             Settings.AngleUnits angleUnits,
             Settings.EnterMode enterMode,
-            Settings.StackMode stackMode)
+            Settings.StackMode stackMode,
+            Settings.RandomDistribution randomDistribution)
         {
-            var cpu = new Cpu(mode, angleUnits, InputLength, ExpInputLength, NumBase, NMem, enterMode, stackMode);
+            var cpu = new Cpu(mode, angleUnits, InputLength, ExpInputLength, NumBase, NMem, enterMode, stackMode, randomDistribution);
             for (int i = 0; i < keystrokes.Length; ++i)
                 cpu.Execute((Command)Enum.Parse(typeof(Command), keystrokes[i]));
             return cpu.X;
@@ -1514,14 +1516,14 @@ namespace Calcoo.Test
         {
             if (mode != Settings.Mode.Alg)
                 throw new Exception("must specify stack and enter mode explicitly for the RPN mode tests");
-            return RunCpu(keystrokes, mode, angleUnits, DefaultEnterMode, DefaultStackMode);
+            return RunCpu(keystrokes, mode, angleUnits, DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
         }
 
         [Test]
         public void GetMemAtBoundaryDoesNotThrow()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             // NMem is 2, so valid indices are 0 and 1. GetMem(NMem) should be caught
             // by the guard and throw Exception with a descriptive message.
@@ -1560,7 +1562,7 @@ namespace Calcoo.Test
         {
             // Large multiples of 180 degrees — the old relative-epsilon check was fragile here
             var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             // sin(360000000 deg) = sin(2000000 * 180) should be exactly 0
             cpu.ExecutePaste(360000000.0);
@@ -1606,7 +1608,7 @@ namespace Calcoo.Test
         public void TrigZeroSnapWorksForLargeRadians()
         {
             var cpu = new Cpu(Settings.Mode.Alg, Settings.AngleUnits.Rad, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             // sin(2000000 * pi) should be exactly 0
             cpu.ExecutePaste(2000000.0 * Math.PI);
@@ -1633,7 +1635,7 @@ namespace Calcoo.Test
         public void GetMemNegativeIndexThrowsDescriptiveException()
         {
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
 
             // Negative index should be caught by the guard and throw Exception,
             // not slip through to _mem[-1] causing IndexOutOfRangeException.
@@ -1764,12 +1766,12 @@ namespace Calcoo.Test
             // In RPN mode, Pi should push the current X onto the stack
             Assert.That(
                 RunCpu(new[] { "Digit5", "Pi", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(5.0 + Math.PI).Within(1e-7), "5 Pi +");
             // Pi after Enter
             Assert.That(
                 RunCpu(new[] { "Digit3", "Enter", "Pi", "Mul" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Traditional, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0 * Math.PI).Within(1e-7), "3 Enter Pi *");
         }
 
@@ -1779,12 +1781,12 @@ namespace Calcoo.Test
             // HP28 enter mode: Enter does not duplicate X, it only pushes
             Assert.That(
                 RunCpu(new[] { "Digit3", "Enter", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(3.0).Within(1e-7), "HP28: 3 Enter + = 3 (no dup)");
             // HP28: two values then add
             Assert.That(
                 RunCpu(new[] { "Digit3", "Enter", "Digit4", "Add" }, Settings.Mode.Rpn,
-                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite),
+                    Settings.AngleUnits.Deg, Settings.EnterMode.Hp28, Settings.StackMode.Infinite, DefaultRandomDistribution),
                 Is.EqualTo(7.0).Within(1e-7), "HP28: 3 Enter 4 + = 7");
         }
 
@@ -1810,7 +1812,7 @@ namespace Calcoo.Test
             // Custom sequence "InvX Add" should error on InvX (1/0 = NaN)
             // and NOT proceed to Add (which would consume Y=5 from the stack).
             var cpu = new Cpu(Settings.Mode.Rpn, Settings.AngleUnits.Deg, InputLength, ExpInputLength, NumBase, NMem,
-                DefaultEnterMode, DefaultStackMode);
+                DefaultEnterMode, DefaultStackMode, DefaultRandomDistribution);
             cpu.Execute(Command.Digit5);
             cpu.Execute(Command.Enter);
             // Stack: [5], X=5

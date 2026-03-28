@@ -35,7 +35,7 @@ namespace Calcoo
         {
             var settings = Settings.Load(InputLength);
             _cpu = new Cpu(settings.CurrentMode, settings.CurrentAngleUnits, InputLength, ExpInputLength, NumBase, NMem,
-                settings.CurrentEnterMode, settings.CurrentStackMode);
+                settings.CurrentEnterMode, settings.CurrentStackMode, settings.CurrentRandomDistribution);
             _undoStack = new LinkedList<Cpu>();
             _redoStack = new LinkedList<Cpu>();
 
@@ -268,6 +268,7 @@ namespace Calcoo
                         body.CurrentPasteParsingAlgorithm,
                         _customButtonCommand,
                         _customButtonTooltip,
+                        _cpu.CurrentRandomDistribution,
                         _cpu.CurrentAngleUnits,
                         body.CurrentDisplayFormat);
                     var settingsDialog = new SettingsDialog(settings, InputLength);
@@ -297,6 +298,8 @@ namespace Calcoo
                         _customButtonCommand = settingsDialog.NewSettings.CustomButtonCommand;
                         _customButtonTooltip = settingsDialog.NewSettings.CustomButtonTooltip;
                         body.SetCustomButtonTooltip(_customButtonTooltip);
+                        if (settingsDialog.NewSettings.CurrentRandomDistribution != _cpu.CurrentRandomDistribution)
+                            _cpu.CurrentRandomDistribution = settingsDialog.NewSettings.CurrentRandomDistribution;
                         settingsDialog.NewSettings.Save();
                     }
                     break;
@@ -359,7 +362,8 @@ namespace Calcoo
                             if (!double.IsFinite(_cpu.X))
                                 break;
                             if (Enum.TryParse(token, out Command parsed)
-                                && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed))
+                                && !CommandExtensions.InvalidForCustomCommandSequence.Contains(parsed)
+                                && parsed.IsValidButton(_cpu.CurrentMode))
                                 _cpu.Execute(parsed);
                         }
                     }

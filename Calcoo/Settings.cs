@@ -40,6 +40,14 @@ namespace Calcoo
 
         public PasteParsingAlgorithm CurrentPasteParsingAlgorithm;
 
+        public enum RandomDistribution
+        {
+            Uniform,
+            Normal
+        }
+
+        public RandomDistribution CurrentRandomDistribution;
+
 
         public bool Round;
         public int RoundLength;
@@ -69,6 +77,9 @@ namespace Calcoo
 
             public const PasteParsingAlgorithm PasteParsingAlgorithm =
                 Settings.PasteParsingAlgorithm.LocaleBased;
+
+            public const RandomDistribution RandomDistribution =
+                Settings.RandomDistribution.Uniform;
 
             public const string CustomButtonCommand = "";
             public const string CustomButtonTooltip = "Custom command";
@@ -104,6 +115,7 @@ namespace Calcoo
             PasteParsingAlgorithm pasteParsingAlgorithm,
             string customButtonCommand,
             string customButtonTooltip,
+            RandomDistribution randomDistribution,
             AngleUnits angleUnits,
             DisplayFormat displayFormat)
         {
@@ -118,6 +130,7 @@ namespace Calcoo
             this.CurrentPasteParsingAlgorithm = pasteParsingAlgorithm;
             this.CustomButtonCommand = customButtonCommand;
             this.CustomButtonTooltip = customButtonTooltip;
+            this.CurrentRandomDistribution = randomDistribution;
             this.CurrentAngleUnits = angleUnits;
             this.CurrentDisplayFormat = displayFormat;
         }
@@ -136,6 +149,7 @@ namespace Calcoo
                 CurrentPasteParsingAlgorithm,
                 CustomButtonCommand,
                 CustomButtonTooltip,
+                CurrentRandomDistribution,
                 CurrentAngleUnits,
                 CurrentDisplayFormat);
         }
@@ -153,6 +167,7 @@ namespace Calcoo
             CurrentPasteParsingAlgorithm = Defaults.PasteParsingAlgorithm;
             CustomButtonCommand = Defaults.CustomButtonCommand;
             CustomButtonTooltip = Defaults.CustomButtonTooltip;
+            CurrentRandomDistribution = Defaults.RandomDistribution;
             CurrentAngleUnits = Defaults.AngleUnits;
             CurrentDisplayFormat = Defaults.DisplayFormat;
         }
@@ -173,6 +188,7 @@ namespace Calcoo
             public static string PasteParsingAlgorithm = "PasteParsingAlgorithm";
             public static string CustomButtonCommand = "CustomButtonCommand";
             public static string CustomButtonTooltip = "CustomButtonTooltip";
+            public static string RandomDistribution = "RandomDistribution";
             public static string StayOnTop = "StayOnTop";
         }
 
@@ -237,6 +253,8 @@ namespace Calcoo
 
             settings.CustomButtonCommand = CleanUpCustomCommand(rk.GetValue(Names.CustomButtonCommand, Defaults.CustomButtonCommand, RegistryValueOptions.None) as string ?? Defaults.CustomButtonCommand);
             settings.CustomButtonTooltip = rk.GetValue(Names.CustomButtonTooltip, Defaults.CustomButtonTooltip, RegistryValueOptions.None) as string ?? Defaults.CustomButtonTooltip;
+            if (!Enum.TryParse((string)rk.GetValue(Names.RandomDistribution, Defaults.RandomDistribution.ToString(), RegistryValueOptions.None), out settings.CurrentRandomDistribution))
+                settings.CurrentRandomDistribution = Defaults.RandomDistribution;
             if (!bool.TryParse((string)rk.GetValue(Names.StayOnTop, Defaults.StayOnTop.ToString(), RegistryValueOptions.None), out settings.StayOnTop))
                 settings.StayOnTop = Defaults.StayOnTop;
 
@@ -280,6 +298,7 @@ namespace Calcoo
             rk.SetValue(Names.PasteParsingAlgorithm, CurrentPasteParsingAlgorithm.ToString());
             rk.SetValue(Names.CustomButtonCommand, CustomButtonCommand);
             rk.SetValue(Names.CustomButtonTooltip, CustomButtonTooltip);
+            rk.SetValue(Names.RandomDistribution, CurrentRandomDistribution.ToString());
             rk.SetValue(Names.AngleUnits, CurrentAngleUnits.ToString());
             rk.SetValue(Names.DisplayFormat, CurrentDisplayFormat.ToString());
             rk.SetValue(Names.StayOnTop, StayOnTop.ToString());

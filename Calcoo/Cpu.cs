@@ -12,6 +12,7 @@ namespace Calcoo
         IDoubleByDigitGetters GetInput();
         bool IsInputInProgress();
         Settings.AngleUnits CurrentAngleUnits { get; }
+        Settings.RandomDistribution CurrentRandomDistribution { get; }
     }
 
     public class Cpu : ICpuOutput
@@ -99,6 +100,7 @@ namespace Calcoo
         public int ActiveMemNum { get; private set; }
 
         public Settings.AngleUnits CurrentAngleUnits { get; private set; }
+        public Settings.RandomDistribution CurrentRandomDistribution { get; set; }
 
         public Settings.EnterMode CurrentEnterMode { get; set; }
 
@@ -133,7 +135,8 @@ namespace Calcoo
             int numBase,
             int nMem,
             Settings.EnterMode enterMode,
-            Settings.StackMode stackMode)
+            Settings.StackMode stackMode,
+            Settings.RandomDistribution randomDistribution)
         {
             _numBase = numBase;
 
@@ -149,6 +152,7 @@ namespace Calcoo
             _currentMode = mode;
             CurrentAngleUnits = angleUnits;
             CurrentEnterMode = enterMode;
+            CurrentRandomDistribution = randomDistribution;
 
             // resetting variables to the default state
             ActiveMemNum = 0;
@@ -160,7 +164,7 @@ namespace Calcoo
         public Cpu Clone()
         {
             var clonedCpu = new Cpu(CurrentMode, CurrentAngleUnits, _inputLength, _expInputLength, _numBase, _mem.Length, CurrentEnterMode,
-                _stack.CurrentStackMode);
+                _stack.CurrentStackMode, CurrentRandomDistribution);
             clonedCpu._lastAction = _lastAction;
             clonedCpu.ActiveMemNum = ActiveMemNum;
             clonedCpu.X = X;
@@ -511,7 +515,14 @@ namespace Calcoo
                 FinalizeInput();
                 _stack.Push(X);
             }
-            X = _random.NextDouble();
+            X = CurrentRandomDistribution switch
+            {
+                Settings.RandomDistribution.Normal => // Box-Muller transform
+                    Math.Sqrt(-2.0 * Math.Log(1.0 - _random.NextDouble())) * Math.Cos(2.0 * Math.PI * _random.NextDouble()),
+                Settings.RandomDistribution.Uniform =>
+                    _random.NextDouble(),
+                _ => throw new Exception("unknown random distribution " + CurrentRandomDistribution)
+            };
             _lastAction = Action.Enter;
         }
 
