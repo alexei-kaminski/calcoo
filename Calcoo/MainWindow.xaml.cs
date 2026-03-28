@@ -217,6 +217,7 @@ namespace Calcoo
                 Key key = e.Key == Key.System ? e.SystemKey : e.Key;
                 if (key == Key.Up)   { SetStayOnTop(true);  e.Handled = true; return; }
                 if (key == Key.Down) { SetStayOnTop(false); e.Handled = true; return; }
+                if (key == Key.R)    { ProcessCommand(Command.Random); e.Handled = true; return; }
             }
 
             Command? command = body.TranslateShortcut(e.Key, Keyboard.Modifiers.HasFlag(ModifierKeys.Control), Keyboard.Modifiers.HasFlag(ModifierKeys.Shift));

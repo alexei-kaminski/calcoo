@@ -73,7 +73,8 @@ namespace Calcoo
         Redo,
         ClearX,
         ExchXMem,
-        Exit
+        Exit,
+        Random
     }
 
     public static class CommandExtensions

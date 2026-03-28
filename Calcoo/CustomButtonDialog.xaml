@@ -81,6 +81,7 @@
                             <Button Content="InvX" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                             <Button Content="Pi" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                             <Button Content="Fact" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
+                            <Button Content="Random" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Sin" Click="CommandLabel_Click" Style="{StaticResource CommandLabelStyle}"/>

@@ -119,6 +119,7 @@ namespace Calcoo
         }
 
         private InputField _currentInputField;
+        private Random _random;
 
         private Cpu()
         {
@@ -153,6 +154,7 @@ namespace Calcoo
             ActiveMemNum = 0;
             ResetRegisters();
             X = 0.0;
+            _random = new Random();
         }
 
         public Cpu Clone()
@@ -167,6 +169,7 @@ namespace Calcoo
             clonedCpu._stack = _stack.Clone();
             clonedCpu._input = _input.Clone();
             clonedCpu._currentInputField = _currentInputField;
+            clonedCpu._random = _random;
             return clonedCpu;
         }
 
@@ -256,6 +259,9 @@ namespace Calcoo
                     break;
                 case Command.Pi:
                     ExecutePi();
+                    break;
+                case Command.Random:
+                    ExecuteRandom();
                     break;
                 case Command.ExchXy:
                     ExecuteExchXy();
@@ -495,6 +501,17 @@ namespace Calcoo
                 _stack.Push(X);
             }
             X = Math.PI;
+            _lastAction = Action.Enter;
+        }
+
+        private void ExecuteRandom()
+        {
+            if (CurrentMode == Settings.Mode.Rpn)
+            {
+                FinalizeInput();
+                _stack.Push(X);
+            }
+            X = _random.NextDouble();
             _lastAction = Action.Enter;
         }
 
