@@ -16,10 +16,11 @@ Calcoo is an RPN and algebraic scientific calculator designed to provide maximum
 - Displays for the memory and operation registers
 - Copy/paste with locale-aware number parsing
 - Customizable command button
-- Keyboard shortcuts for all basic operations
+- Keyboard shortcuts for most operations
 - Scalable vector UI that maintains aspect ratio
 - Dark/light theme following Windows system setting
 - Stay-on-top functionality
+- Random number generator
 
 ## Requirements
 
