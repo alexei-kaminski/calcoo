@@ -185,8 +185,6 @@
                                 <Run>Locale-based parsing of pasted numbers uses the system's native parsing algorithm, based on your current locale. It is quite robust and should be chosen unless you sometimes need to paste numbers formatted in different locales. In that case, the heuristic parser may be a better choice. While more picky, it tries to figure out which locale conventions to use based on the appearance of the pasted number.</Run>
                                 <LineBreak/><LineBreak/>
                                 <Run>"Stay on top" keeps the Calcoo window above all other windows. It can be toggled via the system menu (right-click the title bar) or with Alt-Up (on) and Alt-Down (off).</Run>
-                                <LineBreak/><LineBreak/>
-                                <Run>Random numbers are uniformly distributed in [0, 1).</Run>
                             </TextBlock>
                         </ScrollViewer>
                     </Border>

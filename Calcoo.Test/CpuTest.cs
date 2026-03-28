@@ -1317,6 +1317,9 @@ namespace Calcoo.Test
                     Settings.AngleUnits.Deg),
                 Is.EqualTo(3.0).Within(1e-7), "EQ resets lone opening paren");
             // more tests in executeRightParenTest because the require both parens
+
+            Assert.That(() => RunCpu(new[] { "LeftParen" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg),
+                Throws.InstanceOf<Exception>(), "throw at LeftParen in RPN mode");
         }
 
         [Test]
@@ -1342,6 +1345,9 @@ namespace Calcoo.Test
                 }, Settings.Mode.Alg,
                     Settings.AngleUnits.Deg),
                 Is.EqualTo(Math.Pow(2.0, (3.0 + 4.0) * 5.0)).Within(1e-7), "2^((3+4)*5)");
+
+            Assert.That(() => RunCpu(new[] { "RightParen" }, Settings.Mode.Rpn, Settings.AngleUnits.Deg),
+                Throws.InstanceOf<Exception>(), "throw at RightParen in RPN mode");
         }
 
         [Test]
