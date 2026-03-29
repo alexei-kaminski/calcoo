@@ -103,7 +103,12 @@
   <ItemGroup>
     <Content Include="Images\SplashScreen.scale-200.png" />
     <Content Include="Images\LockScreenLogo.scale-200.png" />
+    <Content Include="Images\Square150x150Logo.scale-100.png" />
+    <Content Include="Images\Square150x150Logo.scale-100_altform-unplated.png" />
     <Content Include="Images\Square150x150Logo.scale-200.png" />
+    <Content Include="Images\Square150x150Logo.scale-200_altform-unplated.png" />
+    <Content Include="Images\Square150x150Logo.scale-400.png" />
+    <Content Include="Images\Square150x150Logo.scale-400_altform-unplated.png" />
     <Content Include="Images\Square44x44Logo.scale-200.png" />
     <Content Include="Images\Square44x44Logo.targetsize-16.png" />
     <Content Include="Images\Square44x44Logo.targetsize-16_altform-unplated.png" />
@@ -115,7 +120,12 @@
     <Content Include="Images\Square44x44Logo.targetsize-32_altform-unplated.png" />
     <Content Include="Images\Square44x44Logo.targetsize-48.png" />
     <Content Include="Images\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="Images\Square71x71Logo.scale-100.png" />
+    <Content Include="Images\Square71x71Logo.scale-100_altform-unplated.png" />
     <Content Include="Images\Square71x71Logo.scale-200.png" />
+    <Content Include="Images\Square71x71Logo.scale-200_altform-unplated.png" />
+    <Content Include="Images\Square71x71Logo.scale-400.png" />
+    <Content Include="Images\Square71x71Logo.scale-400_altform-unplated.png" />
     <Content Include="Images\Square310x310Logo.scale-200.png" />
     <Content Include="Images\StoreLogo.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
