@@ -10,17 +10,17 @@ Calcoo is an RPN and algebraic scientific calculator designed to provide maximum
 - Trigonometric, logarithmic, and hyperbolic functions with arc/hyp modifiers
 - Factorial, power, and root operations
 - Two memory registers with store, recall, add, and swap
-- Undo/redo (up to 200 steps)
+- Undo/redo
 - Degree and radian angle modes
 - Multiple display formats (fixed, scientific, engineering)
 - Displays for the memory and operation registers
-- Copy/paste with locale-aware number parsing
+- Copy/paste with locale-awareand heuristic number parsing
 - Customizable command button
 - Keyboard shortcuts for most operations
-- Scalable vector UI that maintains aspect ratio
+- Scalable vector UI
 - Dark/light theme following Windows system setting
-- Stay-on-top functionality
-- Random number generator
+- Optional stay-on-top functionality
+- Random number generator (uniform and normal)
 
 ## Requirements
 
@@ -55,7 +55,7 @@ GPL-3.0-or-later. See the License tab in the application for details.
 
 ## Miscellanea
 
-Icon Font: Arian Rounded MT Bold
+Icon Font: Arial Rounded MT Bold
 
 ## Previous Versions
 
