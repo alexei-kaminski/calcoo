@@ -17,14 +17,13 @@
     <None Include="CodeDependencies.iss" />
   </ItemGroup>
 
-  <Target Name="Build" Condition="'$(Configuration)' == 'Release'">
+  <Target Name="Build">
     <PropertyGroup>
       <_CalcooProjectDir>$(MSBuildThisFileDirectory)..\Calcoo\</_CalcooProjectDir>
     </PropertyGroup>
-    <Exec Command="dotnet publish Calcoo.csproj -c Release -r win-x64 --no-self-contained" WorkingDirectory="$(_CalcooProjectDir)" />
-    <Exec Command="&quot;C:\Program Files (x86)\Inno Setup 6\ISCC.exe&quot; &quot;$(MSBuildThisFileDirectory)Calcoo.iss&quot;" />
+    <Exec Condition="'$(Configuration)' == 'Release'" Command="dotnet publish Calcoo.csproj -c Release -r win-x64 --no-self-contained" WorkingDirectory="$(_CalcooProjectDir)" />
+    <Exec Condition="'$(Configuration)' == 'Release'" Command="&quot;C:\Program Files (x86)\Inno Setup 6\ISCC.exe&quot; &quot;$(MSBuildThisFileDirectory)Calcoo.iss&quot;" />
   </Target>
-  <Target Name="Build" Condition="'$(Configuration)' != 'Release'" />
   <Target Name="Clean" />
   <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 </Project>
