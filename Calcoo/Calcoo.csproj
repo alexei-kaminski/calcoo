@@ -13,6 +13,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Copyright>Copyright (C) 2001-2026 Alexei Kaminski.</Copyright>
 	<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <!-- Self-contained for MSIX packaging; overridden by --no-self-contained in Inno Setup build -->
+    <SelfContained Condition="'$(RuntimeIdentifier)' != '' and '$(SelfContained)' == ''">true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
