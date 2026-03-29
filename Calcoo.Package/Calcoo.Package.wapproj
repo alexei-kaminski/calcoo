@@ -139,8 +139,8 @@
     </PropertyGroup>
     <!-- Restore for all Windows RIDs unconditionally — VS overrides AppxBundlePlatforms
          during "Create App Package" so per-platform conditions are not reliable. -->
-    <Exec Command="dotnet restore Calcoo.csproj -r win-x64   -p:BaseIntermediateOutputPath=obj\wappublish\win-x64\"   WorkingDirectory="$(_CalcooProjectDir)" />
-    <Exec Command="dotnet restore Calcoo.csproj -r win-x86   -p:BaseIntermediateOutputPath=obj\wappublish\win-x86\"   WorkingDirectory="$(_CalcooProjectDir)" />
-    <Exec Command="dotnet restore Calcoo.csproj -r win-arm64 -p:BaseIntermediateOutputPath=obj\wappublish\win-arm64\" WorkingDirectory="$(_CalcooProjectDir)" />
+    <Exec Command="dotnet restore Calcoo.csproj -r win-x64   -p:SelfContained=true -p:BaseIntermediateOutputPath=obj\wappublish\win-x64\"   WorkingDirectory="$(_CalcooProjectDir)" />
+    <Exec Command="dotnet restore Calcoo.csproj -r win-x86   -p:SelfContained=true -p:BaseIntermediateOutputPath=obj\wappublish\win-x86\"   WorkingDirectory="$(_CalcooProjectDir)" />
+    <Exec Command="dotnet restore Calcoo.csproj -r win-arm64 -p:SelfContained=true -p:BaseIntermediateOutputPath=obj\wappublish\win-arm64\" WorkingDirectory="$(_CalcooProjectDir)" />
   </Target>
 </Project>
