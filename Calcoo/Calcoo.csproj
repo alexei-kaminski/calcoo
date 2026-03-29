@@ -7,10 +7,12 @@
     <RootNamespace>Calcoo</RootNamespace>
     <AssemblyName>Calcoo</AssemblyName>
     <ApplicationIcon>Resources\calcoo.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>3.0.3</Version>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Copyright>Copyright (C) 2001-2026 Alexei Kaminski.</Copyright>
+	<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
@@ -58,8 +60,8 @@
     <Resource Include="Resources\Icons\Displays\Main\Tick.xaml" />
   </ItemGroup>
 
-  <Target Name="BuildInstaller" AfterTargets="Publish">
+	<!--   <Target Name="BuildInstaller" AfterTargets="Publish">
     <Exec Command="&quot;C:\Program Files (x86)\Inno Setup 6\ISCC.exe&quot; &quot;$(MSBuildProjectDirectory)\..\Calcoo.Setup\Calcoo.iss&quot;" />
-  </Target>
+  </Target> -->
 
 </Project>
