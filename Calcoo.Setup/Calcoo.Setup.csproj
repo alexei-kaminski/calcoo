@@ -1,0 +1,30 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <ProjectGuid>{D56ADAC9-BED0-4DB9-9D9E-CE7C22992DE7}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Calcoo.iss" />
+    <None Include="CodeDependencies.iss" />
+  </ItemGroup>
+
+  <Target Name="Build" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <_CalcooProjectDir>$(MSBuildThisFileDirectory)..\Calcoo\</_CalcooProjectDir>
+    </PropertyGroup>
+    <Exec Command="dotnet publish Calcoo.csproj -c Release -r win-x64 --no-self-contained" WorkingDirectory="$(_CalcooProjectDir)" />
+    <Exec Command="&quot;C:\Program Files (x86)\Inno Setup 6\ISCC.exe&quot; &quot;$(MSBuildThisFileDirectory)Calcoo.iss&quot;" />
+  </Target>
+  <Target Name="Build" Condition="'$(Configuration)' != 'Release'" />
+  <Target Name="Clean" />
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+</Project>
