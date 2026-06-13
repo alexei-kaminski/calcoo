@@ -25,7 +25,7 @@ Calcoo is an RPN and algebraic scientific calculator designed to provide maximum
 ## Requirements
 
 - Windows 10 or later
-- [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 ## Build
 

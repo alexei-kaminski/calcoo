@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Calcoo is a WPF scientific calculator for Windows, written in C# targeting .NET 9 (`net9.0-windows`). It supports both RPN (Reverse Polish Notation) and Algebraic calculation modes, similar to classic HP calculators.
+Calcoo is a WPF scientific calculator for Windows, written in C# targeting .NET 10 (`net10.0-windows`). It supports both RPN (Reverse Polish Notation) and Algebraic calculation modes, similar to classic HP calculators.
 
 ## Build and Test Commands
 
@@ -16,7 +16,7 @@ dotnet build Calcoo.sln
 dotnet test Calcoo.Test/Calcoo.Test.csproj
 ```
 
-The solution file is `Calcoo.sln` containing two projects: `Calcoo` (WinExe) and `Calcoo.Test` (test library).
+The solution file is `Calcoo.sln` containing three projects: `Calcoo` (WinExe), `Calcoo.Test` (test library), and `Calcoo.Setup` (Inno Setup installer).
 
 ## Architecture
 
