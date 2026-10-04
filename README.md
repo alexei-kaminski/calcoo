@@ -14,7 +14,7 @@ Calcoo is an RPN and algebraic scientific calculator designed to provide maximum
 - Degree and radian angle modes
 - Multiple display formats (fixed, scientific, engineering)
 - Displays for the memory and operation registers
-- Copy/paste with locale-awareand heuristic number parsing
+- Copy/paste with locale-aware and heuristic number parsing
 - Customizable command button
 - Keyboard shortcuts for most operations
 - Scalable vector UI
